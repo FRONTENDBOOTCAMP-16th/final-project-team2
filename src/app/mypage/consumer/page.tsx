@@ -18,7 +18,7 @@ export default function ConsumerPage() {
             {dummyOrders.length > 3 && (
               <div className="flex justify-between">
                 <p className="text-xl text-red-500 font-semibold py-3 px-5 ">
-                  ※ 최근 주문한 3건의 상품만 표시됩니다.{" "}
+                  ※ 최근 주문한 4건의 상품만 표시됩니다.{" "}
                 </p>
               </div>
             )}
