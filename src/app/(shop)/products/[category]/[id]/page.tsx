@@ -27,11 +27,11 @@ const formatPrice = (price: number) => `${price.toLocaleString('ko-KR')}원`;
 function InfoRow({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <>
-      <div className="flex gap-6 py-4">
-        <dt className="text-gray-700 text-[18px] mr-4">{label}</dt>
-        <dd className=" text-sm text-gray-600">{children}</dd>
-      </div>
-      <hr className="w-full border-gray-200" />
+      <dl className="flex gap-6  items-center m-0">
+        <dt className="text-gray-700 text-[18px] mr-4 mt-4 mb-4">{label}</dt>
+        <dd className=" text-sm text-gray-600 mt-4 mb-4">{children}</dd>
+      </dl>
+      <hr className="w-full border-gray-200 m-0" />
     </>
   );
 }
@@ -74,53 +74,41 @@ export default function ProductDetailPage() {
 
             <div className="space-y-6">
               <dl className="space-y-3">
-                <div>
-                  <dt className="sr-only">제품 타입</dt>
-                  <dd className="text-lg text-gray-600">{PRODUCT.category}</dd>
-                </div>
+                <dt className="sr-only">제품 타입</dt>
+                <dd className="text-lg text-gray-600">{PRODUCT.category}</dd>
 
-                <div>
-                  <dt className="sr-only">제품명</dt>
-                  <dd className="text-3xl font-semibold">{PRODUCT.name}</dd>
-                </div>
+                <dt className="sr-only">제품명</dt>
+                <dd className="text-3xl font-semibold">{PRODUCT.name}</dd>
 
-                <div>
-                  <dt className="sr-only">정가</dt>
-                  <dd>
-                    <del className="text-lg text-gray-400">{formatPrice(PRODUCT.originalPrice)}</del>
-                  </dd>
-                </div>
+                <dt className="sr-only">정가</dt>
+                <dd>
+                  <del className="text-lg text-gray-500">{formatPrice(PRODUCT.originalPrice)}</del>
+                </dd>
 
                 <div className="flex items-center gap-3">
-                  <div>
-                    <dt className="sr-only">할인율</dt>
-                    <dd className="text-xl font-bold text-orange-800">{PRODUCT.discountRate}%</dd>
-                  </div>
+                  <dt className="sr-only">할인율</dt>
+                  <dd className="text-xl font-bold text-orange-800">{PRODUCT.discountRate}%</dd>
 
-                  <div>
-                    <dt className="sr-only">할인가</dt>
-                    <dd className="text-2xl font-semibold">{formatPrice(PRODUCT.salePrice)}</dd>
-                  </div>
+                  <dt className="sr-only">할인가</dt>
+                  <dd className="text-2xl font-semibold">{formatPrice(PRODUCT.salePrice)}</dd>
                 </div>
               </dl>
 
               <hr className="w-full m-0 border-gray-200" />
 
-              <dl>
-                <InfoRow label="적립">
-                  <button type="button" className="text-sm underline">
-                    등급 별 정책 확인하기 →
-                  </button>
-                </InfoRow>
+              <InfoRow label="적립">
+                <button type="button" className="text-sm underline">
+                  등급 별 정책 확인하기 →
+                </button>
+              </InfoRow>
 
-                <InfoRow label="배송">
-                  <div className="space-y-1">
-                    {PRODUCT.shipping.map(text => (
-                      <p key={text}>{text}</p>
-                    ))}
-                  </div>
-                </InfoRow>
-              </dl>
+              <InfoRow label="배송">
+                <div className="space-y-1">
+                  {PRODUCT.shipping.map(text => (
+                    <p key={text}>{text}</p>
+                  ))}
+                </div>
+              </InfoRow>
 
               <div className="inline-block">
                 <label htmlFor="quantity" className="text-[18px] text-gray-700">
@@ -128,7 +116,7 @@ export default function ProductDetailPage() {
                 </label>
 
                 <div className="mt-4 flex items-center overflow-hidden rounded border">
-                  <button type="button" aria-label="한개 제거" className="border-r px-4 py-1 text-3xl text-gray-400 cursor-not-allowed" disabled>
+                  <button type="button" aria-label="한개 제거" className="border-r px-4 py-1 text-3xl text-gray-600 cursor-not-allowed" disabled>
                     -
                   </button>
 
@@ -169,7 +157,7 @@ export default function ProductDetailPage() {
             <ul className="flex gap-6">
               {DETAIL_TABS.map(tab => (
                 <li key={tab.id}>
-                  <button type="button" className="border-b-2 border-transparent px-1 py-4 text-gray-700 transition-colors hover:text-black">
+                  <button type="button" className="border-b-2 border-transparent text-2xl px-1 py-4 text-gray-700 transition-colors hover:text-black">
                     {tab.label}
                   </button>
                 </li>
@@ -183,21 +171,20 @@ export default function ProductDetailPage() {
             제품 상세
           </h2>
 
-          <p className="mt-4 max-w-3xl break-keep leading-8 text-gray-700">{PRODUCT.description}</p>
+          <p className="mt-4 text-xl max-w-6xl text-justify break-keep leading-8 text-gray-700">{PRODUCT.description}</p>
 
-          <dl className="mt-10">
-            <InfoRow label="배송">
-              <p>{PRODUCT.shipping[0]}</p>
-            </InfoRow>
+          <hr className="mt-20 border-gray-200" />
+          <InfoRow label="배송">
+            <p>{PRODUCT.shipping[0]}</p>
+          </InfoRow>
 
-            <InfoRow label="반품/교환">
-              <p>{PRODUCT.returnPolicy}</p>
-            </InfoRow>
+          <InfoRow label="반품/교환">
+            <p>{PRODUCT.returnPolicy}</p>
+          </InfoRow>
 
-            <InfoRow label="원산지">
-              <p>{PRODUCT.countryOfOrigin}</p>
-            </InfoRow>
-          </dl>
+          <InfoRow label="원산지">
+            <p>{PRODUCT.countryOfOrigin}</p>
+          </InfoRow>
         </section>
       </article>
 
