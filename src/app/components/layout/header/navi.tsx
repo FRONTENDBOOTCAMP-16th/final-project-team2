@@ -1,7 +1,7 @@
 'use client'
 
 import Link from "next/link"
-import NavList from "@/src/app/components/header/nav-list"
+import NavList from "./nav-list"
 
 
 const convenienceMenu = [
