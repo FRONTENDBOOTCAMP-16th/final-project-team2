@@ -1,0 +1,61 @@
+[
+  { "id": 1, "name": "볼펜 상품 1", "price": 10000, "discount": 5, "image": "/pen_dummy.jpg" },
+  { "id": 2, "name": "볼펜 상품 2", "price": 10500, "discount": 10, "image": "/pen_dummy.jpg" },
+  { "id": 3, "name": "볼펜 상품 3", "price": 11000, "discount": 15, "image": "/pen_dummy.jpg" },
+  { "id": 4, "name": "볼펜 상품 4", "price": 11500, "discount": 20, "image": "/pen_dummy.jpg" },
+  { "id": 5, "name": "볼펜 상품 5", "price": 12000, "discount": 25, "image": "/pen_dummy.jpg" },
+
+  { "id": 6, "name": "볼펜 상품 6", "price": 12500, "discount": 5, "image": "/pen_dummy.jpg" },
+  { "id": 7, "name": "볼펜 상품 7", "price": 13000, "discount": 10, "image": "/pen_dummy.jpg" },
+  { "id": 8, "name": "볼펜 상품 8", "price": 13500, "discount": 15, "image": "/pen_dummy.jpg" },
+  { "id": 9, "name": "볼펜 상품 9", "price": 14000, "discount": 20, "image": "/pen_dummy.jpg" },
+  { "id": 10, "name": "볼펜 상품 10", "price": 14500, "discount": 25, "image": "/pen_dummy.jpg" },
+
+  { "id": 11, "name": "볼펜 상품 11", "price": 15000, "discount": 5, "image": "/pen_dummy.jpg" },
+  { "id": 12, "name": "볼펜 상품 12", "price": 15500, "discount": 10, "image": "/pen_dummy.jpg" },
+  { "id": 13, "name": "볼펜 상품 13", "price": 16000, "discount": 15, "image": "/pen_dummy.jpg" },
+  { "id": 14, "name": "볼펜 상품 14", "price": 16500, "discount": 20, "image": "/pen_dummy.jpg" },
+  { "id": 15, "name": "볼펜 상품 15", "price": 17000, "discount": 25, "image": "/pen_dummy.jpg" },
+
+  { "id": 16, "name": "볼펜 상품 16", "price": 17500, "discount": 5, "image": "/pen_dummy.jpg" },
+  { "id": 17, "name": "볼펜 상품 17", "price": 18000, "discount": 10, "image": "/pen_dummy.jpg" },
+  { "id": 18, "name": "볼펜 상품 18", "price": 18500, "discount": 15, "image": "/pen_dummy.jpg" },
+  { "id": 19, "name": "볼펜 상품 19", "price": 19000, "discount": 20, "image": "/pen_dummy.jpg" },
+  { "id": 20, "name": "볼펜 상품 20", "price": 19500, "discount": 25, "image": "/pen_dummy.jpg" },
+
+  { "id": 21, "name": "볼펜 상품 21", "price": 20000, "discount": 5, "image": "/pen_dummy.jpg" },
+  { "id": 22, "name": "볼펜 상품 22", "price": 20500, "discount": 10, "image": "/pen_dummy.jpg" },
+  { "id": 23, "name": "볼펜 상품 23", "price": 21000, "discount": 15, "image": "/pen_dummy.jpg" },
+  { "id": 24, "name": "볼펜 상품 24", "price": 21500, "discount": 20, "image": "/pen_dummy.jpg" },
+  { "id": 25, "name": "볼펜 상품 25", "price": 22000, "discount": 25, "image": "/pen_dummy.jpg" },
+
+  { "id": 26, "name": "볼펜 상품 26", "price": 22500, "discount": 5, "image": "/pen_dummy.jpg" },
+  { "id": 27, "name": "볼펜 상품 27", "price": 23000, "discount": 10, "image": "/pen_dummy.jpg" },
+  { "id": 28, "name": "볼펜 상품 28", "price": 23500, "discount": 15, "image": "/pen_dummy.jpg" },
+  { "id": 29, "name": "볼펜 상품 29", "price": 24000, "discount": 20, "image": "/pen_dummy.jpg" },
+  { "id": 30, "name": "볼펜 상품 30", "price": 24500, "discount": 25, "image": "/pen_dummy.jpg" },
+
+  { "id": 31, "name": "볼펜 상품 31", "price": 25000, "discount": 5, "image": "/pen_dummy.jpg" },
+  { "id": 32, "name": "볼펜 상품 32", "price": 25500, "discount": 10, "image": "/pen_dummy.jpg" },
+  { "id": 33, "name": "볼펜 상품 33", "price": 26000, "discount": 15, "image": "/pen_dummy.jpg" },
+  { "id": 34, "name": "볼펜 상품 34", "price": 26500, "discount": 20, "image": "/pen_dummy.jpg" },
+  { "id": 35, "name": "볼펜 상품 35", "price": 27000, "discount": 25, "image": "/pen_dummy.jpg" },
+
+  { "id": 36, "name": "볼펜 상품 36", "price": 27500, "discount": 5, "image": "/pen_dummy.jpg" },
+  { "id": 37, "name": "볼펜 상품 37", "price": 28000, "discount": 10, "image": "/pen_dummy.jpg" },
+  { "id": 38, "name": "볼펜 상품 38", "price": 28500, "discount": 15, "image": "/pen_dummy.jpg" },
+  { "id": 39, "name": "볼펜 상품 39", "price": 29000, "discount": 20, "image": "/pen_dummy.jpg" },
+  { "id": 40, "name": "볼펜 상품 40", "price": 29500, "discount": 25, "image": "/pen_dummy.jpg" },
+
+  { "id": 41, "name": "볼펜 상품 41", "price": 30000, "discount": 5, "image": "/pen_dummy.jpg" },
+  { "id": 42, "name": "볼펜 상품 42", "price": 30500, "discount": 10, "image": "/pen_dummy.jpg" },
+  { "id": 43, "name": "볼펜 상품 43", "price": 31000, "discount": 15, "image": "/pen_dummy.jpg" },
+  { "id": 44, "name": "볼펜 상품 44", "price": 31500, "discount": 20, "image": "/pen_dummy.jpg" },
+  { "id": 45, "name": "볼펜 상품 45", "price": 32000, "discount": 25, "image": "/pen_dummy.jpg" },
+
+  { "id": 46, "name": "볼펜 상품 46", "price": 32500, "discount": 5, "image": "/pen_dummy.jpg" },
+  { "id": 47, "name": "볼펜 상품 47", "price": 33000, "discount": 10, "image": "/pen_dummy.jpg" },
+  { "id": 48, "name": "볼펜 상품 48", "price": 33500, "discount": 15, "image": "/pen_dummy.jpg" },
+  { "id": 49, "name": "볼펜 상품 49", "price": 34000, "discount": 20, "image": "/pen_dummy.jpg" },
+  { "id": 50, "name": "볼펜 상품 50", "price": 34500, "discount": 25, "image": "/pen_dummy.jpg" }
+]
