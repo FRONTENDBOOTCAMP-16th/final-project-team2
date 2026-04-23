@@ -30,7 +30,7 @@ const mainMenu = [
 
 export default function Header() {
   return (
-    <header className="absolute top-0 w-full bg-white">
+    <header className="top-0 w-full bg-white sticky">
       <div className="flex justify-between border-be">
         {/* 편의 메뉴 */}
         <NavList label="convenience-menu" items={convenienceMenu} />

@@ -16,7 +16,7 @@ export default function Footer() {
       <div className="flex gap-4">
         <Link href='/inquire'>1:1문의하기</Link>
         <button type="button">이미지 저작권 및 AI 사용</button>
-        <small className="ms-auto">&copy; copyright by 2026</small>
+        <small className="ms-auto">copyright by 2026</small>
       </div>
     </footer>
   )
