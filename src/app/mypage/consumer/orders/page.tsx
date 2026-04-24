@@ -12,6 +12,7 @@ export default function OrdersPage() {
     selectedStatus === ""
       ? dummyOrders
       : dummyOrders.filter((order) => order.status === selectedStatus);
+      
   return (
     <div className="flex flex-col px-5 py-2">
       <h1 className="sr-only">주문 내역 조회</h1>

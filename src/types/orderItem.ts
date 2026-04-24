@@ -4,5 +4,5 @@ export type OrderItem = {
   orderDate: string;
   price: number;
   image: string;
-  status: "결제대기" | "결제완료" | "배송중" | "배송완료" | "취소됨";
+  status: "PENDING" | "PAID" | "SHIPPED" | "DELIVERED" | "CANCELED";
 };

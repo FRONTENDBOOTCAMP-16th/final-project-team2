@@ -1,14 +1,9 @@
-import type { OrderItem } from "@/types/orderItem";
+import { statusLabel } from "@/data/statusLabel";
 import { ChangeEvent } from "react";
 
-// 주문 상태 더미 데이터 넣기
-const STATUS_LIST: OrderItem["status"][] = [
-  "결제대기",
-  "결제완료",
-  "배송중",
-  "배송완료",
-  "취소됨",
-];
+// statusLabel 키값 배열로  만들기
+const STATUS_LIST = Object.keys(statusLabel) as Array<keyof typeof statusLabel>;
+
 
 interface Props {
   value: string;
@@ -33,7 +28,7 @@ export default function OrderStatusFilter({ value, statusChange }: Props) {
         <option value="">전체 상태</option>
         {STATUS_LIST.map((status) => (
           <option key={status} value={status}>
-            {status}
+            {statusLabel[status].label}
           </option>
         ))}
       </select>

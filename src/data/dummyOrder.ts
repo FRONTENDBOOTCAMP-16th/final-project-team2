@@ -6,7 +6,7 @@ export const dummyOrders: OrderItem[] = [
     name: "키치 스티커 세트",
     price: 12000,
     image: "/globe.svg",
-    status: "배송중",
+    status: "SHIPPED",
     orderDate: "2026-04-01",
   },
   {
@@ -14,7 +14,7 @@ export const dummyOrders: OrderItem[] = [
     name: "다이어리 스티커",
     price: 9000,
     image: "/globe.svg",
-    status: "배송완료",
+    status: "DELIVERED",
     orderDate: "2026-03-28",
   },
   {
@@ -22,7 +22,7 @@ export const dummyOrders: OrderItem[] = [
     name: "감성 메모지 패키지",
     price: 7000,
     image: "/globe.svg",
-    status: "취소됨",
+    status: "CANCELED",
     orderDate: "2026-04-10",
   },
   {
@@ -30,7 +30,7 @@ export const dummyOrders: OrderItem[] = [
     name: "레트로 다꾸 스티커",
     price: 11000,
     image: "/globe.svg",
-    status: "결제완료",
+    status: "PAID",
     orderDate: "2026-03-25",
   },
   {
@@ -38,7 +38,7 @@ export const dummyOrders: OrderItem[] = [
     name: "미니 메모 스티커",
     price: 5000,
     image: "/globe.svg",
-    status: "배송완료",
+    status: "DELIVERED",
     orderDate: "2026-03-20",
   },
   {
@@ -46,7 +46,7 @@ export const dummyOrders: OrderItem[] = [
     name: "파스텔 하트 스티커",
     price: 8000,
     image: "/globe.svg",
-    status: "결제대기",
+    status: "PENDING",
     orderDate: "2026-04-15",
   },
   {
@@ -54,7 +54,7 @@ export const dummyOrders: OrderItem[] = [
     name: "다꾸 인덱스 스티커",
     price: 6000,
     image: "/globe.svg",
-    status: "배송중",
+    status: "SHIPPED",
     orderDate: "2026-04-05",
   },
   {
@@ -62,7 +62,7 @@ export const dummyOrders: OrderItem[] = [
     name: "감성 일러스트 스티커",
     price: 13000,
     image: "/globe.svg",
-    status: "배송완료",
+    status: "DELIVERED",
     orderDate: "2026-03-18",
   },
   {
@@ -70,7 +70,7 @@ export const dummyOrders: OrderItem[] = [
     name: "빈티지 라벨 스티커",
     price: 9500,
     image: "/globe.svg",
-    status: "배송완료",
+    status: "DELIVERED",
     orderDate: "2026-04-12",
   },
   {
@@ -78,7 +78,7 @@ export const dummyOrders: OrderItem[] = [
     name: "모노톤 다꾸 세트",
     price: 15000,
     image: "/globe.svg",
-    status: "배송중",
+    status: "SHIPPED",
     orderDate: "2026-03-30",
   },
   {
@@ -86,7 +86,7 @@ export const dummyOrders: OrderItem[] = [
     name: "캐릭터 스티커 팩",
     price: 14000,
     image: "/globe.svg",
-    status: "결제완료",
+    status: "PAID",
     orderDate: "2026-03-22",
   },
   {
@@ -94,7 +94,7 @@ export const dummyOrders: OrderItem[] = [
     name: "감성 손글씨 스티커",
     price: 10000,
     image: "/globe.svg",
-    status: "취소됨",
+    status: "CANCELED",
     orderDate: "2026-04-18",
   },
 ];

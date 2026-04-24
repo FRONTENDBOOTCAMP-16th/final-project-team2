@@ -28,7 +28,6 @@ export default function OrderItemCard({ order }: { order: OrderItem }) {
       <div className="flex gap-3 w-1/6">
         <OrderStatusBadge status={order.status} />
       </div>
-      <div></div>
     </div>
   );
 }
