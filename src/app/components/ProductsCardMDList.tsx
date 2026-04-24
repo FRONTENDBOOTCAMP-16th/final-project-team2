@@ -7,14 +7,13 @@ import products from '@/data/dummyproducts.json';
 
 const MD_PICK_PRODUCTS = 4
 
-
 export default function ProductMDList() {
   const [maxProducts, setMaxProducts] = useState(MD_PICK_PRODUCTS)
-  const [buttonDisabled, setDuttonDisabled] = useState(true)
+  const [buttonDisabled, setButtonDisabled] = useState(true)
 
   const handleMoreProduct = () => {
     setMaxProducts((prev) => prev + 4)
-    setDuttonDisabled(false)
+    setButtonDisabled(false)
   }
   
   return (

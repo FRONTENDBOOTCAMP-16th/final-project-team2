@@ -1,7 +1,6 @@
-import Image from "next/image";
-import Header from "./components/layout/header/navi";
-import Footer from "./components/layout/footer/footerSection";
-import Main from "./components/layout/main/mainList";
+import Header from "./components/Navi"
+import Main from "./components/MainList"
+import Footer from "./components/FooterSection"
 
 export default function Home() {
   return (
@@ -10,5 +9,5 @@ export default function Home() {
       <Main /> 
       <Footer />
     </div>
-  );
+  )
 }
