@@ -7,17 +7,20 @@ export default function SideMenu() {
   const pathname = usePathname();
   const role: "consumer" | "seller" = "consumer";
 
+  const CONSUMER_PATH = "/mypage/consumer";
+  const SELLER_PATH = "/mypage/seller";
+
   const menus = {
     consumer: [
-      { name: "주문내역", href: "/mypage/consumer/orders" },
-      { name: "프로필 관리", href: "/mypage/consumer/profile" },
-      { name: "찜한 상품", href: "/mypage/consumer/wishlist" },
+      { name: "주문내역", href: `${CONSUMER_PATH}/orders` },
+      { name: "프로필 관리", href: `${CONSUMER_PATH}/profile` },
+      { name: "찜한 상품", href: `${CONSUMER_PATH}/wishlist` },
     ],
     seller: [
-      { name: "나의 상품", href: "/mypage/seller/products" },
-      { name: "상품 등록", href: "/mypage/seller/register" },
-      { name: "상점 정보 관리", href: "/mypage/seller/info" },
-      { name: "배송 상태 관리", href: "/mypage/seller/delivery" },
+      { name: "나의 상품", href: `${SELLER_PATH}/products` },
+      { name: "상품 등록", href: `${SELLER_PATH}/register` },
+      { name: "상점 정보 관리", href: `${SELLER_PATH}/info` },
+      { name: "배송 상태 관리", href: `${SELLER_PATH}/delivery` },
     ],
   };
 
