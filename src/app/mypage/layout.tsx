@@ -1,4 +1,4 @@
-import SideMenu from "./_components/SideMenu";
+import SideMenu from "./components/SideMenu";
 
 interface LayoutProps {
   children: React.ReactNode;
