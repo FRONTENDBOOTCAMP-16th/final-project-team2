@@ -18,7 +18,7 @@ const swiperList = [
 
 export default function Main() {
   return (
-    <main className="w-full h-full min-h-full flex-1">
+    <>
       {/* 스와이프 섹션 */}
       <SwiperSection swiperList={swiperList} />
 
@@ -74,6 +74,6 @@ export default function Main() {
           <ProductsCard maxProducts={INVENTORY_PRODUCTS} products={products} hasLike/>
         </ProductsRecommendationList>
       </div>
-    </main>
+    </>
   )
 }
