@@ -12,12 +12,13 @@ interface Product {
 interface ProductsProps {
   products: Product[];
   maxProducts: number;
+  hasLike?: boolean;
 }
 
 /*
  * maxProduct는 페이지에 들어가는 최대 제품 갯수입니다
  */
-export default function ProductsCard({ products, maxProducts }: ProductsProps) {
+export default function ProductsCard({ products, maxProducts, hasLike }: ProductsProps) {
   return products.slice(0, maxProducts).map(item => {
     const discountPrice = item.price * (1 - item.discount / 100);
     const label = `제품명 ${item.name} 원래가격은 ${item.price}원이고 할인 ${item.discount}퍼센트 할인 중이며
@@ -44,12 +45,16 @@ export default function ProductsCard({ products, maxProducts }: ProductsProps) {
                 <dd className="text-2xl font-medium">{discountPrice.toLocaleString()}원</dd>
               </div>
             </dl>
-            <button
-              className="p-1 aspect-square text-2xl border-2 border-gray-500 rounded-full hover:bg-pink-100 transition-colors duration-300"
-              type="button"
-            >
-              ❤️
-            </button>
+            {hasLike ? (
+              <></>
+            ): (
+              <button
+                className="p-1 aspect-square text-2xl border-2 border-gray-500 rounded-full hover:bg-pink-100 transition-colors duration-300"
+                type="button"
+              >
+                ❤️
+              </button>
+            )}
           </div>
         </Link>
       </li>
