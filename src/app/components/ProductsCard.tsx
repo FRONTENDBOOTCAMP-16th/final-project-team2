@@ -26,7 +26,7 @@ export default function ProductsCard({ products, maxProducts, hasLike }: Product
 
     return (
       <li key={item.id} aria-label={label}>
-        <Link href={`/${item.name}`}>
+        <Link href={`/products/pen/${item.id}`}>
           <Image src={item.image} alt={item.name} width={282} height={282} />
           <div className="flex justify-between items-start mt-5">
             <dl>
