@@ -1,7 +1,7 @@
 'use client'
 
 import Link from "next/link"
-import NavList from "./nav-list"
+import NavList from "./navList"
 
 
 const convenienceMenu = [
@@ -30,7 +30,7 @@ const mainMenu = [
 
 export default function Header() {
   return (
-    <header className="top-0 w-full bg-white sticky">
+    <header className="top-0 w-full bg-white sticky z-2">
       <div className="flex justify-between border-be">
         {/* 편의 메뉴 */}
         <NavList label="convenience-menu" items={convenienceMenu} />

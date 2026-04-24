@@ -18,7 +18,7 @@ export default function ProductMDList() {
   }
   
   return (
-    <section className="flex flex-col m-auto w-full ">
+    <section className="flex flex-col m-auto w-full">
       <ProductsCardList>
         <ProductsCard maxProducts={maxProducts} products={products} />
       </ProductsCardList>
