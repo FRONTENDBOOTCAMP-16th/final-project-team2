@@ -11,7 +11,7 @@ export default function OrderStatusBadge({
 
   return (
     <span
-      className={`inline-flex items-center justify-center w-20 py-1 rounded text-sm  ${config.color}`}
+      className={`inline-flex items-center justify-center w-20 h-10 rounded text-sm  ${config.color}`}
     >
       {config.label}
     </span>
