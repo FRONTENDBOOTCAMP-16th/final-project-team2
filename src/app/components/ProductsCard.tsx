@@ -28,7 +28,7 @@ export default function ProductsCard({ products, maxProducts, hasLike }: Product
       <li key={item.id} aria-label={label}>
         <Link href={`/products/pen/${item.id}`}>
           <Image src={item.image} alt={item.name} width={282} height={282} />
-          <div className="flex justify-between items-start mt-5">
+          <div>
             <dl>
               <dt className="sr-only">제품 타입</dt>
               <dd className="text-gray-700">필기구</dd>
@@ -38,25 +38,25 @@ export default function ProductsCard({ products, maxProducts, hasLike }: Product
               <dd>
                 <del>{item.price.toLocaleString()}원</del>
               </dd>
-              <div className="flex gap-3">
-                <dt className="sr-only">할인율</dt>
-                <dd className="text-orange-600 font-bold text-2xl">{item.discount}%</dd>
-                <dt className="sr-only">할인된 가격</dt>
-                <dd className="text-2xl font-medium">{discountPrice.toLocaleString()}원</dd>
-              </div>
             </dl>
-            {hasLike ? (
-              <></>
-            ): (
-              <button
-                className="p-1 aspect-square text-2xl border-2 border-gray-500 rounded-full hover:bg-pink-100 transition-colors duration-300"
-                type="button"
-              >
-                ❤️
-              </button>
-            )}
+            <dl className="flex gap-3">
+              <dt className="sr-only">할인율</dt>
+              <dd className="text-orange-600 font-bold text-2xl">{item.discount}%</dd>
+              <dt className="sr-only">할인된 가격</dt>
+              <dd className="text-2xl font-medium">{discountPrice.toLocaleString()}원</dd>
+            </dl>
           </div>
         </Link>
+        {hasLike ? (
+          <></>
+        ) : (
+          <button
+            className="p-1 aspect-square text-2xl border-2 border-gray-500 rounded-full hover:bg-pink-100 transition-colors duration-300"
+            type="button"
+          >
+            ❤️
+          </button>
+        )}
       </li>
     );
   });
