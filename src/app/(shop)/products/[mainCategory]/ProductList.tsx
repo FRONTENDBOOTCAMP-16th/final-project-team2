@@ -1,4 +1,3 @@
-import Pagination from '@/app/components/paginateion';
 import ProductsCard from '@/app/components/ProductsCard';
 import ProductsCardList from '@/app/components/ProductsCardList';
 
@@ -15,18 +14,13 @@ interface Product {
 
 interface ProductListProps {
   products: Product[];
-  totalProduct: number;
-  currentPage: string;
   category: string;
   sort: string;
-  pagePerProducts: number;
-  visiblePages: number;
 }
 
-const ProductList = ({ products, totalProduct, currentPage, category, sort, pagePerProducts }: ProductListProps) => {
+const ProductList = ({ products }: ProductListProps) => {
   const hasProducts = products.length > 0;
   const MAX_PRODUCT_LIMIT = 12;
-  const MAX_PAGE_LIMIT = 5;
 
   return (
     <section aria-labelledby="productList">
