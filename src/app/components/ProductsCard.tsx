@@ -24,19 +24,13 @@ export default function ProductsCard({ products, maxProducts, hasLike = true }: 
     const isLike = false;
     return (
       <li key={item.id} className="relative" aria-label={label}>
-        {hasLike && (
-          <button
-            className="absolute bottom-15 right-3 z-10 p-2 aspect-square text-xl bg-white hover:bg-pink-100 transition-colors duration-300"
-            type="button"
-            aria-label={`${item.name} 좋아요`}
-          >
-            <Heart className={isLike ? 'fill-red-500' : ''} />
-          </button>
-        )}
-
         <Link href={`/products/pen/${item.id}`} className="block">
-          <Image src={item.image} alt={item.name} width={282} height={282} className="w-full h-auto" />
-
+          <div className="w-70.5 aspect-square relative">
+            <Image src={item.image} alt={item.name} fill={true} className="object-cover absolute" />
+            <div className="absolute w-16 h-8  bg-[#FF6B6B] text-white font-semibold flex items-center justify-center" aria-hidden>
+              {item.discount}%
+            </div>
+          </div>
           <div>
             <dl>
               <dt className="sr-only">제품 타입</dt>
@@ -48,13 +42,22 @@ export default function ProductsCard({ products, maxProducts, hasLike = true }: 
 
             <dl className="flex gap-3">
               <dt className="sr-only">할인율</dt>
-              <dd className="text-orange-600 mt-2 font-bold text-2xl">{item.discount}%</dd>
+              <dd className="text-[#FF6B6B] mt-2 font-bold text-2xl">{item.discount}%</dd>
 
               <dt className="sr-only">할인된 가격</dt>
               <dd className="text-2xl font-medium mt-2 ml-2">{discountPrice.toLocaleString()}원</dd>
             </dl>
           </div>
         </Link>
+        {hasLike && (
+          <button
+            className="absolute bottom-15 right-3 z-10 p-2 aspect-square text-xl bg-white hover:bg-pink-100 transition-colors duration-300"
+            type="button"
+            aria-label={`${item.name} 좋아요`}
+          >
+            <Heart className={isLike ? 'fill-red-500' : ''} />
+          </button>
+        )}
       </li>
     );
   });
