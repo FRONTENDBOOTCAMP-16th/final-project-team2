@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { Heart } from "lucide-react";
 
 export default function LikeToggleButton() {
   const [isLike, setIsLike] = useState(true);
@@ -29,7 +30,7 @@ export default function LikeToggleButton() {
   return (
     // 버튼 누르면 찜한 상품에 추가되었다는 문구, 삭제가 되면 삭제되었다는 문구
     <>
-      <button onClick={handleLike}>{isLike ? "❤️" : "💔"}</button>
+      <button onClick={handleLike}>{isLike ? (<Heart className="fill-red-500 text-red-500" />) : (<Heart/>)}</button>
 
       {showToast && (
         <div className="fixed bottom-10 left-1/2 -translate-x-1/2 z-20">
