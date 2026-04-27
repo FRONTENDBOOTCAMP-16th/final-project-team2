@@ -1,4 +1,5 @@
 import products from '@/data/dummyproducts.json';
+import { ArrowLeft, ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
@@ -13,9 +14,10 @@ const PAGE_SIZE = 16;
 const PAGE_GROUP_SIZE = 5;
 
 const paginationButton = {
-  active: 'rounded-full bg-black text-white px-4 py-2',
-  default: 'rounded-full bg-gray-100 text-black px-4 py-2',
-  disabled: 'rounded-full bg-gray-300 text-gray-500 px-4 py-2 cursor-not-allowed',
+  active: 'text-[#FF6B6B] font-semibold px-4 py-2',
+  default: 'text-black px-4 py-2',
+  disabled: 'cursor-not-allowed text-gray-500 flex px-4 py-2 flex -space-x-3',
+  pageActive: 'px-4 py-2 hover:text-[#FF6B6B] flex -space-x-3',
 };
 
 export default async function Pagination({ searchParams }: Product) {
@@ -46,16 +48,24 @@ export default async function Pagination({ searchParams }: Product) {
   return (
     <div className="pagination flex gap-3 justify-center mt-24 mb-20">
       {currentPage === 1 ? (
-        <span className={paginationButton.disabled}>prev</span>
+        <span className={paginationButton.disabled}>
+          <ChevronLeft />
+          <ChevronLeft />
+        </span>
       ) : (
-        <Link href={createPageLink(currentPage - 1)} className={paginationButton.default}>
-          prev
+        <Link className={paginationButton.pageActive} href={createPageLink(1)}>
+          <ChevronLeft />
+          <ChevronLeft />
         </Link>
       )}
 
-      {startPage > 1 && (
-        <Link href={createPageLink(startPage - 1)} className={paginationButton.default}>
-          ...
+      {currentPage === 1 ? (
+        <span className={paginationButton.disabled}>
+          <ChevronLeft />
+        </span>
+      ) : (
+        <Link href={createPageLink(currentPage - 1)} className={paginationButton.pageActive}>
+          <ChevronLeft />
         </Link>
       )}
 
@@ -70,17 +80,25 @@ export default async function Pagination({ searchParams }: Product) {
         );
       })}
 
-      {endPage < totalPages && (
-        <Link href={createPageLink(endPage + 1)} className={paginationButton.default}>
-          ...
+      {currentPage === totalPages ? (
+        <span className={paginationButton.disabled}>
+          <ChevronRight />
+        </span>
+      ) : (
+        <Link href={createPageLink(currentPage + 1)} className={paginationButton.pageActive}>
+          <ChevronRight />
         </Link>
       )}
 
       {currentPage === totalPages ? (
-        <span className={paginationButton.disabled}>next</span>
+        <span className={paginationButton.disabled}>
+          <ChevronRight />
+          <ChevronRight />
+        </span>
       ) : (
-        <Link href={createPageLink(currentPage + 1)} className={paginationButton.default}>
-          next
+        <Link href={createPageLink(totalPages)} className={paginationButton.pageActive}>
+          <ChevronRight />
+          <ChevronRight />
         </Link>
       )}
     </div>
