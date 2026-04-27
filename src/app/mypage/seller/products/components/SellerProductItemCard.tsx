@@ -2,7 +2,7 @@ import Image from "next/image";
 import { SellerProduct } from "@/app/mypage/types/sellerOrderItems";
 
 export default function SellerProductItemCard({
-  product,
+  product
 }: {
   product: SellerProduct;
 }) {

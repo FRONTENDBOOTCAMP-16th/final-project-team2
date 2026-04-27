@@ -1,10 +1,11 @@
-import dummySellerProducts from "@/data/dummySellerProducts.json";
-import SellerProductItemCard from "./SellerProductItemCard";
 import { SellerProduct } from "@/app/mypage/types/sellerOrderItems";
+import SellerProductItemCard from "./SellerProductItemCard";
 
-export default function SellerProductsList() {
-  const products = dummySellerProducts as SellerProduct[]
+type Props = {
+  products: SellerProduct[];
+};
 
+export default function SellerProductsList({ products }: Props) {
   return (
     <ul>
       {products.map((product) => (
@@ -13,5 +14,5 @@ export default function SellerProductsList() {
         </li>
       ))}
     </ul>
-  )
+  );
 }
