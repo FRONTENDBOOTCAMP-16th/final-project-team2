@@ -34,10 +34,10 @@ export default function LoginPage() {
         {/* 아이디 패스워드 */}
         <div className="flex flex-col gap-5 mbs-8">
           <InputBox type="text" label="아이디" name="login-id" placeholder="이메일을 입력하세요"/>          
-          <InputBox type="text" label="패스워드" name="login-password" placeholder="비밀번호를 입력하세요"/>          
+          <InputBox type="password" label="패스워드" name="login-password" placeholder="비밀번호를 입력하세요"/>          
         </div>
 
-        {/* 로그인 서브 컨텐츠 */}
+        {/* 로그인 서브 */}
         <div className="flex justify-between mbs-12">
           <CheckeBox name="login-stay" label="로그인 상태유지" />
           <Link href="/" className="text-gray-600">비밀번호 재설정</Link>
