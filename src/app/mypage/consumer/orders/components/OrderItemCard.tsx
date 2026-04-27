@@ -5,9 +5,9 @@ import Link from 'next/link';
 
 export default function OrderItemCard({ order }: { order: OrderItem }) {
   return (
-    <div className="flex  font-semibold  pt-2 pb-2 mb-2">
+    <div className="flex  font-semibold  pt-2 pb-2 mb-2 border-b border-gray-300 ">
       {/* 상품 이미지 및 정보 */}
-      <div className="flex gap-5 w-3/6">
+      <div className="flex  w-3/6 ">
        <Link href={`/products/pen/${order.id}`}>
           <Image
           width={80}
