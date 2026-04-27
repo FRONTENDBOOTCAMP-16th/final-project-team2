@@ -5,14 +5,18 @@ import ProductsCardList from '@/app/components/ProductsCardList';
 import Pagination from '@/app/components/Pagination';
 
 type Product = {
+  params: Promise<{
+    mainCategory: string;
+  }>;
   searchParams: Promise<{
     category?: string;
     page?: string;
   }>;
 };
 
-const ProductListPage = async ({ searchParams }: Product) => {
+const ProductListPage = async ({ searchParams, params }: Product) => {
   const { category, page } = await searchParams;
+  const { mainCategory } = await params;
 
   const filtered = category ? products.filter(product => product.category === category) : products;
   const PAGE_SIZE = 16;
@@ -26,28 +30,28 @@ const ProductListPage = async ({ searchParams }: Product) => {
       <div className="flex justify-between mb-16">
         <ul className="flex gap-1.5">
           <li>
-            <Link href="/products" className="p-2 rounded-2xl bg-black text-white">
+            <Link href={`/products/stationery`} className="p-2 rounded-2xl bg-black text-white">
               전체
             </Link>
           </li>
           <div aria-hidden>/</div>
           <li>
-            <Link href="/products?category=ballpen">볼펜</Link>
+            <Link href={`/products/${mainCategory}?category=ballpen`}>볼펜</Link>
           </li>
           <div aria-hidden>/</div>
           <li>
-            <Link href="/products?category=fountainpen">만년필</Link>
+            <Link href={`/products/${mainCategory}?category=fountainpen`}>만년필</Link>
           </li>
           <div aria-hidden>/</div>
           <li>
-            <Link href="/products?category=note">노트</Link>
+            <Link href={`/products/${mainCategory}?category=note`}>노트</Link>
           </li>
         </ul>
 
-        <label htmlFor="filter" className="sr-only">
-          필터
+        <label htmlFor="sort" className="sr-only">
+          정렬
         </label>
-        <select name="filter" id="filter" className="border-2 p-1 rounded-2xl">
+        <select name="sort" id="filter" className="border">
           <option value="lastProduct">최신순</option>
           <option value="popularProduct">인기순</option>
           <option value="highPriceProduct">가격 높은 순</option>
@@ -56,15 +60,12 @@ const ProductListPage = async ({ searchParams }: Product) => {
       </div>
 
       <section aria-labelledby="productList">
-        <h2 className="sr-only" id="productList">
-          상품 정보
-        </h2>
-        <hr />
+        <h2 id="productList">볼펜</h2>
         <ProductsCardList>
-          <ProductsCard maxProducts={12} products={paginated} />
+          <ProductsCard maxProducts={PAGE_SIZE} products={paginated} />
         </ProductsCardList>
       </section>
-      <Pagination searchParams={searchParams} />
+      <Pagination mainCategory={mainCategory} searchParams={searchParams} />
     </div>
   );
 };
