@@ -1,4 +1,4 @@
-import { OrderItem } from "@/types/orderItem";
+import { OrderItem } from "@/app/mypage/types/orderItem";
 import OrderItemCard from "./OrderItemCard";
 import OrderItemHeader from "./OrderListHeader";
 

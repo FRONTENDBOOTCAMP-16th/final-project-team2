@@ -1,4 +1,4 @@
-import { OrderItem } from "@/types/orderItem";
+import { OrderItem } from "@/app/mypage/types/orderItem";
 import OrderStatusBadge from "./OrderStatusBadge";
 import Image from "next/image";
 import Link from 'next/link';
