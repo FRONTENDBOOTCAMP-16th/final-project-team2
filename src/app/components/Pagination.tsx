@@ -1,9 +1,10 @@
 import products from '@/data/dummyproducts.json';
-import { ArrowLeft, ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
-type Product = {
+type PaginationProps = {
+  mainCategory: string;
   searchParams: Promise<{
     category?: string;
     page?: string;
@@ -16,11 +17,11 @@ const PAGE_GROUP_SIZE = 5;
 const paginationButton = {
   active: 'text-[#FF6B6B] font-semibold px-4 py-2',
   default: 'text-black px-4 py-2',
-  disabled: 'cursor-not-allowed text-gray-500 flex px-4 py-2 flex -space-x-3',
+  disabled: 'cursor-not-allowed text-gray-500 flex px-4 py-2 -space-x-3',
   pageActive: 'px-4 py-2 hover:text-[#FF6B6B] flex -space-x-3',
 };
 
-export default async function Pagination({ searchParams }: Product) {
+export default async function Pagination({ searchParams, mainCategory }: PaginationProps) {
   const { category, page } = await searchParams;
 
   const filtered = category ? products.filter(product => product.category === category) : products;
@@ -28,9 +29,11 @@ export default async function Pagination({ searchParams }: Product) {
   const totalPages = Math.ceil(filtered.length / PAGE_SIZE);
   const currentPage = page === undefined ? 1 : Number(page);
 
-  if (!Number.isInteger(currentPage) || currentPage < 1 || currentPage > totalPages) {
+  if (totalPages > 0 && (!Number.isInteger(currentPage) || currentPage < 1 || currentPage > totalPages)) {
     notFound();
   }
+
+  if (totalPages <= 1) return null;
 
   const currentGroup = Math.floor((currentPage - 1) / PAGE_GROUP_SIZE);
   const startPage = currentGroup * PAGE_GROUP_SIZE + 1;
@@ -42,7 +45,7 @@ export default async function Pagination({ searchParams }: Product) {
     if (category) params.set('category', category);
     params.set('page', String(pageNumber));
 
-    return `/products?${params.toString()}`;
+    return `/products/${mainCategory}?${params.toString()}`;
   };
 
   return (
@@ -53,7 +56,7 @@ export default async function Pagination({ searchParams }: Product) {
           <ChevronLeft />
         </span>
       ) : (
-        <Link className={paginationButton.pageActive} href={createPageLink(1)}>
+        <Link aria-label="처음으로 이동하기" href={createPageLink(1)} className={paginationButton.pageActive}>
           <ChevronLeft />
           <ChevronLeft />
         </Link>
@@ -64,7 +67,7 @@ export default async function Pagination({ searchParams }: Product) {
           <ChevronLeft />
         </span>
       ) : (
-        <Link href={createPageLink(currentPage - 1)} className={paginationButton.pageActive}>
+        <Link aria-label="이전 페이지로 이동" href={createPageLink(currentPage - 1)} className={paginationButton.pageActive}>
           <ChevronLeft />
         </Link>
       )}
@@ -85,7 +88,7 @@ export default async function Pagination({ searchParams }: Product) {
           <ChevronRight />
         </span>
       ) : (
-        <Link href={createPageLink(currentPage + 1)} className={paginationButton.pageActive}>
+        <Link aria-label="다음 페이지로 이동" href={createPageLink(currentPage + 1)} className={paginationButton.pageActive}>
           <ChevronRight />
         </Link>
       )}
@@ -96,7 +99,7 @@ export default async function Pagination({ searchParams }: Product) {
           <ChevronRight />
         </span>
       ) : (
-        <Link href={createPageLink(totalPages)} className={paginationButton.pageActive}>
+        <Link aria-label="마지막 페이지로 이동" href={createPageLink(totalPages)} className={paginationButton.pageActive}>
           <ChevronRight />
           <ChevronRight />
         </Link>
