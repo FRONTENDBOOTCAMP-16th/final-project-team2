@@ -36,8 +36,8 @@ export default function WishlistPage() {
       {HAS_WISH_PRODUCTS ?  (<div className="grid grid-cols-2 md:grid-cols-3 gap-x-6  gap-y-15 ">
         <WishListItemsList />
       </div>) : ( <div className="text-red-500 text-center pt-3">
-      <p>찜한 상품이 없습니다.</p> </div>)}
-     
+      <p>찜한 상품이 없습니다.</p> </div>
+      )}
     </div>
   );
 }
