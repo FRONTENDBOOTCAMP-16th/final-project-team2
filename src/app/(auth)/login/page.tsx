@@ -40,7 +40,7 @@ export default function LoginPage() {
         {/* 로그인 서브 */}
         <div className="flex justify-between mbs-12">
           <CheckeBox name="login-stay" label="로그인 상태유지" />
-          <Link href="/" className="text-gray-600">비밀번호 재설정</Link>
+          <Link href="/reset-password-check" className="text-gray-600">비밀번호 재설정</Link>
         </div>
 
         {/* 로그인버튼 */}
