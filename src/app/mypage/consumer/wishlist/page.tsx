@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import WishListItemsList from "./components/WishListItemsList";
-import TabFilter from "@/app/components/common/tabFilter";
+import TabFilter from "@/app/mypage/consumer/wishlist/components/tabFilter";
 import { dummyOrders } from "@/data/dummyOrder";
 
 const CATEGORIES = [

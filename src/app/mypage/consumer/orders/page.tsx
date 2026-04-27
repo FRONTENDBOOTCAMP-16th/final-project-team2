@@ -4,7 +4,7 @@ import { dummyOrders } from "@/data/dummyOrder";
 import OrderList from "./components/OrderList";
 import OrderStatusFilter from "./components/OrderStatusFilter";
 import { useState } from "react";
-import TabFilter from "@/app/components/common/tabFilter";
+import TabFilter from "@/app/mypage/consumer/wishlist/components/tabFilter";
 
 const CATEGORIES = [
   { id: "", label: "전체" },
