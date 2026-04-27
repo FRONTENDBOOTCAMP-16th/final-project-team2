@@ -8,17 +8,22 @@ interface LayoutProps {
 
 export default function MyPageLayout({ children }: LayoutProps) {
   return (
-    <section className="flex min-h-screen w-full max-w-7xl mx-auto pt-32">
-      <div>
-        <UserProfile />
-        <SideMenu />
+    <section className="w-full min-h-screen bg-[#FFF8F3]">
+      <div className="flex max-w-7xl mx-auto pt-32 px-4 md:px-6">
+        {/* 왼쪽 사이드 영역 */}
+        <aside className="shrink-0">
+          <UserProfile />
+          <SideMenu />
+        </aside>
+
+        {/* 오른쪽 메인 콘텐츠 영역 */}
+        <main className="flex-1 p-4">
+          <div className="max-w-4xl mx-auto w-full">
+            <SummaryMenu />
+            {children}
+          </div>
+        </main>
       </div>
-      <main className="flex-1 p-4">
-        <div className="max-w-4xl mx-auto w-full">
-          <SummaryMenu />
-          {children}
-        </div>
-      </main>
     </section>
   );
 }
