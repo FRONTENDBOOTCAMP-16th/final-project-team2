@@ -1,8 +1,11 @@
-export type OrderItem = {
+export interface OrderItem {
   id: number;
   name: string;
-  orderDate: string;
-  price: number;
+  originalPrice?: number; 
+  discountRate: number; 
+  price: number;        
   image: string;
   status: "PENDING" | "PAID" | "SHIPPED" | "DELIVERED" | "CANCELED";
-};
+  orderDate: string;
+  category: "writing" | "paper";
+}
