@@ -9,7 +9,7 @@ export default function MyPageLayout({ children }: LayoutProps) {
     <section className="flex min-h-screen w-full bg-[#FFF8F3]">
       <SideMenu />
       <main className="flex-1 p-6 pt-32">
-        <div className="max-w-4xl mx-auto w-full">{children}</div>
+        <div className=" mx-auto w-full ">{children}</div>
       </main>
     </section>
   );
