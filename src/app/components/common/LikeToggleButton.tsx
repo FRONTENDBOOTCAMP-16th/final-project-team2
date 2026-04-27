@@ -32,7 +32,7 @@ export default function LikeToggleButton() {
       <button onClick={handleLike}>{isLike ? "❤️" : "💔"}</button>
 
       {showToast && (
-        <div className="fixed bottom-10 left-1/2 -translate-x-1/2 ">
+        <div className="fixed bottom-10 left-1/2 -translate-x-1/2 z-20">
           <div className="bg-gray-800 text-white px-6 py-3 rounded-full shadow-lg text-sm ">
             {isLike
               ? "찜한 상품을 추가하였습니다."

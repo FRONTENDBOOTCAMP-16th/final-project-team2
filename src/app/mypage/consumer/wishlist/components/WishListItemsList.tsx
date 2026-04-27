@@ -17,9 +17,12 @@ export default function WishListItemsList() {
         href={`/products/pen/${item.id}`}
         className="relative flex flex-col"
       >
-        <div className="absolute top-0 left-0  bg-[#FF6B6B] text-white px-2 py-1 text-sm font-bold">
-          {item.discountRate}%
-        </div>
+        {item.discountRate > 0 && (
+          <div className="absolute top-0 left-0  bg-[#FF6B6B] text-white px-2 py-1 text-sm font-bold">
+            {item.discountRate}%
+          </div>
+        )}
+
         <Image
           width={282}
           height={282}
