@@ -5,7 +5,7 @@ import TypeRadioInput from "@/app/components/TypeRadioInput";
 export default function SignupPage() {
   return (
     <>
-      <section className="bg-white w-full p-10 sm:w-160 transition-all">
+      <div className="bg-white w-full p-10 sm:w-160 transition-all">
         <div className="text-lg">
           <strong>회원가입</strong>
         </div>
@@ -41,7 +41,7 @@ export default function SignupPage() {
           <button type="submit" className="w-full py-4 mbs-4 bg-black text-white cursor-pointer">회원가입</button>
         </form>
 
-      </section>
+      </div>
       <strong className="mbs-4 text-red-600 text-center">현 사이트는 실제로 운영되는 페이지가 아닙니다.<br />개인정보를 넣지 말아주세요</strong>
     </>
   )

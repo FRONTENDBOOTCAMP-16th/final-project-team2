@@ -5,7 +5,7 @@ import Link from "next/link";
 
 export default function LoginPage() {
   return (
-    <section className="bg-white w-full p-10 sm:w-160 transition-all">
+    <div className="bg-white w-full p-10 sm:w-160 transition-all">
       <div className="text-center">
         <strong>환영합니다</strong>
         <p className="mbs-2">계정에 로그인하세요</p>
@@ -53,6 +53,6 @@ export default function LoginPage() {
         {/* 카카오로그인 */}
         <button type="submit" className="w-full py-4 mbs-7 bg-gray-200 cursor-pointer">카카오 로그인</button>
       </div>
-    </section>
+    </div>
   )
 }
