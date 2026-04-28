@@ -1,20 +1,24 @@
 import { OrderItem } from "@/types/orderItem";
 import OrderStatusBadge from "./OrderStatusBadge";
 import Image from "next/image";
+import Link from 'next/link';
 
 export default function OrderItemCard({ order }: { order: OrderItem }) {
   return (
     <div className="flex  font-semibold  pt-2 pb-2 mb-2">
       {/* 상품 이미지 및 정보 */}
       <div className="flex gap-5 w-3/6">
-        <Image
-          width={50}
-          height={50}
+       <Link href={`/products/pen/${order.id}`}>
+          <Image
+          width={80}
+          height={80}
           className="object-fill"
           src={order.image}
           alt=""
         />
         <h2 className="self-center">{order.name}</h2>
+       </Link>
+     
       </div>
       {/* 주문 일자 */}
       <div className="flex gap-3 w-1/6">
