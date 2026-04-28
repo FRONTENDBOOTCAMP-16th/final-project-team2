@@ -1,8 +1,8 @@
 import { createClient } from '../../utils/supabase/server'
-import type { Notice } from '@/types/notice';
+import type { Notice } from '@/types/notice'
 
 export const getNoticeDetail = async (id: string): Promise<Notice> => {
-  const supabase = await createClient();
+  const supabase = await createClient()
   
   const { data, error } = await supabase
     .from('notices')
@@ -11,8 +11,8 @@ export const getNoticeDetail = async (id: string): Promise<Notice> => {
     .single()
 
   if (error) {
-    throw new Error(error.message);
+    throw new Error(error.message)
   }
 
-  return data;
-};
+  return data
+}
