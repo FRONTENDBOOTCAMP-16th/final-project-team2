@@ -4,6 +4,7 @@ import { useState, SyntheticEvent } from "react";
 import ProfileForm from "./components/ProfileForm";
 import ImageUploader from "./components/ImageUploader";
 import ProfileAction from "./components/ProfileAction";
+import { Pen, Check } from "lucide-react";
 
 const PROFILE_FIELDS = [
   { label: "이메일", name: "email", type: "email", isReadOnly: true },
@@ -90,9 +91,19 @@ export default function Profile() {
             <button
               type={isEditing ? "submit" : "button"}
               onClick={!isEditing ? handleEdit : undefined}
-              className={`${isEditing ? "bg-green-500 hover:bg-green-600" : "bg-red-400 hover:bg-red-500"} text-white px-6 py-2 rounded font-medium transition`}
+              className={`${isEditing ? "bg-green-500 hover:bg-green-600" : "bg-red-400 hover:bg-red-500"}  text-white px-6 py-2 font-medium transition`}
             >
-              {isEditing ? "저장하기" : "수정"}
+              {isEditing ? (
+                <span className="flex items-center justify-center gap-2">
+                  <Check size={16} strokeWidth={2.5} />
+                  저장하기
+                </span>
+              ) : (
+                <span className="flex items-center justify-center gap-2">
+                  <Pen size={16} strokeWidth={2.5} />
+                  수정하기
+                </span>
+              )}
             </button>
           </div>
         </div>
