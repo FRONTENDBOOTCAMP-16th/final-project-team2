@@ -18,7 +18,7 @@ export default function FIndIdPage() {
 
         
         {/* 실제 사용은 button으로 사용예정 연결확인을 위해 Link로 임시 연결*/}
-        <Link href={'/find-id-result'} className="block text-center w-full py-4 mbs-8 bg-gray-200 cursor-pointer">아이디 찾기</Link>
+        <Link href={'/find-id/find-id-result'} className="block text-center w-full py-4 mbs-8 bg-gray-200 cursor-pointer">아이디 찾기</Link>
         {/* <button type="submit" className="w-full py-4 mbs-8 bg-gray-200 cursor-pointer">아이디 찾기</button> */}
       </form>
     </div>
