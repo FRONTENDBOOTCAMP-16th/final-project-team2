@@ -9,7 +9,7 @@ export default function ProductInventory() {
         type="number"
         name="productInventory"
         id="productInventory"
-        aria-labelledby="productInventoryHelp"
+        aria-describedby="productInventoryHelp"
         placeholder=" 최소 10개부터 최대 100개까지 설정 가능합니다."
         min="10"
         max="100"

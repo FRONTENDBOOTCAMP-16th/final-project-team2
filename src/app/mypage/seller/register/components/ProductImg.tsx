@@ -8,14 +8,14 @@ export default function ProductImg() {
   return (
     <div className="flex flex-col gap-2">
       <p id="productImageLabel" className="text-sm">
-        상품 이미지
+        상품 이미지 업로드
       </p>
 
       <div className="flex flex-row gap-3 items-center">
         <input
           type="file"
           id="productImage"
-          aria-labelledby="productImageLabel"
+          aria-describedby="productImageLabel"
           accept="image/png, image/jpeg"
           className="sr-only"
           onChange={(e) => setFile(e.target.files?.[0] || null)}

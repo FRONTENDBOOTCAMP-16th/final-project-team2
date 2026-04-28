@@ -9,7 +9,7 @@ export default function ProductPrice() {
         name="productPrice"
         id="productPrice"
         type="number"
-        aria-labelledby="productPriceHelp"
+        aria-describedby="productPriceHelp"
         className="w-2xl h-12.5 border border-[#D1D5DC] bg-[#F9FAFB] px-4 py-3 appearance-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
         style={{
           MozAppearance: "textfield",
