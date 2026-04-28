@@ -26,7 +26,7 @@ export default function SummaryMenu() {
     coupons: 4,
   };
   return (
-    <div className="flex gap-8">
+    <div className="flex gap-8 w-[972px]">
       {STATS_CONFIG.map((stat) => (
         <StatCard
           key={stat.key}
