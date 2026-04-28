@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import QueryProvider from '@/app/components/QueryProvider';
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Header from "./components/Navi";
@@ -31,11 +32,11 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col">
         <Header />
-
-        <main className="w-full h-full min-h-full flex-1">
-          {children}
-        </main>
-
+        <QueryProvider>
+          <main className="w-full h-full min-h-full flex-1">
+            {children}
+          </main>
+        </QueryProvider>
         <Footer />
       </body>
     </html>
