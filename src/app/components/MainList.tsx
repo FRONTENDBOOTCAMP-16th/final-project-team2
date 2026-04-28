@@ -12,8 +12,9 @@ const DISCOUNT_PRODUCTS = 2
 const MD_PRODUCTS = 4
 
 const swiperList = [
-  { title: '신상품 추천', image: '/slide_bg_1.png'},
-  { title: '베스트 상품', image: '/slide_bg_2.png'},
+  { title: '새학기 준비,\n행쇼마켓에서!', subText: '필기구부터 노트까지, 특가로 만나보세요', tag: 'SPRING SALE', image: '/Hero_banner.png'},
+  { title: '행쇼마켓\n특가 할인', subText: '12:00 ~ 18:00까지!', tag: 'TIME SALE', image: '/Hero_banner.png'},
+  { title: '품절 임박 꿀템,\n놓치지 마세요', image: '/Hero_banner.png'},
 ]
 
 export default function Main() {
