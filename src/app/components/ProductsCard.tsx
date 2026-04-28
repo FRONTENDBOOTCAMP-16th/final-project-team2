@@ -1,3 +1,4 @@
+import { Heart } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -15,48 +16,48 @@ interface ProductsProps {
   hasLike?: boolean;
 }
 
-/*
- * maxProduct는 페이지에 들어가는 최대 제품 갯수입니다
- */
-export default function ProductsCard({ products, maxProducts, hasLike }: ProductsProps) {
+export default function ProductsCard({ products, maxProducts, hasLike = true }: ProductsProps) {
   return products.slice(0, maxProducts).map(item => {
-    const discountPrice = item.price * (1 - item.discount / 100);
-    const label = `제품명 ${item.name} 원래가격은 ${item.price}원이고 할인 ${item.discount}퍼센트 할인 중이며
-                               현재 가격은 ${discountPrice.toLocaleString()}원 입니다 `;
+    const discountPrice = Math.floor(item.price * (1 - item.discount / 100));
 
+    const label = `제품명 ${item.name}, 원래 가격은 ${item.price.toLocaleString()}원이고 ${item.discount}퍼센트 할인 중이며 현재 가격은 ${discountPrice.toLocaleString()}원입니다.`;
+    const isLike = false;
     return (
-      <li key={item.id} aria-label={label}>
-        <Link href={`/products/pen/${item.id}`}>
-          <Image src={item.image} alt={item.name} width={282} height={282} />
-          <div className="flex justify-between items-start mt-5">
+      <li key={item.id} className="relative" aria-label={label}>
+        <Link href={`/products/pen/${item.id}`} className="block">
+          <div className="w-70.5 aspect-square relative">
+            <Image src={item.image} alt={item.name} fill={true} className="object-cover absolute" />
+            <div className="absolute w-16 h-8  bg-[#FF6B6B] text-white font-semibold flex items-center justify-center" aria-hidden>
+              {item.discount}%
+            </div>
+          </div>
+          <div>
             <dl>
               <dt className="sr-only">제품 타입</dt>
-              <dd className="text-gray-700">필기구</dd>
+              <dd className="text-gray-700 mt-4">필기구</dd>
+
               <dt className="sr-only">제품 명</dt>
               <dd className="text-2xl font-medium mt-2">{item.name}</dd>
-              <dt className="sr-only">가격</dt>
-              <dd>
-                <del>{item.price.toLocaleString()}원</del>
-              </dd>
-              <div className="flex gap-3">
-                <dt className="sr-only">할인율</dt>
-                <dd className="text-orange-600 font-bold text-2xl">{item.discount}%</dd>
-                <dt className="sr-only">할인된 가격</dt>
-                <dd className="text-2xl font-medium">{discountPrice.toLocaleString()}원</dd>
-              </div>
             </dl>
-            {hasLike ? (
-              <></>
-            ): (
-              <button
-                className="p-1 aspect-square text-2xl border-2 border-gray-500 rounded-full hover:bg-pink-100 transition-colors duration-300"
-                type="button"
-              >
-                ❤️
-              </button>
-            )}
+
+            <dl className="flex gap-3">
+              <dt className="sr-only">할인율</dt>
+              <dd className="text-[#FF6B6B] mt-2 font-bold text-2xl">{item.discount}%</dd>
+
+              <dt className="sr-only">할인된 가격</dt>
+              <dd className="text-2xl font-medium mt-2 ml-2">{discountPrice.toLocaleString()}원</dd>
+            </dl>
           </div>
         </Link>
+        {hasLike && (
+          <button
+            className="absolute bottom-15 right-3 z-10 p-2 aspect-square text-xl bg-white hover:bg-pink-100 transition-colors duration-300"
+            type="button"
+            aria-label={`${item.name} 좋아요`}
+          >
+            <Heart className={isLike ? 'fill-red-500' : ''} />
+          </button>
+        )}
       </li>
     );
   });
