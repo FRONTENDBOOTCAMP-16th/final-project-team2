@@ -28,7 +28,7 @@ export default function SideMenu() {
   const currentMenu = menus[role];
 
   return (
-    <aside className="w-[204px] bg-white">
+    <aside className="w-full max-w-[204px] bg-white">
       <nav aria-label="마이페이지 메뉴">
         <ul className="flex flex-col">
           {currentMenu.map((menu) => {

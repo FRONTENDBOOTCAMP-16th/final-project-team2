@@ -28,7 +28,7 @@ const STATS_CONFIG: StatData[] = [
 const StatCard = ({ label, value, href, icon: Icon }: StatCardProps) => (
   <Link
     href={href}
-    className="flex flex-col items-center w-[308px] h-[190px] gap-6 justify-center border-4 border-[#FF6B6B]/50 bg-white hover:bg-[#FF6B6B]/5 transition-colors cursor-pointer"
+    className="flex flex-col items-center flex-1 h-[190px] gap-6 justify-center border-4 border-[#FF6B6B]/50 bg-white hover:bg-[#FF6B6B]/5 transition-colors cursor-pointer"
   >
     <span className="font-black text-5xl">{value}</span>
     <span className="text-[#FF6B6B] font-black text-base flex items-center gap-1">
@@ -45,7 +45,7 @@ export default function SummaryMenu() {
     reviews: 10,
   };
   return (
-    <div className="flex gap-8 w-[972px]">
+    <div className="flex gap-6 mx-auto w-full max-w-4xl">
       {STATS_CONFIG.map((stat) => (
         <StatCard
           key={stat.key}
