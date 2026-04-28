@@ -36,10 +36,10 @@ export default function UserProfile() {
   const userName = "사용자";
 
   return (
-    <div className="p-4">
+    <div className="pt-6">
       <div className="flex flex-col gap-6 mb-5">
         <div className="w-51 h-[306px] flex flex-col items-center">
-          <div className="w-51 h-51 bg-gray-200 shrink-0" />
+          <div className="w-51 h-51 bg-white shrink-0" />
 
           <div className="flex items-center justify-center gap-2 pt-5 pb-[10px]">
             <div className="bg-black text-white inline-block px-2 py-0.5 text-xs font-bold">
