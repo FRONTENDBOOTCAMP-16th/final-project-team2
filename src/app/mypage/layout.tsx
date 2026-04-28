@@ -18,7 +18,7 @@ export default function MyPageLayout({ children }: LayoutProps) {
 
         {/* 오른쪽 메인 콘텐츠 영역 */}
         <main className="flex-1 p-4">
-          <div className="max-w-4xl mx-auto w-full">
+          <div className="mx-auto w-full">
             <SummaryMenu />
             {children}
           </div>

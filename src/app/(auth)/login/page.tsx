@@ -5,7 +5,7 @@ import Link from "next/link";
 
 export default function LoginPage() {
   return (
-    <section className="bg-white w-full p-10 sm:w-160 transition-all">
+    <div className="bg-white w-full p-10 sm:w-160 transition-all">
       <div className="text-center">
         <strong>환영합니다</strong>
         <p className="mbs-2">계정에 로그인하세요</p>
@@ -38,9 +38,11 @@ export default function LoginPage() {
         </div>
 
         {/* 로그인 서브 */}
-        <div className="flex justify-between mbs-12">
+        <div className="grid grid-cols-1 mbs-4">
           <CheckeBox name="login-stay" label="로그인 상태유지" />
-          <Link href="/" className="text-gray-600">비밀번호 재설정</Link>
+          <Link href="/signup" className="text-gray-600 row-start-1 col-start-2 text-right">회원가입</Link>
+          <Link href="/find-id" className="text-gray-600 row-start-2 col-start-2 text-right">아이디 찾기</Link>
+          <Link href="/reset-password-check" className="text-gray-600 row-start-3 col-start-2 text-right">비밀번호 재설정</Link>
         </div>
 
         {/* 로그인버튼 */}
@@ -53,6 +55,6 @@ export default function LoginPage() {
         {/* 카카오로그인 */}
         <button type="submit" className="w-full py-4 mbs-7 bg-gray-200 cursor-pointer">카카오 로그인</button>
       </div>
-    </section>
+    </div>
   )
 }
