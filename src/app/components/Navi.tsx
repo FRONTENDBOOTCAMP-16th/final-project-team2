@@ -22,7 +22,8 @@ export default function Header() {
   return (
     <>
       {/* 쿠폰 */}
-      <Link href={'/coupon'} className="flex px-8 py-2 bg-[#FF6B6B] text-sm text-white" >🎉 신규가입 시 5,000원 할인쿠폰 증정!</Link>
+      {/* 로그인 여부에 따라 해당 쿠폰 표출/비표출 */}
+      <Link href={'/coupon'} className="flex px-8 py-2 bg-[#FF6B6B] text-sm text-white focus:z-30" >🎉 신규가입 시 5,000원 할인쿠폰 증정!</Link>
 
       <header className="top-0 w-full bg-white sticky z-20 border-be border-be-[#2D3142]/9">
         {/* 편의 메뉴 */}
@@ -32,6 +33,11 @@ export default function Header() {
           <h1>
             <Link href="/" className="font-bold text-2xl">행쇼마켓</Link>
           </h1>
+
+          {/* 스킵링크 */}
+          <a href="#main-content" className="sr-only bg-black text-white focus:not-sr-only focus:z-30 focus:absolute top-0 left-0">
+            상품 리스트로 바로가기
+          </a>
 
           {/* 메뉴 리스트 */}
           <NavList label="main-menu" items={mainMenu} className="md:absolute md:left-1/2 md:-translate-x-1/2" mainMenu/>
