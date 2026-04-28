@@ -30,12 +30,11 @@ export default function WishListItemCard({ order }: { order: OrderItem }) {
         />
       </Link>
       <div className="flex flex-col gap-2 pr-4 pt-4">
-        <h2 className="mt-2">{order.name}</h2>
-        <div className="flex justify-between">
-          <p className="text-sm text-gray-400">
+         <p className="text-sm text-gray-400 ">
             {CATEGORY_TO_KOREAN[order.category]}
           </p>
-
+        <div className="flex justify-between">
+        <p className="font-bold self-center">{order.name}</p>
           <LikeToggleButton />
         </div>
 
