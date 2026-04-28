@@ -1,4 +1,4 @@
-import type { OrderItem } from "@/types/orderItem";
+import type { OrderItem } from "@/app/mypage/types/orderItem";
 
 export const dummyOrders: OrderItem[] = [
   {
