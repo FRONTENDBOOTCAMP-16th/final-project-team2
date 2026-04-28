@@ -6,6 +6,7 @@ import OptionList from "./OptionList";
 import useOptionForm from "@/hooks/useOptionForm";
 
 export default function OptionInput() {
+  // 추후 중복 옵션은 작성할 수 없는 중복 제거 방어 로직도 커스텀 훅 함수에 넣어야 됨.
   const { state, actions } = useOptionForm();
 
   const placeholderOptions = {
@@ -14,9 +15,14 @@ export default function OptionInput() {
   };
 
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col gap-3">
+      <label htmlFor="productOptions" className="text-sm">
+        상품 옵션
+      </label>
       <div className="flex flex-row gap-3">
-        <label htmlFor="productOptions">상품 옵션</label>
+        <label htmlFor="productType" className="sr-only">
+          옵션 타입
+        </label>
         <select
           name="productType"
           id="productType"
@@ -24,6 +30,7 @@ export default function OptionInput() {
           onChange={(e: ChangeEvent<HTMLSelectElement>) =>
             actions.handleOptionType(e.target.value as OptionType | "")
           }
+          className="p-1 text-sm"
         >
           <option value="">선택</option>
           <option value="color">색상</option>
@@ -32,8 +39,9 @@ export default function OptionInput() {
         <input
           type="text"
           id="productOptions"
+          value={state.optionValue}
           onChange={(e) => actions.handleInput(e.target.value)}
-          className="border w-100"
+          className="w-120 border border-[#D1D5DC] bg-[#F9FAFB] px-4 py-3"
           placeholder={
             state.optionType
               ? placeholderOptions[state.optionType]
@@ -43,7 +51,7 @@ export default function OptionInput() {
         <button
           type="button"
           onClick={actions.handleAddOptions}
-          className="shirink-0 border"
+          className="border px-4"
         >
           옵션 추가
         </button>

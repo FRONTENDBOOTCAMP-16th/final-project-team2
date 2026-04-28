@@ -1,39 +1,34 @@
-import { Pen } from "lucide-react";
 import OptionInput from "./OptionInput";
+import ProductName from "./ProductName";
+import ProductImg from "./ProductImg";
+import ProductPrice from "./ProductPrice";
+import ProductDescription from "./ProductDescription";
+import ProductInventory from "./ProductInventory";
+import ProductDiscount from "./ProductDiscount";
+import SubmitButton from "./SubmitButton";
+
+//  각 input에 관한 검증은 zods와 서버 액션을 사용하여 검증하는 로직 만들어야 함
 
 export default function RegisterProduct() {
   // 상품명, 가격, 이미지, 상품 상세 설명, 재고, 할인율
 
+  // 폼 액션 필요함
   return (
-    <section>
-      <form className="flex flex-col">
-        <button type="submit" className="flex flex-row self-end border p-2">
-          <Pen />
-          상품 등록
-        </button>
-        {/* 상품명 */}
-        <label htmlFor="productName">상품명</label>
-        <input id="productName" name="productName" type="text" />
-        {/* 상품 이미지 */}
-        <label htmlFor="productImage">상품 이미지</label>
-        <input type="file" name="productImage" id="productImage" />
-
-        {/* 상품 가격 */}
-        <label htmlFor="productPrice">상품 가격</label>
-        <input id="productPrice" type="number" name="productPrice" />
-
-        {/* 상품 정보 */}
-        <label htmlFor="productdescription">상품 정보</label>
-        <textarea name="productDescription" id="productDescription" />
-
-        {/* 상품 재고 */}
-        <label htmlFor="productInventory">상품 재고</label>
-        <input type="number" name="productInventory" id="productInventory" />
-        {/* 상품 할인율*/}
-        <label htmlFor="productDiscount">상품 할인율</label>
-        <input type="number" name="productDiscount" id="productDiscount" />
+    <form className="flex flex-col gap-6">
+      {/* 저장 버튼 */}
+      <div className="flex justify-between">
+        <h2 className="text-2xl font-bold">상품 등록 페이지</h2>
+        <SubmitButton />
+      </div>
+      <div className="flex flex-col gap-y-6 ">
+        <ProductImg />
+        <ProductName />
+        <ProductPrice />
+        <ProductDescription />
+        <ProductInventory />
+        <ProductDiscount />
         <OptionInput />
-      </form>
-    </section>
+      </div>
+    </form>
   );
 }

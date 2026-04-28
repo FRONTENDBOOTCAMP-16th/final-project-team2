@@ -1,0 +1,23 @@
+export default function ProductDiscount() {
+  return (
+    <div className="flex flex-col gap-2">
+      {/* 상품 할인율*/}
+      <label htmlFor="productDiscount" className="text-sm">
+        상품 할인율
+      </label>
+      <input
+        type="number"
+        name="productDiscount"
+        id="productDiscount"
+        aria-labelledby="prouductDiscountHelp"
+        step="5"
+        max="70"
+        className="w-2xl h-12.5 border border-[#D1D5DC] bg-[#F9FAFB] px-4 py-3"
+        placeholder="최소 5%부터 최대 70%까지 설정 가능합니다."
+      />
+      <p id="prouductDiscountHelp" className="sr-only">
+        최소 5%부터 최대 70%까지 설정 가능합니다.
+      </p>
+    </div>
+  );
+}
