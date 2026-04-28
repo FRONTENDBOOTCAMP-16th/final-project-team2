@@ -1,8 +1,19 @@
 "use client";
 
-import { useState } from "react";
+import { useState, SyntheticEvent } from "react";
 import ProfileForm from "./components/ProfileForm";
 import ImageUploader from "./components/ImageUploader";
+import ProfileAction from "./components/ProfileAction";
+
+// 위에서 정의한 필드 데이터 (실제로는 파일 상단에 위치)
+const PROFILE_FIELDS = [
+  { label: "이메일", name: "email", type: "email", isReadOnly: true },
+  { label: "이름", name: "name", type: "text", isReadOnly: true },
+  { label: "닉네임", name: "nickname", type: "text", isReadOnly: false },
+  { label: "휴대전화", name: "phone", type: "tel", isReadOnly: false },
+  { label: "주소", name: "address", type: "text", isReadOnly: false },
+  { label: "생일", name: "birthday", type: "date", isReadOnly: true },
+];
 
 export default function Profile() {
   const [isEditing, setIsEditing] = useState(false);
@@ -11,97 +22,109 @@ export default function Profile() {
     name: "홍길동",
     email: "user01@example.com",
     nickname: "행쇼마켓너무좋아요",
-    phone: "010-1234-5678",
+    phone: "01012345678",
     address: "서울시 강남구 테헤란로 123",
     birthday: "1990-01-01",
   });
 
+  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [backupData, setBackupData] = useState(formData);
+
+  // [입력 핸들러]
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
+    if (errors[name]) setErrors((prev) => ({ ...prev, [name]: "" }));
+
+    if (name === "phone") {
+      const onlyNumber = value.replace(/[^0-9]/g, "").slice(0, 11);
+      setFormData((prev) => ({ ...prev, [name]: onlyNumber }));
+      return;
+    }
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  return (
-    <section className="p-8 bg-white mt-8">
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-xl font-bold">프로필 수정</h1>
-        <button
-          onClick={() => setIsEditing(!isEditing)}
-          className="bg-red-400 text-white px-4 py-2"
-        >
-          {isEditing ? "저장하기" : "수정"}
-        </button>
-      </div>
+  // [수정/취소 로직]
+  const handleEdit = (e: React.MouseEvent) => {
+    e.preventDefault();
+    setBackupData(formData);
+    setIsEditing(true);
+  };
 
-      <div className="flex flex-col gap-5">
-        <ImageUploader
-          label="프로필 이미지"
-          defaultImage={formData.profileImage}
-        />
-        <ProfileForm
-          label="이메일"
-          name="email"
-          type="email"
-          value={formData.email}
-          onChange={handleChange}
-          disabled={!isEditing}
-          readOnly={true}
-        />
-        <ProfileForm
-          label="이름"
-          name="name"
-          type="text"
-          value={formData.name}
-          onChange={handleChange}
-          disabled={!isEditing}
-          readOnly={true}
-        />
-        <ProfileForm
-          label="닉네임"
-          name="nickname"
-          type="text"
-          value={formData.nickname}
-          onChange={handleChange}
-          disabled={!isEditing}
-        />
-        <ProfileForm
-          label="휴대전화"
-          name="phone"
-          type="tel"
-          value={formData.phone}
-          onChange={handleChange}
-          disabled={!isEditing}
-        />
-        <ProfileForm
-          label="주소"
-          name="address"
-          type="text"
-          value={formData.address}
-          onChange={handleChange}
-          disabled={!isEditing}
-        />
-        <ProfileForm
-          label="생일"
-          name="birthday"
-          type="date"
-          value={formData.birthday}
-          onChange={handleChange}
-          disabled={!isEditing}
-          readOnly={true}
-        />
-        <button
-          type="button"
-          className="text-white w-[672px] h-[50px] bg-black cursor-pointer"
-        >
-          비밀번호 변경
-        </button>
-        <button
-          type="button"
-          className="text-white w-22 h-8 bg-red-700 cursor-pointer"
-        >
-          회원 탈퇴
-        </button>
-      </div>
+  const handleCancel = (e: React.MouseEvent) => {
+    e.preventDefault();
+    setFormData(backupData);
+    setErrors({});
+    setIsEditing(false);
+  };
+
+  // [저장 로직]
+  const handleSubmit = (e: SyntheticEvent) => {
+    e.preventDefault();
+    const newErrors: Record<string, string> = {};
+
+    if (!formData.nickname.trim())
+      newErrors.nickname = "닉네임을 입력해주세요.";
+    if (formData.phone.length > 11) newErrors.phone = "전화번호가 너무 깁니다.";
+    else if (formData.phone.length < 10 && formData.phone.length > 0)
+      newErrors.phone = "전화번호가 너무 짧습니다.";
+    if (!formData.address.trim()) newErrors.address = "주소를 입력해주세요.";
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return;
+    }
+
+    setIsEditing(false);
+    setErrors({});
+  };
+
+  return (
+    <section className="p-8 bg-white mt-8 w-[972px] mx-auto">
+      <form onSubmit={handleSubmit} className="w-[832px]">
+        <div className="flex justify-between items-center mb-6">
+          <h1 className="text-xl font-bold">프로필 수정</h1>
+          <div className="flex gap-2">
+            {isEditing && (
+              <button
+                type="button"
+                onClick={handleCancel}
+                className="bg-gray-200 text-gray-700 px-4 py-2 rounded hover:bg-gray-300 transition"
+              >
+                취소
+              </button>
+            )}
+            <button
+              type={isEditing ? "submit" : "button"}
+              onClick={!isEditing ? handleEdit : undefined}
+              className={`${isEditing ? "bg-green-500 hover:bg-green-600" : "bg-red-400 hover:bg-red-500"} text-white px-6 py-2 rounded font-medium transition`}
+            >
+              {isEditing ? "저장하기" : "수정"}
+            </button>
+          </div>
+        </div>
+
+        <div className="flex flex-col gap-5">
+          <ImageUploader
+            label="프로필 이미지"
+            defaultImage={formData.profileImage}
+          />
+
+          {PROFILE_FIELDS.map((field) => (
+            <ProfileForm
+              key={field.name}
+              label={field.label}
+              name={field.name}
+              type={field.type}
+              value={formData[field.name as keyof typeof formData]}
+              onChange={handleChange}
+              disabled={!isEditing}
+              readOnly={field.isReadOnly}
+              error={errors[field.name]}
+            />
+          ))}
+          <ProfileAction />
+        </div>
+      </form>
     </section>
   );
 }
