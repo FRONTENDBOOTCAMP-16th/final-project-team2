@@ -5,7 +5,6 @@ import ProfileForm from "./components/ProfileForm";
 import ImageUploader from "./components/ImageUploader";
 import ProfileAction from "./components/ProfileAction";
 
-// 위에서 정의한 필드 데이터 (실제로는 파일 상단에 위치)
 const PROFILE_FIELDS = [
   { label: "이메일", name: "email", type: "email", isReadOnly: true },
   { label: "이름", name: "name", type: "text", isReadOnly: true },
@@ -29,8 +28,6 @@ export default function Profile() {
 
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [backupData, setBackupData] = useState(formData);
-
-  // [입력 핸들러]
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     if (errors[name]) setErrors((prev) => ({ ...prev, [name]: "" }));
@@ -43,7 +40,6 @@ export default function Profile() {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  // [수정/취소 로직]
   const handleEdit = (e: React.MouseEvent) => {
     e.preventDefault();
     setBackupData(formData);
@@ -57,15 +53,13 @@ export default function Profile() {
     setIsEditing(false);
   };
 
-  // [저장 로직]
   const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
     const newErrors: Record<string, string> = {};
 
     if (!formData.nickname.trim())
       newErrors.nickname = "닉네임을 입력해주세요.";
-    if (formData.phone.length > 11) newErrors.phone = "전화번호가 너무 깁니다.";
-    else if (formData.phone.length < 10 && formData.phone.length > 0)
+    if (formData.phone.length < 10 && formData.phone.length > 0)
       newErrors.phone = "전화번호가 너무 짧습니다.";
     if (!formData.address.trim()) newErrors.address = "주소를 입력해주세요.";
 
