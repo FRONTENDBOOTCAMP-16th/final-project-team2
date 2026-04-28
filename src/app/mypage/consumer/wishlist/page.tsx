@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import WishListItemsList from "./components/WishListItemsList";
-import TabFilter from "@/app/components/common/tabFilter";
+import TabFilter from "@/app/mypage/consumer/wishlist/components/tabFilter";
 import { dummyOrders } from "@/data/dummyOrder";
 
 const CATEGORIES = [
@@ -10,6 +10,7 @@ const CATEGORIES = [
   { id: "paper", label: "노트/메모" },
 ];
 
+const MAX_COUNT = 9;
 const HAS_WISH_PRODUCTS = dummyOrders.length > 0;
 
 export default function WishlistPage() {
@@ -34,8 +35,8 @@ export default function WishlistPage() {
         </select>
       </div>
       {HAS_WISH_PRODUCTS ? (
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-x-6  gap-y-15 ">
-          <WishListItemsList />
+        <div>
+          <WishListItemsList items={dummyOrders.slice(0, MAX_COUNT)} />
         </div>
       ) : (
         <div className="text-red-500 text-center pt-3">

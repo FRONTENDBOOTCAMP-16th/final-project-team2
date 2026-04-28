@@ -10,6 +10,9 @@ interface TabFilterProps {
   separator?: string;
 }
 
+
+// searchParams를 이용하여 탭 항목을 가져오는 형식으로 구현해야 되기때문에,
+// 추후 수정 필요
 export default function TabFilter({
   items,
   selectedValue,

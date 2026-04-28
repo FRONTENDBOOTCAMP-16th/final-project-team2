@@ -1,5 +1,5 @@
 import { statusLabel } from "@/data/statusLabel";
-import { OrderItem } from "@/types/orderItem";
+import { OrderItem } from "@/app/mypage/types/orderItem";
 
 
 export default function OrderStatusBadge({
