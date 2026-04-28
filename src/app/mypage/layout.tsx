@@ -9,7 +9,7 @@ interface LayoutProps {
 export default function MyPageLayout({ children }: LayoutProps) {
   return (
     <section className="w-full min-h-screen bg-[#FFF8F3]">
-      <div className="flex max-w-7xl mx-auto pt-32 px-4 md:px-6">
+      <div className="flex max-w-7xl mx-auto pt-32">
         {/* 왼쪽 사이드 영역 */}
         <aside className="shrink-0">
           <UserProfile />
@@ -17,7 +17,7 @@ export default function MyPageLayout({ children }: LayoutProps) {
         </aside>
 
         {/* 오른쪽 메인 콘텐츠 영역 */}
-        <main className="flex-1 p-4">
+        <main className="flex-1 p-6">
           <div className="mx-auto w-full">
             <SummaryMenu />
             {children}

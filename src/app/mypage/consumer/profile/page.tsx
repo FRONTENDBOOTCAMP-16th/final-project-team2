@@ -73,7 +73,7 @@ export default function Profile() {
   };
 
   return (
-    <section className="p-8 bg-white mt-8 w-[972px] mx-auto">
+    <section className="p-8 bg-white mt-8 w-[972px] ">
       <form onSubmit={handleSubmit} className="w-[832px]">
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-xl font-bold">프로필 수정</h1>
