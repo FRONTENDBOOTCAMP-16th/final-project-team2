@@ -12,8 +12,9 @@ export default function SideMenu() {
 
   const menus = {
     consumer: [
-      { name: "주문내역", href: `${CONSUMER_PATH}/orders` },
+      { name: "주문 내역", href: `${CONSUMER_PATH}/orders` },
       { name: "프로필 관리", href: `${CONSUMER_PATH}/profile` },
+      { name: "나의 쿠폰", href: `${CONSUMER_PATH}/coupons` },
       { name: "찜한 상품", href: `${CONSUMER_PATH}/wishlist` },
     ],
     seller: [
@@ -25,24 +26,31 @@ export default function SideMenu() {
   };
 
   const currentMenu = menus[role];
+
   return (
-    <aside className="w-50 p-3 pt-50">
+    <aside className="w-[204px] bg-white">
       <nav aria-label="마이페이지 메뉴">
-        <ul className="flex flex-col gap-10">
+        <ul className="flex flex-col">
           {currentMenu.map((menu) => {
             const isActive = pathname === menu.href;
             return (
               <li
                 key={menu.name}
-                className={`cursor-pointer ${isActive ? "font-bold" : "hover:font-bold"}`}
+                className={`
+                  relative flex items-center h-[57px] border-gray-300 border-b last:border-none cursor-pointer transition-colors
+                  ${isActive ? "bg-gray-50 font-bold" : "hover:bg-gray-50"}
+                `}
               >
+                {/* 활성화 시 왼쪽 빨간색 바 */}
+                {isActive && (
+                  <div className="absolute left-0 w-1 h-[57px] bg-red-400" />
+                )}
+
                 <Link
                   href={menu.href}
+                  className="flex items-center w-full h-full px-5 text-sm"
                   aria-current={isActive ? "page" : undefined}
                 >
-                  <span className="mr-3" aria-hidden="true">
-                    ■
-                  </span>
                   {menu.name}
                 </Link>
               </li>
