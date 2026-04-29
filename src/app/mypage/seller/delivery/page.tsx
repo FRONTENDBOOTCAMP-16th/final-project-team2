@@ -3,6 +3,7 @@
 import { useState } from "react";
 import TabFilter from "../../consumer/wishlist/components/tabFilter";
 import DeliveryProductHeader from "./components/DeliveryProductHeader";
+import DeliveryProductList from "./components/DeliveryProductList";
 
 const CATEGORIES = [
   { id: "", label: "전체" },
@@ -19,7 +20,10 @@ export default function SellerDeliveryStatusPage() {
         selectedValue={selectedValue}
         onValueChange={setSelectedValue}
       />
-      <DeliveryProductHeader />
+      <div className="my-12.5">
+        <DeliveryProductHeader />
+        <DeliveryProductList />
+      </div>
     </section>
   );
 }

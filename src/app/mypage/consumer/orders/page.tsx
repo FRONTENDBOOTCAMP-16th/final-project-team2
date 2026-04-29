@@ -24,7 +24,7 @@ export default function OrdersPage() {
   return (
     <div className="flex flex-col px-5 py-2 w-full bg-white">
       <h1 className="sr-only">주문 내역 조회</h1>
-      <div className="flex justify-between px-5">
+      <div className="flex justify-between">
         <TabFilter
           items={CATEGORIES}
           selectedValue={selectedCategory}

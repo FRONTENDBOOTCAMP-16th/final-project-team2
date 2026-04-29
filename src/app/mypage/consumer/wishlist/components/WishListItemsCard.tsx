@@ -30,11 +30,11 @@ export default function WishListItemCard({ order }: { order: OrderItem }) {
         />
       </Link>
       <div className="flex flex-col gap-2 pr-4 pt-4">
-         <p className="text-sm text-gray-400 ">
-            {CATEGORY_TO_KOREAN[order.category]}
-          </p>
+        <p className="text-sm text-gray-400 ">
+          {CATEGORY_TO_KOREAN[order.category]}
+        </p>
         <div className="flex justify-between">
-        <p className="font-bold self-center">{order.name}</p>
+          <p className="font-bold self-center">{order.name}</p>
           <LikeToggleButton />
         </div>
 
@@ -45,7 +45,7 @@ export default function WishListItemCard({ order }: { order: OrderItem }) {
             </span>
           )}
           <span className="font-bold text-sm text-slate-800">
-            {order.price.toLocaleString()}원
+            {order.unitPrice.toLocaleString()}원
           </span>
         </div>
       </div>

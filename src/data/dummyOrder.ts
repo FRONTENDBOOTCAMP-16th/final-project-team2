@@ -4,6 +4,7 @@ export const dummyOrderItems: OrderItem[] = [
   {
     id: "item-1",
     orderId: "ORD-001",
+    userId: "김근영",
     productId: "prod-1",
     name: "0.5mm 저중심 샤프",
     quantity: 1,
@@ -17,6 +18,7 @@ export const dummyOrderItems: OrderItem[] = [
   {
     id: "item-2",
     orderId: "ORD-001",
+    userId: "김근영",
     productId: "prod-2",
     name: "다이어리 꾸미기 스티커",
     quantity: 2,
@@ -30,6 +32,7 @@ export const dummyOrderItems: OrderItem[] = [
   {
     id: "item-3",
     orderId: "ORD-002",
+    userId: "장예지",
     productId: "prod-3",
     name: "감성 메모지 패키지",
     quantity: 1,
@@ -43,6 +46,7 @@ export const dummyOrderItems: OrderItem[] = [
   {
     id: "item-4",
     orderId: "ORD-002",
+    userId: "장예지",
     productId: "prod-4",
     name: "젤잉크 볼펜 5색 세트",
     quantity: 1,
@@ -56,6 +60,7 @@ export const dummyOrderItems: OrderItem[] = [
   {
     id: "item-5",
     orderId: "ORD-003",
+    userId: "송하늬",
     productId: "prod-5",
     name: "미니 체크 리스트 메모",
     quantity: 3,
@@ -69,6 +74,7 @@ export const dummyOrderItems: OrderItem[] = [
   {
     id: "item-6",
     orderId: "ORD-004",
+    userId: "박성윤",
     productId: "prod-6",
     name: "파스텔 형광펜 세트",
     quantity: 1,
@@ -82,6 +88,7 @@ export const dummyOrderItems: OrderItem[] = [
   {
     id: "item-7",
     orderId: "ORD-005",
+    userId: "이동헌",
     productId: "prod-7",
     name: "다꾸 인덱스 스티커",
     quantity: 2,
@@ -95,6 +102,7 @@ export const dummyOrderItems: OrderItem[] = [
   {
     id: "item-8",
     orderId: "ORD-005",
+    userId: "이동헌",
     productId: "prod-8",
     name: "수성 사인펜 12색",
     quantity: 1,
@@ -108,6 +116,7 @@ export const dummyOrderItems: OrderItem[] = [
   {
     id: "item-9",
     orderId: "ORD-006",
+    userId: "김근영",
     productId: "prod-9",
     name: "빈티지 라벨 스티커",
     quantity: 1,
@@ -121,6 +130,7 @@ export const dummyOrderItems: OrderItem[] = [
   {
     id: "item-10",
     orderId: "ORD-007",
+    userId: "장예지",
     productId: "prod-10",
     name: "고급 만년필 블랙",
     quantity: 1,
@@ -134,6 +144,7 @@ export const dummyOrderItems: OrderItem[] = [
   {
     id: "item-11",
     orderId: "ORD-007",
+    userId: "장예지",
     productId: "prod-11",
     name: "A5 무지 노트 3권",
     quantity: 1,
@@ -147,6 +158,7 @@ export const dummyOrderItems: OrderItem[] = [
   {
     id: "item-12",
     orderId: "ORD-008",
+    userId: "송하늬",
     productId: "prod-12",
     name: "캘리그라피 붓펜",
     quantity: 1,
@@ -160,6 +172,7 @@ export const dummyOrderItems: OrderItem[] = [
   {
     id: "item-13",
     orderId: "ORD-009",
+    userId: "박성윤",
     productId: "prod-13",
     name: "컬러 포스트잇 세트",
     quantity: 4,
@@ -173,6 +186,7 @@ export const dummyOrderItems: OrderItem[] = [
   {
     id: "item-14",
     orderId: "ORD-010",
+    userId: "이동헌",
     productId: "prod-14",
     name: "프리미엄 볼펜 세트",
     quantity: 1,
@@ -186,6 +200,7 @@ export const dummyOrderItems: OrderItem[] = [
   {
     id: "item-15",
     orderId: "ORD-010",
+    userId: "이동헌",
     productId: "prod-15",
     name: "다꾸 마스킹 테이프",
     quantity: 3,
