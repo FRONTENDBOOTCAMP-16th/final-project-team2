@@ -20,7 +20,10 @@ export default function DeliveryProductCard({ order }: { order: OrderItem }) {
 
       {/* 가격 */}
       <div className="flex w-1/9 text-center justify-center items-center">
-        <p>{order.unitPrice.toLocaleString()}원</p>
+        <p>
+          {(order.unitPrice * (1 - order.discountRate / 100)).toLocaleString()}
+          원
+        </p>
       </div>
 
       {/* 주문 수량 */}
