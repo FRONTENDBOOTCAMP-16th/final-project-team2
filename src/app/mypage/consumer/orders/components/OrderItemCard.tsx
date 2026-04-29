@@ -28,11 +28,11 @@ export default function OrderItemCard({ order }: { order: OrderItem }) {
       </div>
       {/* 결제 금액 */}
       <div className="flex gap-3 w-1/6">
-        <p>{order.price.toLocaleString()}원</p>
+        <p>{order.unitPrice.toLocaleString()}원</p>
       </div>
       {/* 배송 상태  */}
       <div className="flex gap-3 w-1/6">
-        <OrderStatusBadge status={order.status} />
+        <OrderStatusBadge status={order.itemStatus} />
       </div>
     </div>
   );

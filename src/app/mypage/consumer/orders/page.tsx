@@ -1,6 +1,6 @@
 "use client";
 
-import { dummyOrders } from "@/data/dummyOrder";
+import { dummyOrderItems } from "@/data/dummyOrder";
 import OrderList from "./components/OrderList";
 import OrderStatusFilter from "./components/OrderStatusFilter";
 import { useState } from "react";
@@ -18,11 +18,11 @@ export default function OrdersPage() {
 
   const filteredOrders =
     selectedStatus === ""
-      ? dummyOrders
-      : dummyOrders.filter((order) => order.status === selectedStatus);
+      ? dummyOrderItems
+      : dummyOrderItems.filter((order) => order.itemStatus === selectedStatus);
 
   return (
-     <div className="flex flex-col px-5 py-2 w-full bg-white">
+    <div className="flex flex-col px-5 py-2 w-full bg-white">
       <h1 className="sr-only">주문 내역 조회</h1>
       <div className="flex justify-between px-5">
         <TabFilter
