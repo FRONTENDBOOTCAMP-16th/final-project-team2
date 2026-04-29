@@ -4,6 +4,12 @@ import { useMemo, useState } from "react";
 type SortType = "All" | "latest" | "oldest" | "highPrice" | "lowPrice";
 type SalesStatus = "PAID" | "SHIPPED" | "DELIVERED";
 
+type Order = {
+  unitPrice: number;
+  discountRate: number;
+  orderTime: number;
+};
+
 interface Category {
   id: string;
   label: string;
@@ -35,6 +41,8 @@ export default function useDeliveryOrders(myProductIds: string[]) {
       setSortType(selectedTab.sort);
     }
   };
+  const getFinalPrice = (order: Order) =>
+    order.unitPrice * (1 - order.discountRate / 100);
 
   // 3. 정렬만 존재 (필터 제거)
   const sortedOrders = useMemo(() => {
@@ -50,10 +58,9 @@ export default function useDeliveryOrders(myProductIds: string[]) {
           return a.orderTime - b.orderTime;
 
         case "highPrice":
-          return b.unitPrice - a.unitPrice;
-
+          return getFinalPrice(b) - getFinalPrice(a);
         case "lowPrice":
-          return a.unitPrice - b.unitPrice;
+          return getFinalPrice(a) - getFinalPrice(b);
 
         default:
           return 0;
