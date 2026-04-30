@@ -16,7 +16,7 @@ const HAS_WISH_PRODUCTS = dummyOrders.length > 0;
 export default function WishlistPage() {
   const [selectedValue, setSelectedValue] = useState("");
   return (
-    <div className="w-full lg:w-243 lg:h-376 m-auto mt-2 bg-white pt-6 px-6 pb-11.25 ">
+    <div className="w-full bg-white pt-6 px-6 pb-11.25 ">
       <h1 className="text-2xl font-bold mb-8 sr-only">찜한 상품</h1>
       <div className="flex justify-between py-6">
         <TabFilter

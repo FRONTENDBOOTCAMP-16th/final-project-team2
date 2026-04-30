@@ -41,7 +41,7 @@ export default function ProfileForm({
         placeholder={placeholder}
         disabled={disabled}
         readOnly={readOnly}
-        className={`w-[672px] h-[50px] pl-4 border 
+        className={`max-w-2xl h-12 pl-4 border 
           ${error ? "border-red-500" : "border-gray-300"} 
           ${
             isNotEditable
