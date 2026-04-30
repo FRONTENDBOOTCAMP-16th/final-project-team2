@@ -7,6 +7,7 @@ import ProductTodayList from "./ProductsToday"
 import ProductsTodaySale from "./ProductsTodaySale"
 import RecommendMDWrapper from "./RecommendMDWrapper"
 import ProductsCardList from "./ProductsCardList"
+import MainCard from "./MainCard"
 
 const INVENTORY_PRODUCTS = 4
 const DISCOUNT_PRODUCTS = 2
@@ -41,28 +42,16 @@ export default function Main() {
 
       {/* 오늘의 특가 */}
       <section className="bg-[#FFF8F3]">
-        <div className="py-22.5 px-4 max-w-7xl m-auto">
-          <div className="text-center">
-            <h2 className="text-5xl font-bold font-4">오늘의 특가</h2>
-            <p className="text-[#7B7979] mbs-5 mb-12.5">오늘만 이 가격! 특별한 가격을 확인해보세요</p>
-          </div>
-
-          <div className="grid lg:grid-cols-2 gap-6">
-            <ProductsTodaySale maxProducts={DISCOUNT_PRODUCTS} products={productList} />
-          </div>
-        </div>
+        <MainCard title="오늘의 특가" subTitle="오늘만 이 가격! 특별한 가격을 확인해보세요">
+          <ProductsTodaySale maxProducts={DISCOUNT_PRODUCTS} products={productList} />
+        </MainCard>
       </section>
 
       {/* MD 추천 상품 */}
       <section className="py-22.5 px-4 max-w-7xl m-auto">
-        <div className="text-center">
-          <h2 className="text-5xl font-bold font-4">MD 추천 상품</h2>
-          <p className="text-[#7B7979] mbs-5 mb-12.5">이번주 인기상품을 확인해보세요</p>
-        </div>
-
-        <div className="[&_a>div]:w-full! [&_li>button]:right-0">
+        <MainCard title="MD 추천 상품" subTitle="이번주 인기상품을 확인해보세요" fullImage>
           <RecommendMDWrapper maxProducts={MD_PRODUCTS} products={sortedList(MainProducts, 'average_grade')}/>
-        </div>
+        </MainCard>
       </section>
 
       {/* 오늘의 신상품 */}
@@ -72,19 +61,11 @@ export default function Main() {
 
       {/* 품절 임박 꿀템 */}
       <section className="bg-[#FFF8F3]">
-        <div className="py-22.5 px-4 max-w-7xl m-auto">
-          <div className="text-center">
-            <h2 className="text-5xl font-bold font-4">품절 임박 꿀템</h2>
-            <p className="text-[#7B7979] mbs-5 mb-12.5">서두르세요! 재고가 얼마 남지 않았어요</p>
-          </div>
-
-          {/* 동일한 디자인에 뱃지만 다름, 컴포넌트 재사용 고려 */}
-          <div className="[&_a>div]:w-full! [&_li>button]:right-0">
-            <ProductsCardList>
-              <ProductsCard maxProducts={INVENTORY_PRODUCTS} products={sortedList(MainProducts, 'inventory')} hasLike/>
-            </ProductsCardList>
-          </div>
-        </div>
+        <MainCard title="품절 임박 꿀템" subTitle="서두르세요! 재고가 얼마 남지 않았어요" fullImage>
+          <ProductsCardList>
+            <ProductsCard maxProducts={INVENTORY_PRODUCTS} products={sortedList(MainProducts, 'inventory')} hasLike/>
+          </ProductsCardList>
+        </MainCard>
       </section>
     </>
   )
