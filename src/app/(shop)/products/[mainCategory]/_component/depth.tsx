@@ -3,9 +3,10 @@ import Link from 'next/link';
 
 type DepthProps = {
   mainCategory: string;
+  productName?: string;
 };
 
-const Depth = ({ mainCategory }: DepthProps) => {
+const Depth = ({ mainCategory, productName }: DepthProps) => {
   const categoryMap: Record<string, string> = {
     stationery: '필기구',
     notebook: '노트',
@@ -21,8 +22,22 @@ const Depth = ({ mainCategory }: DepthProps) => {
         </li>
 
         <ChevronRight className="w-4 h-4" />
+        {productName ? (
+          <>
+            <li className="text-black font-medium">
+              <Link href={`/products/${mainCategory}`} aria-label={`${categoryMap[mainCategory]}로 이동하기`} className="hover:text-black">
+                {categoryMap[mainCategory] ?? mainCategory}
+              </Link>
+            </li>
 
-        <li className="text-black font-medium">{categoryMap[mainCategory] ?? mainCategory}</li>
+            <ChevronRight className="w-4 h-4" />
+            <li className="text-black font-medium">{productName}</li>
+          </>
+        ) : (
+          <>
+            <li className="text-black font-medium">{categoryMap[mainCategory] ?? mainCategory}</li>
+          </>
+        )}
       </ol>
     </nav>
   );
