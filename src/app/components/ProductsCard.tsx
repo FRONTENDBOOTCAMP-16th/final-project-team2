@@ -17,13 +17,13 @@ interface ProductsProps {
 }
 
 export default function ProductsCard({ products, maxProducts, hasLike = true }: ProductsProps) {
-  return products.slice(0, maxProducts).map(item => {
+  return products.slice(0, maxProducts).map((item, i) => {
     const discountPrice = Math.floor(item.price * (1 - item.discount / 100));
 
     const label = `제품명 ${item.name}, 원래 가격은 ${item.price.toLocaleString()}원이고 ${item.discount}퍼센트 할인 중이며 현재 가격은 ${discountPrice.toLocaleString()}원입니다.`;
     const isLike = false;
     return (
-      <li key={item.id} className="relative" aria-label={label}>
+      <li key={`${item.id}-${i}`} className="relative" aria-label={label}>
         <Link href={`/products/pen/${item.id}`} className="block">
           <div className="w-70.5 aspect-square relative">
             <Image src={item.image} alt={item.name} fill={true} className="object-cover absolute" />
