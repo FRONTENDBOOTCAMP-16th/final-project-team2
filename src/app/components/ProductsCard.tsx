@@ -13,10 +13,9 @@ interface Product {
 interface ProductsProps {
   products: Product[];
   maxProducts: number;
-  hasLike?: boolean;
 }
 
-export default function ProductsCard({ products, maxProducts, hasLike = true }: ProductsProps) {
+export default function ProductsCard({ products, maxProducts }: ProductsProps) {
   return products.slice(0, maxProducts).map(item => {
     const discountPrice = Math.floor(item.price * (1 - item.discount / 100));
 
@@ -49,15 +48,13 @@ export default function ProductsCard({ products, maxProducts, hasLike = true }: 
             </dl>
           </div>
         </Link>
-        {hasLike && (
-          <button
-            className="absolute bottom-15 right-3 z-10 p-2 aspect-square text-xl bg-white hover:bg-pink-100 transition-colors duration-300"
-            type="button"
-            aria-label={`${item.name} 좋아요`}
-          >
-            <Heart className={isLike ? 'fill-red-500' : ''} />
-          </button>
-        )}
+        <button
+          className="absolute bottom-15 right-3 z-10 p-2 aspect-square text-xl bg-white hover:bg-pink-100 transition-colors duration-300"
+          type="button"
+          aria-label={`${item.name} 좋아요`}
+        >
+          <Heart className={isLike ? 'fill-red-500' : ''} />
+        </button>
       </li>
     );
   });

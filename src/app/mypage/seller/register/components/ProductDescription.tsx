@@ -29,17 +29,17 @@ export default function ProductDescription() {
       <label htmlFor="productDescription" className="text-sm">
         상품 정보
       </label>
-      <div className="relative">
+      <div className="relative w-2xl">
         <textarea
           name="productDescription"
           value={value}
           id="productDescription"
-          className="w-2xl h-50 border border-[#D1D5DC] bg-[#F9FAFB] px-4 py-3 "
+          className=" w-full h-50  resize-none border border-[#D1D5DC] bg-[#F9FAFB] px-4 py-3 pr-16 pb-8"
           onChange={handleValue}
           maxLength={500}
           placeholder="예) 정밀하게 지울 수 있는 펜형 지우개"
         />
-        <p className="text-sm text-gray-500 absolute bottom-2 right-70">
+        <p className="text-sm text-gray-500 absolute bottom-2 right-3">
           {value.length} / 500
         </p>
       </div>

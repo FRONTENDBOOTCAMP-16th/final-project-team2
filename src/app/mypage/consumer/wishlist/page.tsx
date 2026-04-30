@@ -18,7 +18,7 @@ export default function WishlistPage() {
   return (
     <div className="w-full bg-white pt-6 px-6 pb-11.25 ">
       <h1 className="text-2xl font-bold mb-8 sr-only">찜한 상품</h1>
-      <div className="flex justify-between py-6">
+      <div className="flex justify-between ">
         <TabFilter
           items={CATEGORIES}
           selectedValue={selectedValue}
@@ -27,7 +27,11 @@ export default function WishlistPage() {
         <label htmlFor="filter" className="sr-only">
           필터
         </label>
-        <select name="filter" id="filter" className="border py-1 ">
+        <select
+          name="filter"
+          id="filter"
+          className="border border-gray-400 h-9 "
+        >
           <option value="lastProduct">등록순</option>
           <option value="popularProduct">인기순</option>
           <option value="highPriceProduct">가격 높은 순</option>

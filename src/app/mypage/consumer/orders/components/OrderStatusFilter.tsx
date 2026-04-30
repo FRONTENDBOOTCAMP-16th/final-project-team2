@@ -14,7 +14,7 @@ export default function OrderStatusFilter({ value, statusChange }: Props) {
   };
 
   return (
-    <div className="flex flex-col gap-4 px-2 py-5">
+    <div className="flex flex-col gap-4 ">
       <div className="flex items-center gap-2">
         <label htmlFor="filter" className="text-sm text-gray-500 font-medium">
           배송 상태:

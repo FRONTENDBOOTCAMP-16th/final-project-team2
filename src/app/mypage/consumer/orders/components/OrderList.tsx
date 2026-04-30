@@ -9,7 +9,7 @@ export default function OrderList({ orders }: { orders: OrderItem[] }) {
   return (
     <>
       <OrderItemHeader />
-      <ul className="px-5 py-5">
+      <ul>
         {orders.map((order) => (
           <li key={order.id}>
             <OrderItemCard order={order} />
