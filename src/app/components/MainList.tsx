@@ -1,7 +1,5 @@
-import Image from "next/image"
 import SwiperSection from "./SwiperSection"
 import ProductsCard from "./ProductsCard"
-import products from '@/data/dummyproducts.json'
 import MainProducts from '@/data/dummyMainproducts.json'
 import ProductTodayList from "./ProductsToday"
 import ProductsTodaySale from "./ProductsTodaySale"
