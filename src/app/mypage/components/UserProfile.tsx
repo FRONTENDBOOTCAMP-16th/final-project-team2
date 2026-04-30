@@ -36,22 +36,21 @@ export default function UserProfile() {
   const userName = "사용자";
 
   return (
-    <div className="p-4">
-      <div className="flex flex-col gap-6 mb-5">
-        <div className="w-51 h-[306px] flex flex-col items-center">
-          <div className="w-51 h-51 bg-gray-200 shrink-0" />
+    <div className="flex flex-col mb-10">
+      <div className="w-[204px] pb-6 flex flex-col items-center bg-white">
+        {/* 이미지 영역 임시로 border 처리 - 추후에 이미지로 변경 예정 */}
+        <div className="w-[204px] aspect-square bg-white shrink-0 border" />
 
-          <div className="flex items-center justify-center gap-2 pt-5 pb-[10px]">
-            <div className="bg-black text-white inline-block px-2 py-0.5 text-xs font-bold">
-              {userGrade}
-            </div>
-            {role !== "seller" && <GradeTooltip />}
+        <div className="flex items-center justify-center gap-2 pt-5 pb-2">
+          <div className="bg-black text-white inline-block px-2 py-0.5 text-xs font-bold">
+            {userGrade}
           </div>
-          <span className="text-lg w-full text-center">
-            <strong className="font-bold text-black">{userName}</strong>님
-            반갑습니다.
-          </span>
+          {role !== "seller" && <GradeTooltip />}
         </div>
+        <p className="text-lg w-full text-center">
+          <strong className="font-bold text-black">{userName}</strong>님
+          반갑습니다.
+        </p>
       </div>
     </div>
   );

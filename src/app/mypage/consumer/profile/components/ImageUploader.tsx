@@ -34,7 +34,7 @@ export default function ImageUploader({
       <span className="text-sm font-semibold text-gray-700 ml-1">{label}</span>
 
       <div className="flex items-center gap-4">
-        <div className="relative w-[100px] h-[100px] overflow-hidden border border-gray-200 bg-gray-50 flex items-center justify-center">
+        <div className="relative w-24 aspect-square overflow-hidden border border-gray-200 bg-gray-50 flex items-center justify-center">
           <Image
             src={preview}
             alt="프로필 미리보기"
