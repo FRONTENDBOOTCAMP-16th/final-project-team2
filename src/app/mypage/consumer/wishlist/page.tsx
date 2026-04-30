@@ -2,7 +2,7 @@
 import { useState } from "react";
 import WishListItemsList from "./components/WishListItemsList";
 import TabFilter from "@/app/mypage/consumer/wishlist/components/tabFilter";
-import { dummyOrders } from "@/data/dummyOrder";
+import { dummyOrderItems } from "@/data/dummyOrder";
 
 const CATEGORIES = [
   { id: "", label: "전체" },
@@ -11,7 +11,7 @@ const CATEGORIES = [
 ];
 
 const MAX_COUNT = 9;
-const HAS_WISH_PRODUCTS = dummyOrders.length > 0;
+const HAS_WISH_PRODUCTS = dummyOrderItems.length > 0;
 
 export default function WishlistPage() {
   const [selectedValue, setSelectedValue] = useState("");
@@ -36,7 +36,7 @@ export default function WishlistPage() {
       </div>
       {HAS_WISH_PRODUCTS ? (
         <div>
-          <WishListItemsList items={dummyOrders.slice(0, MAX_COUNT)} />
+          <WishListItemsList items={dummyOrderItems.slice(0, MAX_COUNT)} />
         </div>
       ) : (
         <div className="text-red-500 text-center pt-3">

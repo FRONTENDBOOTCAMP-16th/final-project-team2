@@ -7,13 +7,15 @@ import OrderItemHeader from "./OrderListHeader";
 
 export default function OrderList({ orders }: { orders: OrderItem[] }) {
   return (
-    <ul className="px-5 py-5">
+    <>
       <OrderItemHeader />
-      {orders.map((order) => (
-        <li key={order.id}>
-          <OrderItemCard  order={order} />
-        </li>
-      ))}
-    </ul>
+      <ul className="px-5 py-5">
+        {orders.map((order) => (
+          <li key={order.id}>
+            <OrderItemCard order={order} />
+          </li>
+        ))}
+      </ul>
+    </>
   );
 }

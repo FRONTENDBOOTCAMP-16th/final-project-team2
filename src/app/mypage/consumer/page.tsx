@@ -1,7 +1,7 @@
-import { dummyOrders } from "@/data/dummyOrder";
+import { dummyOrderItems } from "@/data/dummyOrder";
 import OrderList from "./orders/components/OrderList";
 
-const hasProducts = dummyOrders.length > 0;
+const hasProducts = dummyOrderItems.length > 0;
 const MAX_PRODUCT_COUNT = 4;
 
 export default function ConsumerPage() {
@@ -14,7 +14,7 @@ export default function ConsumerPage() {
       <section className="flex flex-col gap-4 p-6 w-full bg-white">
         <h2 className="font-semibold px-5">최근 주문 내역</h2>
         {hasProducts ? (
-          <OrderList orders={dummyOrders.slice(0, MAX_PRODUCT_COUNT)} />
+          <OrderList orders={dummyOrderItems.slice(0, MAX_PRODUCT_COUNT)} />
         ) : (
           <div className="text-red-500 text-center pt-3">
             <p>주문한 상품이 없습니다.</p>

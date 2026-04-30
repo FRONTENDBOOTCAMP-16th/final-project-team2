@@ -10,14 +10,13 @@ interface TabFilterProps {
   separator?: string;
 }
 
-
 // searchParams를 이용하여 탭 항목을 가져오는 형식으로 구현해야 되기때문에,
 // 추후 수정 필요
 export default function TabFilter({
   items,
   selectedValue,
   onValueChange,
-  separator = "/",
+  separator = "|",
 }: TabFilterProps) {
   return (
     <div className="flex items-center gap-3 text-md font-medium">
@@ -35,7 +34,7 @@ export default function TabFilter({
           </button>
           {/* 리스트의 마지막이 아닐 때만 구분자 표시 */}
           {index !== items.length - 1 && (
-            <span className="text-gray-300 font-light">{separator}</span>
+            <span className=" font-light">{separator}</span>
           )}
         </div>
       ))}

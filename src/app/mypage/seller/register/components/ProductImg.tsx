@@ -25,7 +25,9 @@ export default function ProductImg() {
         </div>
         <label
           htmlFor="productImage"
+          tabIndex={0}
           className={`cursor-pointer border px-4 h-10 flex items-center font-bold
+            focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2
             ${file ? "bg-[#FF6B6B] text-white " : "bg-white text-gray-600 "}`}
         >
           {file ? "이미지 선택 완료" : "이미지 선택"}
