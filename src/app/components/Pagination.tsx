@@ -45,8 +45,8 @@ export default async function Pagination({ searchParams, mainCategory, baseUrl, 
   const createPageLink = (pageNumber: number) => {
     const params = new URLSearchParams();
 
-    if (category) params.set('category', category);
     if (sort) params.set('sort', sort);
+    if (category) params.set('category', category);
     params.set('page', String(pageNumber));
 
     return `${baseUrl}/${mainCategory}?${params.toString()}`;
