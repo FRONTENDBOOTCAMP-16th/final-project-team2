@@ -63,7 +63,7 @@ export default function Main() {
       <section className="bg-[#FFF8F3]">
         <MainCard title="품절 임박 꿀템" subTitle="서두르세요! 재고가 얼마 남지 않았어요" fullImage>
           <ProductsCardList>
-            <ProductsCard maxProducts={INVENTORY_PRODUCTS} products={sortedList(MainProducts, 'inventory')} hasLike/>
+            <ProductsCard maxProducts={INVENTORY_PRODUCTS} products={sortedList(MainProducts, 'inventory')}/>
           </ProductsCardList>
         </MainCard>
       </section>
