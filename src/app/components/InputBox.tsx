@@ -14,9 +14,9 @@ export default function InputBox({ label, placeholder, name, type = "text", valu
 
   return (
     <div className="flex flex-col">
-      <label htmlFor={uniqueId}>{label}</label>
+      <label htmlFor={uniqueId} className="text-[#474953] font-medium">{label}</label>
       <input
-        className="border px-3 py-2 mbs-1"
+        className="px-3 py-2.5 mbs-1 rounded bg-[#F0F1F1]"
         id={uniqueId}
         type={type}
         placeholder={placeholder}
