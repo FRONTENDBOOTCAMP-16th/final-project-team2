@@ -58,7 +58,7 @@ const ProductListPage = async ({ searchParams, params }: Product) => {
         <p className="text-base font-semibold text-gray-600">장인은 도구탓을 합니다</p>
       </div>
       <div className="flex justify-between mb-16 mt-18">
-        <FilterCategory mainCategory={mainCategory} />
+        <FilterCategory sort={sort} mainCategory={mainCategory} />
         <Sort />
       </div>
       <main>
