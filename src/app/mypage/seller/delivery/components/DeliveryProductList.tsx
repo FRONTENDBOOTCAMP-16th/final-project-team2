@@ -40,27 +40,28 @@ export default function DeliveryProductList() {
     usePagination(sortedOrders, 5);
 
   return (
-    <div className="flex flex-col pb-12.5">
-      {/* TAB = 정렬 스위치 */}
-      <TabFilter
-        items={CATEGORIES}
-        selectedValue={sortType}
-        onValueChange={(id) => handleTabChange(id, CATEGORIES)}
-      />
+    <div className="flex flex-col">
+      <div className="flex  flex-col ">
+        {/* TAB = 정렬 스위치 */}
+        <TabFilter
+          items={CATEGORIES}
+          selectedValue={sortType}
+          onValueChange={(id) => handleTabChange(id, CATEGORIES)}
+        />
+        <div>
+          {/* HEADER */}
+          <DeliveryProductHeader />
 
-      {/* HEADER */}
-      <div className="my-12.5">
-        <DeliveryProductHeader />
+          {/* LIST */}
+          <ul>
+            {currentItems.map((item) => (
+              <li key={item.id}>
+                <DeliveryProductCard order={item} />
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
-
-      {/* LIST */}
-      <ul>
-        {currentItems.map((item) => (
-          <li key={item.id}>
-            <DeliveryProductCard order={item} />
-          </li>
-        ))}
-      </ul>
 
       {/* PAGINATION */}
       <Pagination

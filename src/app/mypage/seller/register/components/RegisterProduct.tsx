@@ -14,7 +14,7 @@ export default function RegisterProduct() {
 
   // 폼 액션 필요함
   return (
-    <form className="flex flex-col gap-6">
+    <form className="flex flex-col gap-6 ">
       {/* 저장 버튼 */}
       <div className="flex justify-between">
         <h2 className="text-2xl font-bold">상품 등록 페이지</h2>

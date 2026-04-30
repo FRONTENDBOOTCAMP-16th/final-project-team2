@@ -15,7 +15,7 @@ export default function MyPageLayout({ children }: LayoutProps) {
           <SideMenu />
         </aside>
         <main className="flex-1">
-          <div className="flex flex-col gap-6">
+          <div className="flex flex-col gap-6 mb-6">
             <SummaryMenu />
             {children}
           </div>

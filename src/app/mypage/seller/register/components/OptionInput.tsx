@@ -19,7 +19,7 @@ export default function OptionInput() {
   return (
     <fieldset className="flex flex-col gap-3">
       <legend className="text-sm">상품 옵션</legend>
-      <div className="flex flex-row gap-3">
+      <div className="flex flex-row gap-3 mt-2">
         <label htmlFor="productType" className="sr-only">
           옵션 타입
         </label>
@@ -30,8 +30,8 @@ export default function OptionInput() {
           onChange={(e: ChangeEvent<HTMLSelectElement>) =>
             actions.handleOptionType(e.target.value as OptionType | "")
           }
-          className="p-1 text-sm"
-           aria-describedby="optionTypeHelp"
+          className="p-1 text-sm border border-gray-400"
+          aria-describedby="optionTypeHelp"
         >
           <option value="">선택</option>
           <option value="color">색상</option>

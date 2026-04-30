@@ -22,9 +22,9 @@ export default function OrdersPage() {
       : dummyOrderItems.filter((order) => order.itemStatus === selectedStatus);
 
   return (
-    <div className="flex flex-col px-5 py-2 w-full bg-white">
+    <div className="flex flex-col px-6 pt-6 w-full bg-white ">
       <h1 className="sr-only">주문 내역 조회</h1>
-      <div className="flex justify-between">
+      <div className="flex justify-between ">
         <TabFilter
           items={CATEGORIES}
           selectedValue={selectedCategory}
@@ -35,7 +35,9 @@ export default function OrdersPage() {
           statusChange={setSelectedStatus}
         />
       </div>
-      <OrderList orders={filteredOrders} />
+      <div className="mb-12.5">
+        <OrderList orders={filteredOrders} />
+      </div>
     </div>
   );
 }
