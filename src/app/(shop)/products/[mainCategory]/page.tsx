@@ -4,6 +4,7 @@ import Depth from './_component/depth';
 import ProductArea from './_component/ProductArea';
 import FilterCategory from './_component/filterCategory';
 import Sort from './_component/Sort';
+import { sortProducts } from './util/sort';
 
 type Product = {
   params: Promise<{
@@ -25,29 +26,7 @@ const ProductListPage = async ({ searchParams, params }: Product) => {
   const PAGE_SIZE = 12;
   const currentPage = Number(page) || 1;
   const start = (currentPage - 1) * PAGE_SIZE;
-  const getDiscountPrice = (price: number, discount: number) => {
-    return price * (1 - discount / 100);
-  };
-
-  const sorted = [...filtered].sort((a, b) => {
-    if (!sort || sort === 'latest') {
-      return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
-    }
-
-    if (sort === 'highPrice') {
-      return getDiscountPrice(b.price, b.discount) - getDiscountPrice(a.price, a.discount);
-    }
-
-    if (sort === 'lowPrice') {
-      return getDiscountPrice(a.price, a.discount) - getDiscountPrice(b.price, b.discount);
-    }
-
-    if (sort === 'popular') {
-      return b.popularity - a.popularity;
-    }
-
-    return 0;
-  });
+  const sorted = sortProducts(filtered, sort);
   const paginated = sorted.slice(start, start + PAGE_SIZE);
 
   return (
@@ -58,7 +37,7 @@ const ProductListPage = async ({ searchParams, params }: Product) => {
         <p className="text-base font-semibold text-gray-600">장인은 도구탓을 합니다</p>
       </div>
       <div className="flex justify-between mb-16 mt-18">
-        <FilterCategory sort={sort} mainCategory={mainCategory} />
+        <FilterCategory sort={sort} mainCategory={mainCategory} category={category} />
         <Sort />
       </div>
       <main>

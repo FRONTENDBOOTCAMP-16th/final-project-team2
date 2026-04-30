@@ -3,6 +3,7 @@ import products from '@/data/dummyproducts.json';
 import ProductsCard from '@/app/components/ProductsCard';
 import ProductsCardList from '@/app/components/ProductsCardList';
 import Pagination from '@/app/components/Pagination';
+import FilterCategory from './[mainCategory]/_component/filterCategory';
 
 type Product = {
   params: Promise<{
@@ -28,26 +29,7 @@ const ProductListPage = async ({ searchParams, params }: Product) => {
     <div className="mt-5 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <h1 className="sr-only">제품 목록 페이지</h1>
       <div className="flex justify-between mb-16">
-        <ul className="flex gap-1.5">
-          <li>
-            <Link href={`/products/stationery`} className="p-2 rounded-2xl bg-black text-white">
-              전체
-            </Link>
-          </li>
-          <div aria-hidden>/</div>
-          <li>
-            <Link href={`/products/${mainCategory}?category=ballpen`}>볼펜</Link>
-          </li>
-          <div aria-hidden>/</div>
-          <li>
-            <Link href={`/products/${mainCategory}?category=fountainpen`}>만년필</Link>
-          </li>
-          <div aria-hidden>/</div>
-          <li>
-            <Link href={`/products/${mainCategory}?category=note`}>노트</Link>
-          </li>
-        </ul>
-
+        <FilterCategory mainCategory={mainCategory} />
         <label htmlFor="sort" className="sr-only">
           정렬
         </label>
@@ -65,7 +47,7 @@ const ProductListPage = async ({ searchParams, params }: Product) => {
           <ProductsCard maxProducts={PAGE_SIZE} products={paginated} />
         </ProductsCardList>
       </section>
-      <Pagination mainCategory={mainCategory} searchParams={searchParams} />
+      {/* <Pagination mainCategory={mainCategory} searchParams={searchParams} /> */}
     </div>
   );
 };
