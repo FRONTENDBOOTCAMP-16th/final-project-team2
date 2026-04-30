@@ -45,15 +45,15 @@ export default async function Pagination({ searchParams, mainCategory, baseUrl, 
   const createPageLink = (pageNumber: number) => {
     const params = new URLSearchParams();
 
-    if (sort) params.set('sort', sort);
     if (category) params.set('category', category);
+    if (sort) params.set('sort', sort);
     params.set('page', String(pageNumber));
 
     return `${baseUrl}/${mainCategory}?${params.toString()}`;
   };
 
   return (
-    <div className="pagination flex gap-3 justify-center mt-24 mb-20">
+    <div className="pagination flex gap-3 justify-center mt-24 mb-20 items-center">
       {currentPage === 1 ? (
         <span className={paginationButton.disabled}>
           <ChevronLeft />
@@ -81,9 +81,12 @@ export default async function Pagination({ searchParams, mainCategory, baseUrl, 
         const isActive = currentPage === pageNumber;
 
         return (
-          <Link key={pageNumber} href={createPageLink(pageNumber)} className={isActive ? paginationButton.active : paginationButton.default}>
-            {pageNumber}
-          </Link>
+          <>
+            <Link key={pageNumber} href={createPageLink(pageNumber)} className={isActive ? paginationButton.active : paginationButton.default}>
+              {pageNumber}
+            </Link>
+            {index !== PAGE_GROUP_SIZE - 1 && <span aria-hidden>|</span>}
+          </>
         );
       })}
 
