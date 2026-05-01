@@ -3,7 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 interface Product {
-  id: number;
+  id: string;
   name: string;
   price: number;
   discount: number;
@@ -13,10 +13,9 @@ interface Product {
 interface ProductsProps {
   products: Product[];
   maxProducts: number;
-  hasLike?: boolean;
 }
 
-export default function ProductsCard({ products, maxProducts, hasLike = true }: ProductsProps) {
+export default function ProductsCard({ products, maxProducts }: ProductsProps) {
   return products.slice(0, maxProducts).map((item, i) => {
     const discountPrice = Math.floor(item.price * (1 - item.discount / 100));
 
@@ -26,7 +25,7 @@ export default function ProductsCard({ products, maxProducts, hasLike = true }: 
       <li key={`${item.id}-${i}`} className="relative" aria-label={label}>
         <Link href={`/products/pen/${item.id}`} className="block">
           <div className="w-70.5 aspect-square relative">
-            <Image src={item.image} alt={item.name} fill={true} className="object-cover absolute" />
+            <Image src={'/pen_dummy.jpg'} alt={item.name} fill={true} className="object-cover absolute" />
             <div className="absolute w-16 h-8  bg-[#FF6B6B] text-white font-semibold flex items-center justify-center" aria-hidden>
               {item.discount}%
             </div>
@@ -49,15 +48,13 @@ export default function ProductsCard({ products, maxProducts, hasLike = true }: 
             </dl>
           </div>
         </Link>
-        {hasLike && (
-          <button
-            className="absolute bottom-15 right-3 z-10 p-2 aspect-square text-xl bg-white hover:bg-pink-100 transition-colors duration-300"
-            type="button"
-            aria-label={`${item.name} 좋아요`}
-          >
-            <Heart className={isLike ? 'fill-red-500' : ''} />
-          </button>
-        )}
+        <button
+          className="absolute bottom-15 right-3 z-10 p-2 aspect-square text-xl bg-white hover:bg-pink-100 transition-colors duration-300"
+          type="button"
+          aria-label={`${item.name} 좋아요`}
+        >
+          <Heart className={isLike ? 'fill-red-500' : ''} />
+        </button>
       </li>
     );
   });
