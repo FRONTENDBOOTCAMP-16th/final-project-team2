@@ -1,3 +1,10 @@
+import {
+  ChevronLeft,
+  ChevronRight,
+  ChevronsLeft,
+  ChevronsRight,
+} from "lucide-react";
+
 interface Props {
   currentPage: number;
   totalPages: number;
@@ -14,29 +21,24 @@ export default function Pagination({
       <button
         onClick={() => onPageChange(1)}
         aria-disabled={currentPage === 1}
-        className={` aria-disabled:cursor-not-allowed`}
+        className={`aria-disabled:cursor-not-allowed`}
       >
-        {"<<"}
+        <ChevronsLeft />
       </button>
 
       <button
         onClick={() => onPageChange(Math.max(currentPage - 1, 1))}
         aria-disabled={currentPage === 1}
-        className={` aria-disabled:cursor-not-allowed`}
+        className={`aria-disabled:cursor-not-allowed`}
       >
-        {"<"}
+        <ChevronLeft />
       </button>
 
       {Array.from({ length: totalPages }, (_, i) => (
         <button
           key={i}
           onClick={() => onPageChange(i + 1)}
-          disabled={currentPage === i + 1}
-          aria-disabled={currentPage === i + 1}
-          className={` px-2 py-1 ${currentPage === i + 1 ? "text-red-500 font-bold" : ""}
-      
-     
-    `}
+          className={` px-2 py-1 ${currentPage === i + 1 ? "text-red-500 font-bold" : ""}`}
         >
           {i + 1}
         </button>
@@ -47,15 +49,15 @@ export default function Pagination({
         aria-disabled={currentPage === totalPages}
         className={` aria-disabled:cursor-not-allowed`}
       >
-        {">"}
+        <ChevronRight />
       </button>
 
       <button
         onClick={() => onPageChange(totalPages)}
         aria-disabled={currentPage === totalPages}
-        className={` aria-disabled:cursor-not-allowed`}
+        className={`aria-disabled:cursor-not-allowed`}
       >
-        {">>"}
+        <ChevronsRight />
       </button>
     </div>
   );

@@ -36,7 +36,7 @@ export default function DeliveryProductList() {
   const { sortType, handleTabChange, sortedOrders } =
     useDeliveryOrders(myProductIds);
 
-  // 2. 페이지네이션 (UI 레이어)
+  // 2. 페이지네이션
   const { currentPage, setCurrentPage, totalPages, currentItems } =
     usePagination(sortedOrders, 4);
 
@@ -47,17 +47,13 @@ export default function DeliveryProductList() {
   return (
     <div className="flex flex-col">
       <div className="flex  flex-col ">
-        {/* TAB = 정렬 스위치 */}
         <TabFilter
           items={CATEGORIES}
           selectedValue={sortType}
           onValueChange={(id) => handleTabChange(id, CATEGORIES)}
         />
         <div>
-          {/* HEADER */}
           <DeliveryProductHeader />
-
-          {/* LIST */}
           <ul>
             {currentItems.map((item) => (
               <li key={item.id}>
@@ -67,8 +63,6 @@ export default function DeliveryProductList() {
           </ul>
         </div>
       </div>
-
-      {/* PAGINATION */}
       <Pagination
         currentPage={currentPage}
         totalPages={totalPages}
