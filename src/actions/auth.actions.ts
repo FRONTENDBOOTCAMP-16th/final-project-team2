@@ -1,12 +1,12 @@
 "use server"
 
-import { signupSchema } from "@/app/lib/ahth"
+import z from "zod"
 
 // formData를 받아 에러를 반환
-export const signupAction = async (_: unknown, formData: FormData) => {
+export const ahthAction = async (_: unknown, formData: FormData, schema: z.ZodSchema) => {
   // form을 일반 객체로 변환
   const objectTransform = Object.fromEntries(formData)
-  const result = signupSchema.safeParse(objectTransform)
+  const result = schema.safeParse(objectTransform)
 
   if (!result.success) {
     // 에러를 담을 객체

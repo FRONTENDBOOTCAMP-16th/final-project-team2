@@ -4,7 +4,7 @@ import { useActionState } from "react";
 import InputBox from "@/app/components/InputBox";
 import CheckeBox from "@/app/components/CheckBox";
 import TypeRadioInput from "@/app/components/TypeRadioInput";
-import { signupAction } from "@/actions/auth.actions";
+import { signupAction } from "@/actions/signupAction";
 
 export default function SignupPage() {
   const [state, formAction] = useActionState(signupAction, null)
