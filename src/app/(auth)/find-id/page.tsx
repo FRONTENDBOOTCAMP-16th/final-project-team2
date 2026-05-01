@@ -1,6 +1,11 @@
+'use client'
+
+import { findIdAction } from "@/actions/findIdAction";
 import InputBox from "@/app/components/InputBox";
+import { useActionState } from "react";
 
 export default function FIndIdPage() {
+  const [state, formAction] = useActionState(findIdAction, null)
   const errorMessage = '아이디가 존재하지 않습니다.'
 
   return (
@@ -9,11 +14,11 @@ export default function FIndIdPage() {
         <strong className="text-[#575A68]">아이디 찾기</strong>
       </div>
 
-      <form action="">
+      <form action={formAction}>
         <div className="flex flex-col gap-2 mbs-10">
-          <InputBox type="text" label="이름" name="find-id-name" placeholder="이름을 입력하세요"/>
-          <InputBox type="text" label="이메일" name="find-id-email" placeholder="이메일을 입력하세요"/>
-          <InputBox type="text" label="핸드폰 번호" name="find-id-phone" placeholder="핸드폰 번호를 입력하세요" />
+          <InputBox type="text" label="이름" name="find-id-name" placeholder="이름을 입력하세요" error={state?.errors?.name?.[0]}/>
+          <InputBox type="text" label="이메일" name="find-id-email" placeholder="이메일을 입력하세요" error={state?.errors?.email?.[0]}/>
+          <InputBox type="text" label="핸드폰 번호" name="find-id-phone" placeholder="핸드폰 번호를 입력하세요" error={state?.errors?.phone?.[0]}/>
         </div>
         <p aria-live="polite" className="border-be border-[#e0e0e0] pbe-12 mbs-2 text-center text-red-500">{errorMessage || '\u00A0'}</p>
         

@@ -46,6 +46,13 @@ export const loginSchema = z.object({
   password: passwordSchema
 })
 
+// 아이디 찾기 스키마
+export const findIdSchema = z.object({
+  name: nameSchema,
+  email: emailSchema,
+  phone: phoneSchema
+})
 
-type loginSchema = z.infer<typeof loginSchema>
 type signupSchema = z.infer<typeof signupSchema>
+type loginSchema = z.infer<typeof loginSchema>
+type findIdSchema = z.infer<typeof findIdSchema>
