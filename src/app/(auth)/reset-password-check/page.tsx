@@ -2,7 +2,7 @@ import InputBox from "@/app/components/InputBox"
 import Link from "next/link"
 
 export default function ResetPasswordCheckPage() {
-  const errorMessage = ''
+  const errorMessage = 'a'
 
   return (
     <div className=" bg-white w-full p-10 sm:w-160 transition-all rounded-2xl shadow-md shadow-[#c7c7c7]">
