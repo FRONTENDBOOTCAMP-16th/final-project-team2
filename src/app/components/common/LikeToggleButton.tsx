@@ -28,7 +28,10 @@ export default function LikeToggleButton() {
   return (
     // 버튼 누르면 찜한 상품에 추가되었다는 문구, 삭제가 되면 삭제되었다는 문구
     <>
-      <button onClick={handleLike}>
+      <button
+        onClick={handleLike}
+        aria-label={isLike ? "좋아요 해제" : "좋아요 추가"}
+      >
         {isLike ? (
           <Heart className="w-10 h-10 p-2 fill-red-500 text-red-500 transition-transform duration-200 hover:scale-130 " />
         ) : (
