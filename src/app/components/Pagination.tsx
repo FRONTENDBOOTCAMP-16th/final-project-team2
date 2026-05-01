@@ -76,19 +76,21 @@ export default async function Pagination({ searchParams, mainCategory, baseUrl, 
         </Link>
       )}
 
-      {Array.from({ length: endPage - startPage + 1 }, (_, index) => {
-        const pageNumber = startPage + index;
-        const isActive = currentPage === pageNumber;
+      <ul className="flex">
+        {Array.from({ length: endPage - startPage + 1 }, (_, index) => {
+          const pageNumber = startPage + index;
+          const isActive = currentPage === pageNumber;
 
-        return (
-          <>
-            <Link key={pageNumber} href={createPageLink(pageNumber)} className={isActive ? paginationButton.active : paginationButton.default}>
-              {pageNumber}
-            </Link>
-            {index !== PAGE_GROUP_SIZE - 1 && <span aria-hidden>|</span>}
-          </>
-        );
-      })}
+          return (
+            <li key={pageNumber}>
+              <Link href={createPageLink(pageNumber)} className={isActive ? paginationButton.active : paginationButton.default}>
+                {pageNumber}
+              </Link>
+              {index !== PAGE_GROUP_SIZE - 1 && <span aria-hidden>|</span>}
+            </li>
+          );
+        })}
+      </ul>
 
       {!isNext ? (
         <span className={paginationButton.disabled}>
