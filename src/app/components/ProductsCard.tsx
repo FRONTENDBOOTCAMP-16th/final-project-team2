@@ -35,21 +35,21 @@ export default function ProductsCard({ products, maxProducts }: ProductsProps) {
               <dt className="sr-only">제품 타입</dt>
               <dd className="text-gray-700 mt-4">필기구</dd>
 
-              <dt className="sr-only">제품 명</dt>
-              <dd className="text-2xl font-medium mt-2">{item.name}</dd>
+              <dt className="sr-only ">제품 명</dt>
+              <dd className="text-2xl w-60 font-medium mt-2 truncate ">{item.name}</dd>
             </dl>
 
             <dl className="flex gap-3">
               <dt className="sr-only">할인율</dt>
-              <dd className="text-[#FF6B6B] mt-2 font-bold text-2xl">{item.discount}%</dd>
+              <dd className="text-[#FF6B6B] mt-2 font-bold text-xl">{item.discount}%</dd>
 
               <dt className="sr-only">할인된 가격</dt>
-              <dd className="text-2xl font-medium mt-2 ml-2">{discountPrice.toLocaleString()}원</dd>
+              <dd className="text-xl font-medium mt-2 ml-2">{discountPrice.toLocaleString()}원</dd>
             </dl>
           </div>
         </Link>
         <button
-          className="absolute bottom-15 right-3 z-10 p-2 aspect-square text-xl bg-white hover:bg-pink-100 transition-colors duration-300"
+          className="absolute bottom-17 right-3 rounded-full p-2 aspect-square text-xl bg-none hover:bg-pink-100 transition-colors duration-300"
           type="button"
           aria-label={`${item.name} 좋아요`}
         >

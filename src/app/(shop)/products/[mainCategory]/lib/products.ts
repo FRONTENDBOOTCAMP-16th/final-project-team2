@@ -1,12 +1,3 @@
-export const CATEGORY_MAP = {
-  write: { label: 'writing', value: 'write' },
-  paper: { label: 'paper', value: 'paper' },
-  deco: { label: '다꾸/데코', value: 'deco' },
-  accessory: { label: '소품/악세서리', value: 'accessory' },
-} as const;
-
-export type CategoryType = keyof typeof CATEGORY_MAP;
-export const CATEGORY_TYPES = Object.keys(CATEGORY_MAP) as CategoryType[];
 export type Products = {
   id: string; // uuid
   store_id: string;

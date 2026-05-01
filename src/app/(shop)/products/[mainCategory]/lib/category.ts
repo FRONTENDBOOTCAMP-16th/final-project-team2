@@ -1,5 +1,5 @@
 export const CATEGORY_MAP = {
-  write: { label: '필기구', value: 'write' },
+  writing: { label: '필기구', value: 'writing' },
   paper: { label: '종이류', value: 'paper' },
   deco: { label: '다꾸/데코', value: 'deco' },
   accessory: { label: '소품/악세서리', value: 'accessory' },
