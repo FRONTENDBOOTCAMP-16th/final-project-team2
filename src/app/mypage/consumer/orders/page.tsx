@@ -1,43 +1,10 @@
-"use client";
-
-import { dummyOrderItems } from "@/data/dummyOrder";
 import OrderList from "./components/OrderList";
-import OrderStatusFilter from "./components/OrderStatusFilter";
-import { useState } from "react";
-import TabFilter from "@/app/mypage/consumer/wishlist/components/tabFilter";
-
-const CATEGORIES = [
-  { id: "", label: "전체" },
-  { id: "writing", label: "필기구" },
-  { id: "paper", label: "노트/메모" },
-];
 
 export default function OrdersPage() {
-  const [selectedStatus, setSelectedStatus] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState("");
-
-  const filteredOrders =
-    selectedStatus === ""
-      ? dummyOrderItems
-      : dummyOrderItems.filter((order) => order.itemStatus === selectedStatus);
-
   return (
-    <div className="flex flex-col px-6 pt-6 w-full bg-white ">
+    <div className="flex flex-col px-6 pt-6 pb-11.25 w-full bg-white ">
       <h1 className="sr-only">주문 내역 조회</h1>
-      <div className="flex justify-between ">
-        <TabFilter
-          items={CATEGORIES}
-          selectedValue={selectedCategory}
-          onValueChange={setSelectedCategory}
-        />
-        <OrderStatusFilter
-          value={selectedStatus}
-          statusChange={setSelectedStatus}
-        />
-      </div>
-      <div className="mb-12.5">
-        <OrderList orders={filteredOrders} />
-      </div>
+      <OrderList />
     </div>
   );
 }
