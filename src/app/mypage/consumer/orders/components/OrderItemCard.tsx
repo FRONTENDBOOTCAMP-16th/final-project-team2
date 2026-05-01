@@ -19,7 +19,9 @@ export default function OrderItemCard({ order }: { order: OrderItem }) {
             src={order.image}
             alt=""
           />
-          <h2 className="self-center hover:text-red-500">{order.name}</h2>
+          <h2 className="self-center hover:text-red-500 hover:font-extrabold">
+            {order.name}
+          </h2>
         </Link>
       </div>
       {/* 주문 일자 */}
