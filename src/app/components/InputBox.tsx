@@ -24,7 +24,7 @@ export default function InputBox({ label, placeholder, error, name, type = "text
         name={name}
         value={value}
       />
-      <p className="mbs-1 text-red-600" aria-live="polite" aria-hidden="true" >{error || ' \u00A0'}</p>
+      <p className="mbs-1 text-red-600" aria-live="polite" aria-hidden="true">{error}</p>
     </div>
   )
 }

@@ -8,7 +8,7 @@ interface TypeRadioInput {
   onChange?: () => void
 }
 
-export default function TypeRadioInput({ label, name }: TypeRadioInput) {
+export default function TypeRadioInput({ label, name, value }: TypeRadioInput) {
   const uniqueId = useId()
 
   return (
@@ -18,6 +18,7 @@ export default function TypeRadioInput({ label, name }: TypeRadioInput) {
         className="sr-only peer"
         id={uniqueId}
         name={name}
+        value={value}
       />
       <label
         htmlFor={uniqueId}
