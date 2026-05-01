@@ -1,11 +1,8 @@
-import products from '@/data/dummyproducts.json';
 import Pagination from '@/app/components/Pagination';
-import Depth from './_component/depth';
 import ProductArea from './_component/ProductArea';
-import FilterCategory from './_component/filterCategory';
 import Sort from './_component/Sort';
-import { sortProducts } from './util/sort';
-
+import { getProducts } from '@/api/getProducts';
+import BreadCrumble from './_component/BreadCrumble';
 type Product = {
   params: Promise<{
     mainCategory: string;
@@ -17,32 +14,36 @@ type Product = {
   }>;
 };
 
-const ProductListPage = async ({ searchParams, params }: Product) => {
-  const { category, page, sort } = await searchParams;
+const ProductListPage = async ({ params, searchParams }: Product) => {
   const { mainCategory } = await params;
-
-  const filtered = category ? products.filter(product => product.category === category) : products;
-
+  const { category: keyword, page = '1', sort = 'latest' } = await searchParams;
   const PAGE_SIZE = 12;
-  const currentPage = Number(page) || 1;
-  const start = (currentPage - 1) * PAGE_SIZE;
-  const sorted = sortProducts(filtered, sort);
-  const paginated = sorted.slice(start, start + PAGE_SIZE);
+
+  const data = await getProducts({
+    page: page,
+    pageSize: 12,
+    category: mainCategory,
+    sort,
+    keyword,
+  });
+
+  console.log(mainCategory);
 
   return (
     <div className="mt-5 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <Depth mainCategory={mainCategory} />
+      <BreadCrumble categoryMap={data.category} />
+
       <div className="text-center">
-        <h1 className="text-[48px] bold mb-5">필기구</h1>
         <p className="text-base font-semibold text-gray-600">장인은 도구탓을 합니다</p>
       </div>
+
       <div className="flex justify-between mb-16 mt-18">
-        <FilterCategory sort={sort} mainCategory={mainCategory} category={category} />
         <Sort />
       </div>
+
       <main>
-        <ProductArea paginated={paginated} pageSize={PAGE_SIZE} />
-        <Pagination pagesize={PAGE_SIZE} baseUrl="/products" mainCategory={mainCategory} searchParams={searchParams} />
+        <ProductArea pageSize={PAGE_SIZE} paginated={data.products} />
+        <Pagination baseUrl={'/products'} mainCategory={mainCategory} searchParams={searchParams} pagesize={PAGE_SIZE} />
       </main>
     </div>
   );
