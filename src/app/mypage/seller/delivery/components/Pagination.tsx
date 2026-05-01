@@ -21,17 +21,19 @@ export default function Pagination({
       <button
         onClick={() => onPageChange(1)}
         aria-disabled={currentPage === 1}
-        className={`aria-disabled:cursor-not-allowed`}
+        className={`aria-disabled:cursor-not-allowed `}
+        aria-label="맨 처음 페이지"
       >
-        <ChevronsLeft />
+        <ChevronsLeft aria-hidden="true" />
       </button>
 
       <button
         onClick={() => onPageChange(Math.max(currentPage - 1, 1))}
         aria-disabled={currentPage === 1}
-        className={`aria-disabled:cursor-not-allowed`}
+        className={`aria-disabled:cursor-not-allowed `}
+        aria-label="이전 페이지"
       >
-        <ChevronLeft />
+        <ChevronLeft aria-hidden="true" />
       </button>
 
       {Array.from({ length: totalPages }, (_, i) => (
@@ -47,17 +49,19 @@ export default function Pagination({
       <button
         onClick={() => onPageChange(Math.min(currentPage + 1, totalPages))}
         aria-disabled={currentPage === totalPages}
-        className={` aria-disabled:cursor-not-allowed`}
+        className={` aria-disabled:cursor-not-allowed `}
+        aria-label="다음 페이지"
       >
-        <ChevronRight />
+        <ChevronRight aria-hidden="true" />
       </button>
 
       <button
         onClick={() => onPageChange(totalPages)}
         aria-disabled={currentPage === totalPages}
-        className={`aria-disabled:cursor-not-allowed`}
+        className={`aria-disabled:cursor-not-allowed `}
+        aria-label="맨 마지막 페이지"
       >
-        <ChevronsRight />
+        <ChevronsRight aria-hidden="true" />
       </button>
     </div>
   );
