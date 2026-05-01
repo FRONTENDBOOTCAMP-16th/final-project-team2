@@ -1,8 +1,13 @@
 'use client';
 
 import { useRouter, useSearchParams } from 'next/navigation';
+import { CategoryType } from '../lib/category';
 
-const Sort = () => {
+type SortProps = {
+  mainCategory: CategoryType;
+};
+
+const Sort = (mainCategory: SortProps) => {
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -12,7 +17,7 @@ const Sort = () => {
     params.set('sort', e.target.value);
     params.set('page', '1');
 
-    router.push(`/products/stationery?${params.toString()}`);
+    router.push(`/products/${mainCategory}?${params.toString()}`);
   };
 
   return (
