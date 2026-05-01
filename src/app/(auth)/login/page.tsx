@@ -29,8 +29,8 @@ export default function LoginPage() {
         
         {/* 아이디 패스워드 */}
         <div className="flex flex-col gap-2 mbs-2">
-          <InputBox type="text" label="아이디" name="login-id" placeholder="이메일을 입력하세요" error={state?.errors?.email?.[0]}/>
-          <InputBox type="password" label="패스워드" name="login-password" placeholder="비밀번호를 입력하세요" error={state?.errors?.password?.[0]}/>
+          <InputBox type="text" label="아이디" name="id" placeholder="이메일을 입력하세요" error={state?.errors?.email?.[0]}/>
+          <InputBox type="password" label="패스워드" name="password" placeholder="비밀번호를 입력하세요" error={state?.errors?.password?.[0]}/>
         </div>
 
         {/* 로그인 서브 */}

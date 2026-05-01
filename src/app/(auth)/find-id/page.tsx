@@ -16,9 +16,9 @@ export default function FIndIdPage() {
 
       <form action={formAction}>
         <div className="flex flex-col gap-2 mbs-10">
-          <InputBox type="text" label="이름" name="find-id-name" placeholder="이름을 입력하세요" error={state?.errors?.name?.[0]}/>
-          <InputBox type="text" label="이메일" name="find-id-email" placeholder="이메일을 입력하세요" error={state?.errors?.email?.[0]}/>
-          <InputBox type="text" label="핸드폰 번호" name="find-id-phone" placeholder="핸드폰 번호를 입력하세요" error={state?.errors?.phone?.[0]}/>
+          <InputBox type="text" label="이름" name="name" placeholder="이름을 입력하세요" error={state?.errors?.name?.[0]}/>
+          <InputBox type="text" label="이메일" name="email" placeholder="이메일을 입력하세요" error={state?.errors?.email?.[0]}/>
+          <InputBox type="text" label="핸드폰 번호" name="phone" placeholder="핸드폰 번호를 입력하세요" error={state?.errors?.phone?.[0]}/>
         </div>
         <p aria-live="polite" className="border-be border-[#e0e0e0] pbe-12 mbs-2 text-center text-red-500">{errorMessage || '\u00A0'}</p>
         
