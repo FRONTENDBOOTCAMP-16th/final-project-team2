@@ -19,7 +19,7 @@ export default function LikeToggleButton() {
     if (showToast) {
       const timer = setTimeout(() => {
         setShowToast(false);
-      }, 2000);
+      }, 1500);
 
       return () => clearTimeout(timer);
     }

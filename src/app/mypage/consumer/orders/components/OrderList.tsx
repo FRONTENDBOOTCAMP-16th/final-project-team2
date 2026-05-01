@@ -32,7 +32,7 @@ export default function OrderList() {
 
   return (
     <>
-      <div className="flex justify-between h-9 mb-12.5 ">
+      <div className="flex justify-between h-9 mb-12.5 pl-4">
         <TabFilter
           items={CATEGORIES}
           selectedValue={selectedCategory}
