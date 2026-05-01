@@ -6,6 +6,7 @@ import Pagination from "./Pagination";
 import TabFilter from "@/app/mypage/consumer/wishlist/components/tabFilter";
 import DeliveryProductHeader from "./DeliveryProductHeader";
 import useDeliveryOrders from "@/hooks/useDeliveryOrders";
+import { useEffect } from "react";
 
 const myProductIds = [
   "prod-1",
@@ -37,7 +38,11 @@ export default function DeliveryProductList() {
 
   // 2. 페이지네이션 (UI 레이어)
   const { currentPage, setCurrentPage, totalPages, currentItems } =
-    usePagination(sortedOrders, 5);
+    usePagination(sortedOrders, 4);
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [sortType, setCurrentPage]);
 
   return (
     <div className="flex flex-col">

@@ -33,7 +33,7 @@ export default function Pagination({
           onClick={() => onPageChange(i + 1)}
           disabled={currentPage === i + 1}
           aria-disabled={currentPage === i + 1}
-          className={` px-2 py-1${currentPage === i + 1 ? "text-red-500 font-bold" : ""}
+          className={` px-2 py-1 ${currentPage === i + 1 ? "text-red-500 font-bold" : ""}
       
      
     `}
