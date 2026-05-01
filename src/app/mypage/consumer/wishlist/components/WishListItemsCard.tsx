@@ -1,4 +1,4 @@
-import LikeToggleButton from "@/app/components/common/LikeToggleButton";
+import LikeToggleButton from "@/app/mypage/consumer/wishlist/components/LikeToggleButton";
 import Link from "next/link";
 import Image from "next/image";
 import { OrderItem } from "@/app/mypage/types/orderItem";
@@ -8,12 +8,17 @@ const CATEGORY_TO_KOREAN: { writing: string; paper: string } = {
   paper: "노트/메모",
 };
 
-export default function WishListItemCard({ order }: { order: OrderItem }) {
+interface Props {
+  order: OrderItem;
+  onRemove: (id: string) => void;
+}
+
+export default function WishListItemCard({ order, onRemove }: Props) {
   return (
     <div key={order.id} className="flex flex-col">
       <Link
         href={`/products/pen/${order.id}`}
-        className="relative flex flex-col"
+        className="relative flex flex-col transition-transform duration-400 hover:scale-105"
       >
         {order.discountRate > 0 && (
           <div className="absolute top-0 left-0  bg-[#DC2626] text-white px-2 py-1 text-sm font-bold">
@@ -24,7 +29,7 @@ export default function WishListItemCard({ order }: { order: OrderItem }) {
         <Image
           width={282}
           height={282}
-          className="object-fill"
+          className="object-fill "
           src={order.image}
           alt=""
         />
@@ -35,7 +40,7 @@ export default function WishListItemCard({ order }: { order: OrderItem }) {
         </p>
         <div className="flex justify-between">
           <p className="font-bold self-center">{order.name}</p>
-          <LikeToggleButton />
+          <LikeToggleButton id={order.id} onRemove={onRemove} />
         </div>
 
         <div className="flex gap-2">
