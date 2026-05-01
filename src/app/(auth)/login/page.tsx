@@ -1,9 +1,15 @@
+'use client'
+
+import Link from "next/link";
+import { useActionState } from "react";
+import { loginAction } from "@/actions/loginAction";
 import CheckeBox from "@/app/components/CheckBox";
 import InputBox from "@/app/components/InputBox";
 import TypeRadioInput from "@/app/components/TypeRadioInput";
-import Link from "next/link";
 
 export default function LoginPage() {
+  const [state, formAction] = useActionState(loginAction, null)
+
   return (
     <div className="bg-white w-full p-10 sm:w-160 transition-all rounded-2xl shadow-md shadow-[#c7c7c7]">
       <div className="text-2xl text-center border-be pbe-9 border-[#e0e0e0]">
@@ -11,18 +17,20 @@ export default function LoginPage() {
         <p className="text-sm mbs-1 text-[#575A68]">계정에 로그인하세요</p>
       </div>
 
-      <form action="" className="flex flex-col gap-2 mbs-10 pb-7">
+      <form action={formAction} className="flex flex-col gap-2 mbs-10 pb-7">
         {/* 계정 타입 */}
         <div className="flex gap-2">
           <TypeRadioInput label="소비자" name="login" value="USER" />
           <TypeRadioInput label="판매자" name="login" value="BUSINSS" />
           <TypeRadioInput label="관리자" name="login" value="ADMIN" />
         </div>
+        <p className="mbs-1 text-red-600" aria-live="polite" aria-hidden="true">{state?.errors?.role?.[0] || '\u00A0'}</p>
 
+        
         {/* 아이디 패스워드 */}
         <div className="flex flex-col gap-2 mbs-2">
-          <InputBox type="text" label="아이디" name="login-id" placeholder="이메일을 입력하세요"/>          
-          <InputBox type="password" label="패스워드" name="login-password" placeholder="비밀번호를 입력하세요"/>          
+          <InputBox type="text" label="아이디" name="login-id" placeholder="이메일을 입력하세요" error={state?.errors?.email?.[0]}/>
+          <InputBox type="password" label="패스워드" name="login-password" placeholder="비밀번호를 입력하세요" error={state?.errors?.password?.[0]}/>
         </div>
 
         {/* 로그인 서브 */}

@@ -20,7 +20,7 @@ const baseSignupSchema = z.object({
   confirmPassword: z.string().min(1, '비밀번호 확인을 입력해주세요')
 })
 
-// 실제 사용되는 회원가입
+// 실제 사용되는 회원가입 스키마
 export const signupSchema = baseSignupSchema.check((checkValue) => {
   // password, confirmPassword를 타입 지정
   const data = checkValue.value as { password: string; confirmPassword: string }
@@ -35,4 +35,17 @@ export const signupSchema = baseSignupSchema.check((checkValue) => {
     })
   }
 })
+
+
+// 로그인 스키마
+export const loginSchema = z.object({
+  role: roleSchema.refine((val) => !!val, {
+    message: '권한을 선택해주세요',
+  }),
+  email: emailSchema,
+  password: passwordSchema
+})
+
+
+type loginSchema = z.infer<typeof loginSchema>
 type signupSchema = z.infer<typeof signupSchema>
