@@ -33,11 +33,11 @@ export default async function Pagination({ searchParams, mainCategory, baseUrl, 
   const totalPages = Math.ceil(filtered.length / pagesize);
   const currentPage = page === undefined ? 1 : Number(page);
 
-  // if (filtered.length === 0) return null;
+  if (filtered.length === 0) return null;
 
-  // if (!Number.isInteger(currentPage) || currentPage < 1 || currentPage > totalPages) {
-  //   notFound();
-  // }
+  if (!Number.isInteger(currentPage) || currentPage < 1 || currentPage > totalPages) {
+    notFound();
+  }
 
   const currentGroup = Math.floor((currentPage - 1) / PAGE_GROUP_SIZE);
   const startPage = currentGroup * PAGE_GROUP_SIZE + 1;
