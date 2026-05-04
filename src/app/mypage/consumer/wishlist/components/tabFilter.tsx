@@ -19,11 +19,7 @@ export default function TabFilter({
   separator = "|",
 }: TabFilterProps) {
   return (
-<<<<<<< HEAD
-    <div className="flex items-center gap-3 text-md font-medium">
-=======
     <div className="flex items-center  gap-3 text-md font-medium mb-12.5 h-9">
->>>>>>> dev
       {items.map((item, index) => (
         <div key={item.id} className="flex items-center gap-3">
           <button
