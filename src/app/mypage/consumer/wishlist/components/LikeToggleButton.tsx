@@ -1,29 +1,42 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useRef, useState } from "react";
 import { Heart } from "lucide-react";
 
-export default function LikeToggleButton() {
+interface Props {
+  id: string;
+  onRemove: (id: string) => void;
+}
+
+export default function LikeToggleButton({ id, onRemove }: Props) {
   const [isLike, setIsLike] = useState(true);
   const [showToast, setShowToast] = useState(false);
+  const timerRef = useRef<ReturnType<typeof setTimeout>>(null);
 
   const handleLike = () => {
     const nextLikeStatus = !isLike;
+
     setIsLike(nextLikeStatus);
-
-    //추가/해체 모두 다 토스트 보여줘야함
     setShowToast(true);
-  };
 
-  useEffect(() => {
-    if (showToast) {
-      const timer = setTimeout(() => {
-        setShowToast(false);
-      }, 1500);
+    // 추가, 해체를 연속으로 하게 되는 경우, 기존에는 useEffect를 사용하여,
+    // 토스트 메시지가 기존의 타이머 값에 의해 빠르게 사라짐
+    // 따라서 이를 해결하기 위해 useRef를 사용하여, 타이머 값을 기억하고
+    // 클릭할 때마다 기존 타이머를 clearTimeout으로 제거한 뒤
+    // 새로운 타이머를 설정하여 항상 마지막 액션 기준으로 1.5초 동안 유지되도록 처리
+    // 새로운 타이머 실행되었을 시, 좋아요 해제상태라면 해당 아이템 카드 제거하기
 
-      return () => clearTimeout(timer);
+    if (timerRef.current) {
+      clearTimeout(timerRef.current);
     }
-  }, [showToast]);
+
+    timerRef.current = setTimeout(() => {
+      setShowToast(false);
+      if (nextLikeStatus === false) {
+        onRemove(id);
+      }
+    }, 1500);
+  };
 
   return (
     // 버튼 누르면 찜한 상품에 추가되었다는 문구, 삭제가 되면 삭제되었다는 문구
