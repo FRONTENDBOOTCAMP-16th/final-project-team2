@@ -53,7 +53,7 @@ export default function ProductsCard({ products, maxProducts }: ProductsProps) {
           type="button"
           aria-label={`${item.name} 좋아요`}
         >
-          <Heart className={isLike ? 'fill-red-500' : ''} />
+          <Heart className={isLike ? 'fill-red-500' : 'fill-white'} />
         </button>
       </li>
     );
