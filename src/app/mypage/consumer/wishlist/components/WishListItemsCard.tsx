@@ -16,7 +16,7 @@ export default function WishListItemCard({ order }: { order: OrderItem }) {
         className="relative flex flex-col"
       >
         {order.discountRate > 0 && (
-          <div className="absolute top-0 left-0  bg-[#FF6B6B] text-white px-2 py-1 text-sm font-bold">
+          <div className="absolute top-0 left-0  bg-[#DC2626] text-white px-2 py-1 text-sm font-bold">
             {order.discountRate}%
           </div>
         )}
@@ -29,7 +29,7 @@ export default function WishListItemCard({ order }: { order: OrderItem }) {
           alt=""
         />
       </Link>
-      <div className="flex flex-col gap-2 pr-4 pt-4">
+      <div className="flex flex-col pr-4 pt-4">
         <p className="text-sm text-gray-400 ">
           {CATEGORY_TO_KOREAN[order.category]}
         </p>

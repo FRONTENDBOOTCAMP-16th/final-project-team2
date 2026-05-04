@@ -6,6 +6,7 @@ import Pagination from "./Pagination";
 import TabFilter from "@/app/mypage/consumer/wishlist/components/tabFilter";
 import DeliveryProductHeader from "./DeliveryProductHeader";
 import useDeliveryOrders from "@/hooks/useDeliveryOrders";
+import { useEffect } from "react";
 
 const myProductIds = [
   "prod-1",
@@ -35,11 +36,16 @@ export default function DeliveryProductList() {
   const { sortType, handleTabChange, sortedOrders } =
     useDeliveryOrders(myProductIds);
 
-  // 2. 페이지네이션 (UI 레이어)
+  // 2. 페이지네이션
   const { currentPage, setCurrentPage, totalPages, currentItems } =
-    usePagination(sortedOrders, 5);
+    usePagination(sortedOrders, 4);
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [sortType, setCurrentPage]);
 
   return (
+<<<<<<< HEAD
     <div className="flex flex-col pb-12.5">
       {/* TAB = 정렬 스위치 */}
       <TabFilter
@@ -63,6 +69,26 @@ export default function DeliveryProductList() {
       </ul>
 
       {/* PAGINATION */}
+=======
+    <div className="flex flex-col">
+      <div className="flex  flex-col ">
+        <TabFilter
+          items={CATEGORIES}
+          selectedValue={sortType}
+          onValueChange={(id) => handleTabChange(id, CATEGORIES)}
+        />
+        <div>
+          <DeliveryProductHeader />
+          <ul>
+            {currentItems.map((item) => (
+              <li key={item.id}>
+                <DeliveryProductCard order={item} />
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+>>>>>>> dev
       <Pagination
         currentPage={currentPage}
         totalPages={totalPages}
