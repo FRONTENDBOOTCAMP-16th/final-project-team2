@@ -1,18 +1,14 @@
 import { dummyUserCoupons } from "@/data/dummyCouponLists";
-import CouponItem from "./components/CouponItem";
+import CouponList from "./components/CouponList";
 
-export default function Coupon() {
+export default function CouponPage() {
+  // 현재는 더미 데이터를 사용합니다.
+  const coupons = dummyUserCoupons;
+
   return (
-    <div className="flex flex-col gap-4 w-full py-12 px-18 bg-white">
-      {dummyUserCoupons.length > 0 ? (
-        dummyUserCoupons.map((userCoupon) => (
-          <CouponItem key={userCoupon.id} userCoupon={userCoupon} />
-        ))
-      ) : (
-        <p className="text-gray-500 text-center py-20">
-          사용 가능한 쿠폰이 없습니다.
-        </p>
-      )}
+    <div className="flex flex-col w-full py-12 px-18 bg-white">
+      <h1 className="text-2xl font-bold mb-8">내 쿠폰함</h1>
+      <CouponList initialCoupons={coupons} />
     </div>
   );
 }
