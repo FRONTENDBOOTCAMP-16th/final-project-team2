@@ -10,7 +10,8 @@ interface ProductCardProps {
   onImageLoad?: () => void;
 }
 
-export default function ProductCard({ product, onImageLoad }: ProductCardProps) {
+export default function ProductsCard({ product, onImageLoad }: ProductCardProps) {
+  if (!product) return null;
   const discountPrice = product.discount > 0 ? Math.floor(product.price * (1 - product.discount / 100)) : product.price;
 
   const label = `제품명 ${product.name}, 원래 가격은 ${product.price.toLocaleString()}원이고 ${product.discount}퍼센트 할인 중이며 현재 가격은 ${discountPrice.toLocaleString()}원입니다.`;

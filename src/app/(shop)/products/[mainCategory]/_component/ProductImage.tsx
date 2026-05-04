@@ -1,16 +1,25 @@
 'use client';
 
 import Image from 'next/image';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 
 type ProductImageProps = {
-  src: string;
+  src?: string;
   alt: string;
   onLoadComplete?: () => void;
 };
 
 export default function ProductImage({ src, alt, onLoadComplete }: ProductImageProps) {
-  const [imgSrc, setImgSrc] = useState(src || '/pen_dummy.jpg');
+  const fallback = '/pen_dummy.jpg';
+  const [imgSrc, setImgSrc] = useState(src || fallback);
+  const isReportedRef = useRef(false);
+
+  const reportLoaded = () => {
+    if (isReportedRef.current) return;
+
+    isReportedRef.current = true;
+    onLoadComplete?.();
+  };
 
   return (
     <Image
@@ -18,12 +27,14 @@ export default function ProductImage({ src, alt, onLoadComplete }: ProductImageP
       alt={alt}
       fill
       className="object-cover"
-      onLoad={onLoadComplete}
+      sizes="(max-width: 768px) 50vw, 25vw"
+      onLoad={reportLoaded}
       onError={() => {
-        if (imgSrc !== '/pen_dummy.jpg') {
-          setImgSrc('/pen_dummy.jpg');
+        reportLoaded();
+
+        if (imgSrc !== fallback) {
+          setImgSrc(fallback);
         }
-        onLoadComplete?.();
       }}
     />
   );
