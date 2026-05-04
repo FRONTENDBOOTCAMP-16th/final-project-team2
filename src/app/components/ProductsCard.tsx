@@ -26,7 +26,10 @@ export default function ProductsCard({ products, maxProducts }: ProductsProps) {
         <Link href={`/products/pen/${item.id}`} className="block">
           <div className="w-70.5 aspect-square relative">
             <Image src={'/pen_dummy.jpg'} alt={item.name} fill={true} className="object-cover absolute" />
-            <div className="absolute w-16 h-8  bg-[#FF6B6B] text-white font-semibold flex items-center justify-center" aria-hidden>
+            <div
+              className={item.discount === 0 ? `hidden` : 'absolute w-16 h-8  bg-[#FF6B6B] text-white font-semibold flex items-center justify-center'}
+              aria-hidden
+            >
               {item.discount}%
             </div>
           </div>
@@ -41,10 +44,10 @@ export default function ProductsCard({ products, maxProducts }: ProductsProps) {
 
             <dl className="flex gap-3">
               <dt className="sr-only">할인율</dt>
-              <dd className="text-[#FF6B6B] mt-2 font-bold text-xl">{item.discount}%</dd>
+              <dd className={item.discount === 0 ? `hidden` : `text-[#FF6B6B] mt-2 font-bold text-xl`}>{item.discount}%</dd>
 
-              <dt className="sr-only">할인된 가격</dt>
-              <dd className="text-xl font-medium mt-2 ml-2">{discountPrice.toLocaleString()}원</dd>
+              <dt className="sr-only">{item.discount === 0 ? `가격` : '할인된 가격'}</dt>
+              <dd className={'text-xl font-medium mt-2 ml-2'}>{discountPrice.toLocaleString()}원</dd>
             </dl>
           </div>
         </Link>
