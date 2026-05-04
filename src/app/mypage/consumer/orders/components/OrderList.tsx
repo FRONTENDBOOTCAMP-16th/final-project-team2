@@ -44,13 +44,8 @@ export default function OrderList() {
         />
       </div>
       <OrderItemHeader />
-<<<<<<< HEAD
-      <ul className="px-5 py-5">
-        {orders.map((order) => (
-=======
       <ul>
         {currentItems.map((order) => (
->>>>>>> dev
           <li key={order.id}>
             <OrderItemCard order={order} />
           </li>
