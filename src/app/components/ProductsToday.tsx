@@ -1,15 +1,9 @@
-import { LucideSearch } from "lucide-react";
 import Image from "next/image";
-import Link from "next/link";
 
 interface Product {
-  id: string
+  id: number
   name: string
-  category: string
-  price: number
-  discount_rate: number
-  thunmbnail_image: string
-  updated_at: string
+  created_at: string
 }
 
 interface ProductsProps {
@@ -19,7 +13,7 @@ interface ProductsProps {
 
 
 export default function ProductTodayList({ products, image }: ProductsProps) {
-  const latestProduct = products && products.length > 0 ? products.toSorted((a, b) => new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime())[0] : null
+  const latestProduct = products && products.length > 0 ? [...products].sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())[0] : null
 
   if(!latestProduct) return
 
@@ -32,19 +26,14 @@ export default function ProductTodayList({ products, image }: ProductsProps) {
         fill
         unoptimized={true} 
       />
-      <div className="w-full max-w-7xl m-auto break-keep z-0 text-right"> 
-        <strong className="block text-white font-bold">
+      <div className="break-keep z-0 max-w-7xl px-10 w-full m-auto text-right"> 
+        <strong className="block text-2xl sm:text-4xl text-white font-bold leading-tight">
           오늘의 신상품
         </strong>
         
-        <p className="text-4xl font-bold text-white mt-9">
+        <p className="text-sm sm:text-base text-gray-200 mt-3 sm:mt-4">
           {latestProduct.name}
         </p>
-
-        <Link href={`/products/${latestProduct.category}/${latestProduct.id}`} className="inline-flex mt-9 px-8 py-3 text-white font-bold bg-[#FF6B6B] cursor-pointer rounded-2xl">
-          <LucideSearch className="me-2.5"/>
-          자세히 보기
-        </Link>
       </div>
     </>
   )

@@ -4,7 +4,7 @@ import DeliverStatusButton from "./DeliveryStatusButton";
 
 export default function DeliveryProductCard({ order }: { order: OrderItem }) {
   return (
-    <div className="flex font-semibold mb-2 border-b border-gray-300 gap-8 p-4 ">
+    <div className="flex font-semibold p-4 mb-2 border-b border-gray-300 gap-8 ">
       {/* 주문번호 */}
       <div className="flex w-1/9 text-center">
         <h2>{order.orderId}</h2>

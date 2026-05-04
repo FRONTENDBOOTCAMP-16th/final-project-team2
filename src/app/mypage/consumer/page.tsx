@@ -10,8 +10,9 @@ export default function ConsumerPage() {
       <h1 className="sr-only">마이페이지</h1>
 
       {/* 주문한 상품 없을 시, 없다는 안내 문구, 최근 주문한 4건만 마이 페이지 메인에서 볼 수 있도록 함 */}
-      {/* 헤더와 아이템 리스트 간격이 생겨서 section 부분에서 gap 스타일링을 삭제했습니다. */}
-      <section className="flex flex-col w-full bg-white px-6 pt-6 pb-11.25">
+      
+      <section className="flex flex-col gap-4 p-6 w-full bg-white">
+        <h2 className="font-semibold px-5">최근 주문 내역</h2>
         {hasProducts ? (
           <OrderList orders={dummyOrderItems.slice(0, MAX_PRODUCT_COUNT)} />
         ) : (

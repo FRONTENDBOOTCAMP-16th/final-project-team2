@@ -17,7 +17,7 @@ export default function Pagination({
   onPageChange,
 }: Props) {
   return (
-    <div className="flex justify-center gap-2 mt-12.5 text-[18px]">
+    <div className="flex justify-center gap-2 mt-6">
       <button
         onClick={() => onPageChange(1)}
         aria-disabled={currentPage === 1}
