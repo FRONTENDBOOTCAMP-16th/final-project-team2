@@ -15,8 +15,15 @@ const CATEGORIES = [
 
 export default function WishListItemsList() {
   const [selectedValue, setSelectedValue] = useState("");
+  const [filterValue, setFilterValue] = useState([...dummyOrderItems]);
+
   const { currentItems, currentPage, setCurrentPage, totalPages } =
-    usePagination(dummyOrderItems, 9);
+    usePagination(filterValue, 9);
+
+  const onRemove = (id: string) => {
+    const newFilterValue = filterValue.filter((item) => item.id !== id);
+    setFilterValue(newFilterValue);
+  };
 
   return (
     <>
@@ -43,7 +50,7 @@ export default function WishListItemsList() {
       <ul className="grid grid-cols-2 md:grid-cols-3 gap-x-6  gap-y-15 ">
         {currentItems.map((item) => (
           <li key={item.id}>
-            <WishListItemCard order={item} />
+            <WishListItemCard order={item} onRemove={onRemove} />
           </li>
         ))}
       </ul>

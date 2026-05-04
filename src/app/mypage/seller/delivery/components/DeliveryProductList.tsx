@@ -45,6 +45,31 @@ export default function DeliveryProductList() {
   }, [sortType, setCurrentPage]);
 
   return (
+<<<<<<< HEAD
+    <div className="flex flex-col pb-12.5">
+      {/* TAB = 정렬 스위치 */}
+      <TabFilter
+        items={CATEGORIES}
+        selectedValue={sortType}
+        onValueChange={(id) => handleTabChange(id, CATEGORIES)}
+      />
+
+      {/* HEADER */}
+      <div className="my-12.5">
+        <DeliveryProductHeader />
+      </div>
+
+      {/* LIST */}
+      <ul>
+        {currentItems.map((item) => (
+          <li key={item.id}>
+            <DeliveryProductCard order={item} />
+          </li>
+        ))}
+      </ul>
+
+      {/* PAGINATION */}
+=======
     <div className="flex flex-col">
       <div className="flex  flex-col ">
         <TabFilter
@@ -63,6 +88,7 @@ export default function DeliveryProductList() {
           </ul>
         </div>
       </div>
+>>>>>>> dev
       <Pagination
         currentPage={currentPage}
         totalPages={totalPages}

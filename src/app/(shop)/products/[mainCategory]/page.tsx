@@ -1,45 +1,52 @@
-import products from '@/data/dummyproducts.json';
 import Pagination from '@/app/components/Pagination';
-import Depth from './_component/depth';
 import ProductArea from './_component/ProductArea';
-import FilterCategory from './_component/filterCategory';
 import Sort from './_component/Sort';
-
+import { getProducts } from '@/api/getProducts';
+import BreadCrumble from './_component/BreadCrumble';
+import FilterCategory from './_component/filterCategory';
+import { CATEGORY_MAP, CategoryType } from './lib/category';
 type Product = {
   params: Promise<{
-    mainCategory: string;
+    mainCategory: CategoryType;
   }>;
   searchParams: Promise<{
     category?: string;
     page?: string;
+    sort?: string;
   }>;
 };
 
-const ProductListPage = async ({ searchParams, params }: Product) => {
-  const { category, page } = await searchParams;
+const ProductListPage = async ({ params, searchParams }: Product) => {
   const { mainCategory } = await params;
-
-  const filtered = category ? products.filter(product => product.category === category) : products;
-
+  const { category: keyword, page = '1', sort = 'latest' } = await searchParams;
   const PAGE_SIZE = 12;
-  const currentPage = Number(page) || 1;
-  const start = (currentPage - 1) * PAGE_SIZE;
-  const paginated = filtered.slice(start, start + PAGE_SIZE);
+
+  const data = await getProducts({
+    page: page,
+    pageSize: 12,
+    category: mainCategory,
+    sort,
+    keyword,
+  });
+
+  console.log(mainCategory);
 
   return (
     <div className="mt-5 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <Depth mainCategory={mainCategory} />
+      <BreadCrumble categoryMap={CATEGORY_MAP[mainCategory].label} />
       <div className="text-center">
-        <h1 className="text-[48px] bold mb-5">필기구</h1>
-        <p className="text-base font-semibold text-gray-600">장인은 도구탓을 합니다</p>
+        <h1 className="text-4xl font-bold mt-3">{keyword ? keyword : CATEGORY_MAP[mainCategory].label}</h1>
+        <p className="text-base mt-3 font-semibold text-gray-600">장인은 도구탓을 합니다</p>
       </div>
+
       <div className="flex justify-between mb-16 mt-18">
-        <FilterCategory mainCategory={mainCategory} />
-        <Sort />
+        <FilterCategory mainCategory={mainCategory} sort={sort} category={keyword} />
+        <Sort mainCategory={mainCategory} />
       </div>
+
       <main>
-        <ProductArea paginated={paginated} pageSize={PAGE_SIZE} />
-        <Pagination mainCategory={mainCategory} searchParams={searchParams} />
+        <ProductArea pageSize={PAGE_SIZE} paginated={data.products} />
+        <Pagination baseUrl={'/products'} mainCategory={mainCategory} searchParams={searchParams} pagesize={PAGE_SIZE} />
       </main>
     </div>
   );

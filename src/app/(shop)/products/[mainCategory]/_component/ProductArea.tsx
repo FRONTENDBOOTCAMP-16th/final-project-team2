@@ -2,7 +2,7 @@ import ProductsCard from '@/app/components/ProductsCard';
 import ProductsCardList from '@/app/components/ProductsCardList';
 
 type Product = {
-  id: number;
+  id: string;
   name: string;
   price: number;
   discount: number;
