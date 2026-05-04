@@ -3,7 +3,11 @@
 import z from "zod"
 
 // formData를 받아 에러를 반환
-export const ahthAction = async (_: unknown, formData: FormData, schema: z.ZodSchema) => {
+export const authAction = async (
+  _: unknown,
+  formData: FormData,
+  schema: z.ZodSchema,
+) => {
   // form을 일반 객체로 변환
   const objectTransform = Object.fromEntries(formData)
   const result = schema.safeParse(objectTransform)
@@ -11,7 +15,7 @@ export const ahthAction = async (_: unknown, formData: FormData, schema: z.ZodSc
   if (!result.success) {
     // 에러를 담을 객체
     const errors: Record<string, string[]> = {}
-  
+
     // 에러 목록을 필드별로 분류
     for (const issue of result.error.issues) {
       const field = issue.path[0] as string
@@ -20,8 +24,18 @@ export const ahthAction = async (_: unknown, formData: FormData, schema: z.ZodSc
       errors[field].push(issue.message)
     }
 
-    return { errors }
+    return {
+      errors,
+      // 사용자 입력 정보 브라우저(클라이언트)에 다시 보내기
+      role: formData.get('role')?.toString(),
+      name: formData.get('name')?.toString(),
+      email: formData.get('email')?.toString(),
+      phone: formData.get('phone')?.toString(),
+      password: formData.get('password')?.toString(),
+      confirmPassword: formData.get('confirmPassword')?.toString(),
+      terms: formData.get('terms')?.toString(),
+    }
   }
-  
+
   return { errors: null }
 }

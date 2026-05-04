@@ -1,11 +1,11 @@
 'use client'
 
-import { resetPasswordAction } from "@/actions/resetPasswordAction"
+import { resetPasswordCheckAction } from "@/actions/resetPasswordCheckAction"
 import InputBox from "@/app/components/InputBox"
 import { useActionState } from "react"
 
 export default function ResetPasswordCheckPage() {
-  const [state, formAction] = useActionState(resetPasswordAction, null)
+  const [state, formAction] = useActionState(resetPasswordCheckAction, null)
   const errorMessage = '일치하는 아이디가 없습니다'
 
   return (
@@ -16,9 +16,9 @@ export default function ResetPasswordCheckPage() {
 
       <form action={formAction} className="flex flex-col gap-2 mbs-10 pb-10">
         <div className="mbe-4">
-          <InputBox type="text" label="이름" name="id" placeholder="이름을 입력하세요" error={state?.errors?.name?.[0]}/>
-          <InputBox type="text" label="이메일" name="email" placeholder="이메일을 입력하세요" error={state?.errors?.email?.[0]}/>
-          <InputBox type="text" label="핸드폰 번호" name="phone" placeholder="핸드폰 번호를 입력하세요 (010-0000-0000)" error={state?.errors?.phone?.[0]}/>
+          <InputBox type="text" label="이름" name="name" placeholder="이름을 입력하세요" error={state?.errors?.name?.[0]} defaultValue={state?.name}/>
+          <InputBox type="text" label="이메일" name="email" placeholder="이메일을 입력하세요" error={state?.errors?.email?.[0]} defaultValue={state?.email}/>
+          <InputBox type="text" label="핸드폰 번호" name="phone" placeholder="핸드폰 번호를 입력하세요 (010-0000-0000)" error={state?.errors?.phone?.[0]} defaultValue={state?.phone}/>
         </div>
         <p className="pbs-4 text-center text-red-500 border-bs border-[#e0e0e0]">{errorMessage || '\u00A0'}</p>
 

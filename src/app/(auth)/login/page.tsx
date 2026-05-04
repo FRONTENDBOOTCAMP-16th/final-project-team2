@@ -20,22 +20,22 @@ export default function LoginPage() {
       <form action={formAction} className="flex flex-col gap-2 mbs-10 pb-7">
         {/* 계정 타입 */}
         <div className="flex gap-2">
-          <TypeRadioInput label="소비자" name="login" value="USER" />
-          <TypeRadioInput label="판매자" name="login" value="BUSINSS" />
-          <TypeRadioInput label="관리자" name="login" value="ADMIN" />
+          <TypeRadioInput label="소비자" name="role" value="USER" defaultChecked={state?.role === "USER"}/>
+          <TypeRadioInput label="판매자" name="role" value="BUSINESS" defaultChecked={state?.role === "BUSINESS"}/>
+          <TypeRadioInput label="관리자" name="role" value="ADMIN" defaultChecked={state?.role === "ADMIN"}/>
         </div>
         <p className="mbs-1 text-red-600" aria-live="polite" aria-hidden="true">{state?.errors?.role?.[0] || '\u00A0'}</p>
 
         
         {/* 아이디 패스워드 */}
         <div className="flex flex-col gap-2 mbs-2">
-          <InputBox type="text" label="아이디" name="id" placeholder="이메일을 입력하세요" error={state?.errors?.email?.[0]}/>
-          <InputBox type="password" label="패스워드" name="password" placeholder="비밀번호를 입력하세요" error={state?.errors?.password?.[0]}/>
+          <InputBox type="text" label="이메일" name="email" placeholder="이메일을 입력하세요" error={state?.errors?.email?.[0]} defaultValue={state?.email}/>
+          <InputBox type="password" label="패스워드" name="password" placeholder="비밀번호를 입력하세요" error={state?.errors?.password?.[0]} defaultValue={state?.password}/>
         </div>
 
         {/* 로그인 서브 */}
         <div className="grid grid-cols-1 mbs-2 pbe-9 border-be border-[#e0e0e0]">
-          <CheckeBox name="login-stay" label="로그인 상태유지" />
+          <CheckeBox name="terms" label="로그인 상태유지" />
           <Link href="/signup" className="text-[#575A68] row-start-1 col-start-2 text-right">회원가입</Link>
           <Link href="/find-id" className="text-[#575A68] row-start-2 col-start-2 text-right">아이디 찾기</Link>
           <Link href="/reset-password-check" className="text-[#575A68] row-start-3 col-start-2 text-right">비밀번호 재설정</Link>

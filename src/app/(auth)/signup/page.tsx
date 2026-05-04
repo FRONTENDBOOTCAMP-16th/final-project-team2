@@ -19,22 +19,22 @@ export default function SignupPage() {
         <form action={formAction}>
           {/* 계정 타입 */}
           <div className="flex gap-2 mbs-6">
-            <TypeRadioInput label="소비자" name="role" value="USER" />
-            <TypeRadioInput label="판매자" name="role" value="BUSINESS" />
+            <TypeRadioInput label="소비자" name="role" value="USER" defaultChecked={state?.role === "USER"} />
+            <TypeRadioInput label="판매자" name="role" value="BUSINESS" defaultChecked={state?.role === "BUSINESS"}/>
           </div>
           <p className="mbs-1 text-red-600" aria-live="polite" aria-hidden="true">{state?.errors?.role?.[0] || '\u00A0'}</p>
 
           {/* 아이디 패스워드 */}
           <div className="flex flex-col gap-3 mbs-4">
-            <InputBox type="text" label="이름" name="name" placeholder="이름을 입력하세요" error={state?.errors?.name?.[0]}/>
-            <InputBox type="text" label="이메일" name="email" placeholder="이메일을 입력하세요" error={state?.errors?.email?.[0]}/>
-            <InputBox type="text" label="핸드폰 번호" name="phone" placeholder="핸드폰 번호를 입력하세요 (010-0000-0000)" error={state?.errors?.phone?.[0]} />
-            <InputBox type="text" label="비밀번호 설정" name="password" placeholder="비밀 번호를 입력하세요" error={state?.errors?.password?.[0]} />
-            <InputBox type="text" label="비밀번호 재확인" name="confirmPassword" placeholder="비밀 번호를 재입력하세요" error={state?.errors?.confirmPassword?.[0]} />
+            <InputBox type="text" label="이름" name="name" placeholder="이름을 입력하세요" error={state?.errors?.name?.[0]} defaultValue={state?.name}/>
+            <InputBox type="text" label="이메일" name="email" placeholder="이메일을 입력하세요" error={state?.errors?.email?.[0]} defaultValue={state?.email}/>
+            <InputBox type="text" label="핸드폰 번호" name="phone" placeholder="핸드폰 번호를 입력하세요 (010-0000-0000)" error={state?.errors?.phone?.[0]} defaultValue={state?.phone}/>
+            <InputBox type="password" label="비밀번호 설정" name="password" placeholder="비밀 번호를 입력하세요" error={state?.errors?.password?.[0]} defaultValue={state?.password} />
+            <InputBox type="password" label="비밀번호 재확인" name="confirmPassword" placeholder="비밀 번호를 재입력하세요" error={state?.errors?.confirmPassword?.[0]} defaultValue={state?.confirmPassword}/>
           </div>
 
           <div className="mbs-6 border-be pbe-6 border-[#e0e0e0]">
-            <CheckeBox name="login-terms" label="이용약관 동의(필수)" />
+            <CheckeBox name="terms" label="이용약관 동의(필수)" error={state?.errors?.terms?.[0]} defaultChecked={state?.terms === "on"}/>
           </div>
 
           <button type="submit" className="w-full py-4 mbs-12 text-white bg-[#FF6B6B] rounded font-bold cursor-pointer">회원가입</button>

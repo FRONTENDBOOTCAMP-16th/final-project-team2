@@ -7,10 +7,10 @@ interface InputBoxProps {
   error?: string
   type?: "text" | "password"
   value?: string
-  onChange?: () => void
+  defaultValue?: string
 }
 
-export default function InputBox({ label, placeholder, error, name, type = "text", value, onChange }: InputBoxProps) {
+export default function InputBox({ label, placeholder, error, name, type = "text", value, defaultValue }: InputBoxProps) {
   const uniqueId = useId()
 
   return (
@@ -23,6 +23,7 @@ export default function InputBox({ label, placeholder, error, name, type = "text
         placeholder={placeholder}
         name={name}
         value={value}
+        defaultValue={defaultValue}
       />
       <p className="mbs-1 text-red-600" aria-live="polite" aria-hidden="true">{error}</p>
     </div>

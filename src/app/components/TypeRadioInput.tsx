@@ -5,10 +5,11 @@ interface TypeRadioInput {
   name: string
   value: string
   checked?: boolean
+  defaultChecked?: boolean
   onChange?: () => void
 }
 
-export default function TypeRadioInput({ label, name, value }: TypeRadioInput) {
+export default function TypeRadioInput({ label, name, value, defaultChecked }: TypeRadioInput) {
   const uniqueId = useId()
 
   return (
@@ -19,6 +20,7 @@ export default function TypeRadioInput({ label, name, value }: TypeRadioInput) {
         id={uniqueId}
         name={name}
         value={value}
+        defaultChecked={defaultChecked}
       />
       <label
         htmlFor={uniqueId}
