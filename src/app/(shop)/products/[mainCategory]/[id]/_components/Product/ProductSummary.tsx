@@ -1,18 +1,9 @@
 import { Star } from 'lucide-react';
-type ProductProps = {
-  category: string;
-  name: string;
-  originalPrice: number;
-  discountRate: number;
-  salePrice: number;
-  shipping: string[];
-  returnPolicy: string;
-  countryOfOrigin: string;
-  description: string;
-};
+import { Products } from '../../../lib/products';
+
 
 interface Props {
-  products: ProductProps;
+  products: Products;
 }
 
 const ProductSummary = ({ products }: Props) => {
@@ -46,14 +37,14 @@ const ProductSummary = ({ products }: Props) => {
         <dl className="flex items-center gap-2 mt-9">
           <dt className="sr-only">정가</dt>
           <dd className="order-2">
-            <del className="text-lg text-gray-500">{formatPrice(products.originalPrice)}</del>
+            <del className="text-lg text-gray-500">{formatPrice(products.price)}</del>
           </dd>
 
           <dt className="sr-only">할인가</dt>
-          <dd className="order-1 text-2xl font-semibold">{formatPrice(products.salePrice)}</dd>
+          <dd className="order-1 text-2xl font-semibold">{formatPrice(Math.ceil(products.price*(1-products.discount_rate/100)))}</dd>
         </dl>
         <div className="discountBadge w-20.5 h-7 bg-[#ff6b6b] mt-2 pl-3 pr-3  pt-1 pb-1 flex items-center justify-center">
-          <p className="text-white">{products.discountRate}%</p>
+          <p className="text-white">{products.discount_rate}%</p>
         </div>
       </div>
     </>
