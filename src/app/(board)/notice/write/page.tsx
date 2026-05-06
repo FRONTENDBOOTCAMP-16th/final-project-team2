@@ -1,4 +1,4 @@
-export default function writeNotice(props) {
+export default function writeNotice() {
   return (
     <div>
       

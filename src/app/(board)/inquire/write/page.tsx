@@ -1,4 +1,4 @@
-export default function writeInquire(props) {
+export default function writeInquire() {
   return (
     <div>
       

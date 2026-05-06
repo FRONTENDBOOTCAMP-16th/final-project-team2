@@ -8,10 +8,7 @@ export default async function qnaList({
   searchParams: Promise<{ page?: string }>; 
 }) {
   const params = await searchParams;
-  
   const currentPage = Number(params?.page) || 1;
-  const ITEMS_PER_PAGE = 20;
-  
   const { normalData, normalCount } = await getInquires(currentPage);
 
   if (normalData.length === 0) {
@@ -23,9 +20,7 @@ export default async function qnaList({
       <h1 className="text-2xl font-bold mb-6">1:1 문의</h1>
       
       <ul>
-        {normalData.map((inquire, index) => {
-          const listNumber = normalCount - ((currentPage - 1) * ITEMS_PER_PAGE) - index;
-          
+        {normalData.map((inquire) => {
           return (
             <PostListCard 
               key={inquire.id} 

@@ -10,7 +10,6 @@ export default async function NoticeList({
   const params = await searchParams;
   
   const currentPage = Number(params?.page) || 1;
-  const ITEMS_PER_PAGE = 20; // 번호 계산을 위해 동일한 상수 필요
   
   // 1. 수정된 API의 반환값에 맞게 구조 분해 할당
   const { importantData, normalData, normalCount } = await getNotices(currentPage);
@@ -36,7 +35,7 @@ export default async function NoticeList({
         ))}
 
         {/* 3. 일반 공지사항 렌더링 (역순 번호 계산해서 전달) */}
-        {normalData.map((notice, index) => {
+        {normalData.map((notice) => {
           return (
             <PostListCard 
               key={notice.id} 
