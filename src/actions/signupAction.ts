@@ -53,5 +53,5 @@ export const signupAction = async (_: unknown, formData: FormData): Promise<Sign
   // 데이터 저장 실패시 에러메세지
   if (dbError) return { errors: { root: [ dbError.message ] } }
   
-  redirect('/signup-result')
+  redirect('/signup/signup-result')
 }
