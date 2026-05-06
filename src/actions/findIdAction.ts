@@ -1,8 +1,8 @@
 "use server"
 
-import { findIdSchema } from "@/app/lib/ahth"
-import { ahthAction } from "./auth.actions"
+import { findIdSchema } from "@/app/lib/auth"
+import { authAction } from "./auth.actions"
 
 export const findIdAction = async (_: unknown, formData: FormData) => {
-  return ahthAction(_, formData, findIdSchema)
+  return authAction(_, formData, findIdSchema)
 }
