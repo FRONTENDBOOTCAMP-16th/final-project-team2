@@ -1,11 +1,11 @@
 import Pagination from '@/app/components/Pagination';
-import Sort from './_component/Sort';
-import BreadCrumble from './_component/BreadCrumble';
-import FilterCategory from './_component/filterCategory';
+import Sort from './_components/Sort';
+import BreadCrumble from './_components/BreadCrumble';
+import FilterCategory from './_components/filterCategory';
 import { CATEGORY_MAP, CategoryType } from './lib/category';
 import { Suspense } from 'react';
-import ProductListSkeleton from './_component/ProductListSkeleton';
-import ProductListFetcher from './_component/ProductListFetcher';
+import ProductListSkeleton from './_components/ProductListSkeleton';
+import ProductListFetcher from './_components/ProductListFetcher';
 type Product = {
   params: Promise<{
     mainCategory: CategoryType;
