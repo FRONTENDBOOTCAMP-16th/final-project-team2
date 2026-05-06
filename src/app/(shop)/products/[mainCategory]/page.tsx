@@ -22,8 +22,6 @@ const ProductListPage = async ({ params, searchParams }: Product) => {
   const { category: keyword, page = '1', sort = 'latest' } = await searchParams;
   const PAGE_SIZE = 12;
 
-  console.log(mainCategory);
-
   return (
     <div className="mt-5 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <BreadCrumble categoryMap={CATEGORY_MAP[mainCategory].label} />

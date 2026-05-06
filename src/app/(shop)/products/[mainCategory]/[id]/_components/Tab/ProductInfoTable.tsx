@@ -1,16 +1,7 @@
-type Product = {
-  category: string;
-  name: string;
-  originalPrice: number;
-  discountRate: number;
-  salePrice: number;
-  shipping: string[];
-  returnPolicy: string;
-  countryOfOrigin: string;
-  description: string;
-};
+import { Products } from "../../../lib/products";
+
 type Props = {
-  product: Product;
+  product: Products;
 };
 
 const ProductInfoTable = ({ product }: Props) => {
@@ -39,7 +30,7 @@ const ProductInfoTable = ({ product }: Props) => {
 
         <tr>
           <th className="w-32 px-4 py-3 text-left bg-gray-50 text-gray-500">원산지</th>
-          <td className="px-4 py-3">{product.countryOfOrigin}</td>
+          <td className="px-4 py-3">대한민국</td>
         </tr>
       </tbody>
     </table>
