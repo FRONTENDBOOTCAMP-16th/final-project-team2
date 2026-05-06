@@ -18,6 +18,10 @@ export default function SignupPage() {
 
         <form action={formAction}>
           {/* 계정 타입 */}
+          <p className="mbs-1 text-red-600 font-bold text-center" aria-live="polite" aria-hidden="true">
+            {state?.errors?.root?.[0]}
+            에러났나요?
+          </p>
           <div className="flex gap-2 mbs-6">
             <TypeRadioInput label="소비자" name="role" value="USER" defaultChecked={state?.role === "USER"} />
             <TypeRadioInput label="판매자" name="role" value="BUSINESS" defaultChecked={state?.role === "BUSINESS"}/>

@@ -3,6 +3,7 @@
 import { signupSchema } from "@/app/lib/auth"
 import { authAction } from "./auth.actions"
 import { supabase } from "@/app/lib/supabase"
+import { redirect } from "next/navigation"
 
 export type SignupState = {
   errors: Record<string, string[]> | null
@@ -52,5 +53,5 @@ export const signupAction = async (_: unknown, formData: FormData): Promise<Sign
   // 데이터 저장 실패시 에러메세지
   if (dbError) return { errors: { root: [ dbError.message ] } }
   
-  return { errors: null }
+  redirect('/signup-result')
 }
