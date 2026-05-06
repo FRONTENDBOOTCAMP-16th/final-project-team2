@@ -11,7 +11,7 @@ const TabInfoComponent = ({ product }: Props) => {
     <>
       <TabProductsInfo product={product}>
         <div className="mt-4">
-          <ProductInfoTable product={product} />
+          <ProductInfoTable />
         </div>
       </TabProductsInfo>
 
