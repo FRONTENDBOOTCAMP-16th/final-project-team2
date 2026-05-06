@@ -2,6 +2,7 @@
 import { getNoticeDetail } from "@/api/noticeDetail";
 import { notFound } from "next/navigation";
 import DOMPurify from 'isomorphic-dompurify';
+import Link from "next/link";
 
 
 export default async function NoticeDetailPage({ 
@@ -24,10 +25,10 @@ export default async function NoticeDetailPage({
     notFound(); 
   }
 
-  const cleanHtml = DOMPurify.sanitize(notice.content);
+  const cleanHtml = DOMPurify.sanitize(notice.content || '');
 
   return (
-    <div className="p-8">
+    <div className="w-full max-w-4xl p-8 mx-auto">
       <h1 className="text-2xl font-bold">{notice.title}</h1>
       <p className="text-gray-500">
         작성일: {new Date(notice.created_at).toLocaleDateString()}
@@ -37,6 +38,12 @@ export default async function NoticeDetailPage({
         className="prose"
         dangerouslySetInnerHTML={{ __html: cleanHtml }}
       />
+      <Link
+        href="/notice"
+        className="inline-block mb-4 px-4 py-2 bg-slate-800 text-white rounded hover:bg-slate-700"
+      >
+        목록
+      </Link>
     </div>
   );
 }
