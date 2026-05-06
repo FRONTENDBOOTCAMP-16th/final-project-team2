@@ -1,4 +1,4 @@
-import BreadCrumble from '../_component/BreadCrumble';
+import BreadCrumble from '../_components/BreadCrumble';
 import ProductInfoComponent from './_components/Product/ProductInfoComponent';
 import TabInfoComponent from './_components/Tab/TabInfoComponent';
 import { getProductDetail } from './lib/getProductDetail';
@@ -13,7 +13,7 @@ type ProductDetailPageProps = {
 export default async function ProductDetailPage({ params }: ProductDetailPageProps) {
   const { mainCategory, id } = await params;
 
-  const product = await getProductDetail({id});
+  const product = await getProductDetail({ id });
 
   return (
     <div aria-labelledby="product-detail-title" className="mt-5 mb-38 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
