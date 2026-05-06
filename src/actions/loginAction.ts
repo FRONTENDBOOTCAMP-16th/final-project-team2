@@ -22,7 +22,6 @@ export const loginAction = async (_: unknown, formData: FormData): Promise<Login
 
   // 객체 변경 및 로그인지속 여부
   const objectForm = Object.fromEntries(formData) as Record<string, string>
-
   const isKeepLogin = objectForm.keeplogin === 'on'
   const supabase = await createClient(isKeepLogin)
 
