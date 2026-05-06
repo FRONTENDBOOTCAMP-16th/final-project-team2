@@ -1,5 +1,7 @@
+import { ReactNode } from "react"
+
 interface ResetPasswordCheckProps {
-  children: string
+  children: ReactNode
 }
 
 export default function ResetPasswordCheckLayout({ children }: ResetPasswordCheckProps) {
