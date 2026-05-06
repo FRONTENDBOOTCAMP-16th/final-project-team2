@@ -1,7 +1,7 @@
 import { Heart } from 'lucide-react';
 import Link from 'next/link';
 import { Products } from '../(shop)/products/[mainCategory]/lib/products';
-import ProductImage from '../(shop)/products/[mainCategory]/_component/ProductImage';
+import ProductImage from '../(shop)/products/[mainCategory]/_components/ProductImage';
 
 interface ProductCardProps {
   product: Products;
