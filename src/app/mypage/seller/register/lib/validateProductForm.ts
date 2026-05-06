@@ -1,3 +1,8 @@
+export type Option = {
+  name: string;
+  values: string[];
+};
+
 export type ProductForm = {
   productImage: File | null;
   productName: string;
@@ -5,22 +10,12 @@ export type ProductForm = {
   productDescription: string;
   productInventory: string;
   productDiscount: string;
-  productOptions: string;
+  productOptions: Option[];
 };
 export default function validateProductform<T extends keyof ProductForm>(
   name: T,
   value: ProductForm[T],
 ) {
-  // 이미지
-  if (name === "productImage") {
-    const file = value as File | null;
-    if (!file) return "이미지를 업로드해야 합니다.";
-    if (file.size > 5 * 1024 * 1024) {
-      return "5MB 이하 이미지만 업로드 가능합니다.";
-    }
-    return "";
-  }
-
   // 이름
   if (name === "productName") {
     if (typeof value !== "string") return "잘못된 값입니다.";

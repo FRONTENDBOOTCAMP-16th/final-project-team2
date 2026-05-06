@@ -2,9 +2,15 @@ type Props = {
   value: string;
   error?: string;
   onChange: (value: string) => void;
+  onBlur: () => void;
 };
 
-export default function ProductDescription({ value, error, onChange }: Props) {
+export default function ProductDescription({
+  value,
+  error,
+  onChange,
+  onBlur,
+}: Props) {
   //  작성할 때마다 밑에 오류 메시지가 깜빡 깜빡 되는 부분을 리펙토링 과정 필요
 
   return (
@@ -20,6 +26,7 @@ export default function ProductDescription({ value, error, onChange }: Props) {
           id="productDescription"
           className="w-full h-50 border border-[#D1D5DC] bg-[#F9FAFB] px-4 py-3 "
           onChange={(e) => onChange(e.target.value)}
+          onBlur={onBlur}
           maxLength={500}
           placeholder="예) 정밀하게 지울 수 있는 펜형 지우개"
         />

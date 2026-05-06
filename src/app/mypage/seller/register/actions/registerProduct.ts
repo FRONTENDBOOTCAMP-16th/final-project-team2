@@ -1,6 +1,7 @@
 "use server";
 
 import { redirect } from "next/navigation";
+import { createClient } from "../../../../../../utils/supabase/server";
 
 export type FormState = {
   errors: {
@@ -21,8 +22,7 @@ export async function registerProductAction(formData: FormData) {
     console.error(result.errors);
     return;
   }
-
-  redirect("/mypage/seller/products");
+  return await processRegister(formData);
 }
 
 export async function registerProductActionWithState(
@@ -35,18 +35,18 @@ export async function registerProductActionWithState(
 async function processRegister(formData: FormData): Promise<FormState> {
   const errors: NonNullable<FormState>["errors"] = {};
 
-  const imageFile = formData.get("productImage") as File;
+  const image = formData.get("productImage");
   const name = formData.get("productName")?.toString().trim();
   const priceRaw = formData.get("productPrice")?.toString();
   const description = formData.get("productDescription")?.toString().trim();
   const inventory = formData.get("productInventory")?.toString();
   const discount = formData.get("productDiscount")?.toString();
-  const optionsRaw = formData.get("productOptions")?.toString() ?? "[]";
+  const optionsRaw = formData.get("productOptions")?.toString();
 
   // 이미지
-  if (!imageFile || imageFile.size === 0) {
+  if (!(image instanceof File) || image.size === 0) {
     errors.productImage = "이미지를 업로드해야 합니다.";
-  } else if (imageFile.size > 5 * 1024 * 1024) {
+  } else if (image.size > 5 * 1024 * 1024) {
     errors.productImage = "5MB 이하 이미지만 업로드 가능합니다.";
   }
 
@@ -76,8 +76,12 @@ async function processRegister(formData: FormData): Promise<FormState> {
   }
 
   // 옵션
+
+  let options = [];
+
   try {
-    JSON.parse(optionsRaw);
+    options = JSON.parse(typeof optionsRaw === "string" ? optionsRaw : "[]");
+    console.log(options);
   } catch {
     errors.productOptions = "옵션 데이터가 올바르지 않습니다.";
   }
@@ -87,13 +91,38 @@ async function processRegister(formData: FormData): Promise<FormState> {
     return { errors };
   }
 
+  const imageFile = image as File;
+
   const fakeImageUrl = `/temp/${Date.now()}-${imageFile.name}`;
+  const finalDescription = `<img src="${fakeImageUrl}" alt="상세이미지"/><br/>${description}`;
 
-  console.log({
-    name,
-    price: Number(priceRaw),
-    imageUrl: fakeImageUrl,
-  });
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
 
-  return null;
+  const { data: store } = await supabase
+    .from("stores")
+    .select("id")
+    .eq("owner_id", user?.id)
+    .single();
+
+  const { data, error } = await supabase
+    .from("products")
+    .insert({
+      store_id: store?.id,
+      name,
+      price: Number(priceRaw),
+      thumbnail_image: fakeImageUrl,
+      content: finalDescription,
+      inventory: Number(inventory),
+      discount_rate: Number(discount),
+      options: JSON.parse(optionsRaw ?? "[]"),
+      status: "PREPARING",
+    })
+    .select();
+
+  console.log(data, error);
+
+  return redirect("/mypage/seller/products");
 }

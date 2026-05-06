@@ -2,9 +2,15 @@ type Props = {
   value: string;
   error?: string;
   onChange: (value: string) => void;
+  onBlur: () => void;
 };
 
-export default function ProductInventory({ value, error, onChange }: Props) {
+export default function ProductInventory({
+  value,
+  error,
+  onChange,
+  onBlur,
+}: Props) {
   return (
     <div className="flex flex-col gap-2">
       {/* 상품 재고 */}
@@ -21,6 +27,7 @@ export default function ProductInventory({ value, error, onChange }: Props) {
         max="100"
         value={value}
         onChange={(e) => onChange(e.target.value)}
+        onBlur={onBlur}
         className="w-2xl h-12.5 border border-[#D1D5DC] bg-[#F9FAFB] px-4 py-3"
       />
       <p id="productInventoryHelp" className="sr-only">

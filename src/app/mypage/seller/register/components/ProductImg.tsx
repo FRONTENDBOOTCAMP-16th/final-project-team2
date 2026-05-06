@@ -1,23 +1,21 @@
+"use client";
 import Image from "next/image";
+import { useState } from "react";
 
 type Props = {
-  value: File | null;
   error?: string;
-  onChange: (file: File | null) => void;
 };
 
-export default function ProductImg({ value, error, onChange }: Props) {
-  // 미리보기 이미지 상태 선언
-  const preview = value ? URL.createObjectURL(value) : null;
+export default function ProductImg({ error }: Props) {
+  const [preview, setPreview] = useState<string | null>(null);
+  const [fileName, setFileName] = useState("");
 
-  // 이미지 업로드 이벤트 핸들러
   const handleChangeImg = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-
     if (!file) return;
-    if (preview) URL.revokeObjectURL(preview);
 
-    onChange(file);
+    setFileName(file.name);
+    setPreview(URL.createObjectURL(file));
   };
 
   return (
@@ -43,7 +41,7 @@ export default function ProductImg({ value, error, onChange }: Props) {
             alt="상품 이미지 미리보기"
             width={300}
             height={300}
-            className="aspect-auto"
+            className="border-2 border-red-400 p-3 "
           />
         )}
 
@@ -57,8 +55,8 @@ export default function ProductImg({ value, error, onChange }: Props) {
           {preview ? "이미지 선택 완료" : "이미지 선택"}
         </label>
 
-        <span aria-live="polite" className="text-sm text-gray-500 shirink-0">
-          {value?.name || "선택된 파일 없음"}
+        <span aria-live="polite" className="text-sm text-gray-500 shrink-0">
+          {fileName || "선택된 파일 없음"}
         </span>
       </div>
       {error && <p className="text-red-500">{error}</p>}

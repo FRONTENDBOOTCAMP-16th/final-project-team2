@@ -50,7 +50,6 @@ export default function OptionInput({ optionForm, error }: Props) {
           <input
             type="text"
             id="productOptions"
-            name="productOptions"
             value={optionForm.state.optionValue}
             onChange={(e) => optionForm.actions.handleInput(e.target.value)}
             className="w-120 border border-[#D1D5DC] bg-[#F9FAFB] px-4 py-3"
@@ -60,6 +59,11 @@ export default function OptionInput({ optionForm, error }: Props) {
                 : "값을 입력하세요"
             }
             aria-describedby="optionValueHelp"
+          />
+          <input
+            type="hidden"
+            name="productOptions"
+            value={JSON.stringify(optionForm.state.options)}
           />
           <button
             type="button"

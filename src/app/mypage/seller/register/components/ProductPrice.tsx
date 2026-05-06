@@ -2,9 +2,15 @@ type Props = {
   value: string;
   error?: string;
   onChange: (value: string) => void;
+  onBlur: () => void;
 };
 
-export default function ProductPrice({ value, error, onChange }: Props) {
+export default function ProductPrice({
+  value,
+  error,
+  onChange,
+  onBlur,
+}: Props) {
   return (
     <div className="flex flex-col gap-2">
       {/* 상품 가격 */}
@@ -23,6 +29,7 @@ export default function ProductPrice({ value, error, onChange }: Props) {
         }}
         placeholder="예) 10000"
         onChange={(e) => onChange(e.target.value)}
+        onBlur={onBlur}
       />
       <p id="productPriceHelp" className="sr-only">
         상품 가격을 숫자로만 표기해주세요.
