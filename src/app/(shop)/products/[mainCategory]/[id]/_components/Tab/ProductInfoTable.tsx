@@ -1,10 +1,4 @@
-import { Products } from "../../../lib/products";
-
-type Props = {
-  product: Products;
-};
-
-const ProductInfoTable = ({ product }: Props) => {
+const ProductInfoTable = () => {
   return (
     <table className="max-w-7xl m-auto w-full border-t border-b border-t-gray-200 border-b-gray-200">
       <tbody>
