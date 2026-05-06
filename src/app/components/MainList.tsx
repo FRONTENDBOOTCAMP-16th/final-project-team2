@@ -22,7 +22,7 @@ const swiperList = [
 const productList = [
   {
     id: '1',
-    category: '만년필',
+    category: 'writing',
     name: '멋쟁이 만년필 1',
     discount_rate: 35,
     price: 24000,
@@ -32,7 +32,7 @@ const productList = [
   },
   {
     id: '2',
-    category: '만년필',
+    category: 'writing',
     name: '멋쟁이 만년필 2',
     discount_rate: 26,
     price: 26000,
@@ -42,7 +42,7 @@ const productList = [
   },
   {
     id: '3',
-    category: '만년필',
+    category: 'writing',
     name: '멋쟁이 만년필 3',
     discount_rate: 40,
     price: 26000,
@@ -52,7 +52,7 @@ const productList = [
   },
   {
     id: '4',
-    category: '페이퍼',
+    category: 'paper',
     name: '뉴 글랜 다이어리',
     discount_rate: 37,
     price: 46000,
