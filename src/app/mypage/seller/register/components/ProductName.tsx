@@ -1,4 +1,10 @@
-export default function ProductName() {
+type Props = {
+  value: string;
+  error?: string;
+  onChange: (value: string) => void;
+};
+
+export default function ProductName({ value, error, onChange }: Props) {
   return (
     <div className="flex flex-col gap-2">
       <label htmlFor="productName" className="text-sm">
@@ -11,10 +17,13 @@ export default function ProductName() {
         className="w-2xl h-12.5 border border-[#D1D5DC] bg-[#F9FAFB] px-4 py-3"
         placeholder="예) 빈티지 라벨 스티커"
         aria-describedby="prouductNameHelp"
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
       />
       <p id="prouductNameHelp" className="sr-only">
         상품명을 입력하세요
       </p>
+      {error && <p className="text-red-500">{error}</p>}
     </div>
   );
 }

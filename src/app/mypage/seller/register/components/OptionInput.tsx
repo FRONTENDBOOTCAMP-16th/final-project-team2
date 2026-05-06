@@ -31,7 +31,7 @@ export default function OptionInput() {
             actions.handleOptionType(e.target.value as OptionType | "")
           }
           className="p-1 text-sm"
-           aria-describedby="optionTypeHelp"
+          aria-describedby="optionTypeHelp"
         >
           <option value="">선택</option>
           <option value="color">색상</option>
@@ -45,6 +45,7 @@ export default function OptionInput() {
           <input
             type="text"
             id="productOptions"
+            name="productOptions"
             value={state.optionValue}
             onChange={(e) => actions.handleInput(e.target.value)}
             className="w-120 border border-[#D1D5DC] bg-[#F9FAFB] px-4 py-3"

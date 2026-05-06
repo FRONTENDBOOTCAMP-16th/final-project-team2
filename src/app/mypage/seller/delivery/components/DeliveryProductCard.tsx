@@ -31,7 +31,7 @@ export default function DeliveryProductCard({ order }: { order: OrderItem }) {
         <p>{order.quantity}개</p>
       </div>
       {/* 상태 */}
-      <div className="flex w-2/9 gap-3">
+      <div className="flex w-2/9 gap-2">
         <OrderStatusBadge status={order.itemStatus} />
         <DeliverStatusButton />
       </div>

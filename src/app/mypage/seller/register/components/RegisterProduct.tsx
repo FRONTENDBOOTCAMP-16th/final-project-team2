@@ -1,3 +1,4 @@
+"use client";
 import OptionInput from "./OptionInput";
 import ProductName from "./ProductName";
 import ProductImg from "./ProductImg";
@@ -6,27 +7,103 @@ import ProductDescription from "./ProductDescription";
 import ProductInventory from "./ProductInventory";
 import ProductDiscount from "./ProductDiscount";
 import SubmitButton from "./SubmitButton";
+import {
+  FormState,
+  registerProductActionWithState,
+} from "../actions/registerProduct";
+import { useActionState, useState } from "react";
+import validateProductForm, { ProductForm } from "../lib/validateProductForm";
 
-//  각 input에 관한 검증은 zods와 서버 액션을 사용하여 검증하는 로직 만들어야 함
+type ProductErrors = {
+  productImage?: string;
+  productName?: string;
+  productPrice?: string;
+  productDescription?: string;
+  productInventory?: string;
+  productDiscount?: string;
+};
 
-export default function RegisterProduct() {
-  // 상품명, 가격, 이미지, 상품 상세 설명, 재고, 할인율
+export default function RegisterProductForm() {
+  // 서버 액션
+  const [formState, formAction] = useActionState<FormState, FormData>(
+    registerProductActionWithState, // RCC용 서버 액션(함수)
+    null, // 폼 상태 초기값
+  );
+  // 클라이언트 함수
+  const [form, setForm] = useState({
+    productImage: null as File | null,
+    productName: "",
+    productPrice: "",
+    productDescription: "",
+    productInventory: "",
+    productDiscount: "",
+  });
 
-  // 폼 액션 필요함
+  const serverErrors = formState?.errors;
+  const [clientErrors, setClientErrors] = useState<ProductErrors>({});
+
+  const handleInputChange = <T extends keyof ProductForm>(
+    name: T,
+    value: ProductForm[T],
+  ) => {
+    // form 업데이트
+    setForm((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+
+    // validation 실행
+    const error = validateProductForm(name, value);
+
+    // errors 업데이트
+    setClientErrors((prev) => ({
+      ...prev,
+      [name]: error,
+    }));
+  };
+
   return (
-    <form className="flex flex-col gap-6">
-      {/* 저장 버튼 */}
+    <form action={formAction} className="flex flex-col gap-6 px-6">
       <div className="flex justify-between">
         <h2 className="text-2xl font-bold">상품 등록 페이지</h2>
         <SubmitButton />
       </div>
+
       <div className="flex flex-col gap-y-6 ">
-        <ProductImg />
-        <ProductName />
-        <ProductPrice />
-        <ProductDescription />
-        <ProductInventory />
-        <ProductDiscount />
+        <ProductImg
+          value={form.productImage}
+          error={clientErrors.productImage || serverErrors?.productImage}
+          onChange={(file) => handleInputChange("productImage", file)}
+        />
+        <ProductName
+          value={form.productName}
+          error={clientErrors.productName || serverErrors?.productName}
+          onChange={(value) => handleInputChange("productName", value)}
+        />
+        <ProductPrice
+          value={form.productPrice}
+          error={clientErrors.productPrice || serverErrors?.productPrice}
+          onChange={(value) => handleInputChange("productPrice", value)}
+        />
+        <ProductDescription
+          value={form.productDescription}
+          error={
+            clientErrors.productDescription || serverErrors?.productDescription
+          }
+          onChange={(value) => handleInputChange("productDescription", value)}
+        />
+        <ProductInventory
+          value={form.productInventory}
+          error={
+            clientErrors.productInventory || serverErrors?.productInventory
+          }
+          onChange={(value) => handleInputChange("productInventory", value)}
+        />
+        <ProductDiscount
+          value={form.productDiscount}
+          error={clientErrors.productDiscount || serverErrors?.productDiscount}
+          onChange={(value) => handleInputChange("productDiscount", value)}
+        />
         <OptionInput />
       </div>
     </form>
