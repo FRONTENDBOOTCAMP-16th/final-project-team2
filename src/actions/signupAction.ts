@@ -23,13 +23,12 @@ export const signupAction = async (_: unknown, formData: FormData): Promise<Sign
   // 데이터 검증이 실패했을 시 조기리턴
   if (result.errors) return result
 
-  // 사용하기 쉽도록 객체로 변경
-  const objectForm = Object.fromEntries(formData) as Record<string, string>
+  const { email, password, name, phone, role } = result.data
 
   // 아이디/비밀번호 암호화 - 로그인에 필요한 정보
   const { data, error } = await supabase.auth.signUp({
-    email: objectForm.email,
-    password: objectForm.password,
+    email: email,
+    password: password,
   })
 
   // 아이디 중복시 영어노티를 한글로 변환
@@ -44,10 +43,10 @@ export const signupAction = async (_: unknown, formData: FormData): Promise<Sign
   // 그 외 created_at: 자동생성, nickname: null 등 기본값 제외
   const { error: dbError } = await supabase.from('users').insert({
     id: data.user?.id,
-    email: objectForm.email,
-    name: objectForm.name,
-    phone: objectForm.phone,
-    role: objectForm.role
+    email: email,
+    name: name,
+    phone: phone,
+    role: role
   })
 
   // 데이터 저장 실패시 에러메세지

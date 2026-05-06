@@ -37,6 +37,7 @@ export const loginSchema = z.object({
   role: roleSchema,
   email: emailSchema,
   password: passwordSchema,
+  keeplogin: z.string().optional()
 })
 
 // 아이디 찾기 스키마

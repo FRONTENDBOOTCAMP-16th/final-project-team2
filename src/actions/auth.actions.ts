@@ -3,11 +3,11 @@
 import z from "zod"
 
 // formData를 받아 에러를 반환
-export const authAction = async (
+export async function authAction<T extends z.ZodSchema>(
   _: unknown,
   formData: FormData,
-  schema: z.ZodSchema,
-) => {
+  schema: T
+) {
   // form을 일반 객체로 변환
   const objectTransform = Object.fromEntries(formData)
   const result = schema.safeParse(objectTransform)
@@ -37,5 +37,8 @@ export const authAction = async (
     }
   }
 
-  return { errors: null }
+  return {
+    errors: null,
+    data: result.data as z.infer<T>
+  }
 }
