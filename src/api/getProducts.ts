@@ -68,8 +68,8 @@ export const getProducts = async (params: GetProductsParams): Promise<ProductsRe
 
   if (params.sort === 'highPrice' || params.sort === 'lowPrice') {
     products = [...products].sort((a, b) => {
-      const aPrice = getDiscountPrice(a.price, a.discount);
-      const bPrice = getDiscountPrice(b.price, b.discount);
+      const aPrice = getDiscountPrice(a.price, a.discount_rate);
+      const bPrice = getDiscountPrice(b.price, b.discount_rate);
 
       return params.sort === 'lowPrice' ? aPrice - bPrice : bPrice - aPrice;
     });
@@ -135,8 +135,8 @@ const getMockProducts = ({ page, pageSize, category, keyword, sort }: GetProduct
 
   if (sort === 'highPrice' || sort === 'lowPrice') {
     result = [...result].sort((a, b) => {
-      const aPrice = getDiscountPrice(a.price, a.discount);
-      const bPrice = getDiscountPrice(b.price, b.discount);
+      const aPrice = getDiscountPrice(a.price, a.discount_rate);
+      const bPrice = getDiscountPrice(b.price, b.discount_rate);
 
       return sort === 'lowPrice' ? aPrice - bPrice : bPrice - aPrice;
     });

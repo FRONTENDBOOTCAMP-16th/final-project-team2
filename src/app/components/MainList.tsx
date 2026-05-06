@@ -1,15 +1,15 @@
 import SwiperSection from './SwiperSection';
-import ProductsCard from './ProductsCard';
-import MainProducts from '@/data/dummyMainproducts.json';
+// import ProductsCard from './ProductsCard';
+// import MainProducts from '@/data/dummyMainproducts.json';
 import ProductTodayList from './ProductsToday';
-import RecommendMDWrapper from './RecommendMDWrapper';
-import ProductsCardList from './ProductsCardList';
+// import RecommendMDWrapper from './RecommendMDWrapper';
+// import ProductsCardList from './ProductsCardList';
 import MainCard from './MainCard';
 import ProductsTodaySale from './ProductTodaySale';
 
-const INVENTORY_PRODUCTS = 4;
+// const INVENTORY_PRODUCTS = 4;
 const DISCOUNT_PRODUCTS = 2;
-const MD_PRODUCTS = 4;
+// const MD_PRODUCTS = 4;
 
 // 임시로 스와이프 정보 호출
 const swiperList = [
@@ -83,9 +83,9 @@ export default function Main() {
 
       {/* MD 추천 상품 */}
       <section className="py-22.5 px-4 max-w-7xl m-auto">
-        <MainCard title="MD 추천 상품" subTitle="이번주 인기상품을 확인해보세요" fullImage>
+        {/* <MainCard title="MD 추천 상품" subTitle="이번주 인기상품을 확인해보세요" fullImage>
           <RecommendMDWrapper maxProducts={MD_PRODUCTS} products={sortedList(MainProducts, 'average_grade')} />
-        </MainCard>
+        </MainCard> */}
       </section>
 
       {/* 오늘의 신상품 */}
@@ -95,11 +95,11 @@ export default function Main() {
 
       {/* 품절 임박 꿀템 */}
       <section className="bg-[#FFF8F3]">
-        <MainCard title="품절 임박 꿀템" subTitle="서두르세요! 재고가 얼마 남지 않았어요" fullImage>
+        {/* <MainCard title="품절 임박 꿀템" subTitle="서두르세요! 재고가 얼마 남지 않았어요" fullImage>
           <ProductsCardList>
             <ProductsCard maxProducts={INVENTORY_PRODUCTS} products={sortedList(MainProducts, 'inventory')} />
           </ProductsCardList>
-        </MainCard>
+        </MainCard> */}
       </section>
     </>
   );
