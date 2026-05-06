@@ -30,7 +30,7 @@ export default function SignupPage() {
             <InputBox type="text" label="이름" name="name" placeholder="이름을 입력하세요" error={state?.errors?.name?.[0]} defaultValue={state?.name}/>
             <InputBox type="text" label="이메일" name="email" placeholder="이메일을 입력하세요" error={state?.errors?.email?.[0]} defaultValue={state?.email}/>
             <InputBox type="text" label="핸드폰 번호" name="phone" placeholder="핸드폰 번호를 입력하세요 (010-0000-0000)" error={state?.errors?.phone?.[0]} defaultValue={state?.phone}/>
-            <InputBox type="password" label="비밀번호 설정" name="password" placeholder="비밀 번호를 입력하세요" error={state?.errors?.password?.[0]} defaultValue={state?.password} />
+            <InputBox type="password" label="비밀번호 설정" name="password" placeholder="비밀번호를 입력하세요" error={state?.errors?.password?.[0]} defaultValue={state?.password} />
             <InputBox type="password" label="비밀번호 재확인" name="confirmPassword" placeholder="비밀 번호를 재입력하세요" error={state?.errors?.confirmPassword?.[0]} defaultValue={state?.confirmPassword}/>
           </div>
 

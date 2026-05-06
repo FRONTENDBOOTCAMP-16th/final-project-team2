@@ -12,7 +12,7 @@ export default function SignupIdResultPage() {
       </div>
 
       <div className="flex pbs-4 mbs-10 border-bs border-[#e0e0e0]">
-        <Link href="/" className="text-center w-full py-4 mbs-12 text-white bg-[#FF6B6B] rounded font-bold cursor-pointer">메인으로 돌아가기</Link>
+        <Link href="/login" className="text-center w-full py-4 mbs-12 text-white bg-[#FF6B6B] rounded font-bold cursor-pointer">로그인으로 이동하기</Link>
       </div>
     </div>
   )
