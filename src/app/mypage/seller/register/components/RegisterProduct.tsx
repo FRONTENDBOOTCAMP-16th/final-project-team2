@@ -13,6 +13,7 @@ import {
 } from "../actions/registerProduct";
 import { useActionState, useState } from "react";
 import validateProductForm, { ProductForm } from "../lib/validateProductForm";
+import useOptionForm from "@/hooks/useOptionForm";
 
 type ProductErrors = {
   productImage?: string;
@@ -21,6 +22,7 @@ type ProductErrors = {
   productDescription?: string;
   productInventory?: string;
   productDiscount?: string;
+  productOptions?: string;
 };
 
 export default function RegisterProductForm() {
@@ -42,6 +44,36 @@ export default function RegisterProductForm() {
   const serverErrors = formState?.errors;
   const [clientErrors, setClientErrors] = useState<ProductErrors>({});
 
+  //옵션 상태
+  const optionForm = useOptionForm();
+
+  const validateAll = () => {
+    const newErrors: ProductErrors = {};
+
+    Object.entries(form).forEach(([key, value]) => {
+      const error = validateProductForm(key as keyof ProductForm, value);
+
+      if (error) {
+        newErrors[key as keyof ProductErrors] = error;
+      }
+    });
+
+    if (optionForm.state.options.length === 0) {
+      newErrors.productOptions = "옵션을 추가하세요.";
+    }
+
+    return newErrors;
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    const newErrors = validateAll();
+
+    setClientErrors(newErrors);
+
+    if (Object.keys(newErrors).length > 0) {
+      e.preventDefault();
+    }
+  };
   const handleInputChange = <T extends keyof ProductForm>(
     name: T,
     value: ProductForm[T],
@@ -63,7 +95,11 @@ export default function RegisterProductForm() {
   };
 
   return (
-    <form action={formAction} className="flex flex-col gap-6 px-6">
+    <form
+      action={formAction}
+      onSubmit={handleSubmit}
+      className="flex flex-col gap-6 px-6"
+    >
       <div className="flex justify-between">
         <h2 className="text-2xl font-bold">상품 등록 페이지</h2>
         <SubmitButton />
@@ -104,7 +140,7 @@ export default function RegisterProductForm() {
           error={clientErrors.productDiscount || serverErrors?.productDiscount}
           onChange={(value) => handleInputChange("productDiscount", value)}
         />
-        <OptionInput />
+        <OptionInput optionForm={optionForm} />
       </div>
     </form>
   );

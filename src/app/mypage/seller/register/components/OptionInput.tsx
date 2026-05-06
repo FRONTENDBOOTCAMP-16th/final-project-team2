@@ -5,11 +5,14 @@ import { ChangeEvent } from "react";
 import OptionList from "./OptionList";
 import useOptionForm from "@/hooks/useOptionForm";
 
-export default function OptionInput() {
+type Props = {
+  optionForm: ReturnType<typeof useOptionForm>;
+  error?: string;
+};
+
+export default function OptionInput({ optionForm, error }: Props) {
   // 추후 중복 옵션은 작성할 수 없는 중복 제거 방어 로직도 커스텀 훅 함수에 넣어야 됨.
   // 색깔에 사이즈, 사이즈에 색깔 옵션 입력할 수 없는 로직도 구현 필요
-
-  const { state, actions } = useOptionForm();
 
   const placeholderOptions = {
     color: "예: 레드, 블루",
@@ -26,9 +29,11 @@ export default function OptionInput() {
         <select
           name="productType"
           id="productType"
-          value={state.optionType}
+          value={optionForm.state.optionType}
           onChange={(e: ChangeEvent<HTMLSelectElement>) =>
-            actions.handleOptionType(e.target.value as OptionType | "")
+            optionForm.actions.handleOptionType(
+              e.target.value as OptionType | "",
+            )
           }
           className="p-1 text-sm"
           aria-describedby="optionTypeHelp"
@@ -46,19 +51,19 @@ export default function OptionInput() {
             type="text"
             id="productOptions"
             name="productOptions"
-            value={state.optionValue}
-            onChange={(e) => actions.handleInput(e.target.value)}
+            value={optionForm.state.optionValue}
+            onChange={(e) => optionForm.actions.handleInput(e.target.value)}
             className="w-120 border border-[#D1D5DC] bg-[#F9FAFB] px-4 py-3"
             placeholder={
-              state.optionType
-                ? placeholderOptions[state.optionType]
+              optionForm.state.optionType
+                ? placeholderOptions[optionForm.state.optionType]
                 : "값을 입력하세요"
             }
             aria-describedby="optionValueHelp"
           />
           <button
             type="button"
-            onClick={actions.handleAddOptions}
+            onClick={optionForm.actions.handleAddOptions}
             className="border px-4"
           >
             옵션 추가
@@ -72,8 +77,11 @@ export default function OptionInput() {
           선택한 옵션의 값을 입력하세요
         </p>
       </div>
-      <OptionList options={state.options} />
-      {state.error && <p className="text-red-500">{state.error}</p>}
+      <OptionList options={optionForm.state.options} />
+      {optionForm.state.error && (
+        <p className="text-red-500">{optionForm.state.error}</p>
+      )}
+      {error && <p className="text-red-500">{error}</p>}
     </fieldset>
   );
 }
