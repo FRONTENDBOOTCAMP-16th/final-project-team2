@@ -1,22 +1,22 @@
-'use client'
+'use client';
 
-import { Swiper, SwiperSlide } from 'swiper/react'
-import { Navigation, Pagination, Autoplay } from 'swiper/modules'
-import Image from 'next/image'
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation, Pagination, Autoplay } from 'swiper/modules';
+import Image from 'next/image';
 
-import 'swiper/css'
-import 'swiper/css/navigation'
-import 'swiper/css/scrollbar'
-import 'swiper/css/pagination'
-import { LucideBadgePercent } from 'lucide-react'
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/scrollbar';
+import 'swiper/css/pagination';
+import { LucideBadgePercent } from 'lucide-react';
 
 interface swiperProps {
   swiperList: {
-    title: string
-    subText?: string
-    tag?: string
-    image: string
-  }[]
+    title: string;
+    subText?: string;
+    tag?: string;
+    image: string;
+  }[];
 }
 
 export default function SwiperList({ swiperList }: swiperProps) {
@@ -62,7 +62,7 @@ export default function SwiperList({ swiperList }: swiperProps) {
       {swiperList.map((item, index) => (
         <SwiperSlide key={index}>
           <div className="relative w-full h-163 aspect-video">
-            <Image src={item.image} alt={item.title} fill className="object-cover" loading="eager"/>
+            <Image src={item.image} alt={item.title} fill className="object-cover" loading="eager" />
             <div className="absolute inset-y-35 inset-x-30 text-right content-center whitespace-pre-wrap">
               {item.tag && (
                 <span className="inline-flex center bg-[#FF6B6B] px-5.5 py-2 rounded-4xl text-white font-medium mbe-4">
@@ -70,14 +70,12 @@ export default function SwiperList({ swiperList }: swiperProps) {
                   {item.tag}
                 </span>
               )}
-              <strong className='block text-5xl/tight font-extrabold text-[#2D3142]'>{item.title}</strong>
-              {item.subText && (
-                <p className="mbs-3 text-[#7B7979]">{item.subText}</p>
-              )}
+              <strong className="block text-5xl/tight font-extrabold text-[#2D3142]">{item.title}</strong>
+              {item.subText && <p className="mbs-3 text-[#7B7979]">{item.subText}</p>}
             </div>
           </div>
         </SwiperSlide>
       ))}
     </Swiper>
-  )
+  );
 }

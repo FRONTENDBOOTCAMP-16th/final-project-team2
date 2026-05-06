@@ -1,12 +1,11 @@
-import { PropsWithChildren, ReactNode } from "react";
+import { PropsWithChildren, ReactNode } from 'react';
 
 interface MainCardProps {
-  children: ReactNode
-  title: string
-  subTitle?: string
-  fullImage?: boolean
+  children: ReactNode;
+  title: string;
+  subTitle?: string;
+  fullImage?: boolean;
 }
-
 
 export default function MainCard({ children, title, subTitle, fullImage = false }: MainCardProps) {
   return (
@@ -17,15 +16,11 @@ export default function MainCard({ children, title, subTitle, fullImage = false 
           <p className="text-[#7B7979] mbs-5 mb-12.5">{subTitle}</p>
         </div>
         {fullImage ? (
-          <div className="[&_a>div]:w-full! [&_li>button]:right-0">
-            {children}
-          </div>
+          <div className="[&_a>div]:w-full! [&_li>button]:right-0">{children}</div>
         ) : (
-          <div className="grid lg:grid-cols-2 gap-6">
-            {children}
-          </div>
+          <div className="grid lg:grid-cols-2 gap-6">{children}</div>
         )}
       </div>
     </>
-  )
+  );
 }

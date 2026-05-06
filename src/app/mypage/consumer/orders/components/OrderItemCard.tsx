@@ -5,7 +5,7 @@ import Link from "next/link";
 
 export default function OrderItemCard({ order }: { order: OrderItem }) {
   return (
-    <div className="flex  font-semibold p-4 mb-2 border-b border-gray-300 ">
+    <div className="flex font-semibold p-4 mb-2 border-b border-gray-300 ">
       {/* 상품 이미지 및 정보 */}
       <div className="flex w-3/6 ">
         <Link
@@ -19,19 +19,21 @@ export default function OrderItemCard({ order }: { order: OrderItem }) {
             src={order.image}
             alt=""
           />
-          <h2 className="self-center">{order.name}</h2>
+          <h2 className="self-center hover:text-red-500 hover:font-extrabold">
+            {order.name}
+          </h2>
         </Link>
       </div>
       {/* 주문 일자 */}
       <div className="flex gap-3 w-1/6">
-        <p className="self-center">{order.orderDate}</p>
+        <p>{order.orderDate}</p>
       </div>
       {/* 결제 금액 */}
-      <div className="flex gap-3 w-1/6 ">
-        <p className="self-center">{order.unitPrice.toLocaleString()}원</p>
+      <div className="flex gap-3 w-1/6">
+        <p>{order.unitPrice.toLocaleString()}원</p>
       </div>
       {/* 배송 상태  */}
-      <div className="flex gap-3 w-1/6 items-center">
+      <div className="flex gap-3 w-1/6">
         <OrderStatusBadge status={order.itemStatus} />
       </div>
     </div>

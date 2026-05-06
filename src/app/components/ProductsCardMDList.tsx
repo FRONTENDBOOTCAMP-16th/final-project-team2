@@ -1,36 +1,40 @@
-'use client'
+'use client';
 
-import { useState } from "react";
-import ProductsCard from "./ProductsCard";
-import ProductsCardList from "./ProductsCardList";
-import products from '@/data/dummyproducts.json';
+import { useState } from 'react';
+import ProductsCard from './ProductsCard';
+import ProductsCardList from './ProductsCardList';
+import { LucideThumbsUp } from 'lucide-react';
+import { Products } from '../(shop)/products/[mainCategory]/lib/products';
 
-const MD_PICK_PRODUCTS = 4
+interface RecommendMDProps {
+  products: Products[];
+  maxProducts: number;
+}
 
-export default function ProductMDList() {
-  const [maxProducts, setMaxProducts] = useState(MD_PICK_PRODUCTS)
-  const [buttonDisabled, setButtonDisabled] = useState(true)
+export default function RecommendMD({ products, maxProducts }: RecommendMDProps) {
+  const [productsList, setProductsList] = useState(maxProducts);
+  const [moreButton, setMoreButton] = useState(false);
 
-  const handleMoreProduct = () => {
-    setMaxProducts((prev) => prev + 4)
-    setButtonDisabled(false)
-  }
-  
+  const moreProduct = () => {
+    setProductsList(prev => prev + 4);
+    setMoreButton(true);
+  };
+
   return (
-    <section className="flex flex-col m-auto w-full">
+    <>
       <ProductsCardList>
-        <ProductsCard maxProducts={maxProducts} products={products} />
+        <ProductsCard maxProducts={productsList} products={products} />
       </ProductsCardList>
 
-      {buttonDisabled && (
-        <button
-          type="button"
-          className="px-40 py-4 mbs-18 m-auto bg-gray-300 font-bold cursor-pointer"
-          onClick={handleMoreProduct}
-        >
-          추천상품 더보기
-        </button>
-      )}
-    </section>
-  )
+      <button
+        type="button"
+        aria-disabled={moreButton}
+        onClick={moreProduct}
+        className="flex justify-center w-full m-auto max-w-70 font-bold rounded-2xl mbs-15 px-3 py-3 text-white bg-[#FF6B6B] aria-disabled:hidden cursor-pointer"
+      >
+        <LucideThumbsUp className="me-2.5" />
+        추천상품 더보기
+      </button>
+    </>
+  );
 }
