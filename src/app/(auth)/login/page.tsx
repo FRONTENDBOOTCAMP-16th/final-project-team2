@@ -33,14 +33,16 @@ export default function LoginPage() {
           <InputBox type="password" label="패스워드" name="password" placeholder="비밀번호를 입력하세요" error={state?.errors?.password?.[0]} defaultValue={state?.password}/>
         </div>
 
+        <p className="mbs-1 text-red-600 text-center" aria-live="polite" aria-hidden="true">{state?.errors?.root?.[0]}</p>
+        
         {/* 로그인 서브 */}
         <div className="grid grid-cols-1 mbs-2 pbe-9 border-be border-[#e0e0e0]">
-          <CheckeBox name="terms" label="로그인 상태유지" />
+          <CheckeBox name="keeplogin" label="로그인 상태유지" />
           <Link href="/signup" className="text-[#575A68] row-start-1 col-start-2 text-right">회원가입</Link>
           <Link href="/find-id" className="text-[#575A68] row-start-2 col-start-2 text-right">아이디 찾기</Link>
           <Link href="/reset-password-check" className="text-[#575A68] row-start-3 col-start-2 text-right">비밀번호 재설정</Link>
         </div>
-
+        
         {/* 로그인버튼 */}
         <button type="submit" className="w-full py-4 mbs-12 text-white bg-[#FF6B6B] rounded font-bold cursor-pointer">로그인 버튼</button>
       </form>
