@@ -42,7 +42,6 @@ export const loginSchema = z.object({
 // 아이디 찾기 스키마
 export const findIdSchema = z.object({
   name: nameSchema,
-  email: emailSchema,
   phone: phoneSchema,
 })
 
