@@ -1,16 +1,5 @@
+import { ProfileFormProps } from "@/app/mypage/types/profile";
 import { useId } from "react";
-
-interface ProfileFormProps {
-  label: string;
-  name: string;
-  value: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  placeholder?: string;
-  disabled?: boolean;
-  type?: string;
-  readOnly?: boolean;
-  error?: string;
-}
 
 export default function ProfileForm({
   label,
