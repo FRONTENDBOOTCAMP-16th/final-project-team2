@@ -12,9 +12,9 @@ interface ProductCardProps {
 
 export default function ProductsCard({ product, onImageLoad }: ProductCardProps) {
   if (!product) return null;
-  const discountPrice = product.discount > 0 ? Math.floor(product.price * (1 - product.discount / 100)) : product.price;
+  const discountPrice = product.discount_rate > 0 ? Math.floor(product.price * (1 - product.discount_rate / 100)) : product.price;
 
-  const label = `제품명 ${product.name}, 원래 가격은 ${product.price.toLocaleString()}원이고 ${product.discount}퍼센트 할인 중이며 현재 가격은 ${discountPrice.toLocaleString()}원입니다.`;
+  const label = `제품명 ${product.name}, 원래 가격은 ${product.price.toLocaleString()}원이고 ${product.discount_rate}퍼센트 할인 중이며 현재 가격은 ${discountPrice.toLocaleString()}원입니다.`;
 
   const isLike = false;
 
@@ -24,9 +24,9 @@ export default function ProductsCard({ product, onImageLoad }: ProductCardProps)
         <div className="w-70.5 aspect-square relative overflow-hidden">
           <ProductImage src={product.image} alt={product.name} onLoadComplete={onImageLoad} />
 
-          {product.discount > 0 && (
+          {product.discount_rate > 0 && (
             <div className="absolute left-0 top-0 w-16 h-8 bg-[#FF6B6B] text-white font-semibold flex items-center justify-center" aria-hidden="true">
-              {product.discount}%
+              {product.discount_rate}%
             </div>
           )}
         </div>
@@ -41,14 +41,14 @@ export default function ProductsCard({ product, onImageLoad }: ProductCardProps)
           </dl>
 
           <dl className="flex gap-3">
-            {product.discount > 0 && (
+            {product.discount_rate > 0 && (
               <>
                 <dt className="sr-only">할인율</dt>
-                <dd className="text-[#FF6B6B] mt-2 font-bold text-xl">{product.discount}%</dd>
+                <dd className="text-[#FF6B6B] mt-2 font-bold text-xl">{product.discount_rate}%</dd>
               </>
             )}
 
-            <dt className="sr-only">{product.discount === 0 ? '가격' : '할인된 가격'}</dt>
+            <dt className="sr-only">{product.discount_rate === 0 ? '가격' : '할인된 가격'}</dt>
             <dd className="text-xl font-medium mt-2 ml-2">{discountPrice.toLocaleString()}원</dd>
           </dl>
         </div>

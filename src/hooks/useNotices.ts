@@ -9,6 +9,6 @@ export const noticeKeys = {
 export const useNotices = () => {
   return useQuery({
     queryKey: noticeKeys.lists(),
-    queryFn: getNotices,
+    // queryFn: getNotices,
   });
 };

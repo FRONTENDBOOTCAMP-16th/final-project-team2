@@ -29,7 +29,7 @@ export default function ProductListInner({ products, keyword, sort }: Props) {
         className={`transition-opacity duration-150 ${isAllLoaded ? 'opacity-100' : 'opacity-0 absolute inset-0 pointer-events-none'}`}
       >
         {products.map(product => (
-          <ProductsCard key={product.id} product={product} keyword={keyword} sort={sort} onImageLoad={handleImageLoad} />
+          <ProductsCard key={product.id} product={product} onImageLoad={handleImageLoad} />
         ))}
       </ProductsCardList>
     </div>
