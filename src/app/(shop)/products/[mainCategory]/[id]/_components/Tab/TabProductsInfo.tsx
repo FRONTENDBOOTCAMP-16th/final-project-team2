@@ -1,18 +1,8 @@
 import { ReactNode } from 'react';
+import { Products } from '../../../lib/products';
 
-type Product = {
-  category: string;
-  name: string;
-  originalPrice: number;
-  discountRate: number;
-  salePrice: number;
-  shipping: string[];
-  returnPolicy: string;
-  countryOfOrigin: string;
-  description: string;
-};
 type Props = {
-  product: Product;
+  product: Products;
   children: ReactNode;
 };
 
@@ -42,7 +32,7 @@ export default function TabProductsInfo({ product, children }: Props) {
       <section className="py-8">
         <h2 className="text-2xl font-semibold">제품 상세</h2>
         <div className="contents">
-          <p className="mt-4 text-xl text-justify max-w-6xl leading-8 text-gray-700">{product.description}</p>
+          <p className="mt-4 text-xl text-justify max-w-6xl leading-8 text-gray-700">{product.content}</p>
         </div>
         {children}
       </section>

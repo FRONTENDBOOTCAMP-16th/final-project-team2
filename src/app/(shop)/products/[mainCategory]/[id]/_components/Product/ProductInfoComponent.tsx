@@ -5,20 +5,11 @@ import TotalPrice from './TotalPrice';
 import { ShoppingCart } from 'lucide-react';
 import HeartButton from './HeartButton';
 import ProductSummary from './ProductSummary';
+import { Products } from '../../../lib/products';
 
-type Product = {
-  category: string;
-  name: string;
-  originalPrice: number;
-  discountRate: number;
-  salePrice: number;
-  shipping: string[];
-  returnPolicy: string;
-  countryOfOrigin: string;
-  description: string;
-};
+
 type Props = {
-  product: Product;
+  product: Products;
 };
 
 const ProductInfoComponent = ({ product }: Props) => {
