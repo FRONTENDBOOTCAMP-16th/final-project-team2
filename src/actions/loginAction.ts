@@ -41,7 +41,7 @@ export const loginAction = async (_: unknown, formData: FormData): Promise<Login
   }
   
   // 로그인 시 타입확인
-  const { data: roleData, error: roleError } = await supabase.from('users').select('role').eq('id', authData.user?.id).single()
+  const { data: roleData } = await supabase.from('users').select('role').eq('id', authData.user?.id).single()
 
   if (roleData?.role !== objectForm.role) {
     // 타입이 다를시 로그아웃
