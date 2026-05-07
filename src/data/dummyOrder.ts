@@ -2,7 +2,7 @@ import type { OrderItem } from "@/app/mypage/types/orderItem";
 
 export const dummyOrderItems: OrderItem[] = [
   {
-    id: "item-1",
+    id: "1",
     orderId: "ORD-001",
     userId: "김근영",
     productId: "prod-1",
@@ -16,7 +16,7 @@ export const dummyOrderItems: OrderItem[] = [
     category: "writing",
   },
   {
-    id: "item-2",
+    id: "2",
     orderId: "ORD-001",
     userId: "김근영",
     productId: "prod-2",
@@ -30,7 +30,7 @@ export const dummyOrderItems: OrderItem[] = [
     category: "paper",
   },
   {
-    id: "item-3",
+    id: "3",
     orderId: "ORD-002",
     userId: "장예지",
     productId: "prod-3",
@@ -44,7 +44,7 @@ export const dummyOrderItems: OrderItem[] = [
     category: "paper",
   },
   {
-    id: "item-4",
+    id: "4",
     orderId: "ORD-002",
     userId: "장예지",
     productId: "prod-4",
@@ -58,7 +58,7 @@ export const dummyOrderItems: OrderItem[] = [
     category: "writing",
   },
   {
-    id: "item-5",
+    id: "5",
     orderId: "ORD-003",
     userId: "송하늬",
     productId: "prod-5",
@@ -72,7 +72,7 @@ export const dummyOrderItems: OrderItem[] = [
     category: "paper",
   },
   {
-    id: "item-6",
+    id: "6",
     orderId: "ORD-004",
     userId: "박성윤",
     productId: "prod-6",
@@ -86,7 +86,7 @@ export const dummyOrderItems: OrderItem[] = [
     category: "writing",
   },
   {
-    id: "item-7",
+    id: "7",
     orderId: "ORD-005",
     userId: "이동헌",
     productId: "prod-7",
@@ -100,7 +100,7 @@ export const dummyOrderItems: OrderItem[] = [
     category: "paper",
   },
   {
-    id: "item-8",
+    id: "8",
     orderId: "ORD-005",
     userId: "이동헌",
     productId: "prod-8",
@@ -114,7 +114,7 @@ export const dummyOrderItems: OrderItem[] = [
     category: "writing",
   },
   {
-    id: "item-9",
+    id: "9",
     orderId: "ORD-006",
     userId: "김근영",
     productId: "prod-9",
@@ -128,7 +128,7 @@ export const dummyOrderItems: OrderItem[] = [
     category: "paper",
   },
   {
-    id: "item-10",
+    id: "10",
     orderId: "ORD-007",
     userId: "장예지",
     productId: "prod-10",
@@ -142,7 +142,7 @@ export const dummyOrderItems: OrderItem[] = [
     category: "writing",
   },
   {
-    id: "item-11",
+    id: "11",
     orderId: "ORD-007",
     userId: "장예지",
     productId: "prod-11",
@@ -156,7 +156,7 @@ export const dummyOrderItems: OrderItem[] = [
     category: "paper",
   },
   {
-    id: "item-12",
+    id: "12",
     orderId: "ORD-008",
     userId: "송하늬",
     productId: "prod-12",
@@ -170,7 +170,7 @@ export const dummyOrderItems: OrderItem[] = [
     category: "writing",
   },
   {
-    id: "item-13",
+    id: "13",
     orderId: "ORD-009",
     userId: "박성윤",
     productId: "prod-13",
@@ -184,7 +184,7 @@ export const dummyOrderItems: OrderItem[] = [
     category: "paper",
   },
   {
-    id: "item-14",
+    id: "14",
     orderId: "ORD-010",
     userId: "이동헌",
     productId: "prod-14",
@@ -198,7 +198,7 @@ export const dummyOrderItems: OrderItem[] = [
     category: "writing",
   },
   {
-    id: "item-15",
+    id: "15",
     orderId: "ORD-010",
     userId: "이동헌",
     productId: "prod-15",
@@ -212,7 +212,7 @@ export const dummyOrderItems: OrderItem[] = [
     category: "paper",
   },
   {
-    id: "item-16",
+    id: "16",
     orderId: "ORD-011",
     userId: "김근영",
     productId: "prod-16",
@@ -226,7 +226,7 @@ export const dummyOrderItems: OrderItem[] = [
     category: "writing",
   },
   {
-    id: "item-17",
+    id: "17",
     orderId: "ORD-011",
     userId: "김근영",
     productId: "prod-17",
@@ -240,7 +240,7 @@ export const dummyOrderItems: OrderItem[] = [
     category: "writing",
   },
   {
-    id: "item-18",
+    id: "18",
     orderId: "ORD-012",
     userId: "장예지",
     productId: "prod-18",
@@ -254,7 +254,7 @@ export const dummyOrderItems: OrderItem[] = [
     category: "paper",
   },
   {
-    id: "item-19",
+    id: "19",
     orderId: "ORD-012",
     userId: "장예지",
     productId: "prod-19",
@@ -268,7 +268,7 @@ export const dummyOrderItems: OrderItem[] = [
     category: "paper",
   },
   {
-    id: "item-20",
+    id: "20",
     orderId: "ORD-013",
     userId: "송하늬",
     productId: "prod-20",
@@ -282,7 +282,7 @@ export const dummyOrderItems: OrderItem[] = [
     category: "paper",
   },
   {
-    id: "item-21",
+    id: "21",
     orderId: "ORD-014",
     userId: "박성윤",
     productId: "prod-21",
@@ -296,7 +296,7 @@ export const dummyOrderItems: OrderItem[] = [
     category: "writing",
   },
   {
-    id: "item-22",
+    id: "22",
     orderId: "ORD-015",
     userId: "이동헌",
     productId: "prod-22",
@@ -310,7 +310,7 @@ export const dummyOrderItems: OrderItem[] = [
     category: "paper",
   },
   {
-    id: "item-23",
+    id: "23",
     orderId: "ORD-015",
     userId: "이동헌",
     productId: "prod-23",
@@ -324,7 +324,7 @@ export const dummyOrderItems: OrderItem[] = [
     category: "writing",
   },
   {
-    id: "item-24",
+    id: "24",
     orderId: "ORD-016",
     userId: "김근영",
     productId: "prod-24",
@@ -338,7 +338,7 @@ export const dummyOrderItems: OrderItem[] = [
     category: "paper",
   },
   {
-    id: "item-25",
+    id: "25",
     orderId: "ORD-017",
     userId: "장예지",
     productId: "prod-25",
@@ -351,9 +351,8 @@ export const dummyOrderItems: OrderItem[] = [
     orderDate: "2026-03-31",
     category: "writing",
   },
-
   {
-    id: "item-26",
+    id: "26",
     orderId: "ORD-018",
     userId: "송하늬",
     productId: "prod-26",
@@ -367,7 +366,7 @@ export const dummyOrderItems: OrderItem[] = [
     category: "paper",
   },
   {
-    id: "item-27",
+    id: "27",
     orderId: "ORD-018",
     userId: "송하늬",
     productId: "prod-27",
@@ -381,7 +380,7 @@ export const dummyOrderItems: OrderItem[] = [
     category: "paper",
   },
   {
-    id: "item-28",
+    id: "28",
     orderId: "ORD-019",
     userId: "박성윤",
     productId: "prod-28",
@@ -395,7 +394,7 @@ export const dummyOrderItems: OrderItem[] = [
     category: "writing",
   },
   {
-    id: "item-29",
+    id: "29",
     orderId: "ORD-020",
     userId: "이동헌",
     productId: "prod-29",
@@ -409,7 +408,7 @@ export const dummyOrderItems: OrderItem[] = [
     category: "paper",
   },
   {
-    id: "item-30",
+    id: "30",
     orderId: "ORD-021",
     userId: "김근영",
     productId: "prod-30",
@@ -422,9 +421,8 @@ export const dummyOrderItems: OrderItem[] = [
     orderDate: "2026-04-07",
     category: "writing",
   },
-
   {
-    id: "item-31",
+    id: "31",
     orderId: "ORD-022",
     userId: "장예지",
     productId: "prod-31",
@@ -438,7 +436,7 @@ export const dummyOrderItems: OrderItem[] = [
     category: "writing",
   },
   {
-    id: "item-32",
+    id: "32",
     orderId: "ORD-023",
     userId: "송하늬",
     productId: "prod-32",
@@ -452,7 +450,7 @@ export const dummyOrderItems: OrderItem[] = [
     category: "paper",
   },
   {
-    id: "item-33",
+    id: "33",
     orderId: "ORD-024",
     userId: "박성윤",
     productId: "prod-33",
@@ -466,7 +464,7 @@ export const dummyOrderItems: OrderItem[] = [
     category: "writing",
   },
   {
-    id: "item-34",
+    id: "34",
     orderId: "ORD-025",
     userId: "이동헌",
     productId: "prod-34",
@@ -480,7 +478,7 @@ export const dummyOrderItems: OrderItem[] = [
     category: "paper",
   },
   {
-    id: "item-35",
+    id: "35",
     orderId: "ORD-026",
     userId: "김근영",
     productId: "prod-35",
