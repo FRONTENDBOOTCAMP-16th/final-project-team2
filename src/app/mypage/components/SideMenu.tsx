@@ -2,10 +2,11 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useUser } from "../context/UserContext";
 
 export default function SideMenu() {
   const pathname = usePathname();
-  const role: "consumer" | "seller" = "consumer";
+  const { role } = useUser();
 
   const CONSUMER_PATH = "/mypage/consumer";
   const SELLER_PATH = "/mypage/seller";
