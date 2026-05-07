@@ -9,7 +9,7 @@ import ProfileAction from "../../consumer/profile/components/ProfileAction";
 const PROFILE_FIELDS = [
   { label: "이메일", name: "email", type: "email", isReadOnly: true },
   { label: "이름", name: "name", type: "text", isReadOnly: true },
-  { label: "가게명", name: "nickname", type: "text", isReadOnly: false },
+  { label: "닉네임", name: "nickname", type: "text", isReadOnly: false },
   { label: "휴대전화", name: "phone", type: "tel", isReadOnly: false },
   { label: "주소", name: "address", type: "text", isReadOnly: false },
   { label: "생일", name: "birthday", type: "date", isReadOnly: true },
@@ -46,7 +46,7 @@ export default function Profile() {
     handleSubmit,
   } = useFormManagement(initialData, validate);
 
-  // 저장 성공 시 실행할 로직 (API 호출 등)
+  // 저장 성공 시 실행할 로직
   const handleSaveSuccess = (data: typeof initialData) => {
     console.log("저장할 데이터:", data);
     // TODO : supabase 연동 로직
