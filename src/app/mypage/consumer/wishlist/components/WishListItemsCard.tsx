@@ -17,7 +17,7 @@ export default function WishListItemCard({ order, onRemove }: Props) {
   return (
     <div key={order.id} className="flex flex-col">
       <Link
-        href={`/products/pen/${order.id}`}
+        href={`/products/writing/${order.id}`}
         className="relative flex flex-col transition-transform duration-400 hover:scale-105"
       >
         {order.discountRate > 0 && (
