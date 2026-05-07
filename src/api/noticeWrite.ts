@@ -3,6 +3,7 @@
 import { redirect } from 'next/navigation'
 import { createClient } from '../../utils/supabase/server'
 import { updateTag } from 'next/cache';
+import { el } from 'zod/v4/locales';
 
 
 export type FormState = {
@@ -17,7 +18,30 @@ export async function createNotice(prevState: FormState, formData: FormData): Pr
   const title = formData.get('title') as string
   const content = formData.get('content') as string
   const isImportant = formData.get('important') === 'on'
-  const writerId = '535d2a59-ad91-4c29-8aaf-99621faae239'
+
+
+  // 로직
+  const { data: { user }, error: userError } = await supabase.auth.getUser()
+
+  if (userError || !user) {
+    return { success: false, message: '로그인 정보가 유효하지 않습니다.' }
+  }
+
+  const { data: userData, error: dbError } = await supabase
+    .from('users')
+    .select('role, nickname')
+    .eq('id', user.id)
+    .single()
+
+  if (dbError || !userData) {
+    return { success: false, message: '사용자 정보를 불러올 수 없습니다.' }
+  }
+
+  if (userData?.role !== "ADMIN") {
+    redirect('/notice')
+  }
+
+  const writerId = userData.nickname
 
   if (!title || !title.trim()) {
     return { success: false, message: '제목을 입력해주세요.' }
