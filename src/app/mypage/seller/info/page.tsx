@@ -1,10 +1,23 @@
 "use client";
 
+import { z } from "zod";
 import { Pen, Check } from "lucide-react";
 import useFormManagement from "@/hooks/useFormManagement";
 import ImageUploader from "../../consumer/profile/components/ImageUploader";
 import ProfileForm from "../../consumer/profile/components/ProfileForm";
 import ProfileAction from "../../consumer/profile/components/ProfileAction";
+
+const sellerInfoSchema = z.object({
+  phone: z
+    .string()
+    .min(1, "전화번호를 입력해주세요.")
+    .min(10, "전화번호가 너무 짧습니다."),
+  location: z.string().min(1, "가게 주소를 입력해주세요."),
+  intro: z.string().min(1, "소개글을 입력해주세요."),
+  profileImage: z.string().optional(),
+  email: z.string().optional(),
+  name: z.string().optional(),
+});
 
 const PROFILE_FIELDS = [
   { label: "이메일", name: "email", type: "email", isReadOnly: true },
@@ -25,13 +38,17 @@ export default function Info() {
   };
 
   const validate = (data: typeof initialData) => {
-    const newErrors: Record<string, string> = {};
-    if (!data.phone.trim()) newErrors.phone = "전화번호를 입력해주세요.";
-    if (data.phone.length < 10 && data.phone.length > 0)
-      newErrors.phone = "전화번호가 너무 짧습니다.";
-    if (!data.location.trim()) newErrors.location = "가게 주소를 입력해주세요.";
-    if (!data.intro.trim()) newErrors.intro = "소개글을 입력해주세요.";
-    return newErrors;
+    const result = sellerInfoSchema.safeParse(data);
+
+    if (!result.success) {
+      const newErrors: Record<string, string> = {};
+      result.error.issues.forEach((issue) => {
+        const fieldName = issue.path[0] as string;
+        newErrors[fieldName] = issue.message;
+      });
+      return newErrors;
+    }
+    return {};
   };
 
   const {
@@ -44,10 +61,8 @@ export default function Info() {
     handleSubmit,
   } = useFormManagement(initialData, validate);
 
-  // 저장 성공 시 실행할 로직
   const handleSaveSuccess = (data: typeof initialData) => {
     console.log("판매자 정보 저장:", data);
-    // TODO : supabase 연동 로직
     alert("상점 정보가 수정되었습니다.");
   };
 

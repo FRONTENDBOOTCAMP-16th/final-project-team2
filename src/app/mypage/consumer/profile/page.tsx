@@ -1,10 +1,24 @@
 "use client";
 
+import { z } from "zod";
 import { Pen, Check } from "lucide-react";
 import useFormManagement from "@/hooks/useFormManagement";
 import ImageUploader from "../../consumer/profile/components/ImageUploader";
 import ProfileForm from "../../consumer/profile/components/ProfileForm";
 import ProfileAction from "../../consumer/profile/components/ProfileAction";
+
+const profileSchema = z.object({
+  nickname: z.string().min(1, "닉네임을 입력해주세요."),
+  phone: z
+    .string()
+    .min(1, "전화번호를 입력해주세요.")
+    .min(10, "전화번호가 너무 짧습니다."),
+  address: z.string().min(1, "주소를 입력해주세요."),
+  profileImage: z.string().optional(),
+  name: z.string().optional(),
+  email: z.string().optional(),
+  birthday: z.string().optional(),
+});
 
 const PROFILE_FIELDS = [
   { label: "이메일", name: "email", type: "email", isReadOnly: true },
@@ -27,13 +41,17 @@ export default function Profile() {
   };
 
   const validate = (data: typeof initialData) => {
-    const newErrors: Record<string, string> = {};
-    if (!data.nickname.trim()) newErrors.nickname = "닉네임을 입력해주세요.";
-    if (!data.phone.trim()) newErrors.phone = "전화번호를 입력해주세요.";
-    if (data.phone.length < 10 && data.phone.length > 0)
-      newErrors.phone = "전화번호가 너무 짧습니다.";
-    if (!data.address.trim()) newErrors.address = "주소를 입력해주세요.";
-    return newErrors;
+    const result = profileSchema.safeParse(data);
+
+    if (!result.success) {
+      const newErrors: Record<string, string> = {};
+      result.error.issues.forEach((issue) => {
+        const fieldName = issue.path[0] as string;
+        newErrors[fieldName] = issue.message;
+      });
+      return newErrors;
+    }
+    return {};
   };
 
   const {
@@ -46,16 +64,13 @@ export default function Profile() {
     handleSubmit,
   } = useFormManagement(initialData, validate);
 
-  // 저장 성공 시 실행할 로직
   const handleSaveSuccess = (data: typeof initialData) => {
     console.log("저장할 데이터:", data);
-    // TODO : supabase 연동 로직
     alert("프로필이 수정되었습니다.");
   };
 
   return (
     <section className="p-8 bg-white w-full max-w-4xl">
-      {/* handleSubmit 호출 시 handleSaveSuccess를 콜백으로 넘겨줍니다 */}
       <form onSubmit={(e) => handleSubmit(e, handleSaveSuccess)}>
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-xl font-bold">프로필 수정</h1>
