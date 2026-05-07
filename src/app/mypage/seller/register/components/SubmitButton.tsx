@@ -1,6 +1,5 @@
 "use client";
 
-// 아래의 인풋 하나라도 안 채워져 있으면 제출이 안됨
 import { Pen } from "lucide-react";
 import { useFormStatus } from "react-dom";
 
@@ -20,7 +19,7 @@ export default function SubmitButton() {
       className={`flex flex-row self-end  p-2 ${pending ? "cursor-not-allowed opacity-50" : " bg-[#FF6B6B] text-white"}`}
     >
       <Pen className="mr-2" />
-      {pending ? "등록 중..." : "상품 등록"}
+      {pending ? "등록 중..." : "상품 등록 완료"}
     </button>
   );
 }
