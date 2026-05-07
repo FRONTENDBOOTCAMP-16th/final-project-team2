@@ -63,9 +63,10 @@ const productList = [
 ];
 
 // 특정 기준에 따라 상품을 리스트업
-// const sortedList = (products: any[], key: string) => {
-//   return products.toSorted((a, b) => b[key] - a[key]);
-// };
+const sortedList = <T extends Record<string, any>>(products: T[], key: keyof T) => {
+  return products.toSorted((a, b) => b[key] - a[key])
+}
+
 
 export default function Main() {
   return (
