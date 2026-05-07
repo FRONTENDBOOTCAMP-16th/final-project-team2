@@ -1,8 +1,7 @@
-// 실제 Next.js 프로젝트에서는 아래 import 문들을 주석 해제해서 사용하세요!
-import { getNoticeDetail } from "@/api/noticeDetail";
-import { notFound } from "next/navigation";
-import DOMPurify from 'isomorphic-dompurify';
-import Link from "next/link";
+import { getNoticeDetail } from "@/api/noticeDetail"
+import { notFound } from "next/navigation"
+import DOMPurify from 'isomorphic-dompurify'
+import Link from "next/link"
 
 
 export default async function NoticeDetailPage({ 
@@ -10,22 +9,22 @@ export default async function NoticeDetailPage({
 }: { 
   params: Promise<{ id: string }> 
 }) {
-  const { id } = await params;
 
-  let notice;
+  let notice
+  const { id } = await params
 
   try {
-    notice = await getNoticeDetail(id);
+    notice = await getNoticeDetail(id)
   } catch (err) {
-    console.error(err);
-    throw new Error("데이터를 불러오지 못했습니다."); 
+    console.error(err)
+    throw new Error("데이터를 불러오지 못했습니다.")
   }
 
   if (!notice) {
-    notFound(); 
+    notFound() 
   }
 
-  const cleanHtml = DOMPurify.sanitize(notice.content || '');
+  const cleanHtml = DOMPurify.sanitize(notice.content || '')
 
   return (
     <div className="w-full max-w-4xl p-8 mx-auto">
@@ -45,5 +44,5 @@ export default async function NoticeDetailPage({
         목록
       </Link>
     </div>
-  );
+  )
 }

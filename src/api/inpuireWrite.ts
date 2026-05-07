@@ -10,13 +10,12 @@ export type FormState = {
   message: string;
 }
 
-
-
-export async function createNotice(prevState: FormState, formData: FormData): Promise<FormState> {
+export async function createInquire(prevState: FormState, formData: FormData): Promise<FormState> {
   const supabase = await createClient()
   const title = formData.get('title') as string
   const content = formData.get('content') as string
-  const isImportant = formData.get('important') === 'on'
+
+  // 임시 아이디
   const writerId = '535d2a59-ad91-4c29-8aaf-99621faae239'
 
   if (!title || !title.trim()) {
@@ -34,22 +33,20 @@ export async function createNotice(prevState: FormState, formData: FormData): Pr
     if (updateId) {
       // 수정 모드 (Update)
       const { error: updateError } = await supabase
-        .from('notices')
+        .from('qnas')
         .update({
           title: title.trim(),
-          content: content.trim(),
-          important: isImportant,
+          question_content: content.trim(),
         })
         .eq('id', updateId)
       error = updateError;
     } else {
       // 생성 모드 (Insert)
       const { error: insertError } = await supabase
-        .from('notices')
+        .from('qnas')
         .insert({
           title: title.trim(),
-          content: content.trim(),
-          important: isImportant,
+          question_content: content.trim(),
           writer_id: writerId,
           created_at: new Date().toISOString(), // 현재 시간
         })
@@ -61,12 +58,12 @@ export async function createNotice(prevState: FormState, formData: FormData): Pr
       return { success: false, message: 'DB 저장 중 오류가 발생했습니다: ' + error.message }
     }
 
-    updateTag('notices');
+    updateTag('inquire');
 
   } catch (error) {
     console.error('Server Action Error:', error)
     return { success: false, message: '서버 에러가 발생했습니다. 다시 시도해주세요.' }
   }
 
-  redirect('/notice')
+  redirect('/inquire')
 }

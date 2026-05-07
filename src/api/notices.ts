@@ -1,5 +1,6 @@
 import { createClient } from '../../utils/supabase/client'
 import type { BoardCard } from '@/types/boards'
+import { cacheTag } from 'next/cache'
 
 export interface NoticeResponse {
   importantData: BoardCard[]
@@ -8,6 +9,9 @@ export interface NoticeResponse {
 }
 
 export const getNotices = async (pages: number): Promise<NoticeResponse> => {
+  'use cache';
+  cacheTag('notices');
+
   const ITEMS_PER_PAGE = 10
   const supabase = createClient()
 
@@ -33,7 +37,7 @@ export const getNotices = async (pages: number): Promise<NoticeResponse> => {
   const [importantResult, normalResult] = await Promise.all([
     supabase
       .from('notices')
-      .select('*, writer:writer_id (nickname)') 
+      .select('*, writer:writer_id (nickname)')
       .eq('important', true)
       .order('created_at', { ascending: false }),
     supabase
