@@ -1,7 +1,7 @@
 import LikeToggleButton from "@/app/mypage/consumer/wishlist/components/LikeToggleButton";
 import Link from "next/link";
 import Image from "next/image";
-import { ProductLikeWithProduct } from "./WishListItemsList";
+import { ProductLikeWithProduct } from "@/app/lib/productLike";
 
 interface Props {
   order: ProductLikeWithProduct;
@@ -12,7 +12,7 @@ export default function WishListItemCard({ order, onRemove }: Props) {
   return (
     <div key={order.id} className="flex flex-col">
       <Link
-        href={`/products/writing/${order.products.id}`}
+        href={`/products/${order.products.product_categories[0]?.categories.name}/${order.id}`}
         className="relative flex flex-col transition-transform duration-400 hover:scale-105"
       >
         {order.products.discount_rate > 0 && (
@@ -29,12 +29,14 @@ export default function WishListItemCard({ order, onRemove }: Props) {
           alt=""
         />
       </Link>
-      <div className="flex flex-col pr-4 pt-4">
+      <div className="flex flex-col  pt-4">
         <p className="text-sm text-gray-400 ">
           {order.products.product_categories[0]?.categories.name}
         </p>
         <div className="flex justify-between">
-          <p className="font-bold self-center">{order.products.name}</p>
+          <p className="font-bold self-center w-50 truncate">
+            {order.products.name}
+          </p>
           <LikeToggleButton id={order.id} onRemove={onRemove} />
         </div>
 
