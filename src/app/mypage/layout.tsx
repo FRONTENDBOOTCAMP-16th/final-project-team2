@@ -1,6 +1,7 @@
 import SideMenu from "./components/SideMenu";
 import SummaryMenu from "./components/SummaryMenu";
 import UserProfile from "./components/UserProfile";
+import MypageProviders from "./providers/MypageProviders";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -17,7 +18,7 @@ export default function MyPageLayout({ children }: LayoutProps) {
         <main className="flex-1 mb-20">
           <div className="flex flex-col gap-6">
             <SummaryMenu />
-            {children}
+            <MypageProviders>{children}</MypageProviders>
           </div>
         </main>
       </div>
