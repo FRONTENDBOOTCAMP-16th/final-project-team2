@@ -22,9 +22,9 @@ export default function RecommendMD({ products, maxProducts }: RecommendMDProps)
 
   return (
     <>
-      <ProductsCardList>
+      {/* <ProductsCardList>
         <ProductsCard maxProducts={productsList} products={products} />
-      </ProductsCardList>
+      </ProductsCardList> */}
 
       <button
         type="button"

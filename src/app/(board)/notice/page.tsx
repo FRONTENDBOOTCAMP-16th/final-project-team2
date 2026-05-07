@@ -10,7 +10,6 @@ export default async function NoticeList({
   const params = await searchParams;
   
   const currentPage = Number(params?.page) || 1;
-  const ITEMS_PER_PAGE = 20; // 번호 계산을 위해 동일한 상수 필요
   
   // 1. 수정된 API의 반환값에 맞게 구조 분해 할당
   const { importantData, normalData, normalCount } = await getNotices(currentPage);
@@ -28,30 +27,28 @@ export default async function NoticeList({
         {/* 2. 중요 공지사항 렌더링 (번호 없음) */}
         {importantData.map((notice) => (
           <PostListCard 
-            key={`important-${notice.id}`} 
-            data={notice} 
+            key={`important-${notice.id}`}
+            data={notice}
             isImportant={true} // 자식 컴포넌트에서 배경색 등을 다르게 주도록 prop 전달 (선택사항)
+            link={'notice'}
           />
         ))}
 
         {/* 3. 일반 공지사항 렌더링 (역순 번호 계산해서 전달) */}
-        {normalData.map((notice, index) => {
-          // 역순 번호 계산 로직
-          const listNumber = normalCount - ((currentPage - 1) * ITEMS_PER_PAGE) - index;
-          
+        {normalData.map((notice) => {
           return (
             <PostListCard 
               key={notice.id} 
               data={notice} 
-              listNumber={listNumber} // 자식 컴포넌트에서 이 번호를 받아서 출력해야 합니다.
               isImportant={false}
+              link={'notice'}
             />
           );
         })}
       </ul>
 
       {/* 4. 페이지네이션은 일반 공지사항의 개수(normalCount)를 기준으로 렌더링합니다. */}
-      <Pagination count={normalCount || 0} current={currentPage} />
+      <Pagination count={normalCount || 0} current={currentPage} link={'notice'}/>
     </div>
   );
 }

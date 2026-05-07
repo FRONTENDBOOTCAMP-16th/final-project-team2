@@ -1,15 +1,15 @@
 import SwiperSection from './SwiperSection';
-import ProductsCard from './ProductsCard';
-import MainProducts from '@/data/dummyMainproducts.json';
+// import ProductsCard from './ProductsCard';
+// import MainProducts from '@/data/dummyMainproducts.json';
 import ProductTodayList from './ProductsToday';
-import RecommendMDWrapper from './RecommendMDWrapper';
-import ProductsCardList from './ProductsCardList';
+// import RecommendMDWrapper from './RecommendMDWrapper';
+// import ProductsCardList from './ProductsCardList';
 import MainCard from './MainCard';
 import ProductsTodaySale from './ProductTodaySale';
 
-const INVENTORY_PRODUCTS = 4;
+// const INVENTORY_PRODUCTS = 4;
 const DISCOUNT_PRODUCTS = 2;
-const MD_PRODUCTS = 4;
+// const MD_PRODUCTS = 4;
 
 // 임시로 스와이프 정보 호출
 const swiperList = [
@@ -22,7 +22,7 @@ const swiperList = [
 const productList = [
   {
     id: '1',
-    category: '만년필',
+    category: 'writing',
     name: '멋쟁이 만년필 1',
     discount_rate: 35,
     price: 24000,
@@ -32,7 +32,7 @@ const productList = [
   },
   {
     id: '2',
-    category: '만년필',
+    category: 'writing',
     name: '멋쟁이 만년필 2',
     discount_rate: 26,
     price: 26000,
@@ -42,7 +42,7 @@ const productList = [
   },
   {
     id: '3',
-    category: '만년필',
+    category: 'writing',
     name: '멋쟁이 만년필 3',
     discount_rate: 40,
     price: 26000,
@@ -52,7 +52,7 @@ const productList = [
   },
   {
     id: '4',
-    category: '페이퍼',
+    category: 'paper',
     name: '뉴 글랜 다이어리',
     discount_rate: 37,
     price: 46000,
@@ -63,9 +63,9 @@ const productList = [
 ];
 
 // 특정 기준에 따라 상품을 리스트업
-const sortedList = (products: any[], key: string) => {
-  return products.toSorted((a, b) => b[key] - a[key]);
-};
+// const sortedList = (products: any[], key: string) => {
+//   return products.toSorted((a, b) => b[key] - a[key]);
+// };
 
 export default function Main() {
   return (
@@ -82,9 +82,9 @@ export default function Main() {
 
       {/* MD 추천 상품 */}
       <section className="py-22.5 px-4 max-w-7xl m-auto">
-        <MainCard title="MD 추천 상품" subTitle="이번주 인기상품을 확인해보세요" fullImage>
+        {/* <MainCard title="MD 추천 상품" subTitle="이번주 인기상품을 확인해보세요" fullImage>
           <RecommendMDWrapper maxProducts={MD_PRODUCTS} products={sortedList(MainProducts, 'average_grade')} />
-        </MainCard>
+        </MainCard> */}
       </section>
 
       {/* 오늘의 신상품 */}
@@ -94,11 +94,11 @@ export default function Main() {
 
       {/* 품절 임박 꿀템 */}
       <section className="bg-[#FFF8F3]">
-        <MainCard title="품절 임박 꿀템" subTitle="서두르세요! 재고가 얼마 남지 않았어요" fullImage>
+        {/* <MainCard title="품절 임박 꿀템" subTitle="서두르세요! 재고가 얼마 남지 않았어요" fullImage>
           <ProductsCardList>
             <ProductsCard maxProducts={INVENTORY_PRODUCTS} products={sortedList(MainProducts, 'inventory')} />
           </ProductsCardList>
-        </MainCard>
+        </MainCard> */}
       </section>
     </>
   );

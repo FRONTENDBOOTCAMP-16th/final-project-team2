@@ -1,19 +1,4 @@
-type Product = {
-  category: string;
-  name: string;
-  originalPrice: number;
-  discountRate: number;
-  salePrice: number;
-  shipping: string[];
-  returnPolicy: string;
-  countryOfOrigin: string;
-  description: string;
-};
-type Props = {
-  product: Product;
-};
-
-const ProductInfoTable = ({ product }: Props) => {
+const ProductInfoTable = () => {
   return (
     <table className="max-w-7xl m-auto w-full border-t border-b border-t-gray-200 border-b-gray-200">
       <tbody>
@@ -39,7 +24,7 @@ const ProductInfoTable = ({ product }: Props) => {
 
         <tr>
           <th className="w-32 px-4 py-3 text-left bg-gray-50 text-gray-500">원산지</th>
-          <td className="px-4 py-3">{product.countryOfOrigin}</td>
+          <td className="px-4 py-3">대한민국</td>
         </tr>
       </tbody>
     </table>
