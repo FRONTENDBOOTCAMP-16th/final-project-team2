@@ -1,7 +1,7 @@
 import { createClient } from '../../utils/supabase/server'
-import type { Notice } from '@/types/notice'
+import type { BoardCard } from '@/types/boards'
 
-export const getNoticeDetail = async (id: string): Promise<Notice> => {
+export const getNoticeDetail = async (id: string): Promise<BoardCard> => {
   const supabase = await createClient()
   
   const { data, error } = await supabase
