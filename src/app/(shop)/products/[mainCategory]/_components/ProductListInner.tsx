@@ -1,18 +1,19 @@
 'use client';
 
 import { useState } from 'react';
-import { Products } from '../lib/products';
 import ProductsCard from '@/app/components/ProductsCard';
 import ProductsCardList from '@/app/components/ProductsCardList';
 import ProductListSkeleton from './ProductListSkeleton';
+import { Products } from '@/app/lib/products';
+import { Categories } from '@/app/lib/Categories';
 
 type Props = {
   products: Products[];
-  keyword?: string;
+  category: string;
   sort?: string;
 };
 
-export default function ProductListInner({ products, keyword, sort }: Props) {
+export default function ProductListInner({ products, category, sort }: Props) {
   const [loadedCount, setLoadedCount] = useState(0);
 
   const isAllLoaded = products.length === 0 || loadedCount >= products.length;
@@ -29,7 +30,7 @@ export default function ProductListInner({ products, keyword, sort }: Props) {
         className={`transition-opacity duration-150 ${isAllLoaded ? 'opacity-100' : 'opacity-0 absolute inset-0 pointer-events-none'}`}
       >
         {products.map(product => (
-          <ProductsCard key={product.id} product={product} onImageLoad={handleImageLoad} />
+          <ProductsCard key={product.id} sort={sort} category={category} product={product} onImageLoad={handleImageLoad} />
         ))}
       </ProductsCardList>
     </div>
