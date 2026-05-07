@@ -1,16 +1,16 @@
 import { Heart } from 'lucide-react';
 import Link from 'next/link';
-import { Products } from '../(shop)/products/[mainCategory]/lib/products';
 import ProductImage from '../(shop)/products/[mainCategory]/_components/ProductImage';
+import { Products } from '../lib/products';
 
 interface ProductCardProps {
   product: Products;
-  keyword?: string;
+  category: string;
   sort?: string;
   onImageLoad?: () => void;
 }
 
-export default function ProductsCard({ product, onImageLoad }: ProductCardProps) {
+export default function ProductsCard({ product, category, onImageLoad }: ProductCardProps) {
   if (!product) return null;
   const discountPrice = product.discount_rate > 0 ? Math.floor(product.price * (1 - product.discount_rate / 100)) : product.price;
 
@@ -20,9 +20,9 @@ export default function ProductsCard({ product, onImageLoad }: ProductCardProps)
 
   return (
     <li className="relative" aria-label={label}>
-      <Link href={`/products/${product.category}/${product.id}`} className="block">
+      <Link href={`/products/${category}/${product.id}`} className="block">
         <div className="w-70.5 aspect-square relative overflow-hidden">
-          <ProductImage src={product.image} alt={product.name} onLoadComplete={onImageLoad} />
+          <ProductImage src={product.thumbnail_image} alt={product.name} onLoadComplete={onImageLoad} />
 
           {product.discount_rate > 0 && (
             <div className="absolute left-0 top-0 w-16 h-8 bg-[#FF6B6B] text-white font-semibold flex items-center justify-center" aria-hidden="true">
