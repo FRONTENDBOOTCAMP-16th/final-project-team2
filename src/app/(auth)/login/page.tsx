@@ -37,10 +37,9 @@ export default function LoginPage() {
         
         {/* 로그인 서브 */}
         <div className="grid grid-cols-1 mbs-2 pbe-9 border-be border-[#e0e0e0]">
-          <CheckeBox name="keeplogin" label="로그인 상태유지" />
           <Link href="/signup" className="text-[#575A68] row-start-1 col-start-2 text-right">회원가입</Link>
           <Link href="/find-id" className="text-[#575A68] row-start-2 col-start-2 text-right">아이디 찾기</Link>
-          <Link href="/reset-password-check" className="text-[#575A68] row-start-3 col-start-2 text-right">비밀번호 재설정</Link>
+          <Link href="/reset-password" className="text-[#575A68] row-start-3 col-start-2 text-right">비밀번호 재설정</Link>
         </div>
         
         {/* 로그인버튼 */}

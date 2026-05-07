@@ -2,8 +2,8 @@
 
 import { signupSchema } from "@/app/lib/auth"
 import { authAction } from "./auth.actions"
-import { supabase } from "@/app/lib/supabase"
 import { redirect } from "next/navigation"
+import { createClient } from "../../utils/supabase/client"
 
 export type SignupState = {
   errors: Record<string, string[]> | null
@@ -24,6 +24,7 @@ export const signupAction = async (_: unknown, formData: FormData): Promise<Sign
   if (result.errors) return result
 
   const { email, password, name, phone, role } = result.data
+  const supabase = createClient()
 
   // 아이디/비밀번호 암호화 - 로그인에 필요한 정보
   const { data, error } = await supabase.auth.signUp({

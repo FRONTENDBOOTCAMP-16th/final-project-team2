@@ -10,7 +10,6 @@ interface LoginStatus {
   role?: string
   email?: string
   password?: string
-  keeplogin?: string
 }
 
 export const loginAction = async (_: unknown, formData: FormData): Promise<LoginStatus> => {
@@ -21,9 +20,8 @@ export const loginAction = async (_: unknown, formData: FormData): Promise<Login
   if (result.errors) return result
 
   // 객체 변경 및 로그인지속 여부
-  const { email, password, role, keeplogin } = result.data
-  const isKeepLogin = keeplogin === 'on'
-  const supabase = await createClient(isKeepLogin)
+  const { email, password, role } = result.data
+  const supabase = await createClient()
 
 
   // 아이디 비밀번호 체크
@@ -34,7 +32,7 @@ export const loginAction = async (_: unknown, formData: FormData): Promise<Login
 
   if (authError) {
     return { 
-      errors: { root: ['이메일, 비밀번호 또는 타입이 올바르지 않습니다'] },
+      errors: { root: ['이메일, 비밀번호 또는 회원 구분이 올바르지 않습니다'] },
       email: email,
       password: password,
       role: role
@@ -49,7 +47,7 @@ export const loginAction = async (_: unknown, formData: FormData): Promise<Login
     await supabase.auth.signOut()
     
     return {
-      errors: { root: ['선택하신 타입이 일치하지 않습니다'] },
+      errors: { root: ['선택하신 회원 구분이 일치하지 않습니다'] },
       email: email,
       password: password,
       role: role
