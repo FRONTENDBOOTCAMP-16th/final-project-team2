@@ -13,15 +13,8 @@ export default async function NoticeList({
   const currentPage = Number(params?.page) || 1;
   
 
-  // 향후 이거 admin으로 나눌 예정입니다!
-  // 1. Supabase 서버 클라이언트 초기화
   const supabase = await createClient();
-  // 2. 현재 로그인한 유저 정보 가져오기
   const { data: { user } } = await supabase.auth.getUser();
-
-  console.log(user)
-
-  // 3. 유저가 있다면 users 테이블에서 role 조회하여 ADMIN인지 확인
   let isAdmin = false;
   if (user) {
     const { data: userData, error } = await supabase
@@ -34,7 +27,6 @@ export default async function NoticeList({
     }
   }
   
-  // 4. 공지사항 데이터 페칭
   const { importantData, normalData, normalCount } = await getNotices(currentPage);
 
   if (importantData.length === 0 && normalData.length === 0) {
@@ -80,7 +72,7 @@ export default async function NoticeList({
 
       <div className="flex justify-end">
         {isAdmin && (
-          <Link href={'/notice/write'} className="bg-blue-500 text-white px-4 py-2 rounded">
+          <Link href={'/notice/write'} className="bg-gray-100 text-black px-4 py-2">
             글쓰기
           </Link>
         )}

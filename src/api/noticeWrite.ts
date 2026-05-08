@@ -3,54 +3,30 @@
 import { redirect } from 'next/navigation'
 import { createClient } from '../../utils/supabase/server'
 import { updateTag } from 'next/cache';
-import { el } from 'zod/v4/locales';
-
+import checkAdmin from '@/actions/checkAdminAction';
 
 export type FormState = {
   success: boolean;
   message: string;
 }
 
-
-
 export async function createNotice(prevState: FormState, formData: FormData): Promise<FormState> {
   const supabase = await createClient()
   const title = formData.get('title') as string
   const content = formData.get('content') as string
   const isImportant = formData.get('important') === 'on'
+  const updateId = formData.get('updateId') as string
 
-
-  // 로직
-  const { data: { user }, error: userError } = await supabase.auth.getUser()
-
-  if (userError || !user) {
-    return { success: false, message: '로그인 정보가 유효하지 않습니다.' }
-  }
-
-  const { data: userData, error: dbError } = await supabase
-    .from('users')
-    .select('role, nickname')
-    .eq('id', user.id)
-    .single()
-
-  if (dbError || !userData) {
-    return { success: false, message: '사용자 정보를 불러올 수 없습니다.' }
-  }
-
-  if (userData?.role !== "ADMIN") {
-    redirect('/notice')
-  }
-
+  const { userData } = await checkAdmin('/notice')
   const writerId = userData.nickname
 
+  // 방어 검증
   if (!title || !title.trim()) {
     return { success: false, message: '제목을 입력해주세요.' }
   }
   if (!content || !content.trim() || content === '<p><br></p>') {
     return { success: false, message: '본문 내용을 작성해주세요.' }
   }
-
-  const updateId = formData.get('updateId') as string
 
   try {
     let error;
@@ -75,7 +51,7 @@ export async function createNotice(prevState: FormState, formData: FormData): Pr
           content: content.trim(),
           important: isImportant,
           writer_id: writerId,
-          created_at: new Date().toISOString(), // 현재 시간
+          created_at: new Date().toISOString(),
         })
       error = insertError;
     }

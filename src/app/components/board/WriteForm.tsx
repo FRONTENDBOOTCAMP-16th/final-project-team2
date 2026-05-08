@@ -31,7 +31,7 @@ export default function WriteForm({ board, initialData, action, showImportantChe
   const [title, setTitle] = useState(initialData?.title || '')
   const [content, setContent] = useState(initialData?.content || '')
   const [isImportant, setIsImportant] = useState(initialData?.important || false)
-  const [clientError, setClientError] = useState('') // 클라이언트 검증 에러 상태 추가
+  const [clientError, setClientError] = useState('')
   const updateID = initialData?.id || null
 
 
@@ -53,7 +53,7 @@ export default function WriteForm({ board, initialData, action, showImportantChe
       return
     }
 
-    setClientError('') // 유효성 통과 시 에러 초기화
+    setClientError('')
   }
 
   return (
@@ -71,7 +71,7 @@ export default function WriteForm({ board, initialData, action, showImportantChe
 
       {(clientError || (!state.success && state.message)) && (
         <div className="p-4 bg-red-50 border border-red-200 text-red-600 rounded-md text-sm font-medium animate-pulse">
-          🚨 {clientError || state.message}
+          {clientError || state.message}
         </div>
       )}
 
