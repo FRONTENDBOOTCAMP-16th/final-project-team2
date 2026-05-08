@@ -15,7 +15,7 @@ type PaginationProps = {
   totalCount: number;
 };
 
-export default async function Pagination({ mainCategory, baseUrl, pageSize, products, category, page, sort, totalCount }: PaginationProps) {
+export default async function Pagination({ mainCategory, baseUrl, pageSize, category, page, sort, totalCount }: PaginationProps) {
   const PAGE_GROUP_SIZE = 5;
 
   const paginationButton = {
