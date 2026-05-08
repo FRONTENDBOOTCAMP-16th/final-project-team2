@@ -102,7 +102,7 @@ export default function WriteForm({ board, initialData, action, showImportantChe
           id="title"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
-          placeholder="공지사항 제목을 입력하세요 (비워두고 등록하면 에러가 발생합니다)"
+          placeholder={`${board} 제목을 입력하세요 (비워두고 등록하면 에러가 발생합니다)`}
           className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500 transition-shadow disabled:bg-gray-100 disabled:text-gray-500"
           disabled={isPending}
         />

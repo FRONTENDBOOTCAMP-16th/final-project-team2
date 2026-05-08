@@ -8,6 +8,7 @@ export default function NoticeWritePage() {
         board={'1:1문의'}
         action={createInquire} 
         showImportantCheckbox={false} 
+        link='inquire'
       />
     </div>
   );
