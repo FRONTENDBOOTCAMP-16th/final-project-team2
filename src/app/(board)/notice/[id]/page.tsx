@@ -2,6 +2,7 @@ import { getNoticeDetail } from "@/api/noticeDetail"
 import { notFound } from "next/navigation"
 import DOMPurify from 'isomorphic-dompurify'
 import Link from "next/link"
+import checkUserID from "@/actions/checkUserId"
 
 
 export default async function NoticeDetailPage({ 
@@ -25,6 +26,11 @@ export default async function NoticeDetailPage({
   }
 
   const cleanHtml = DOMPurify.sanitize(notice.content || '')
+  let isWriter = false
+  const user = await checkUserID()
+  if (notice.writer_id === user.id || user.role === 'ADMIN') {
+    isWriter = true
+  }
 
   return (
     <div className="w-full max-w-4xl p-8 mx-auto">
@@ -37,12 +43,31 @@ export default async function NoticeDetailPage({
         className="prose"
         dangerouslySetInnerHTML={{ __html: cleanHtml }}
       />
-      <Link
-        href="/notice"
-        className="inline-block mb-4 px-4 py-2 bg-slate-800 text-white rounded hover:bg-slate-700"
-      >
-        목록
-      </Link>
+      <div className="flex gap-2 justify-end w-full my-6">
+        {isWriter && (
+          <Link
+            href={`/notice/${notice.id}/edit`}
+            className="inline-block mb-4 px-8 py-2 bg-gray-200 text-black"
+          >
+            수정
+          </Link>
+        )}
+        {isWriter && (
+          <Link
+            href={`/notice/${notice.id}/delete`}
+            className="inline-block mb-4 px-8 py-2 bg-red-500 text-white"
+          >
+            삭제
+          </Link>
+        )}
+        <Link
+          href="/notice"
+          className="inline-block mb-4 px-8 py-2 bg-slate-800 text-white  hover:bg-slate-700"
+        >
+          목록
+        </Link>
+      </div>
+
     </div>
   )
 }

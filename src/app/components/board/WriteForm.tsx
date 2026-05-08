@@ -36,9 +36,8 @@ export default function WriteForm({ board, initialData, action, showImportantChe
 
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    // 이미지나 iframe(동영상)이 첨부된 경우는 본문이 있는 것으로 간주
+
     const hasMedia = /<img[^>]*>|<iframe[^>]*>/i.test(content)
-    // HTML 태그와 공백(&nbsp;)을 모두 제거하여 순수 텍스트만 추출
     const plainText = content.replace(/<[^>]*>?/gm, '').replace(/&nbsp;/g, '').trim()
 
     if (!title.trim()) {
@@ -46,7 +45,6 @@ export default function WriteForm({ board, initialData, action, showImportantChe
       setClientError('제목을 입력해주세요.')
       return
     }
-
     if (!hasMedia && !plainText) {
       e.preventDefault()
       setClientError('본문 내용을 작성해주세요.')

@@ -2,7 +2,7 @@
 
 import { redirect } from 'next/navigation'
 import { createClient } from '../../utils/supabase/server'
-import { updateTag } from 'next/cache';
+import { revalidateTag } from 'next/cache'; 
 import checkAdmin from '@/actions/checkAdminAction';
 
 export type FormState = {
@@ -12,28 +12,26 @@ export type FormState = {
 
 export async function createNotice(prevState: FormState, formData: FormData): Promise<FormState> {
   const supabase = await createClient()
+
   const title = formData.get('title') as string
   const content = formData.get('content') as string
   const isImportant = formData.get('important') === 'on'
   const updateId = formData.get('updateId') as string
 
-  const { userData } = await checkAdmin('/notice')
-  const writerId = userData.nickname
+  await checkAdmin('/notice')
 
-  // 방어 검증
-  if (!title || !title.trim()) {
-    return { success: false, message: '제목을 입력해주세요.' }
+  const { data: { user }, error: userError } = await supabase.auth.getUser()
+
+  if (userError || !user) {
+    return { success: false, message: '로그인 세션이 만료되었거나 유효하지 않습니다.' }
   }
-  if (!content || !content.trim() || content === '<p><br></p>') {
-    return { success: false, message: '본문 내용을 작성해주세요.' }
-  }
+
+  const writerId = user.id;
 
   try {
-    let error;
-
-    if (updateId) {
-      // 수정 모드 (Update)
-      const { error: updateError } = await supabase
+    let dbError;
+    if (updateId && updateId !== 'null' && updateId !== 'undefined' && updateId !== '') {
+      const { error } = await supabase
         .from('notices')
         .update({
           title: title.trim(),
@@ -41,40 +39,35 @@ export async function createNotice(prevState: FormState, formData: FormData): Pr
           important: isImportant,
         })
         .eq('id', updateId)
-      error = updateError;
+      
+      dbError = error;
     } else {
-      // 생성 모드 (Insert)
-      const { error: insertError } = await supabase
+      // [생성 모드] - 여기서 writer_id (UUID)가 정상적으로 들어갑니다.
+      const { error } = await supabase
         .from('notices')
         .insert({
           title: title.trim(),
           content: content.trim(),
           important: isImportant,
-          writer_id: writerId,
+          writer_id: writerId, 
           created_at: new Date().toISOString(),
         })
-      error = insertError;
+        
+      dbError = error;
+
     }
 
-    if (error) {
-      console.error('Supabase Error:', error.message)
-      return { success: false, message: 'DB 저장 중 오류가 발생했습니다: ' + error.message }
+    if (dbError) {
+      console.error('Supabase Error:', dbError.message)
+      return { success: false, message: 'DB 저장 중 오류가 발생했습니다: ' + dbError.message }
     }
 
-    updateTag('notices');
 
   } catch (error) {
     console.error('Server Action Error:', error)
     return { success: false, message: '서버 에러가 발생했습니다. 다시 시도해주세요.' }
   }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
+  revalidateTag('notices');
   redirect('/notice')
-=======
-  redirect('/notice') 
->>>>>>> aa915c9 (feat: 공지사항 서버 액션 추가)
-=======
-  redirect('/notice')
->>>>>>> ef88a54 (feat: QNA 부분 서버 액션 추가)
 }
