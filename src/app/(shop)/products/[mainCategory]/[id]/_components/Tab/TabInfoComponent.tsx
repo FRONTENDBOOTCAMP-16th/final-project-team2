@@ -1,4 +1,4 @@
-import { Products } from '@/app/lib/products';
+import { Products } from '../../../lib/products';
 import ProductInfoTable from './ProductInfoTable';
 import Review from './ReviewChart';
 import TabProductsInfo from './TabProductsInfo';

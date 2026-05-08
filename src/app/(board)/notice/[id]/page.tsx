@@ -1,9 +1,10 @@
 import { getNoticeDetail } from "@/api/noticeDetail"
 import { notFound } from "next/navigation"
-import sanitizeHtml from 'sanitize-html'
+import DOMPurify from 'isomorphic-dompurify'
 import Link from "next/link"
 import checkUserID from "@/actions/checkUserId"
 import NoticeDeleteAction from "@/app/components/board/NoticeDeleteAction"
+
 
 export default async function NoticeDetailPage({
   params
@@ -25,15 +26,7 @@ export default async function NoticeDetailPage({
     notFound()
   }
 
-  const cleanHtml = sanitizeHtml(notice.content || '', {
-    allowedTags: ['b', 'i', 'em', 'strong', 'a', 'p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'ul', 'ol', 'li', 'span', 'u', 's', 'br', 'hr', 'img', 'iframe', 'blockquote'],
-    allowedAttributes: {
-      '*': ['style', 'class'],
-      'a': ['href', 'target', 'rel'],
-      'img': ['src', 'alt', 'width', 'height'],
-      'iframe': ['src', 'width', 'height', 'frameborder', 'allow', 'allowfullscreen']
-    }
-  });
+  const cleanHtml = DOMPurify.sanitize(notice.content || '')
   let isWriter = false
   const user = await checkUserID()
   if (notice.writer_id === user?.id || user?.role === 'ADMIN') {
