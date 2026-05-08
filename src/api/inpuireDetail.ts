@@ -6,7 +6,19 @@ export const getInquireDetail = async (id: string): Promise<BoardCard> => {
   
   const { data, error } = await supabase
     .from('qnas')
-    .select('*')
+    .select(`*,
+      writer:writer_id (
+        id,
+        nickname,
+        profile_image
+      ),
+      product:product_id (
+        id,
+        name,
+        thumbnail_image,
+        price
+      )
+      `)
     .eq('id', id)
     .single()
 

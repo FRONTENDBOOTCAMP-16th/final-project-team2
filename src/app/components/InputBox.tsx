@@ -8,11 +8,13 @@ interface InputBoxProps {
   name: string
   error?: string
   type?: "text" | "password"
-  value?: string
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
+  onFocus?: (e: React.ChangeEvent<HTMLInputElement>) => void
+  onBlur?: (e: React.ChangeEvent<HTMLInputElement>) => void
   defaultValue?: string
 }
 
-export default function InputBox({ label, placeholder, error, name, type = "text", value, defaultValue }: InputBoxProps) {
+export default function InputBox({ label, placeholder, error, name, type = "text", onChange, onFocus, onBlur , defaultValue }: InputBoxProps) {
   const uniqueId = useId()
   const [localValue, setLocalValue] = useState(defaultValue || "")
   const [isFocused, setIsFocused] = useState(false)

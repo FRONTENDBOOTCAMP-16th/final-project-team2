@@ -10,12 +10,12 @@ type PaginationProps = {
   products: Products[];
   subcategory?: string;
   sort?: string;
-  page: number;
+  page?: number;
   category?: string;
   totalCount: number;
 };
 
-export default async function Pagination({ mainCategory, baseUrl, pageSize, products, category, page, sort, totalCount }: PaginationProps) {
+export default async function Pagination({ mainCategory, baseUrl, pageSize, category, page, sort, totalCount }: PaginationProps) {
   const PAGE_GROUP_SIZE = 5;
 
   const paginationButton = {
@@ -97,7 +97,11 @@ export default async function Pagination({ mainCategory, baseUrl, pageSize, prod
                 {pageNumber}
               </Link>
 
-              {!isLast && <span aria-hidden className="border-gray-300 text-slate-300"></span>}
+              {!isLast && (
+                <span aria-hidden className="border-gray-300 text-slate-300">
+                  |
+                </span>
+              )}
             </li>
           );
         })}

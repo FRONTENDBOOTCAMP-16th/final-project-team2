@@ -1,4 +1,39 @@
 @import "tailwindcss";
+@font-face {
+	font-family: 'SUITE';
+	font-weight: 300;
+	src: url('../fonts/suit/SUITE-Light.woff2') format('woff2');
+}
+@font-face {
+	font-family: 'SUITE';
+	font-weight: 400;
+	src: url('../fonts/suit/SUITE-Regular.woff2') format('woff2');
+}
+@font-face {
+	font-family: 'SUITE';
+	font-weight: 500;
+	src: url('../fonts/suit/SUITE-Medium.woff2') format('woff2');
+}
+@font-face {
+	font-family: 'SUITE';
+	font-weight: 600;
+	src: url('../fonts/suit/SUITE-SemiBold.woff2') format('woff2');
+}
+@font-face {
+	font-family: 'SUITE';
+	font-weight: 700;
+	src: url('../fonts/suit/SUITE-Bold.woff2') format('woff2');
+}
+@font-face {
+	font-family: 'SUITE';
+	font-weight: 800;
+	src: url('../fonts/suit/SUITE-ExtraBold.woff2') format('woff2');
+}
+@font-face {
+	font-family: 'SUITE';
+	font-weight: 900;
+	src: url('../fonts/suit/SUITE-Heavy.woff2') format('woff2');
+}
 
 *{
   font-family: 'SUITE';
