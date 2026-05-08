@@ -11,14 +11,15 @@ export type FormState = {
 }
 
 export async function createNotice(prevState: FormState, formData: FormData): Promise<FormState> {
-  const supabase = await createClient()
-
   const title = formData.get('title') as string
   const content = formData.get('content') as string
   const isImportant = formData.get('important') === 'on'
   const updateId = formData.get('updateId') as string
+  const deleteId = formData.get('deleteId') as string
 
   await checkAdmin('/notice')
+
+  const supabase = await createClient()
 
   const { data: { user }, error: userError } = await supabase.auth.getUser()
 
@@ -31,6 +32,7 @@ export async function createNotice(prevState: FormState, formData: FormData): Pr
   try {
     let dbError;
     if (updateId && updateId !== 'null' && updateId !== 'undefined' && updateId !== '') {
+      // [수정 모드]
       const { error } = await supabase
         .from('notices')
         .update({
@@ -41,8 +43,15 @@ export async function createNotice(prevState: FormState, formData: FormData): Pr
         .eq('id', updateId)
       
       dbError = error;
+    } else if (deleteId && deleteId !== 'null' && deleteId !== 'undefined' && deleteId !== '') {
+      // [삭제 모드]
+      const { error } = await supabase
+        .from('notices')
+        .delete()
+        .eq('id', deleteId)
+      dbError = error;
     } else {
-      // [생성 모드] - 여기서 writer_id (UUID)가 정상적으로 들어갑니다.
+      // [생성 모드]
       const { error } = await supabase
         .from('notices')
         .insert({
@@ -52,16 +61,13 @@ export async function createNotice(prevState: FormState, formData: FormData): Pr
           writer_id: writerId, 
           created_at: new Date().toISOString(),
         })
-        
       dbError = error;
-
     }
 
     if (dbError) {
       console.error('Supabase Error:', dbError.message)
       return { success: false, message: 'DB 저장 중 오류가 발생했습니다: ' + dbError.message }
     }
-
 
   } catch (error) {
     console.error('Server Action Error:', error)
