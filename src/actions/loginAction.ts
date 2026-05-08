@@ -5,7 +5,7 @@ import { authAction } from "./auth.actions"
 import { redirect } from "next/navigation"
 import { createClient } from "../../utils/supabase/server"
 
-interface LoginStatus {
+export interface LoginStatus {
   errors: Record<string, string[]> | null
   role?: string
   email?: string
