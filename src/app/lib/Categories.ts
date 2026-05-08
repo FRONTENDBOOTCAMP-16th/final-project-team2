@@ -10,3 +10,18 @@ export type ProductCategories = {
   product_id: string;
   category_id: string;
 };
+
+// 확장 타입 (supabase 원본 타입 아님)
+export type ProductCategoriesWithCategory = ProductCategories & {
+  categories: Pick<Categories, "id" | "name">;
+};
+
+// 확장 타입 (supabase 원본 타입 아님)
+export type ProductPreview = {
+  id: string;
+  name: string;
+  thumbnail_image: string;
+  price: number;
+  discount_rate: number;
+  product_categories: ProductCategoriesWithCategory[];
+};
