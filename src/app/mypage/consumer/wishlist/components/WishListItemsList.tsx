@@ -9,6 +9,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { fetchLikes } from "@/app/mypage/api/fetchLikes";
 import { ProductLikeWithProduct } from "@/app/lib/productLike";
 import { useRouter, useSearchParams } from "next/navigation";
+import EmptyWishlist from "./EmptyWishlist";
 
 const supabase = createClient();
 
@@ -51,6 +52,7 @@ export default function WishListItemsList() {
     queryKey: ["likes"],
     queryFn: fetchLikes,
   });
+  const hasItems = items.length > 0;
 
   // 아이템의 찜하기 버튼 해체 시 해당 아이템 카드 사라지게 하기
   const onRemove = async (id: string) => {
@@ -131,18 +133,25 @@ export default function WishListItemsList() {
           <option value="price-low">가격 낮은 순</option>
         </select>
       </div>
-      <ul className="grid grid-cols-2 md:grid-cols-3 gap-x-6  gap-y-15 ">
-        {currentItems.map((item) => (
-          <li key={item.id}>
-            <WishListItemCard order={item} onRemove={onRemove} />
-          </li>
-        ))}
-      </ul>
-      <Pagination
-        currentPage={page}
-        totalPages={totalPages}
-        onPageChange={onChangePage}
-      />
+      {hasItems ? (
+        <>
+          <ul className="grid grid-cols-2 md:grid-cols-3 gap-x-6 gap-y-15">
+            {currentItems.map((item) => (
+              <li key={item.id}>
+                <WishListItemCard order={item} onRemove={onRemove} />
+              </li>
+            ))}
+          </ul>
+
+          <Pagination
+            currentPage={page}
+            totalPages={totalPages}
+            onPageChange={onChangePage}
+          />
+        </>
+      ) : (
+        <EmptyWishlist />
+      )}
     </>
   );
 }
