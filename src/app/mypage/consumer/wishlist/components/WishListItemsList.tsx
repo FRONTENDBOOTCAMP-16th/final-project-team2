@@ -59,8 +59,8 @@ export default function WishListItemsList() {
   // 아이템의 찜하기 버튼 해체 시 해당 아이템 카드 사라지게 하기
   const { mutate: removeWishlist } = useRemoveWishList();
 
-  // 데이터에서 카테고리 네임 자동 탭 설정
-  const categoryTabs = getWishListCategoryTabs(safeItems);
+  // 데이터에서 카테고리 네임 탭 설정
+  const categoryTabs = getWishListCategoryTabs();
 
   // 선택된 카테고리 기준으로 찜한 상품 필터링
   const filteredItems = filterWishListItems(safeItems, category);
