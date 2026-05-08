@@ -1,15 +1,10 @@
 import LikeToggleButton from "@/app/mypage/consumer/wishlist/components/LikeToggleButton";
 import Link from "next/link";
 import Image from "next/image";
-import { OrderItem } from "@/app/mypage/types/orderItem";
-
-const CATEGORY_TO_KOREAN: { writing: string; paper: string } = {
-  writing: "필기구",
-  paper: "노트/메모",
-};
+import { ProductLikeWithProduct } from "@/app/lib/productLike";
 
 interface Props {
-  order: OrderItem;
+  order: ProductLikeWithProduct;
   onRemove: (id: string) => void;
 }
 
@@ -17,12 +12,12 @@ export default function WishListItemCard({ order, onRemove }: Props) {
   return (
     <div key={order.id} className="flex flex-col">
       <Link
-        href={`/products/pen/${order.id}`}
+        href={`/products/${order.products.product_categories[0]?.categories.name}/${order.id}`}
         className="relative flex flex-col transition-transform duration-400 hover:scale-105"
       >
-        {order.discountRate > 0 && (
+        {order.products.discount_rate > 0 && (
           <div className="absolute top-0 left-0  bg-[#DC2626] text-white px-2 py-1 text-sm font-bold">
-            {order.discountRate}%
+            {order.products.discount_rate}%
           </div>
         )}
 
@@ -30,27 +25,29 @@ export default function WishListItemCard({ order, onRemove }: Props) {
           width={282}
           height={282}
           className="object-fill "
-          src={order.image}
+          src={order.products.thumbnail_image}
           alt=""
         />
       </Link>
-      <div className="flex flex-col pr-4 pt-4">
+      <div className="flex flex-col  pt-4">
         <p className="text-sm text-gray-400 ">
-          {CATEGORY_TO_KOREAN[order.category]}
+          {order.products.product_categories[0]?.categories.name}
         </p>
         <div className="flex justify-between">
-          <p className="font-bold self-center">{order.name}</p>
+          <p className="font-bold self-center w-50 truncate">
+            {order.products.name}
+          </p>
           <LikeToggleButton id={order.id} onRemove={onRemove} />
         </div>
 
         <div className="flex gap-2">
-          {order.discountRate > 0 && (
+          {order.products.discount_rate > 0 && (
             <span className="text-red-500 font-bold text-sm">
-              {order.discountRate}%
+              {order.products.discount_rate}%
             </span>
           )}
           <span className="font-bold text-sm text-slate-800">
-            {order.unitPrice.toLocaleString()}원
+            {order.products.price.toLocaleString()}원
           </span>
         </div>
       </div>

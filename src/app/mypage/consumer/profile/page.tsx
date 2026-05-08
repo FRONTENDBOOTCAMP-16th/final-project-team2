@@ -1,10 +1,24 @@
 "use client";
 
-import { useState, SyntheticEvent } from "react";
-import ProfileForm from "./components/ProfileForm";
-import ImageUploader from "./components/ImageUploader";
-import ProfileAction from "./components/ProfileAction";
+import { z } from "zod";
 import { Pen, Check } from "lucide-react";
+import useFormManagement from "@/hooks/useFormManagement";
+import ImageUploader from "../../consumer/profile/components/ImageUploader";
+import ProfileForm from "../../consumer/profile/components/ProfileForm";
+import ProfileAction from "../../consumer/profile/components/ProfileAction";
+
+const profileSchema = z.object({
+  nickname: z.string().min(1, "닉네임을 입력해주세요."),
+  phone: z
+    .string()
+    .min(1, "전화번호를 입력해주세요.")
+    .min(10, "전화번호가 너무 짧습니다."),
+  address: z.string().min(1, "주소를 입력해주세요."),
+  profileImage: z.string().optional(),
+  name: z.string().optional(),
+  email: z.string().optional(),
+  birthday: z.string().optional(),
+});
 
 const PROFILE_FIELDS = [
   { label: "이메일", name: "email", type: "email", isReadOnly: true },
@@ -16,8 +30,7 @@ const PROFILE_FIELDS = [
 ];
 
 export default function Profile() {
-  const [isEditing, setIsEditing] = useState(false);
-  const [formData, setFormData] = useState({
+  const initialData = {
     profileImage: "",
     name: "홍길동",
     email: "user01@example.com",
@@ -25,57 +38,40 @@ export default function Profile() {
     phone: "01012345678",
     address: "서울시 강남구 테헤란로 123",
     birthday: "1990-01-01",
-  });
+  };
 
-  const [errors, setErrors] = useState<Record<string, string>>({});
-  const [backupData, setBackupData] = useState(formData);
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    if (errors[name]) setErrors((prev) => ({ ...prev, [name]: "" }));
+  const validate = (data: typeof initialData) => {
+    const result = profileSchema.safeParse(data);
 
-    if (name === "phone") {
-      const onlyNumber = value.replace(/[^0-9]/g, "").slice(0, 11);
-      setFormData((prev) => ({ ...prev, [name]: onlyNumber }));
-      return;
+    if (!result.success) {
+      const newErrors: Record<string, string> = {};
+      result.error.issues.forEach((issue) => {
+        const fieldName = issue.path[0] as string;
+        newErrors[fieldName] = issue.message;
+      });
+      return newErrors;
     }
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    return {};
   };
 
-  const handleEdit = (e: React.MouseEvent) => {
-    e.preventDefault();
-    setBackupData(formData);
-    setIsEditing(true);
-  };
+  const {
+    formData,
+    isEditing,
+    errors,
+    handleChange,
+    handleEdit,
+    handleCancel,
+    handleSubmit,
+  } = useFormManagement(initialData, validate);
 
-  const handleCancel = (e: React.MouseEvent) => {
-    e.preventDefault();
-    setFormData(backupData);
-    setErrors({});
-    setIsEditing(false);
-  };
-
-  const handleSubmit = (e: SyntheticEvent) => {
-    e.preventDefault();
-    const newErrors: Record<string, string> = {};
-
-    if (!formData.nickname.trim())
-      newErrors.nickname = "닉네임을 입력해주세요.";
-    if (formData.phone.length < 10 && formData.phone.length > 0)
-      newErrors.phone = "전화번호가 너무 짧습니다.";
-    if (!formData.address.trim()) newErrors.address = "주소를 입력해주세요.";
-
-    if (Object.keys(newErrors).length > 0) {
-      setErrors(newErrors);
-      return;
-    }
-
-    setIsEditing(false);
-    setErrors({});
+  const handleSaveSuccess = (data: typeof initialData) => {
+    console.log("저장할 데이터:", data);
+    alert("프로필이 수정되었습니다.");
   };
 
   return (
-    <section className="p-8 bg-white w-full max-w-4xl ">
-      <form onSubmit={handleSubmit}>
+    <section className="p-8 bg-white w-full max-w-4xl">
+      <form onSubmit={(e) => handleSubmit(e, handleSaveSuccess)}>
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-xl font-bold">프로필 수정</h1>
           <div className="flex gap-2">
@@ -91,7 +87,11 @@ export default function Profile() {
             <button
               type={isEditing ? "submit" : "button"}
               onClick={!isEditing ? handleEdit : undefined}
-              className={`${isEditing ? "bg-green-500 hover:bg-green-600" : "bg-red-400 hover:bg-red-500"}  text-white px-6 py-2 font-medium transition`}
+              className={`${
+                isEditing
+                  ? "bg-green-500 hover:bg-green-600"
+                  : "bg-red-400 hover:bg-red-500"
+              } text-white px-6 py-2 font-medium transition`}
             >
               {isEditing ? (
                 <span className="flex items-center justify-center gap-2">
@@ -111,7 +111,7 @@ export default function Profile() {
         <div className="flex flex-col gap-5">
           <ImageUploader
             label="프로필 이미지"
-            defaultImage={formData.profileImage}
+            defaultImage={formData.profileImage as string}
           />
 
           {PROFILE_FIELDS.map((field) => (
@@ -120,7 +120,9 @@ export default function Profile() {
               label={field.label}
               name={field.name}
               type={field.type}
-              value={formData[field.name as keyof typeof formData]}
+              value={String(
+                formData[field.name as keyof typeof formData] || "",
+              )}
               onChange={handleChange}
               disabled={!isEditing}
               readOnly={field.isReadOnly}
