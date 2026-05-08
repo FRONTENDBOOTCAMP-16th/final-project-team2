@@ -4,8 +4,7 @@ import WishListItemCard from "./WishListItemsCard";
 import TabFilter from "./tabFilter";
 import Pagination from "@/app/mypage/seller/delivery/components/Pagination";
 import { usePagination } from "@/hooks/usePagination";
-import { createClient } from "../../../../../../utils/supabase/client";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { fetchLikes } from "@/app/mypage/api/fetchLikes";
 import { ProductLikeWithProduct } from "@/app/lib/productLike";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -14,8 +13,7 @@ import MyPageProductSkeleton from "@/app/mypage/components/MypageProductSkeleton
 import { filterWishListItems } from "../utils/filterWishListItems";
 import { SORTTYPE, sortWishListItems } from "../utils/sortWishListItems";
 import { getWishListCategoryTabs } from "../utils/getWishListCategoryTabs";
-
-const supabase = createClient();
+import { useRemoveWishList } from "../hooks/useRemoveWishList";
 
 export default function WishListItemsList() {
   const router = useRouter();
@@ -23,7 +21,6 @@ export default function WishListItemsList() {
   const category = searchParams.get("category") ?? "all";
   const sort = (searchParams.get("sort") as SORTTYPE) ?? "latest";
   const page = Number(searchParams.get("page") ?? 1);
-  const queryClient = useQueryClient();
 
   const onChangeCategory = (slug: string) => {
     const params = new URLSearchParams(searchParams.toString());
@@ -60,10 +57,7 @@ export default function WishListItemsList() {
   const hasItems = safeItems.length > 0;
 
   // 아이템의 찜하기 버튼 해체 시 해당 아이템 카드 사라지게 하기
-  const onRemove = async (id: string) => {
-    await supabase.from("product_likes").delete().eq("id", id);
-    queryClient.invalidateQueries({ queryKey: ["likes"] });
-  };
+  const { mutate: removeWishlist } = useRemoveWishList();
 
   // 데이터에서 카테고리 네임 자동 탭 설정
   const categoryTabs = getWishListCategoryTabs(safeItems);
@@ -110,7 +104,7 @@ export default function WishListItemsList() {
           <ul className="grid grid-cols-2 md:grid-cols-3 gap-x-6 gap-y-15">
             {currentItems.map((item) => (
               <li key={item.id}>
-                <WishListItemCard order={item} onRemove={onRemove} />
+                <WishListItemCard order={item} onRemove={removeWishlist} />
               </li>
             ))}
           </ul>
