@@ -1,20 +1,21 @@
-import products from '@/data/dummyproducts.json';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
+import { Products } from '../lib/products';
 
 type PaginationProps = {
   mainCategory: string;
-  searchParams: Promise<{
-    category?: string;
-    page?: string;
-    sort?: string;
-  }>;
-  pagesize: number;
+  pageSize: number;
   baseUrl: string;
+  products: Products[];
+  subcategory?: string;
+  sort?: string;
+  page: number;
+  category?: string;
+  totalCount: number;
 };
 
-export default async function Pagination({ searchParams, mainCategory, baseUrl, pagesize }: PaginationProps) {
+export default async function Pagination({ mainCategory, baseUrl, pageSize, products, category, page, sort, totalCount }: PaginationProps) {
   const PAGE_GROUP_SIZE = 5;
 
   const paginationButton = {
@@ -24,16 +25,12 @@ export default async function Pagination({ searchParams, mainCategory, baseUrl, 
     pageActive: 'px-4 py-2 hover:text-[#FF6B6B] flex -space-x-3',
   };
 
-  const { category, page, sort } = await searchParams;
-
   const keyword = category?.trim();
 
-  const filtered = keyword ? products.filter(product => product.name.includes(keyword)) : products;
-
-  const totalPages = Math.ceil(filtered.length / pagesize);
+  const totalPages = Math.ceil(totalCount / pageSize);
   const currentPage = page === undefined ? 1 : Number(page);
 
-  if (filtered.length === 0) return null;
+  if (totalCount === 0) return null;
 
   if (!Number.isInteger(currentPage) || currentPage < 1 || currentPage > totalPages) {
     notFound();
@@ -100,7 +97,7 @@ export default async function Pagination({ searchParams, mainCategory, baseUrl, 
                 {pageNumber}
               </Link>
 
-              {!isLast && <span aria-hidden>|</span>}
+              {!isLast && <span aria-hidden className="border-gray-300 text-slate-300"></span>}
             </li>
           );
         })}
