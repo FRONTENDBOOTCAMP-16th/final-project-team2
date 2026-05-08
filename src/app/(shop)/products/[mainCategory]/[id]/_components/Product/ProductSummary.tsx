@@ -1,5 +1,5 @@
 import { Star } from 'lucide-react';
-import { Products } from '../../../lib/products';
+import { Products } from '@/app/lib/products';
 
 
 interface Props {
