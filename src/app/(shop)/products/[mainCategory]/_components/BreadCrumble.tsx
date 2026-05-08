@@ -1,11 +1,11 @@
 import { ChevronRight, HomeIcon } from 'lucide-react';
 import Link from 'next/link';
 
-type DepthProps = {
-  categoryMap: string;
+type categoryProps = {
+  category: string;
 };
 
-const BreadCrumble = ({ categoryMap }: DepthProps) => {
+const BreadCrumble = ({ category }: categoryProps) => {
   return (
     <nav aria-label="breadcrumb">
       <ol className="flex items-center gap-2 text-sm text-gray-500">
@@ -15,7 +15,7 @@ const BreadCrumble = ({ categoryMap }: DepthProps) => {
           </Link>
         </li>
         <ChevronRight className="w-4 h-4" />
-        <li className="text-black font-medium text-lg">{categoryMap}</li>
+        <li className="text-black font-medium text-lg">{category}</li>
       </ol>
     </nav>
   );
