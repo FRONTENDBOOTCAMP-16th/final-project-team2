@@ -1,6 +1,6 @@
 "use client";
 
-import { useUser } from "../context/UserContext"; // 경로를 확인해주세요!
+import { useUser } from "../context/UserContext";
 
 const GradeTooltip = () => (
   <div className="group relative flex items-center">
@@ -34,7 +34,7 @@ const GradeTooltip = () => (
 );
 
 export default function UserProfile() {
-  // 1. 전역 Context에서 role을 가져옵니다.
+  // 전역 Context에서 role을 가져옵니다.
   const { role } = useUser();
 
   // TODO: 실제 로그인 연동 시 서버에서 받은 정보로 교체 예정
@@ -53,7 +53,7 @@ export default function UserProfile() {
             {role === "seller" ? "STORE MANAGER" : userGrade}
           </div>
 
-          {/* 3. 판매자가 아닐 때만 등급 툴팁을 보여줍니다 */}
+          {/* 판매자가 아닐 때만 등급 툴팁을 보여줍니다 */}
           {role !== "seller" && <GradeTooltip />}
         </div>
 

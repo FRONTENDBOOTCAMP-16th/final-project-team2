@@ -1,4 +1,4 @@
-"use client"; // Context를 사용하기 위해 추가합니다.
+"use client"; // Context를 사용하기 위해 추가
 
 import SideMenu from "./components/SideMenu";
 import SummaryMenu from "./components/SummaryMenu";

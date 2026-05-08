@@ -2,7 +2,7 @@ import { useState, SyntheticEvent, ChangeEvent, MouseEvent } from "react";
 
 /**
  * [useFormManagement]
- * 마이페이지 프로필, 판매자 상점 관리 등 다양한 폼에서 공통으로 사용하는 로직입니다.
+ * 마이페이지 프로필, 판매자 상점 관리 폼에서 공통으로 사용하는 로직입니다.
  */
 export default function useFormManagement<T extends Record<string, unknown>>(
   initialData: T,
@@ -25,14 +25,14 @@ export default function useFormManagement<T extends Record<string, unknown>>(
       const onlyNumber = value.replace(/[^0-9]/g, "").slice(0, 11);
       setFormData((prev) => ({
         ...prev,
-        [name]: onlyNumber as T[keyof T], // T의 값 타입으로 단언하여 에러 방지
+        [name]: onlyNumber as T[keyof T],
       }));
       return;
     }
 
     setFormData((prev) => ({
       ...prev,
-      [name]: value as T[keyof T], // T의 값 타입으로 단언하여 에러 방지
+      [name]: value as T[keyof T],
     }));
   };
 
