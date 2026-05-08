@@ -1,4 +1,4 @@
-import { getNoticeDetail } from "@/api/noticeDetail"
+import { getNoticeDetail } from "@/actions/noticeAction"
 import { notFound } from "next/navigation"
 import DOMPurify from 'isomorphic-dompurify'
 import Link from "next/link"

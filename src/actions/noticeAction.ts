@@ -1,72 +1,158 @@
 'use server'
 
 import { redirect } from 'next/navigation'
+import { revalidateTag, cacheTag } from 'next/cache'
 import { createClient } from '../../utils/supabase/server'
-import { updateTag } from 'next/cache';
-import checkAdmin from '@/actions/checkAdminAction';
+import { createStaticClient } from '../../utils/supabase/static'
+import type { BoardCard, NoticeResponse, FormState } from '@/types/boards'
+import checkAdmin from '@/actions/checkAdminAction'
 
-export type FormState = { success: boolean; message: string };
+
+/**
+ * 공지사항 조회 액션 (Static Action)
+ * 
+ * @param pages 조회하는 페이지 (?page= number)
+ * @returns data 배열로 조회결과 생성, 필독 / 일반 공지사항
+ */
+export const getNotices = async (pages: number): Promise<NoticeResponse> => {
+  'use cache'
+  cacheTag('notices')
+
+  // env에 환경설정이랑, 캐시(정적)환경용 supabase 선언
+  const ITEMS_PER_PAGE = Number(process.env.NEXT_PUBLIC_ITEMS_PER_PAGE) || 10 
+  const supabase = await createStaticClient()
+
+  const { count: totalCount, error: countError } = await supabase
+    .from('notices')
+    .select('*', { count: 'exact', head: true })
+    .eq('important', false)
+  if (countError) throw new Error(countError.message)
+
+  // 페이지네이션 로직 (유효하지 않은 페이지 접근 방지)
+  const normalCount = totalCount || 0
+  const totalPages = Math.max(1, Math.ceil(normalCount / ITEMS_PER_PAGE))
+  const safePage = Math.max(1, Math.min(pages, totalPages))
+  const from = (safePage - 1) * ITEMS_PER_PAGE
+  const to = from + ITEMS_PER_PAGE - 1
 
 
+  // 중요한것과 일반 공지사항은 따로 분리
+  const [importantResult, normalResult] = await Promise.all([
+    supabase
+      .from('notices')
+      .select('*, writer:writer_id (nickname)')
+      .eq('important', true)
+      .order('created_at', { ascending: false }),
+    supabase
+      .from('notices')
+      .select('*, writer:writer_id (nickname)')
+      .eq('important', false)
+      .order('created_at', { ascending: false })
+      .range(from, to)
+  ])
+
+  // 조회 중 에러 발생 시 예외 처리
+  if (importantResult.error) throw new Error(importantResult.error.message)
+  if (normalResult.error) throw new Error(normalResult.error.message)
+
+  return {
+    importantData: (importantResult.data as unknown as BoardCard[]) || [],
+    normalData: (normalResult.data as unknown as BoardCard[]) || [],
+    normalCount: normalCount
+  }
+}
+
+/**
+ * 공지사항 생성/수정/삭제 액션 (Server Action)
+ * 클라이언트 폼(useActionState)에서 호출되는 폼 제출 핸들러입니다.
+ * 
+ * @param prevState 이전 폼 상태 (useActionState 연동용)
+ * @param formData 클라이언트에서 제출된 폼 데이터
+ * @returns 폼 제출 결과 (성공 여부 및 메시지)
+ */
 export async function handleNoticeAction(
   prevState: FormState,
   formData: FormData
 ): Promise<FormState> {
 
-  const deleteId = formData.get('deleteId') as string;
-  const updateId = formData.get('updateId') as string;
+  // 관리자 입증에 실패하면 작동 취소 후 공지사항으로 되돌아가기
+  await checkAdmin('/notice')
 
-  // 관리자 체크 및 세션 확인
-  await checkAdmin('/notice');
-  const supabase = await createClient();
-  const { data: { user } } = await supabase.auth.getUser();
+  // supabase 리셋, 글쓴이 검증을 위한 회원 찾기 로직
+  const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
 
-  if (!user) return { success: false, message: '세션이 만료되었습니다.' };
+  // 오류가 났을때 대응.
+  if (!user) return { success: false, message: '세션이 만료되었습니다.' }
+
+  // 수정이냐 삭제 요청이냐 get으로 받아온다.
+  const deleteId = formData.get('deleteId') as string
+  const updateId = formData.get('updateId') as string
 
   try {
-    let error;
-
-    // --- 삭제 모드 ---
     if (deleteId) {
-      const { error: deleteError } = await supabase
+
+      // 공지사항 삭제 쿼리문
+      const { error } = await supabase
         .from('notices')
         .delete()
-        .eq('id', deleteId);
-      error = deleteError;
-    }
-    // --- 생성/수정 모드 ---
-    else {
-      const title = formData.get('title') as string;
-      const content = formData.get('content') as string;
-      const isImportant = formData.get('important') === 'on';
+        .eq('id', deleteId)
+      
+      if (error) throw error
 
-      if (!title?.trim()) return { success: false, message: '제목을 입력해주세요.' };
+    } else {
+      
+      // 수정이라면 수정된 내용 제목, 필수사항, 내용
+      const title = formData.get('title') as string
+      const content = formData.get('content') as string
+      const isImportant = formData.get('important') === 'on'
+
+      // 유효성 검사 (제목 필수)
+      if (!title?.trim()) return { success: false, message: '제목을 입력해주세요.' }
 
       if (updateId) {
-        const { error: updateError } = await supabase
+        // 공지사항 수정 쿼리문
+        const { error } = await supabase
           .from('notices')
           .update({ title, content, important: isImportant })
-          .eq('id', updateId);
-        error = updateError;
+          .eq('id', updateId)
+        if (error) throw error
       } else {
-        const { error: insertError } = await supabase
+        
+        // 아무것도 없다면 새 공지사항 작성
+        const { error } = await supabase
           .from('notices')
-          .insert({ title, content, important: isImportant, writer_id: user.id });
-        error = insertError;
+          .insert({ title, content, important: isImportant, writer_id: user.id })
+        if (error) throw error
       }
     }
 
-    if (error) throw new Error(error.message);
-    updateTag('notices');
-
-    if (deleteId) {
-    } else {
-      return { success: true, message: '작업이 완료되었습니다.' };
-    }
+    revalidateTag('notices')
   } catch (error: any) {
-    return { success: false, message: error.message };
+    return { success: false, message: error.message }
   }
 
-  // 성공 시 목록으로 이동
-  redirect('/notice');
+  redirect('/notice')
+}
+
+/**
+ * 공지사항 상세 조회 액션 (Server Action)
+ * 
+ * @param id 상세 조회할 게시물 아이디 (/notice/id)
+ * @returns data 배열로 조회결과 생성
+ */
+export const getNoticeDetail = async (id: string): Promise<BoardCard> => {
+  const supabase = await createClient()
+  
+  const { data, error } = await supabase
+    .from('notices')
+    .select('*')
+    .eq('id', id)
+    .single()
+
+  if (error) {
+    throw new Error(error.message)
+  }
+
+  return data
 }

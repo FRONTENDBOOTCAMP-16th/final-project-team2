@@ -26,3 +26,17 @@ export interface BoardCard {
   answered_at?: string
   is_answered?: boolean
 }
+
+export interface FormState {
+  success: boolean
+  message: string
+}
+
+
+
+// 공지사항용
+export interface NoticeResponse {
+  importantData: BoardCard[]
+  normalData: BoardCard[]
+  normalCount: number
+}
