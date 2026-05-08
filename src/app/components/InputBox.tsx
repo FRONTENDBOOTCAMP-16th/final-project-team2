@@ -8,23 +8,44 @@ interface InputBoxProps {
   name: string
   error?: string
   type?: "text" | "password"
-  value?: string
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
+  onFocus?: (e: React.ChangeEvent<HTMLInputElement>) => void
+  onBlur?: (e: React.ChangeEvent<HTMLInputElement>) => void
   defaultValue?: string
 }
 
-export default function InputBox({ label, placeholder, error, name, type = "text", value, defaultValue }: InputBoxProps) {
+export default function InputBox({ label, placeholder, error, name, type = "text", onChange, onFocus, onBlur , defaultValue }: InputBoxProps) {
   const uniqueId = useId()
   const [localValue, setLocalValue] = useState(defaultValue || "")
   const [isFocused, setIsFocused] = useState(false)
 
-  const PASSWORD_REGEX = /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*?_])^/
+  const PASSWORD_REGEX = /(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*?_])/
 
+  // onChange, Focus, Blur 이벤트 - 기본값외에 받아오는 값있으면 적용
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setLocalValue(e.target.value)
+    
+    if (onChange) {
+      onChange(e)
+    }
   }
 
-  const handleFocus = () => setIsFocused(true)
-  const handleBlur = () => setIsFocused(false)
+  const handleFocus = (e: React.FocusEvent<HTMLInputElement>) => {
+    setIsFocused(true)
+
+    if (onFocus) {
+      onFocus(e)
+    }
+  }
+
+  const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+    setIsFocused(false)
+
+    if (onBlur) {
+      onBlur(e)
+    }
+  }
+
 
   // 정규식 및 규칙
   const isPasswordInput = type === "password" && name === "password"
