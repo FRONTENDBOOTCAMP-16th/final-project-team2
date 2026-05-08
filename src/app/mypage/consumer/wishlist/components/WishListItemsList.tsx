@@ -54,7 +54,6 @@ export default function WishListItemsList() {
   });
 
   const safeItems = items ?? [];
-  const hasItems = safeItems.length > 0;
 
   // 아이템의 찜하기 버튼 해체 시 해당 아이템 카드 사라지게 하기
   const { mutate: removeWishlist } = useRemoveWishList();
@@ -75,7 +74,7 @@ export default function WishListItemsList() {
   if (isLoading || !items) {
     return <MyPageProductSkeleton count={9} />;
   }
-
+  const hasItems = filteredItems.length > 0;
   return (
     <>
       <div className="flex justify-between ">
