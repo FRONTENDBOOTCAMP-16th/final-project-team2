@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import "./globals.css";
 import Header from "./components/Navi";
 import Footer from "./components/FooterSection";
@@ -27,10 +28,14 @@ export default function RootLayout({
       className={`${suit.className} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
-        <Header />
+        <Suspense fallback={null}>
+          <Header />
+        </Suspense>
 
         <main id="main-content" className="w-full h-full min-h-full flex-1">
-          {children}
+          <Suspense fallback={null}>
+            {children}
+          </Suspense>
         </main>
         
         <Footer />
