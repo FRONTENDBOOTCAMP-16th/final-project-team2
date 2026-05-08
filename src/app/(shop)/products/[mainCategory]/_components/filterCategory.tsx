@@ -1,64 +1,37 @@
-'use client';
-
 import Link from 'next/link';
-import { CategoryType } from '../lib/category';
+import { MainCategoryType, subCategory } from '../lib/category';
 
-interface Props {
-  mainCategory: CategoryType;
+type Props = {
+  mainCategory: MainCategoryType;
   category?: string;
   sort?: string;
-}
-
-const ACTIVE_CLASS = 'border-b-4 border-[#FF6B6B] font-bold';
-
-const categories: Record<CategoryType, { label: string; value: string }[]> = {
-  writing: [
-    { label: '전체', value: '' },
-    { label: '볼펜', value: '볼펜' },
-    { label: '만년필', value: '만년필' },
-  ],
-  paper: [
-    { label: '전체', value: '' },
-    { label: '메모지', value: '메모지' },
-    { label: '노트', value: '노트' },
-  ],
-  deco: [
-    { label: '전체', value: '' },
-    { label: '스티커', value: '스티커' },
-    { label: '마스킹테이프', value: '마스킹테이프' },
-  ],
-  accessory: [
-    { label: '전체', value: '' },
-    { label: '키링', value: '키링' },
-    { label: '파우치', value: '파우치' },
-  ],
+  page?: number;
 };
 
-const FilterCategory = ({ mainCategory, sort, category }: Props) => {
-  const currentCategories = categories[mainCategory] ?? [];
+const ACTIVE_CLASS = 'border-b-4 border-[#FF6B6B] font-bold text-[#FF6B6B]';
+const DEFAULT_CLASS = 'text-gray-500';
+
+export default function FilterCategory({ mainCategory, category, sort = 'latest', page = 1 }: Props) {
+  const currentCategories = subCategory[mainCategory];
 
   return (
-    <ul className="flex gap-2">
+    <ul className="flex gap-4">
       {currentCategories.map(({ label, value }, index) => {
-        const isActive = value === '' ? !category : category === value;
+        const isActive = category === value || (!category && value === '');
 
-        const params = new URLSearchParams({
-          ...(value ? { category: value } : {}),
-          ...(sort ? { sort } : {}),
-          page: '1',
-        });
+        const href = value
+          ? `/products/${mainCategory}?category=${value}&sort=${sort}&page=${page}`
+          : `/products/${mainCategory}?sort=${sort}&page=${page}`;
 
         return (
           <li key={value || 'all'}>
-            <Link href={`/products/${mainCategory}?${params.toString()}`} className={isActive ? ACTIVE_CLASS : ''}>
+            <Link href={href} aria-selected={isActive} className={isActive ? ACTIVE_CLASS : DEFAULT_CLASS}>
               {label}
             </Link>
-            {index !== currentCategories.length - 1 && <span className="m-4">|</span>}
+            {index !== currentCategories.length - 1 && <span className="h-3 border-r ml-4 border-gray-300 text-slate-300" aria-hidden></span>}
           </li>
         );
       })}
     </ul>
   );
-};
-
-export default FilterCategory;
+}
