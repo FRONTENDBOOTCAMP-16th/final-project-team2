@@ -1,4 +1,4 @@
-import { getProductsCategory } from '@/api/getProducts';
+import { getProductsCategory } from '@/api/products';
 import ProductListInner from './ProductListInner';
 import Pagination from '@/app/components/Pagination';
 

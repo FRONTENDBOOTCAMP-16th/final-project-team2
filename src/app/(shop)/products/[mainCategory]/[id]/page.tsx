@@ -27,9 +27,7 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
       <h1 id="product-detail-title" className="sr-only">
         제품 상세 페이지
       </h1>
-
       <BreadCrumble category={categoryLabel} />
-
       <main>
         <h1>{product.name}</h1>
         <ProductInfoComponent product={product} />
