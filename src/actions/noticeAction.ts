@@ -1,7 +1,7 @@
 'use server'
 
 import { redirect } from 'next/navigation'
-// import { revalidateTag, cacheTag } from 'next/cache'
+import { revalidateTag, cacheTag } from 'next/cache'
 import { createClient } from '../../utils/supabase/server'
 import { createStaticClient } from '../../utils/supabase/static'
 import type { BoardCard, NoticeResponse, FormState } from '@/types/boards'
@@ -15,10 +15,8 @@ import checkAdmin from '@/actions/checkAdminAction'
  * @returns data 배열로 조회결과 생성, 필독 / 일반 공지사항
  */
 export const getNotices = async (pages: number): Promise<NoticeResponse> => {
-
-  // 아예 캐싱을 빼자하니 뺍니다...
-  // 'use cache'
-  // cacheTag('notices')
+  'use cache'
+  cacheTag('notices')
 
   // env에 환경설정이랑, 캐시(정적)환경용 supabase 선언
   const ITEMS_PER_PAGE = Number(process.env.NEXT_PUBLIC_ITEMS_PER_PAGE) || 10 
@@ -39,20 +37,12 @@ export const getNotices = async (pages: number): Promise<NoticeResponse> => {
 
 
   // 중요한것과 일반 공지사항은 따로 분리
-  // Promise.all로 둘 다 각자 비동기로 실행한다. 필독, 일반 공지
   const [importantResult, normalResult] = await Promise.all([
-
-    // eq는 SQL의 경우 where = "" 절에 해당한다.
-    // important가 true인 것들만 조회.
-    // 필독은 페이지가 넘어가도 노출되어야 한다.
     supabase
       .from('notices')
       .select('*, writer:writer_id (nickname)')
       .eq('important', true)
       .order('created_at', { ascending: false }),
-    
-    // 나머지 공지는 일반 게시물 처럼 조회
-    // 페이지네이션 from, to로 구분
     supabase
       .from('notices')
       .select('*, writer:writer_id (nickname)')
@@ -92,10 +82,10 @@ export async function handleNoticeAction(
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
 
-  // 만약 getUser에서 오류가 났을때 오류출력
+  // 오류가 났을때 대응.
   if (!user) return { success: false, message: '세션이 만료되었습니다.' }
 
-  // 수정이냐 삭제 요청이냐 따라 get으로 받아온다.
+  // 수정이냐 삭제 요청이냐 get으로 받아온다.
   const deleteId = formData.get('deleteId') as string
   const updateId = formData.get('updateId') as string
 
@@ -137,15 +127,10 @@ export async function handleNoticeAction(
       }
     }
 
-    // 캐싱 설정 제거로 인한 주석
     // revalidateTag('notices', { expire: 3600 })
-
   } catch (error: unknown) {
-    const errorMessage = error instanceof Error ? error.message : '알 수 없는 에러가 발생했습니다.'
-    return { 
-      success: false, 
-      message: errorMessage 
-    }
+    const errorMessage = error instanceof Error ? error.message : '등록 중 알 수 없는 오류가 발생했습니다.'
+    return { success: false, message: errorMessage }
   }
 
   redirect('/notice')

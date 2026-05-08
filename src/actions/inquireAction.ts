@@ -1,7 +1,7 @@
 'use server'
 
 import { redirect } from 'next/navigation'
-// import { revalidateTag, unstable_cache } from 'next/cache'
+import { revalidateTag, cacheTag } from 'next/cache'
 import { createClient } from '../../utils/supabase/server'
 import { createStaticClient } from '../../utils/supabase/static'
 import type { BoardCard, FormState } from '@/types/boards'
@@ -15,9 +15,8 @@ import checkAdmin from '@/actions/checkAdminAction'
  */
 export const getInquires = async (pages: number) => {
 
-  // 아예 캐싱을 빼자하니 뺍니다...
-  // 'use cache'
-  // cacheTag('inquire')
+  'use cache'
+  cacheTag('inquire')
 
   // 페이지 당 게시물은 env로 제어하므로 이렇게 합니다.
   const ITEMS_PER_PAGE = Number(process.env.NEXT_PUBLIC_ITEMS_PER_PAGE) || 10
@@ -125,7 +124,7 @@ export async function handleInquireAction(
     }
 
     // 아예 캐싱을 빼자하니 뺍니다...
-    // revalidateTag('inquire', { expire: 3600 })
+    revalidateTag('inquire', { expire: 3600 })
 
 
   } catch (error: unknown) {
