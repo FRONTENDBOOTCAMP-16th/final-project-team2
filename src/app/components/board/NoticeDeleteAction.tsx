@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, useActionState } from 'react'
 import Modal from '@/app/components/Modal'
 import { handleNoticeAction } from '@/actions/noticeAction'
 
@@ -10,6 +10,7 @@ interface NoticeDeleteActionProps {
 
 export default function NoticeDeleteAction({ id }: NoticeDeleteActionProps) {
   const [isOpen, setIsOpen] = useState(false)
+  const [state, formAction] = useActionState(handleNoticeAction, { success: true, message: '' })
 
   return (
     <>
@@ -33,7 +34,7 @@ export default function NoticeDeleteAction({ id }: NoticeDeleteActionProps) {
               취소
             </button>
             
-            <form action={handleNoticeAction}>
+            <form action={formAction}>
               {/* 삭제할 ID를 hidden input으로 전달 */}
               <input type="hidden" name="deleteId" value={id} />
               <button

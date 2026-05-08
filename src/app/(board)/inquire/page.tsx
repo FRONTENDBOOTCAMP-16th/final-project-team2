@@ -1,6 +1,8 @@
 import PostListCard from '@/app/components/board/PostListCard';
 import Pagination from '@/app/components/board/Pagination';
 import { getInquires } from '@/api/inpuire';
+import { getAuthUserInfo } from '@/actions/getUser';
+import Link from 'next/link';
 
 export default async function qnaList({
   searchParams,
@@ -15,6 +17,9 @@ export default async function qnaList({
     return <div>등록된 QNA가 없습니다.</div>;
   }
 
+  const user = await getAuthUserInfo()
+
+
   return (
     <div className="w-full max-w-4xl mx-auto p-4 space-y-4">
       <h1 className="text-2xl font-bold mb-6">1:1 문의</h1>
@@ -23,7 +28,7 @@ export default async function qnaList({
         {normalData.map((inquire) => {
           return (
             <PostListCard 
-              key={inquire.id} 
+              key={inquire.id}
               data={inquire} 
               isImportant={false}
               link="inquire"
@@ -32,6 +37,12 @@ export default async function qnaList({
           );
         })}
       </ul>
+
+      {user && (
+        <Link href={'/inquire/write'}>
+          작성
+        </Link>
+      )}
 
       <Pagination count={normalCount || 0} current={currentPage} link={'inquire'} />
     </div>

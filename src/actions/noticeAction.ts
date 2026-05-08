@@ -5,10 +5,11 @@ import { createClient } from '../../utils/supabase/server'
 import { updateTag } from 'next/cache';
 import checkAdmin from '@/actions/checkAdminAction';
 
-type FormState = { success: boolean; message: string };
+export type FormState = { success: boolean; message: string };
 
 
 export async function handleNoticeAction(
+  prevState: FormState,
   formData: FormData
 ): Promise<FormState> {
 
