@@ -5,6 +5,7 @@ import { useActionState } from "react";
 import { loginAction } from "@/actions/loginAction";
 import InputBox from "@/app/components/InputBox";
 import TypeRadioInput from "@/app/components/TypeRadioInput";
+import SimpleToast from "@/app/components/SimpleToast";
 
 export default function LoginPage() {
   const [state, formAction] = useActionState(loginAction, null)
@@ -23,8 +24,7 @@ export default function LoginPage() {
           <TypeRadioInput label="판매자" name="role" value="BUSINESS" defaultChecked={state?.role === "BUSINESS"}/>
           <TypeRadioInput label="관리자" name="role" value="ADMIN" defaultChecked={state?.role === "ADMIN"}/>
         </div>
-        <p className="mbs-1 text-red-600" aria-live="polite" aria-hidden="true">{state?.errors?.role?.[0] || '\u00A0'}</p>
-
+        <p className="text-red-600" aria-live="polite" aria-hidden="true">{state?.errors?.role?.[0]}</p>
         
         {/* 아이디 패스워드 */}
         <div className="flex flex-col gap-2 mbs-2">
@@ -35,7 +35,7 @@ export default function LoginPage() {
         <p className="mbs-1 text-red-600 text-center" aria-live="polite" aria-hidden="true">{state?.errors?.root?.[0]}</p>
         
         {/* 로그인 서브 */}
-        <div className="grid grid-cols-1 mbs-2 pbe-9 border-be border-[#e0e0e0]">
+        <div className="grid grid-cols-1 pbe-9 border-be border-[#e0e0e0]">
           <Link href="/signup" className="text-[#575A68] row-start-1 col-start-2 text-right">회원가입</Link>
           <Link href="/find-id" className="text-[#575A68] row-start-2 col-start-2 text-right">아이디 찾기</Link>
           <Link href="/reset-password" className="text-[#575A68] row-start-3 col-start-2 text-right">비밀번호 재설정</Link>
@@ -51,6 +51,9 @@ export default function LoginPage() {
         {/* 카카오로그인 */}
         <button type="submit" className="w-full py-4 mbs-7 text-black bg-[#FEE500] rounded font-bold cursor-pointer">카카오 로그인</button>
       </div>
+
+      {/* 토스트 메세지 */}
+      <SimpleToast text={state?.errors?.root?.[0] ? `로그인 실패: ${state?.errors?.root?.[0]}` : undefined} trigger={state} />
     </div>
   )
 }

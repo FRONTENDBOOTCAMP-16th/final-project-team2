@@ -7,10 +7,11 @@ interface ProductCardProps {
   product: Products;
   category: string;
   sort?: string;
+  baseUrl: string;
   onImageLoad?: () => void;
 }
 
-export default function ProductsCard({ product, category, onImageLoad }: ProductCardProps) {
+export default function ProductsCard({ product, category, baseUrl, onImageLoad }: ProductCardProps) {
   if (!product) return null;
   const discountPrice = product.discount_rate > 0 ? Math.floor(product.price * (1 - product.discount_rate / 100)) : product.price;
 
@@ -20,7 +21,7 @@ export default function ProductsCard({ product, category, onImageLoad }: Product
 
   return (
     <li className="relative" aria-label={label}>
-      <Link href={`/products/${category}/${product.id}`} className="block">
+      <Link href={`${baseUrl}/${category}/${product.id}`} className="block">
         <div className="w-70.5 aspect-square relative overflow-hidden">
           <ProductImage src={product.thumbnail_image} alt={product.name} onLoadComplete={onImageLoad} />
 

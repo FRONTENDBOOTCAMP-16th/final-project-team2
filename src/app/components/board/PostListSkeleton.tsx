@@ -1,7 +1,6 @@
 
 export default function PostListSkeleton() {
-  // 한 페이지당 보여줄 스켈레톤 개수 (예: 10개)
-  const SKELETON_COUNT = 10;
+  const SKELETON_COUNT = 10
 
   return (
     <div className="w-full max-w-4xl mx-auto p-4 space-y-4">
@@ -38,5 +37,5 @@ export default function PostListSkeleton() {
         <div className="h-8 bg-gray-200 rounded w-64 animate-pulse"></div>
       </div>
     </div>
-  );
+  )
 }

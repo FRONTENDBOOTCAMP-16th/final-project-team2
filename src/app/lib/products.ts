@@ -15,6 +15,7 @@ export type Products = {
   discount_rate: number;
   options: ProductOptions | null;
   average_grade: number;
+  category?: string;
   create_at: string;
   update_at: string;
 };

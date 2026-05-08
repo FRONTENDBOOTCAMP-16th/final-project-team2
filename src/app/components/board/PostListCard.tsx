@@ -1,4 +1,5 @@
 import type { BoardCard } from "@/types/boards"
+import Image from "next/image"
 import Link from "next/link"
 
 interface PostCardList {
@@ -14,16 +15,31 @@ export default function PostListCard({ data, isImportant, isAnswered, link }: Po
   const important = isImportant ?? data.important
 
   return (
-    <li className="border-b border-gray-100 hover:bg-gray-50 transition-colors">
+    <li className="border-b border-gray-100 hover:bg-gray-50 transition-colors w-full">
       <Link 
         href={`/${link}/${data.id}`}  
-        className='flex items-center w-full py-4' 
+        className='flex items-center w-full py-4 gap-4' 
         aria-label={`게시글: ${data.title}`}
       >
-        <div className="flex gap-1 items-center justify-start w-1/2">
+        {link === 'inquire' && (
+          <div className="flex items-center gap-2 w-full xl:w-1/3">
+            <div className="relative w-10 h-10 xl:w-16 xl:h-16 shrink-0">
+              <Image 
+                src={data.product?.thumbnail_image || ''} 
+                alt={data.product?.name || ''}
+                fill
+                className="object-cover rounded"
+              />
+            </div>
+            <p className="text-sm">{data.product?.name}</p>
+          </div>
+        )}
+        
+        <div className="flex w-full">
+          <div className="flex gap-1 items-center justify-start w-1/2">
           {/* 공지사항 중요 배지 */}
           {important && (
-            <strong className="text-white px-2 py-1 bg-orange-600 text-xs rounded-sm font-normal shrink-0" aria-label="중요 공지">
+            <strong className="text-white px-2 py-1 bg-orange-600 text-xs font-normal shrink-0" aria-label="중요 공지">
               필독
             </strong>
           )}
@@ -31,11 +47,11 @@ export default function PostListCard({ data, isImportant, isAnswered, link }: Po
           {/* 💡 2. QnA 답변 상태 배지: isAnswered가 undefined가 아닐 때만 렌더링 */}
           {isAnswered !== undefined && (
             isAnswered ? (
-              <strong className="text-white px-2 py-1 bg-green-600 text-xs rounded-sm font-normal shrink-0" aria-label="답변 완료">
+              <strong className="text-white px-2 py-1 bg-green-600 text-xs font-normal shrink-0" aria-label="답변 완료">
                 답변완료
               </strong>
             ) : (
-              <strong className="text-white px-2 py-1 bg-gray-400 text-xs rounded-sm font-normal shrink-0" aria-label="답변 대기">
+              <strong className="text-white px-2 py-1 bg-gray-400 text-xs font-normal shrink-0" aria-label="답변 대기">
                 답변대기
               </strong>
             )
@@ -52,6 +68,7 @@ export default function PostListCard({ data, isImportant, isAnswered, link }: Po
         <div className="w-1/4 text-center shrink-0 text-gray-500">
           <span className="sr-only">작성일</span>
           {formattedDate}
+        </div>
         </div>
       </Link>
     </li>
