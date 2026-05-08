@@ -24,9 +24,10 @@ interface FormProps {
   initialData?: WriteInitialData;
   action: (prevState: FormState, formData: FormData) => Promise<FormState>;
   showImportantCheckbox?: boolean;
+  link?: string
 }
 
-export default function WriteForm({ board, initialData, action, showImportantCheckbox = false }: FormProps) {
+export default function WriteForm({ board, initialData, action, showImportantCheckbox = false, link }: FormProps) {
   const [state, formAction, isPending] = useActionState(action, { success: true, message: '' })
   const [title, setTitle] = useState(initialData?.title || '')
   const [content, setContent] = useState(initialData?.content || '')
@@ -112,15 +113,15 @@ export default function WriteForm({ board, initialData, action, showImportantChe
           본문 <span className="text-red-500" aria-hidden="true">*</span>
         </label>
 
-        <ReactQuill value={content} onChange={setContent} theme="snow" className="h-[400px] pb-10" />
+        <ReactQuill value={content} onChange={setContent} theme="snow" className="h-100 pb-10" />
         <input type="hidden" name="content" value={content} />
       </div>
 
       <div className="flex justify-end mt-4 gap-2">
 
         <Link
-          className="px-8 py-3 bg-gray-400 text-white font-bold rounded-md hover:bg-orange-700 transition-colors disabled:bg-orange-400 disabled:cursor-not-allowed flex items-center justify-center min-w-[160px]"
-          href={'/'}
+          className="px-8 py-3 bg-gray-400 text-white font-bold rounded-md hover:bg-orange-700 transition-colors disabled:bg-orange-400 disabled:cursor-not-allowed flex items-center justify-center min-w-40"
+          href={`/${link}`}
         >
           취소
         </Link>
@@ -128,7 +129,7 @@ export default function WriteForm({ board, initialData, action, showImportantChe
         <button
           type="submit"
           disabled={isPending}
-          className="px-8 py-3 bg-orange-600 text-white font-bold rounded-md hover:bg-orange-700 transition-colors disabled:bg-orange-400 disabled:cursor-not-allowed flex items-center justify-center min-w-[160px]"
+          className="px-8 py-3 bg-orange-600 text-white font-bold rounded-md hover:bg-orange-700 transition-colors disabled:bg-orange-400 disabled:cursor-not-allowed flex items-center justify-center min-w-40"
         >
           {isPending ? (
             <span className="flex items-center gap-2">

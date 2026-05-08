@@ -1,7 +1,7 @@
 import PostListCard from '@/app/components/board/PostListCard';
 import Pagination from '@/app/components/board/Pagination';
 import { getNotices } from '@/api/notices';
-import { createClient } from '../../../../utils/supabase/server'; 
+import { getAuthUserInfo } from '@/actions/getUser';
 import Link from 'next/link';
 
 export default async function NoticeList({
@@ -11,23 +11,11 @@ export default async function NoticeList({
 }) {
   const params = await searchParams;
   const currentPage = Number(params?.page) || 1;
-  
-
-  const supabase = await createClient();
-  const { data: { user } } = await supabase.auth.getUser();
-  let isAdmin = false;
-  if (user) {
-    const { data: userData, error } = await supabase
-      .from('users')
-      .select('role')
-      .eq('id', user.id)
-      .single();
-    if (!error && userData?.role === 'ADMIN') {
-      isAdmin = true;
-    }
-  }
-  
   const { importantData, normalData, normalCount } = await getNotices(currentPage);
+
+  const auth = await getAuthUserInfo();
+  const isAdmin = auth?.role === 'ADMIN';
+
 
   if (importantData.length === 0 && normalData.length === 0) {
     return (

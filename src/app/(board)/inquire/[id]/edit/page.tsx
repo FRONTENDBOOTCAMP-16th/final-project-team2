@@ -1,12 +1,12 @@
 import WriteForm from '@/app/components/board/WriteForm';
-import { createNotice } from '@/api/noticeWrite';
+import { handleNoticeAction } from '@/actions/noticeAction';
 
 export default function NoticeWritePage() {
   return (
     <div className="container mx-auto py-10">
       <WriteForm 
         board={'1:1문의'}
-        action={createNotice} 
+        action={handleNoticeAction} 
         showImportantCheckbox={true} 
       />
     </div>

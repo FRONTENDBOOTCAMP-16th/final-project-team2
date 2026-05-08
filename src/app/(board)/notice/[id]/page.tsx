@@ -3,12 +3,13 @@ import { notFound } from "next/navigation"
 import DOMPurify from 'isomorphic-dompurify'
 import Link from "next/link"
 import checkUserID from "@/actions/checkUserId"
+import NoticeDeleteAction from "@/app/components/board/NoticeDeleteAction"
 
 
-export default async function NoticeDetailPage({ 
-  params 
-}: { 
-  params: Promise<{ id: string }> 
+export default async function NoticeDetailPage({
+  params
+}: {
+  params: Promise<{ id: string }>
 }) {
 
   let notice
@@ -22,13 +23,13 @@ export default async function NoticeDetailPage({
   }
 
   if (!notice) {
-    notFound() 
+    notFound()
   }
 
   const cleanHtml = DOMPurify.sanitize(notice.content || '')
   let isWriter = false
   const user = await checkUserID()
-  if (notice.writer_id === user.id || user.role === 'ADMIN') {
+  if (notice.writer_id === user?.id || user?.role === 'ADMIN') {
     isWriter = true
   }
 
@@ -39,7 +40,7 @@ export default async function NoticeDetailPage({
         작성일: {new Date(notice.created_at).toLocaleDateString()}
       </p>
       <hr className="my-4" />
-      <div 
+      <div
         className="prose"
         dangerouslySetInnerHTML={{ __html: cleanHtml }}
       />
@@ -47,22 +48,17 @@ export default async function NoticeDetailPage({
         {isWriter && (
           <Link
             href={`/notice/${notice.id}/edit`}
-            className="inline-block mb-4 px-8 py-2 bg-gray-200 text-black"
+            className="flex items-center justify-center px-8 py-2 bg-gray-200 text-black"
           >
             수정
           </Link>
         )}
         {isWriter && (
-          <Link
-            href={`/notice/${notice.id}/delete`}
-            className="inline-block mb-4 px-8 py-2 bg-red-500 text-white"
-          >
-            삭제
-          </Link>
+          <NoticeDeleteAction id={notice.id} />
         )}
         <Link
           href="/notice"
-          className="inline-block mb-4 px-8 py-2 bg-slate-800 text-white  hover:bg-slate-700"
+          className="flex items-center justify-center px-8 py-2 bg-slate-800 text-white  hover:bg-slate-700"
         >
           목록
         </Link>
