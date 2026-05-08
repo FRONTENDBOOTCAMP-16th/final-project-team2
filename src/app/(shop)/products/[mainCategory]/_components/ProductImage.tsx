@@ -26,8 +26,7 @@ export default function ProductImage({ src, alt, onLoadComplete }: ProductImageP
       src={imgSrc}
       alt={alt}
       fill
-      className="object-cover"
-      sizes="(max-width: 768px) 50vw, 25vw"
+      className="w-full h-full object-cover"
       onLoad={reportLoaded}
       onError={() => {
         reportLoaded();
