@@ -9,9 +9,11 @@ export interface StatCardProps {
 
 // 사용자 데이터 타입
 export interface UserData {
-  orders: number;
-  reviews: number;
-  coupons: number;
+  orders?: number;
+  coupons?: number;
+  reviews?: number;
+  orderStatus?: number; // 판매자용 추가
+  products?: number; // 판매자용 추가
 }
 
 export interface StatData {
