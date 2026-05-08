@@ -1,7 +1,7 @@
 // 실제 Next.js 프로젝트에서는 아래 import 문들을 주석 해제해서 사용하세요!
 import { getInquireDetail } from "@/api/inpuireDetail";
 import { notFound } from "next/navigation";
-import DOMPurify from 'isomorphic-dompurify';
+import sanitizeHtml from 'sanitize-html';
 import Link from "next/link";
 import Image from "next/image";
 
@@ -27,8 +27,18 @@ export default async function QnaDetailPage({
 
   console.log(qna)
 
-  const cleanQuestion = DOMPurify.sanitize(qna.question_content || '');
-  const cleanAnswer = DOMPurify.sanitize(qna.answer_content || '');
+  const sanitizeConfig = {
+    allowedTags: ['b', 'i', 'em', 'strong', 'a', 'p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'ul', 'ol', 'li', 'span', 'u', 's', 'br', 'hr', 'img', 'iframe', 'blockquote'],
+    allowedAttributes: {
+      '*': ['style', 'class'],
+      'a': ['href', 'target', 'rel'],
+      'img': ['src', 'alt', 'width', 'height'],
+      'iframe': ['src', 'width', 'height', 'frameborder', 'allow', 'allowfullscreen']
+    }
+  };
+
+  const cleanQuestion = sanitizeHtml(qna.question_content || '', sanitizeConfig);
+  const cleanAnswer = sanitizeHtml(qna.answer_content || '', sanitizeConfig);
 
   return (
     <div className="w-full max-w-4xl mx-auto p-8 space-y-8">
