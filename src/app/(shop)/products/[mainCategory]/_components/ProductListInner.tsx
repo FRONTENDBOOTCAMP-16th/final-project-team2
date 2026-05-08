@@ -5,7 +5,6 @@ import ProductsCard from '@/app/components/ProductsCard';
 import ProductsCardList from '@/app/components/ProductsCardList';
 import ProductListSkeleton from './ProductListSkeleton';
 import { Products } from '@/app/lib/products';
-import { Categories } from '@/app/lib/Categories';
 
 type Props = {
   products: Products[];

@@ -1,34 +1,38 @@
 import { getProductsCategory } from '@/api/getProducts';
 import ProductListInner from './ProductListInner';
-import { Categories } from '@/app/lib/Categories';
+import Pagination from '@/app/components/Pagination';
 
 type Props = {
-  page: string;
+  page: number;
   pageSize: number;
-  category: string;
+  mainCategory: string;
+  category?: string;
   sort: string;
-  keyword?: string;
 };
 
-
-export default async function ProductListFetcher({
-  page,
-  pageSize,
-  category,
-  sort,
-}: Props) {
+export default async function ProductListFetcher({ page, pageSize, mainCategory, category, sort }: Props) {
   const data = await getProductsCategory({
     page,
     pageSize,
+    mainCategory,
     category,
     sort,
   });
 
   return (
-    <ProductListInner
-      products={data.products}
-      category={category}
-      sort={sort}
-    />
+    <div>
+      <ProductListInner products={data.products ?? []} category={mainCategory} sort={sort} />
+
+      <Pagination
+        baseUrl="/products"
+        mainCategory={mainCategory}
+        category={category}
+        sort={sort}
+        page={page}
+        pageSize={pageSize}
+        totalCount={data.totalCount}
+        products={data.products}
+      />
+    </div>
   );
 }
