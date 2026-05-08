@@ -11,7 +11,7 @@ type GetProductsParams = {
   mainCategory: string;
   category?: string;
   sort: string;
-  page: number;
+  page?: number;
   pageSize: number;
 };
 

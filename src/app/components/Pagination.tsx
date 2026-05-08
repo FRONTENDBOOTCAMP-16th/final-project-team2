@@ -10,7 +10,7 @@ type PaginationProps = {
   products: Products[];
   subcategory?: string;
   sort?: string;
-  page: number;
+  page?: number;
   category?: string;
   totalCount: number;
 };
@@ -97,7 +97,11 @@ export default async function Pagination({ mainCategory, baseUrl, pageSize, prod
                 {pageNumber}
               </Link>
 
-              {!isLast && <span aria-hidden className="border-gray-300 text-slate-300"></span>}
+              {!isLast && (
+                <span aria-hidden className="border-gray-300 text-slate-300">
+                  |
+                </span>
+              )}
             </li>
           );
         })}
