@@ -1,3 +1,7 @@
+"use client";
+
+import { useUser } from "../context/UserContext";
+
 const GradeTooltip = () => (
   <div className="group relative flex items-center">
     <button
@@ -30,23 +34,29 @@ const GradeTooltip = () => (
 );
 
 export default function UserProfile() {
-  // TODO: 실제 로그인 연동 시 서버에서 받은 유저 정보로 교체 예정
-  const role = "consumer" as "consumer" | "seller";
+  // 전역 Context에서 role을 가져옵니다.
+  const { role } = useUser();
+
+  // TODO: 실제 로그인 연동 시 서버에서 받은 정보로 교체 예정
   const userGrade = "BRONZE";
   const userName = "사용자";
 
   return (
     <div className="flex flex-col mb-10">
       <div className="w-[204px] pb-6 flex flex-col items-center bg-white">
-        {/* 이미지 영역 임시로 border 처리 - 추후에 이미지로 변경 예정 */}
+        {/* 이미지 영역 */}
         <div className="w-[204px] aspect-square bg-white shrink-0 border" />
 
         <div className="flex items-center justify-center gap-2 pt-5 pb-2">
-          <div className="bg-black text-white inline-block px-2 py-0.5 text-xs font-bold">
-            {userGrade}
+          {/* 2. role이 seller면 STORE MANAGER를, 아니면 원래 등급을 보여줍니다 */}
+          <div className="bg-black text-white inline-block px-2 py-0.5 text-xs font-bold tracking-tight">
+            {role === "seller" ? "STORE MANAGER" : userGrade}
           </div>
+
+          {/* 판매자가 아닐 때만 등급 툴팁을 보여줍니다 */}
           {role !== "seller" && <GradeTooltip />}
         </div>
+
         <p className="text-lg w-full text-center">
           <strong className="font-bold text-black">{userName}</strong>님
           반갑습니다.

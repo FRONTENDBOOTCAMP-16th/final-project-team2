@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { useActionState } from "react";
 import { loginAction } from "@/actions/loginAction";
-import CheckeBox from "@/app/components/CheckBox";
 import InputBox from "@/app/components/InputBox";
 import TypeRadioInput from "@/app/components/TypeRadioInput";
 
