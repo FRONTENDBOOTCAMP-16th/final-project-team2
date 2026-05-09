@@ -3,7 +3,6 @@ export const ORDER_ITEM_STATUS = {
   SHIPPED: "배송중",
   DELIVERED: "배송완료",
   CANCELED: "취소됨",
-  PAID: "결제완료",
 } as const;
 
 export type OrderItemStatus = keyof typeof ORDER_ITEM_STATUS;
