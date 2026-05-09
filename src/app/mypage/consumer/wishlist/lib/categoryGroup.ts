@@ -7,14 +7,14 @@ export const CATEGORY_GROUPS = [
   },
 
   {
-    id: "diary-note",
+    id: "paper",
     label: "노트/다이어리",
 
     categories: ["노트/다이어리", "다이어리", "플래너"],
   },
 
   {
-    id: "desk",
+    id: "office",
     label: "사무/데스크용품",
 
     categories: ["사무/데스크용품", "데스크 수납/정리", "파일/서류보관"],
