@@ -46,6 +46,12 @@ export default function OrderList() {
   if (isLoading || !items) {
     return <MyPageOrdersSkeleton count={6} />;
   }
+  if (items.length === 0)
+    return (
+      <div className="text-red-500 text-center pt-3">
+        <p>주문한 상품이 없습니다.</p>
+      </div>
+    );
 
   return (
     <>
