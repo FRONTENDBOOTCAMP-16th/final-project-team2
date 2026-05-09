@@ -1,3 +1,4 @@
+import { OrdersType } from "@/app/lib/Orders";
 import { createClient } from "../../../../utils/supabase/client";
 
 export const fetchOrders = async () => {
@@ -39,8 +40,9 @@ export const fetchOrders = async () => {
     )
   `,
     )
-    .eq("user_id", user.id);
+    .eq("user_id", user.id)
+    .returns<OrdersType[]>();
 
   if (error) throw error;
-  return data;
+  return data ?? [];
 };

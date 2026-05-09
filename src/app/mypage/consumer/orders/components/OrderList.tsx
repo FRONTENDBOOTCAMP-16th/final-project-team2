@@ -9,17 +9,20 @@ import TabFilter from "../../wishlist/components/tabFilter";
 import OrderStatusFilter from "./OrderStatusFilter";
 import Pagination from "@/app/mypage/seller/delivery/components/Pagination";
 import { useState } from "react";
-
-// 마이페이지에서는 4개 정도 주문 내역 보여주고
-// 주문 내역 클릭 시 전부 다 보여주기
-
-const CATEGORIES = [
-  { id: "", label: "전체" },
-  { id: "writing", label: "필기구" },
-  { id: "paper", label: "노트/메모" },
-];
+import { CATEGORIES } from "../lib/orderTabGroups";
+import { fetchOrders } from "@/app/mypage/api/fetchOrders";
+import { useQuery } from "@tanstack/react-query";
+import MyPageOrdersSkeleton from "@/app/mypage/components/MypageOrdersSkeleton";
+import { OrdersType } from "@/app/lib/Orders";
 
 export default function OrderList() {
+  const { data: items, isLoading } = useQuery<OrdersType[]>({
+    queryKey: ["order"],
+    queryFn: fetchOrders,
+  });
+
+  console.log(items);
+
   const [selectedStatus, setSelectedStatus] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
   const filteredOrders =
@@ -29,6 +32,11 @@ export default function OrderList() {
 
   const { currentPage, setCurrentPage, currentItems, totalPages } =
     usePagination(filteredOrders, 5);
+
+  // 로딩 상태일 때 빈 페이지 방지
+  if (isLoading || !items) {
+    return <MyPageOrdersSkeleton count={6} />;
+  }
 
   return (
     <>
@@ -45,11 +53,18 @@ export default function OrderList() {
       </div>
       <OrderItemHeader />
       <ul>
-        {currentItems.map((order) => (
-          <li key={order.id}>
-            <OrderItemCard order={order} />
-          </li>
-        ))}
+        {items.map((orders) =>
+          orders.order_items.map((item) => (
+            <li key={item.id}>
+              <OrderItemCard
+                order={item}
+                createdAt={orders.created_at}
+                finalPrice={orders.final_price}
+                orderStatus={orders.order_status}
+              />
+            </li>
+          )),
+        )}
       </ul>
       <Pagination
         currentPage={currentPage}
