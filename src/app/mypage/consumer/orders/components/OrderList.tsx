@@ -7,7 +7,6 @@ import { usePagination } from "@/hooks/usePagination";
 import TabFilter from "../../wishlist/components/tabFilter";
 import OrderStatusFilter from "./OrderStatusFilter";
 import Pagination from "@/app/mypage/seller/delivery/components/Pagination";
-import { useState } from "react";
 import { fetchOrders } from "@/app/mypage/api/fetchOrders";
 import { useQuery } from "@tanstack/react-query";
 import MyPageOrdersSkeleton from "@/app/mypage/components/MypageOrdersSkeleton";
@@ -24,11 +23,11 @@ export default function OrderList() {
     queryFn: fetchOrders,
   });
 
-  const [selectedStatus, setSelectedStatus] = useState("");
   const selectedCategory = searchParams.get("category") ?? "all";
+  const selectedStatus = searchParams.get("status") ?? "all";
 
   const filteredOrders = sortOrders(
-    selectedStatus === ""
+    selectedStatus === "all"
       ? items
       : items.filter((order) => order.order_status === selectedStatus),
     selectedCategory,
@@ -43,6 +42,11 @@ export default function OrderList() {
     router.push(`?category=${slug}`);
   };
 
+  const handleStatusFilter = (value: string) => {
+    const params = new URLSearchParams(searchParams.toString());
+    params.set("status", value);
+    router.push(`?${params.toString()}`);
+  };
   if (isLoading || !items) {
     return <MyPageOrdersSkeleton count={6} />;
   }
