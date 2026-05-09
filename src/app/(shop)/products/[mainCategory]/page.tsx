@@ -38,7 +38,7 @@ export default async function ProductListPage({ params, searchParams }: Product)
       </div>
       <div className="flex justify-between mb-16 mt-18">
         <FilterCategory mainCategory={mainCategory} category={category} sort={sort} page={page} />
-        <Sort mainCategory={mainCategory} />
+        <Sort mainCategory={mainCategory} category={category} />
       </div>
       <main>
         {/* 페이지 목록 영역 입니다 Suspense로 감싸고 안에 상품에 데이터를 전달 할 수 있도록 컴포넌트를 불러와 작성해줍니다 */}
