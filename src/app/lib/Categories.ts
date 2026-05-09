@@ -25,3 +25,10 @@ export type ProductPreview = {
   discount_rate: number;
   product_categories: ProductCategoriesWithCategory[];
 };
+
+export type OrderProducts = {
+  id: string;
+  name: string;
+  thumbnail_image: string;
+  product_categories: ProductCategoriesWithCategory[];
+};

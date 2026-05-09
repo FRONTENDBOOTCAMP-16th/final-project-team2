@@ -1,10 +1,10 @@
 import { statusLabel } from "@/data/statusLabel";
-import { OrderItem } from "@/app/mypage/types/orderItem";
+import { OrderItemStatus } from "../lib/orderItemStatus";
 
 export default function OrderStatusBadge({
   status,
 }: {
-  status: OrderItem["itemStatus"];
+  status: OrderItemStatus;
 }) {
   const config = statusLabel[status];
 
