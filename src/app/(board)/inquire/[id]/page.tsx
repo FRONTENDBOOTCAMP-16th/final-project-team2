@@ -1,5 +1,5 @@
 // 실제 Next.js 프로젝트에서는 아래 import 문들을 주석 해제해서 사용하세요!
-import { getInquireDetail } from "@/api/inpuireDetail";
+import { getInquireDetail } from "@/actions/inquireAction";
 import { notFound } from "next/navigation";
 import DOMPurify from 'isomorphic-dompurify';
 import Link from "next/link";

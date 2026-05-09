@@ -128,8 +128,12 @@ export async function handleNoticeAction(
     }
 
     revalidateTag('notices')
-  } catch (error: any) {
-    return { success: false, message: error.message }
+  } catch (error: unknown) {
+    const errorMessage = error instanceof Error ? error.message : '알 수 없는 에러가 발생했습니다.'
+    return { 
+      success: false, 
+      message: errorMessage 
+    }
   }
 
   redirect('/notice')
