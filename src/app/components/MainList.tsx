@@ -1,15 +1,15 @@
 import SwiperSection from './SwiperSection';
-// import ProductsCard from './ProductsCard';
-// import MainProducts from '@/data/dummyMainproducts.json';
+import ProductsCard from './ProductsCard';
+import MainProducts from '@/data/dummyMainproducts.json';
 import ProductTodayList from './ProductsToday';
-// import RecommendMDWrapper from './RecommendMDWrapper';
-// import ProductsCardList from './ProductsCardList';
+import ProductsCardList from './ProductsCardList';
 import MainCard from './MainCard';
 import ProductsTodaySale from './ProductTodaySale';
+import RecommendMD from './RecommendMD';
 
-// const INVENTORY_PRODUCTS = 4;
+const INVENTORY_PRODUCTS = 4;
 const DISCOUNT_PRODUCTS = 2;
-// const MD_PRODUCTS = 4;
+const MD_PRODUCTS = 4;
 
 // 임시로 스와이프 정보 호출
 const swiperList = [
@@ -83,9 +83,10 @@ export default function Main() {
 
       {/* MD 추천 상품 */}
       <section className="py-22.5 px-4 max-w-7xl m-auto">
-        {/* <MainCard title="MD 추천 상품" subTitle="이번주 인기상품을 확인해보세요" fullImage>
-          <RecommendMDWrapper maxProducts={MD_PRODUCTS} products={sortedList(MainProducts, 'average_grade')} />
-        </MainCard> */}
+        <MainCard title="MD 추천 상품" subTitle="이번주 인기상품을 확인해보세요" fullImage>
+          {/* <RecommendMD maxProducts={MD_PRODUCTS} products={sortedList(MainProducts, 'average_grade')} /> */}
+          <RecommendMD maxProducts={MD_PRODUCTS} />
+        </MainCard>
       </section>
 
       {/* 오늘의 신상품 */}
