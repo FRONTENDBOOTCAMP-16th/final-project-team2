@@ -49,6 +49,7 @@ export default function ProductImg({ error }: Props) {
           htmlFor="productImage"
           tabIndex={0}
           className={`cursor-pointer border p-4 h-10 flex items-center font-bold 
+            hover:bg-gray-400  hover:text-white
             focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2
             ${preview ? "bg-[#FF6B6B] text-white p-5" : "bg-white text-gray-600 "}`}
         >

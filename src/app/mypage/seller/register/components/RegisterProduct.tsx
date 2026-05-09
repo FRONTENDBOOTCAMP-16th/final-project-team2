@@ -77,7 +77,6 @@ export default function RegisterProductForm() {
     name: T,
     value: ProductForm[T],
   ) => {
-    // form 업데이트
     setForm((prev) => ({
       ...prev,
       [name]: value,
