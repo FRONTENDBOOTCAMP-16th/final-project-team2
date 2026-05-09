@@ -1,7 +1,7 @@
 export type Orders = {
   id: string;
   user_id: string;
-  order_state: string;
+  order_status: string;
   total_price: number;
   used_coupon_id: string;
   discount_amount: number;
