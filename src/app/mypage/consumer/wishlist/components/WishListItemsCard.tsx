@@ -47,11 +47,7 @@ export default function WishListItemCard({ order, onRemove }: Props) {
             </span>
           )}
           <span className="font-bold text-sm text-slate-800">
-            {(
-              order.products.price *
-              (1 - order.products.discount_rate / 100)
-            ).toLocaleString()}
-            원
+            {order.products.price.toLocaleString()}원
           </span>
         </div>
       </div>

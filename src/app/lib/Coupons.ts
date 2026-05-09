@@ -3,8 +3,8 @@ export type Coupon = {
   name: string;
   discount_rate: number;
   start_at: string;
-  created_at?: string;
-  updated_at?: string;
+  created_at: string;
+  updated_at: string;
   expired_at: string;
 };
 

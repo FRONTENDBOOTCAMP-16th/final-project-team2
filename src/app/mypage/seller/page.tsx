@@ -8,7 +8,7 @@ const products = dummySellerProducts as SellerProduct[];
 
 export default function SellerPage() {
   return (
-    <section className="flex flex-col gap-4 p-6 w-full bg-white mb-11.25">
+    <section className="flex flex-col gap-4 p-6 w-full bg-white">
       <h1 className="sr-only">나의 상품</h1>
       {HASPRODUCTS ? (
         <SellerProductsList products={products.slice(0, MAX_CONTENT)} />
