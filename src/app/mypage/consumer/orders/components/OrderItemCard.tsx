@@ -34,30 +34,30 @@ export default function OrderItemCard({
           href={{
             pathname: `/products/${categoryId}/${productId}`,
           }}
-          className="flex flex-row gap-4"
+          className="flex flex-row gap-4 shrink-0"
         >
           <Image
             width={80}
             height={80}
-            className="object-fill"
+            className="object-fill shrink-0"
             src={order.products.thumbnail_image}
             alt=""
           />
-          <h2 className="self-center hover:text-red-500 hover:font-extrabold">
+          <h2 className="self-center truncate  hover:text-red-500 hover:font-extrabold">
             {order.products.name}
           </h2>
         </Link>
       </div>
       {/* 주문 일자 */}
-      <div className="flex gap-3 w-1/6">
+      <div className="flex gap-3 w-1/6 items-center shrink-0 whitespace-nowrap">
         <p>{new Date(createdAt).toLocaleDateString("ko-KR")}</p>
       </div>
       {/* 결제 금액 */}
-      <div className="flex gap-3 w-1/6">
+      <div className="flex gap-3 w-1/6 items-center shrink-0 whitespace-nowrap">
         <p>{finalPrice.toLocaleString()}원</p>
       </div>
       {/* 배송 상태  */}
-      <div className="flex gap-3 w-1/6">
+      <div className="flex gap-3 w-1/6 items-center shrink-0 whitespace-nowrap">
         <OrderStatusBadge status={orderStatus as OrderItemStatus} />
       </div>
     </div>
