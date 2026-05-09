@@ -1,7 +1,7 @@
-import { Coupons, UserCoupons } from "@/app/lib/coupons";
+import { Coupon, UserCoupon } from '@/app/lib/coupons';
 
-export interface UserCouponCombined extends UserCoupons {
-  coupon_details: Coupons;
+export interface UserCouponCombined extends UserCoupon {
+  coupon_details: Coupon;
 }
 
 export interface CouponItemProps {
