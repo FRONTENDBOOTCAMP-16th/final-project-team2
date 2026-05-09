@@ -13,7 +13,7 @@ export default function SimpleToast<T>({ text, delay = 3000, trigger }: SimpleTo
     if (!text) return;
 
     // 토스트 표시
-    setShowToast(true);
+    // setShowToast(true);
 
     // 일정 시간이 지나면 토스트 사라지게 설정
     const timerId = setTimeout(
