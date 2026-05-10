@@ -1,11 +1,12 @@
 import Image from "next/image";
 import { SellerProduct } from "@/app/mypage/types/sellerOrderItems";
 
-export default function SellerProductItemCard({
-  product,
-}: {
+interface CardProps {
   product: SellerProduct;
-}) {
+  onEdit: () => void;
+}
+
+export default function SellerProductItemCard({ product, onEdit }: CardProps) {
   const totalPrice = product.price * (1 - product.discount_rate / 100);
 
   const stateStyles =
@@ -41,7 +42,10 @@ export default function SellerProductItemCard({
         {product.inventory.toLocaleString()}
       </p>
 
-      <button className="w-16 h-9 shrink-0 border border-gray-300 rounded-md text-xs font-semibold text-gray-600 hover:bg-gray-100 transition-colors">
+      <button
+        onClick={onEdit}
+        className="w-16 h-9 shrink-0 border border-gray-300 rounded-md text-xs font-semibold text-gray-600 hover:bg-gray-100 transition-colors"
+      >
         관리
       </button>
     </div>
