@@ -1,6 +1,6 @@
 import { Products } from '@/app/lib/products';
 import { createClient } from '../../utils/supabase/server';
-import notFound from '@/app/not-found';
+import { notFound } from 'next/navigation';
 
 type ProductsResponse = {
   products: Products[];
@@ -11,7 +11,7 @@ type GetProductsParams = {
   mainCategory: string;
   category?: string;
   sort: string;
-  page: number;
+  page?: number;
   pageSize: number;
 };
 

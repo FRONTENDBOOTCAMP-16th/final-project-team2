@@ -4,7 +4,7 @@ import { useState } from 'react';
 import ProductsCard from './ProductsCard';
 import ProductsCardList from './ProductsCardList';
 import { LucideThumbsUp } from 'lucide-react';
-import { Products } from '../(shop)/products/[mainCategory]/lib/products';
+import { Products } from '@/app/lib/products';
 
 interface RecommendMDProps {
   products: Products[];

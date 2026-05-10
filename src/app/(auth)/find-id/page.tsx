@@ -2,6 +2,7 @@
 
 import { findIdAction } from "@/actions/findIdAction";
 import InputBox from "@/app/components/InputBox";
+import SimpleToast from "@/app/components/SimpleToast";
 import { useActionState } from "react";
 
 export default function FIndIdPage() {
@@ -22,6 +23,9 @@ export default function FIndIdPage() {
         
         <button type="submit" className="text-center w-full py-4 mbs-12 text-white bg-[#FF6B6B] rounded font-bold cursor-pointer">아이디 찾기</button>
       </form>
+
+      {/* 토스트 메세지 */}
+      <SimpleToast text={state?.errors?.root?.[0] ? `아이디찾기 실패: ${state?.errors?.root?.[0]}` : undefined} trigger={state} />
     </div>
   )
 }

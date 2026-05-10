@@ -1,6 +1,5 @@
 import { Star } from 'lucide-react';
-import { Products } from '../../../lib/products';
-
+import { Products } from '@/app/lib/products';
 
 interface Props {
   products: Products;
@@ -13,7 +12,7 @@ const ProductSummary = ({ products }: Props) => {
     <>
       <dl className="space-y-3">
         <dt className="sr-only">제품 타입</dt>
-        <dd className="text-lg text-gray-600">{products.category}</dd>
+        <dd className="text-lg text-gray-600">{'메인카테고리'}</dd>
 
         <dt className="sr-only">제품명</dt>
         <dd className="text-3xl font-semibold">{products.name}</dd>
@@ -41,7 +40,7 @@ const ProductSummary = ({ products }: Props) => {
           </dd>
 
           <dt className="sr-only">할인가</dt>
-          <dd className="order-1 text-2xl font-semibold">{formatPrice(Math.ceil(products.price*(1-products.discount_rate/100)))}</dd>
+          <dd className="order-1 text-2xl font-semibold">{formatPrice(Math.ceil(products.price * (1 - products.discount_rate / 100)))}</dd>
         </dl>
         <div className="discountBadge w-20.5 h-7 bg-[#ff6b6b] mt-2 pl-3 pr-3  pt-1 pb-1 flex items-center justify-center">
           <p className="text-white">{products.discount_rate}%</p>
