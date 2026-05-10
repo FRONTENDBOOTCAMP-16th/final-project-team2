@@ -21,7 +21,6 @@ export default function ProductDiscount({
         name="productDiscount"
         id="productDiscount"
         aria-describedby="prouductDiscountHelp"
-        step="5"
         max="70"
         min="0"
         value={value}
