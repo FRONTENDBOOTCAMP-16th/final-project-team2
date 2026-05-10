@@ -18,8 +18,6 @@ export default async function qnaList({
     return <div>등록된 QNA가 없습니다.</div>;
   }
 
-  console.log(user)
-
   return (
     <div className="w-full max-w-4xl mx-auto p-4 space-y-4">
       <h1 className="text-2xl font-bold mb-6">1:1 문의</h1>
