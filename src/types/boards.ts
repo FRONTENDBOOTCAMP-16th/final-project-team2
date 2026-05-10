@@ -19,6 +19,7 @@ export interface BoardCard {
     name: string
     thumbnail_image: string
     price: number
+    store_id?: string
   };
 
   question_content?: string

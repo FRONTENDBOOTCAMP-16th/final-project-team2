@@ -38,44 +38,43 @@ export default async function ReplyInquirePage({ params }: { params: Promise<{ i
   return (
     <div className="container mx-auto py-10">
 
-            <section className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
-      
-              <div className="mb-4">
-                <div className="flex justify-between items-center w-full">
-                  <div className="flex items-center gap-2">
-                    <span className="inline-block px-2 py-1 text-xs font-semibold text-blue-600 bg-blue-100 rounded">
-                      Q. 질문
-                    </span>
-                    <h1 className="text-2xl font-bold text-gray-900">{qna.title}</h1>
-                  </div>
-      
-      
-                  <p className="text-gray-500 text-sm mt-2 w-1/3 text-right">
-                    작성일: {new Date(qna.created_at).toLocaleDateString()}
-                  </p>
-                </div>
-      
-              </div>
-              <hr className="my-4" />
-              <div className="w-full flex items-center gap-2 mb-4">
-                <p className="sr-only">문의 상품</p>
-              <div className="relative w-8 h-8 xl:w-12 xl:h-12 shrink-0">
-                <Image 
-                  src={qna.product?.thumbnail_image || ''}
-                  alt={qna.product?.name || ''}
-                  fill
-                  className="object-cover rounded"
-                />
-              </div>              
-                <p className="text-sm">{qna.product?.name}</p>
-              </div>
-      
-              <div 
-                className="prose max-w-none text-gray-800"
-                dangerouslySetInnerHTML={{ __html: cleanQuestion }}
-              />
-            </section>
+      {/* 상단 질문 원본 */}
+      <section className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+        <div className="mb-4">
+          <div className="flex justify-between items-center w-full">
+            <div className="flex items-center gap-2">
+              <span className="inline-block px-2 py-1 text-xs font-semibold text-blue-600 bg-blue-100 rounded">
+                Q. 질문
+              </span>
+              <h1 className="text-2xl font-bold text-gray-900">{qna.title}</h1>
+            </div>
+            <p className="text-gray-500 text-sm mt-2 w-1/3 text-right">
+              작성일: {new Date(qna.created_at).toLocaleDateString()}
+            </p>
+          </div>
 
+        </div>
+        <hr className="my-4" />
+        <div className="w-full flex items-center gap-2 mb-4">
+          <p className="sr-only">문의 상품</p>
+        <div className="relative w-8 h-8 xl:w-12 xl:h-12 shrink-0">
+          <Image 
+            src={qna.product?.thumbnail_image || ''}
+            alt={qna.product?.name || ''}
+            fill
+            className="object-cover rounded"
+          />
+        </div>              
+          <p className="text-sm">{qna.product?.name}</p>
+        </div>
+
+        <div 
+          className="prose max-w-none text-gray-800"
+          dangerouslySetInnerHTML={{ __html: cleanQuestion }}
+        />
+      </section>
+
+      {/* 작성폼 */}
       <WriteForm 
         board={''}
         initialData={initialData}

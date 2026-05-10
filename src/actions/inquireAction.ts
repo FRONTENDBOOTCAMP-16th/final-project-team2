@@ -256,7 +256,8 @@ export const getInquireDetail = async (id: string): Promise<BoardCard> => {
         id,
         name,
         thumbnail_image,
-        price
+        price,
+        store_id
       )
       `)
     .eq('id', id)
