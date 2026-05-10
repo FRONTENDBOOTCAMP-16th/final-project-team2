@@ -57,7 +57,7 @@ export default function validateProductform<T extends keyof ProductForm>(
     if (!text) {
       return "상품 정보를 입력하세요.";
     }
-    if (!/^[가-힣\s\n.,!?]+$/.test(text)) {
+    if (!/^[가-힣\s\n.,!?~]+$/.test(text)) {
       return "한글만 입력 가능합니다.";
     }
 
