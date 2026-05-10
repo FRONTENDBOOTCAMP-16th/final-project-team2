@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import dynamic from 'next/dynamic'
+import { useInquireStore } from '@/store/useInquireStore'
 import { useState, useActionState } from 'react'
 import 'react-quill-new/dist/quill.snow.css'
 
@@ -10,36 +11,39 @@ const ReactQuill = dynamic(() => import('react-quill-new'), {
   loading: () => <div className="p-4 text-gray-500">에디터를 불러오는 중입니다...</div>,
 })
 
-export type FormState = { success: boolean; message: string };
+export type FormState = { success: boolean; message: string }
 
 export type WriteInitialData = {
-  id: string;
-  title: string;
-  content: string;
-  important: boolean;
+  id?: string
+  reply_id: string
+  title: string
+  content: string
+  important: boolean
 }
 
 interface FormProps {
+  type?: string,
   board?: string,
-  initialData?: WriteInitialData;
-  action: (prevState: FormState, formData: FormData) => Promise<FormState>;
-  showImportantCheckbox?: boolean;
+  initialData?: WriteInitialData
+  action: (prevState: FormState, formData: FormData) => Promise<FormState>
+  showImportantCheckbox?: boolean
   link?: string
 }
 
-export default function WriteForm({ board, initialData, action, showImportantCheckbox = false, link }: FormProps) {
+export default function WriteForm({ type, board, initialData, action, showImportantCheckbox = false, link }: FormProps) {
   const [state, formAction, isPending] = useActionState(action, { success: true, message: '' })
   const [title, setTitle] = useState(initialData?.title || '')
   const [content, setContent] = useState(initialData?.content || '')
   const [isImportant, setIsImportant] = useState(initialData?.important || false)
   const [clientError, setClientError] = useState('')
   const updateID = initialData?.id || null
-
+  const replyID =  initialData?.reply_id|| null
+  const { selectedProduct } = useInquireStore()
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 
     const hasMedia = /<img[^>]*>|<iframe[^>]*>/i.test(content)
-    const plainText = content.replace(/<[^>]*>?/gm, '').replace(/&nbsp;/g, '').trim()
+    const plainText = content.replace(/<[^>]*>?/gm, '').replace(/&nbsp/g, '').trim()
 
     if (!title.trim()) {
       e.preventDefault()
@@ -61,8 +65,12 @@ export default function WriteForm({ board, initialData, action, showImportantChe
       onSubmit={handleSubmit}
       className="w-full max-w-4xl mx-auto p-6 bg-white shadow-sm rounded-lg flex flex-col gap-6"
     >
+      {/* 질문 작성 시 제품정보 위한 히든 input 추가 */}
+      {type === 'inquire' && (<input type='hidden' name='product' id='product' value={selectedProduct || ''} />)}
+
       {/* 수정 시 updateId를 서버 액션에 전달하기 위한 숨김 필드 */}
       {updateID && <input type="hidden" name="updateId" value={updateID} />}
+      {replyID && <input type="hidden" name="replyId" value={replyID} />}
 
       <h2 className="text-2xl font-bold text-gray-800 mb-2">
         {board}
@@ -92,21 +100,23 @@ export default function WriteForm({ board, initialData, action, showImportantChe
         </div>
       )}
 
-      <div className="flex flex-col gap-2">
-        <label htmlFor="title" className="text-sm font-bold text-gray-800">
-          제목 <span className="text-red-500" aria-hidden="true">*</span>
-        </label>
-        <input
-          type="text"
-          name="title"
-          id="title"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          placeholder={`${board} 제목을 입력하세요 (비워두고 등록하면 에러가 발생합니다)`}
-          className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500 transition-shadow disabled:bg-gray-100 disabled:text-gray-500"
-          disabled={isPending}
-        />
-      </div>
+        {!replyID && (
+          <div className="flex flex-col gap-2">
+            <label htmlFor="title" className="text-sm font-bold text-gray-800">
+              제목 <span className="text-red-500" aria-hidden="true">*</span>
+            </label>
+            <input
+              type="text"
+              name="title"
+              id="title"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              placeholder={`${board} 제목을 입력하세요 (비워두고 등록하면 에러가 발생합니다)`}
+              className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500 transition-shadow disabled:bg-gray-100 disabled:text-gray-500"
+              disabled={isPending}
+            />
+          </div>
+        )}
 
       <div className="flex flex-col gap-2">
         <label htmlFor="content-editor" className="text-sm font-bold text-gray-800">

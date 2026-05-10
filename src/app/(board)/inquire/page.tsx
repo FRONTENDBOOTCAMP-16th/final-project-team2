@@ -18,6 +18,8 @@ export default async function qnaList({
     return <div>등록된 QNA가 없습니다.</div>;
   }
 
+  console.log(user)
+
   return (
     <div className="w-full max-w-4xl mx-auto p-4 space-y-4">
       <h1 className="text-2xl font-bold mb-6">1:1 문의</h1>
@@ -37,16 +39,16 @@ export default async function qnaList({
           ))}
         </ul>
       )}
-
-      <div className="flex justify-end">
+      
         {user && (
-          <Link href={'/inquire/write'} className="px-4 py-2 bg-black text-white rounded">
-            작성
+      <div className="flex justify-end">
+          <Link href={'/inquire/write'} className="bg-gray-100 text-black px-4 py-2">
+            글쓰기
           </Link>
-        )}
       </div>
+        )}
 
-      {/* 데이터가 0개여도 컴포넌트가 렌더링되는지 확인을 위해 조건부 렌더링 제거 후 테스트 */}
+
       <Pagination 
         count={normalCount} 
         current={currentPage} 

@@ -1,7 +1,7 @@
-// 실제 Next.js 프로젝트에서는 아래 import 문들을 주석 해제해서 사용하세요!
 import { getInquireDetail } from "@/actions/inquireAction";
 import { notFound } from "next/navigation";
-import DOMPurify from 'isomorphic-dompurify';
+import { getAuthUserInfo } from "@/actions/getUser";
+import sanitizeHtml from 'sanitize-html'
 import Link from "next/link";
 import Image from "next/image";
 
@@ -25,10 +25,31 @@ export default async function QnaDetailPage({
     notFound(); 
   }
 
-  console.log(qna)
+  const cleanQuestion = sanitizeHtml(qna.question_content || '', {
+    allowedTags: sanitizeHtml.defaults.allowedTags.concat(['img', 'span', 'u', 's', 'iframe']),
+    allowedAttributes: {
+      ...sanitizeHtml.defaults.allowedAttributes,
+      '*': ['class', 'style'],
+      'iframe': ['src', 'width', 'height', 'allowfullscreen', 'frameborder'], 
+    },
+    allowedSchemes: ['http', 'https', 'ftp', 'mailto', 'data'],
+  })
 
-  const cleanQuestion = DOMPurify.sanitize(qna.question_content || '');
-  const cleanAnswer = DOMPurify.sanitize(qna.answer_content || '');
+  const cleanAnswer = sanitizeHtml(qna.answer_content || '', {
+    allowedTags: sanitizeHtml.defaults.allowedTags.concat(['img', 'span', 'u', 's', 'iframe']),
+    allowedAttributes: {
+      ...sanitizeHtml.defaults.allowedAttributes,
+      '*': ['class', 'style'],
+      'iframe': ['src', 'width', 'height', 'allowfullscreen', 'frameborder'], 
+    },
+    allowedSchemes: ['http', 'https', 'ftp', 'mailto', 'data'],
+  })
+
+
+  const user = await getAuthUserInfo()
+
+  console.log(user)
+
 
   return (
     <div className="w-full max-w-4xl mx-auto p-8 space-y-8">
