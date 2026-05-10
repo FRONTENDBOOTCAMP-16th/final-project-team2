@@ -88,7 +88,7 @@ export default async function QnaDetailPage({
 
       {/* 질문 작성 버튼 영역 */}
       { (user?.role === 'ADMIN' || qna?.product?.store_id === user?.id) && (
-        <div className="flex justify-end gap-4">
+        <div className="flex justify-end gap-2">
           {user?.role === 'ADMIN' && (
             <Link
             href={`/inquire/${id}/reply`}
@@ -133,12 +133,27 @@ export default async function QnaDetailPage({
           </div>
         )}
       </section>
-      <Link
-        href="/inquire"
-        className="inline-block mb-4 px-4 py-2 bg-slate-800 text-white rounded hover:bg-slate-700"
-      >
-        목록
-      </Link>
+
+      
+      {/* 수정 및 목록 버튼 */}
+      <div className="flex justify-end gap-2">
+        
+        { (user?.role === 'ADMIN' || qna?.writer_id === user?.id) && (
+          <Link
+            href={`/inquire/${id}/edit`}
+            className="inline-block mb-4 px-4 py-2 bg-slate-800 text-white rounded hover:bg-slate-700"
+          >
+            수정
+          </Link>
+        )}
+
+        <Link
+          href="/inquire"
+          className="inline-block mb-4 px-4 py-2 bg-slate-800 text-white rounded hover:bg-slate-700"
+        >
+          목록
+        </Link>
+      </div>
     </div>
   );
 }
