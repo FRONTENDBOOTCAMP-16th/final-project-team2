@@ -29,7 +29,7 @@ export default function RegisterProductForm() {
   // 서버 액션
   const [formState, formAction] = useActionState<FormState, FormData>(
     registerProductActionWithState,
-    null, // 폼 상태 초기값
+    null,
   );
 
   const [form, setForm] = useState<Partial<ProductForm>>({

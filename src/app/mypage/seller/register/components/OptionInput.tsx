@@ -1,13 +1,19 @@
 "use client";
 
-import { OptionType } from "@/app/mypage/types/sellerOrderItems";
+import { OptionType } from "@/app/lib/products";
+import useOptionForm from "@/hooks/useOptionForm";
 import { ChangeEvent } from "react";
 import OptionList from "./OptionList";
-import useOptionForm from "@/hooks/useOptionForm";
 
 type Props = {
   optionForm: ReturnType<typeof useOptionForm>;
   error?: string;
+};
+
+// 옵션 라벨 타입
+export const OPTION_LABEL: Record<OptionType, string> = {
+  color: "색상",
+  size: "사이즈",
 };
 
 export default function OptionInput({ optionForm, error }: Props) {
@@ -81,7 +87,10 @@ export default function OptionInput({ optionForm, error }: Props) {
           선택한 옵션의 값을 입력하세요
         </p>
       </div>
-      <OptionList options={optionForm.state.options} />
+      <OptionList
+        options={optionForm.state.options}
+        onRemove={optionForm.actions.handleDeleteOption}
+      />
       {optionForm.state.error && (
         <p className="text-red-500">{optionForm.state.error}</p>
       )}
