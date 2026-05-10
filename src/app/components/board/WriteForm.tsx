@@ -15,7 +15,7 @@ export type FormState = { success: boolean; message: string }
 
 export type WriteInitialData = {
   id?: string
-  reply_id: string
+  reply_id?: string
   title: string
   content: string
   important: boolean

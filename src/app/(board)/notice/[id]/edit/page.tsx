@@ -1,6 +1,5 @@
 import WriteForm from '@/app/components/board/WriteForm'
-import { getNoticeDetail } from '@/api/noticeDetail'
-import { handleNoticeAction } from '@/actions/noticeAction'
+import { getNoticeDetail, handleNoticeAction } from '@/actions/noticeAction'
 import { notFound } from 'next/navigation'
 
 export default async function NoticeEditPage({ params }: { params: Promise<{ id: string }> }) {
