@@ -1,7 +1,7 @@
 'use server'
 
 import { redirect } from 'next/navigation'
-import { revalidateTag, cacheTag } from 'next/cache'
+// import { revalidateTag, cacheTag } from 'next/cache'
 import { createClient } from '../../utils/supabase/server'
 import { createStaticClient } from '../../utils/supabase/static'
 import type { BoardCard, NoticeResponse, FormState } from '@/types/boards'
@@ -15,8 +15,10 @@ import checkAdmin from '@/actions/checkAdminAction'
  * @returns data 배열로 조회결과 생성, 필독 / 일반 공지사항
  */
 export const getNotices = async (pages: number): Promise<NoticeResponse> => {
-  'use cache'
-  cacheTag('notices')
+
+  // 아예 캐싱을 빼자하니 뺍니다...
+  // 'use cache'
+  // cacheTag('notices')
 
   // env에 환경설정이랑, 캐시(정적)환경용 supabase 선언
   const ITEMS_PER_PAGE = Number(process.env.NEXT_PUBLIC_ITEMS_PER_PAGE) || 10 
@@ -135,7 +137,9 @@ export async function handleNoticeAction(
       }
     }
 
-    revalidateTag('notices', { expire: 3600 })
+    // 캐싱 설정 제거로 인한 주석
+    // revalidateTag('notices', { expire: 3600 })
+
   } catch (error: unknown) {
     const errorMessage = error instanceof Error ? error.message : '알 수 없는 에러가 발생했습니다.'
     return { 

@@ -48,7 +48,6 @@ export default async function qnaList({
       </div>
         )}
 
-
       <Pagination 
         count={normalCount} 
         current={currentPage} 

@@ -1,7 +1,7 @@
 'use server'
 
 import { redirect } from 'next/navigation'
-import { revalidateTag, cacheTag } from 'next/cache'
+// import { revalidateTag, unstable_cache } from 'next/cache'
 import { createClient } from '../../utils/supabase/server'
 import { createStaticClient } from '../../utils/supabase/static'
 import type { BoardCard, FormState } from '@/types/boards'
@@ -14,8 +14,10 @@ import checkAdmin from '@/actions/checkAdminAction'
  * @returns data 배열로 조회결과 생성, 필독 / 일반 공지사항
  */
 export const getInquires = async (pages: number) => {
-  'use cache'
-  cacheTag('inquire')
+
+  // 아예 캐싱을 빼자하니 뺍니다...
+  // 'use cache'
+  // cacheTag('inquire')
 
   // 페이지 당 게시물은 env로 제어하므로 이렇게 합니다.
   const ITEMS_PER_PAGE = Number(process.env.NEXT_PUBLIC_ITEMS_PER_PAGE) || 10
@@ -122,7 +124,10 @@ export async function handleInquireAction(
       }
     }
 
-    revalidateTag('inquire', { expire: 3600 })
+    // 아예 캐싱을 빼자하니 뺍니다...
+    // revalidateTag('inquire', { expire: 3600 })
+
+
   } catch (error: unknown) {
     console.error('오류 코드:', error)
     let errorMessage = '알 수 없는 에러가 발생했습니다.'
@@ -218,7 +223,8 @@ export async function handleInquireReplyAction(
     if (updateError) throw updateError
 
     // 5. 성공 시 목록/상세 캐시 무효화
-    revalidateTag('inquire', { expire: 3600 })
+    // 캐싱 설정 제거로 인한 주석
+    // revalidateTag('inquire', { expire: 3600 })
 
   } catch (error: unknown) {
     const errorMessage = error instanceof Error ? error.message : '답변 등록 중 알 수 없는 오류가 발생했습니다.'
