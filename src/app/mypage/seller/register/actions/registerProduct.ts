@@ -93,10 +93,11 @@ async function processRegister(formData: FormData): Promise<FormState> {
 
   const imageFile = image as File;
 
-  const fakeImageUrl = `/temp/${Date.now()}-${imageFile.name}`;
+  const fakeImageUrl = `https://xgiayrmzgokjzwwzivzi.supabase.co/storage/v1/object/public/public-assets/products/${imageFile.name}`;
   const finalDescription = `<img src="${fakeImageUrl}" alt="상세이미지"/><br/>${description}`;
 
   const supabase = await createClient();
+
   const {
     data: { user },
   } = await supabase.auth.getUser();
