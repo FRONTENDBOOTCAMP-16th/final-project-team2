@@ -12,6 +12,7 @@ export type FormState = {
     productInventory?: string;
     productDiscount?: string;
     productOptions?: string;
+    productCategoryId?: string;
   };
 } | null;
 
@@ -75,6 +76,11 @@ async function processRegister(formData: FormData): Promise<FormState> {
     errors.productDiscount = "할인율을 올바르게 입력하세요.";
   }
 
+  // 카테고리
+  const categoryId = formData.get("productCategoryId")?.toString();
+  if (!categoryId) {
+    errors.productCategoryId = "카테고리를 선택하세요";
+  }
   // 옵션
 
   let options = [];
@@ -120,6 +126,7 @@ async function processRegister(formData: FormData): Promise<FormState> {
       discount_rate: Number(discount),
       options: JSON.parse(optionsRaw ?? "[]"),
       status: "PREPARING",
+      category_id: categoryId,
     })
     .select();
 
