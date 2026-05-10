@@ -1,33 +1,26 @@
-import ProductsCardList from '@/app/components/ProductsCardList';
+'use client';
 
-type ProductListSkeletonProps = {
-  count?: number;
+type LoadingProps = {
+  text?: string;
+  fullScreen?: boolean;
 };
 
-export default function Loading({ count = 12 }: ProductListSkeletonProps) {
+export default function Loading({ text = '잠시만 기다려 주세요', fullScreen = false }: LoadingProps) {
   return (
-    <section aria-labelledby="productListLoading">
-      <h2 id="productListLoading" className="sr-only">
-        상품 목록 불러오는 중
-      </h2>
+    <section aria-label="로딩 중" className={`flex flex-col items-center justify-center gap-5 ${fullScreen ? 'min-h-screen' : 'min-h-125'}`}>
+      <div className="relative flex items-center justify-center">
+        <div className="h-16 w-16 rounded-full border border-gray-200" />
 
-      <ProductsCardList>
-        {Array.from({ length: count }).map((_, i) => (
-          <li key={i} className="animate-pulse">
-            <div className="aspect-square w-70.5 bg-gray-200" />
+        <div className="absolute h-16 w-16 animate-spin rounded-full border-4 border-black border-t-transparent" />
 
-            <div className="mt-4 space-y-2">
-              <div className="h-4 w-20 rounded bg-gray-200" />
-              <div className="h-7 w-60 rounded bg-gray-200" />
+        <div className="absolute h-2.5 w-2.5 rounded-full bg-black" />
+      </div>
 
-              <div className="flex gap-3">
-                <div className="h-6 w-12 rounded bg-gray-200" />
-                <div className="h-6 w-24 rounded bg-gray-300" />
-              </div>
-            </div>
-          </li>
-        ))}
-      </ProductsCardList>
+      <div className="flex flex-col items-center gap-1">
+        <p className="text-sm font-medium tracking-wide text-gray-900">{text}</p>
+
+        <span className="text-xs tracking-[0.2em] text-gray-400 uppercase">Loading</span>
+      </div>
     </section>
   );
 }
