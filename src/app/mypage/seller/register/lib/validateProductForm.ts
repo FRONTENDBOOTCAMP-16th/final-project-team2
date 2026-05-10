@@ -117,8 +117,9 @@ export default function validateProductform<T extends keyof ProductForm>(
   // 옵션
   if (name === "productOptions") {
     if (typeof value !== "string") return "잘못된 값입니다.";
-    if (!value || value.length === 0) {
-      return "옵션을 최소 1개 이상 추가해야 합니다.";
+    const trimmed = value.trim();
+    if (!trimmed) {
+      return "옵션 값을 입력하세요.";
     }
     return "";
   }

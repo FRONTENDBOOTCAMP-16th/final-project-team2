@@ -56,10 +56,6 @@ export default function RegisterProductForm() {
       }
     });
 
-    if (optionForm.state.options.length === 0) {
-      newErrors.productOptions = "옵션을 추가하세요.";
-    }
-
     return newErrors;
   };
 
@@ -68,6 +64,14 @@ export default function RegisterProductForm() {
 
     setClientErrors(newErrors);
 
+    if (optionForm.state.options.length === 0) {
+      optionForm.actions.setError("옵션을 추가하세요.");
+
+      e.preventDefault();
+      return;
+    }
+
+    // 하나라도 폼 양식이 작성되어있지 않은 경우에, 제출을 할 수 없음
     if (Object.keys(newErrors).length > 0) {
       e.preventDefault();
     }
