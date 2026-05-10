@@ -4,7 +4,7 @@ type ProductListSkeletonProps = {
   count?: number;
 };
 
-export default function ProductListSkeleton({ count = 12 }: ProductListSkeletonProps) {
+export default function Loading({ count = 12 }: ProductListSkeletonProps) {
   return (
     <section aria-labelledby="productListLoading">
       <h2 id="productListLoading" className="sr-only">
