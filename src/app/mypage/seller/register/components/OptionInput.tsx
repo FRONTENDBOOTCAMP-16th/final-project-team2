@@ -10,13 +10,7 @@ type Props = {
   error?: string;
 };
 
-// 옵션 라벨 타입
-export const OPTION_LABEL: Record<OptionType, string> = {
-  color: "색상",
-  size: "사이즈",
-};
-
-export default function OptionInput({ optionForm, error }: Props) {
+export default function OptionInput({ optionForm }: Props) {
   // 추후 중복 옵션은 작성할 수 없는 중복 제거 방어 로직도 커스텀 훅 함수에 넣어야 됨.
   // 색깔에 사이즈, 사이즈에 색깔 옵션 입력할 수 없는 로직도 구현 필요
 
@@ -94,7 +88,6 @@ export default function OptionInput({ optionForm, error }: Props) {
       {optionForm.state.error && (
         <p className="text-red-500">{optionForm.state.error}</p>
       )}
-      {error && <p className="text-red-500">{error}</p>}
     </fieldset>
   );
 }

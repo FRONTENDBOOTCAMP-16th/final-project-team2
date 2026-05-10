@@ -25,4 +25,5 @@ export type Option = {
   values: string[];
 };
 
+// 상품 옵션 라벨
 export type OptionType = "color" | "size";
