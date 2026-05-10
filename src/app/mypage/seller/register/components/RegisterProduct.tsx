@@ -14,6 +14,7 @@ import {
 import { useActionState, useState } from "react";
 import validateProductForm, { ProductForm } from "../lib/validateProductForm";
 import useOptionForm from "@/hooks/useOptionForm";
+import CategorySelector from "./CategorySelector";
 
 type ProductErrors = {
   productImage?: string;
@@ -23,6 +24,7 @@ type ProductErrors = {
   productInventory?: string;
   productDiscount?: string;
   productOptions?: string;
+  productCategoryId?: string;
 };
 
 export default function RegisterProductForm() {
@@ -38,6 +40,7 @@ export default function RegisterProductForm() {
     productDescription: "",
     productInventory: "",
     productDiscount: "",
+    productCategoryId: "",
   });
   const serverErrors = formState?.errors;
   const [clientErrors, setClientErrors] = useState<ProductErrors>({});
@@ -146,6 +149,15 @@ export default function RegisterProductForm() {
           error={clientErrors.productDiscount || serverErrors?.productDiscount}
           onChange={(value) => handleInputChange("productDiscount", value)}
           onBlur={() => handleBlur("productDiscount")}
+        />
+        <CategorySelector
+          error={
+            clientErrors.productCategoryId || serverErrors?.productCategoryId
+          }
+          onChange={(value) => {
+            handleInputChange("productCategoryId", value);
+            setClientErrors((prev) => ({ ...prev, productCategoryId: "" }));
+          }}
         />
         <OptionInput optionForm={optionForm} />
       </div>

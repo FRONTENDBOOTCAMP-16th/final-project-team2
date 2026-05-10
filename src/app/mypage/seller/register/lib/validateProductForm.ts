@@ -11,6 +11,7 @@ export type ProductForm = {
   productInventory: string;
   productDiscount: string;
   productOptions: Option[];
+  productCategoryId?: string;
 };
 export default function validateProductform<T extends keyof ProductForm>(
   name: T,
@@ -110,6 +111,16 @@ export default function validateProductform<T extends keyof ProductForm>(
 
     if (num < 0 || num > 70) {
       return "상품 할인율은 0%부터 70%까지 입력 가능합니다.";
+    }
+    return "";
+  }
+
+  // 카테고리
+  if (name === "productCategoryId") {
+    if (typeof value !== "string") return "잘못된 값입니다.";
+    const trimmed = value.trim();
+    if (!trimmed) {
+      return "카테고리를 선택하세요.";
     }
     return "";
   }
