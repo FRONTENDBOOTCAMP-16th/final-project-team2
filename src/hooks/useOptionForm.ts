@@ -58,6 +58,7 @@ export default function useOptionForm() {
       handleOptionType,
       handleInput,
       setOptions,
+      setError,
     },
   };
 }
