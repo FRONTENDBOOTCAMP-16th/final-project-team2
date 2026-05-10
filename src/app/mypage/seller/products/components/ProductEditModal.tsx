@@ -1,16 +1,9 @@
 "use client";
 
-import { useState } from "react";
-import { z } from "zod";
 import ImageUploader from "@/app/mypage/consumer/profile/components/ImageUploader";
 import { SellerProduct } from "@/app/mypage/types/sellerOrderItems";
-
-const productUpdateSchema = z.object({
-  state: z.string().min(1, "판매 상태를 선택해주세요."),
-  inventory: z.number().min(0, "재고는 0개 이상이어야 합니다."),
-  price: z.number().min(1, "원가를 입력해주세요."),
-  discount_rate: z.number().min(0).max(100),
-});
+import { ProductFormField } from "./ProductFormField";
+import { useProductEdit } from "@/hooks/useProductEdit";
 
 interface Props {
   product: SellerProduct;
@@ -18,72 +11,8 @@ interface Props {
 }
 
 export default function ProductEditModal({ product, onClose }: Props) {
-  const [formData, setFormData] = useState({
-    state: product.state,
-    inventory: product.inventory,
-    price: product.price,
-    discount_rate: product.discount_rate,
-  });
-
-  const [errors, setErrors] = useState<Record<string, string>>({});
-
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
-  ) => {
-    const { name, value, type } = e.target;
-    let nextValue: string | number = value;
-
-    if (type === "number") {
-      // 숫자를 다 지웠을 때 빈 칸을 0으로 처리
-      nextValue = value === "" ? 0 : Number(value);
-
-      // 음수 입력 방지
-      if (nextValue < 0) nextValue = 0;
-
-      // 할인율 100% 초과 방지 (에러 메시지 대신 값을 강제 고정)
-      if (name === "discount_rate" && nextValue > 100) nextValue = 100;
-    }
-
-    setFormData((prev) => ({ ...prev, [name]: nextValue }));
-
-    // 입력 시 해당 필드의 에러 메시지 실시간 삭제
-    if (errors[name]) {
-      setErrors((prev) => {
-        const next = { ...prev };
-        delete next[name];
-        return next;
-      });
-    }
-  };
-
-  // Zod를 활용한 유효성 검사 및 제출 로직
-  const handleSubmit = () => {
-    const result = productUpdateSchema.safeParse(formData);
-
-    if (!result.success) {
-      // 복잡한 Zod 에러 배열을 { 필드명: 메시지 } 객체 형태로 평탄화
-      const formattedErrors: Record<string, string> = {};
-
-      result.error.issues.forEach((issue) => {
-        const fieldName = issue.path[0] as string;
-
-        if (fieldName !== "discount_rate") {
-          formattedErrors[fieldName] = issue.message;
-        }
-      });
-
-      setErrors(formattedErrors);
-      return;
-    }
-
-    // 검증 성공 시 실행할 로직
-    // TODO : supabase 연동
-    onClose();
-  };
-  // 최종 금액 계산
-  const finalPrice = Math.floor(
-    formData.price * (1 - formData.discount_rate / 100),
-  );
+  const { formData, errors, handleChange, handleSubmit, finalPrice } =
+    useProductEdit(product, onClose);
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
@@ -122,10 +51,7 @@ export default function ProductEditModal({ product, onClose }: Props) {
           </div>
 
           <div className="space-y-8">
-            <div>
-              <label className="text-[11px] font-bold uppercase tracking-wider text-gray-400 block mb-2 ml-1">
-                판매 상태
-              </label>
+            <ProductFormField label="판매 상태" error={errors.state}>
               <select
                 name="state"
                 value={formData.state}
@@ -138,67 +64,45 @@ export default function ProductEditModal({ product, onClose }: Props) {
                 <option value="판매중지">판매중지</option>
                 <option value="준비중">준비중</option>
               </select>
-              {errors.state && (
-                <p className="text-red-500 text-[10px] mt-1.5 ml-1 font-medium">
-                  {errors.state}
-                </p>
-              )}
-            </div>
+            </ProductFormField>
 
-            <div>
-              <label className="text-[11px] font-bold uppercase tracking-wider text-gray-400 block mb-2 ml-1">
-                재고 수량
-              </label>
+            <ProductFormField label="재고 수량" error={errors.inventory}>
               <input
                 type="number"
                 name="inventory"
-                // 값이 0일 때 빈 칸으로 표시하여 015 같은 입력 방지
                 value={formData.inventory === 0 ? "" : formData.inventory}
                 onChange={handleChange}
                 placeholder="0"
                 className="w-full border-b border-gray-200 py-2 outline-none focus:border-black transition-colors text-sm font-medium"
               />
-              {errors.inventory && (
-                <p className="text-red-500 text-[10px] mt-1.5 ml-1 font-medium">
-                  {errors.inventory}
-                </p>
-              )}
-            </div>
+            </ProductFormField>
 
-            {/* 원가 & 할인율 */}
             <div className="flex gap-8 items-start">
               <div className="flex-1">
-                <label className="text-[11px] font-bold uppercase tracking-wider text-gray-400 block mb-2 ml-1">
-                  원가 (원)
-                </label>
-                <input
-                  type="number"
-                  name="price"
-                  value={formData.price === 0 ? "" : formData.price}
-                  onChange={handleChange}
-                  placeholder="0"
-                  className="w-full border-b border-gray-200 py-2 outline-none focus:border-black transition-colors text-sm font-medium"
-                />
-                {errors.price && (
-                  <p className="text-red-500 text-[10px] mt-1.5 ml-1 font-medium">
-                    {errors.price}
-                  </p>
-                )}
+                <ProductFormField label="원가 (원)" error={errors.price}>
+                  <input
+                    type="number"
+                    name="price"
+                    value={formData.price === 0 ? "" : formData.price}
+                    onChange={handleChange}
+                    placeholder="0"
+                    className="w-full border-b border-gray-200 py-2 outline-none focus:border-black transition-colors text-sm font-medium"
+                  />
+                </ProductFormField>
               </div>
               <div className="flex-1">
-                <label className="text-[11px] font-bold uppercase tracking-wider text-gray-400 block mb-2 ml-1">
-                  할인율 (%)
-                </label>
-                <input
-                  type="number"
-                  name="discount_rate"
-                  value={
-                    formData.discount_rate === 0 ? "" : formData.discount_rate
-                  }
-                  onChange={handleChange}
-                  placeholder="0"
-                  className="w-full border-b border-gray-200 py-2 outline-none focus:border-black transition-colors text-sm font-medium"
-                />
+                <ProductFormField label="할인율 (%)">
+                  <input
+                    type="number"
+                    name="discount_rate"
+                    value={
+                      formData.discount_rate === 0 ? "" : formData.discount_rate
+                    }
+                    onChange={handleChange}
+                    placeholder="0"
+                    className="w-full border-b border-gray-200 py-2 outline-none focus:border-black transition-colors text-sm font-medium"
+                  />
+                </ProductFormField>
               </div>
             </div>
 
