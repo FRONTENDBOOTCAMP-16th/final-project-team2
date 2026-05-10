@@ -97,11 +97,6 @@ async function processRegister(formData: FormData): Promise<FormState> {
     return { errors };
   }
 
-  const imageFile = image as File;
-
-  const fakeImageUrl = `https://xgiayrmzgokjzwwzivzi.supabase.co/storage/v1/object/public/public-assets/products/${imageFile.name}`;
-  const finalDescription = `<img src="${fakeImageUrl}" alt="상세이미지"/><br/>${description}`;
-
   const supabase = await createClient();
 
   const {
@@ -114,21 +109,49 @@ async function processRegister(formData: FormData): Promise<FormState> {
     .eq("owner_id", user?.id)
     .single();
 
+  // 실제 Supabase Storage에 업로드
+  const imageFile = image as File;
+  const ext = imageFile.name.split(".").pop();
+  // 고유한 영문 파일명 생성
+  const fileName = `${Date.now()}.${ext}`;
+  const { error: uploadError } = await supabase.storage
+    .from("public-assets")
+    .upload(`products/${fileName}`, imageFile);
+
+  if (uploadError) {
+    errors.productImage = "이미지 업로드에 실패했습니다.";
+    return { errors };
+  }
+
+  // 업로드된 이미지의 public URL 가져오기
+  const {
+    data: { publicUrl },
+  } = supabase.storage
+    .from("public-assets")
+    .getPublicUrl(`products/${fileName}`);
+
+  const finalDescription = `<img src="${publicUrl}" alt="상세이미지"/><br/>${description}`;
+
   const { data, error } = await supabase
     .from("products")
     .insert({
       store_id: store?.id,
       name,
       price: Number(priceRaw),
-      thumbnail_image: fakeImageUrl,
+      thumbnail_image: publicUrl,
       content: finalDescription,
       inventory: Number(inventory),
       discount_rate: Number(discount),
       options: JSON.parse(optionsRaw ?? "[]"),
       status: "PREPARING",
-      category_id: categoryId,
     })
-    .select();
+    .select()
+    .single();
+
+  await supabase.from("product_categories").insert({
+    product_id: data.id,
+    category_id: categoryId,
+  });
 
   console.log(data, error);
 

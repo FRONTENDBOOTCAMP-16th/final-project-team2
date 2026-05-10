@@ -57,10 +57,9 @@ export default function validateProductform<T extends keyof ProductForm>(
     if (!text) {
       return "상품 정보를 입력하세요.";
     }
-    if (!/^[가-힣\s\n.,!?~]+$/.test(text)) {
+    if (!/^[가-힣0-9\s\n.,!?~"'""''%]+$/.test(text)) {
       return "한글만 입력 가능합니다.";
     }
-
     if (text.length < 10) {
       return "최소 10자 이상 입력해야 합니다.";
     }
@@ -131,6 +130,9 @@ export default function validateProductform<T extends keyof ProductForm>(
     const trimmed = value.trim();
     if (!trimmed) {
       return "옵션 값을 입력하세요.";
+    }
+    if (!/^[가-힣\s\n.,!?~"'""'']+$/.test(trimmed)) {
+      return "한글만 입력 가능합니다.";
     }
     return "";
   }
