@@ -1,15 +1,10 @@
-import { Products } from "@/app/lib/products";
-export interface ProductWithCategory extends Products {
-  category_path: string
-}
-
-// 카테고리 테이블의 기본 형태
 export type Category = { 
   id: string; 
   name: string; 
   parent_id: string | null;
 }
 
+// 영어로 변환할 리스트
 const MAIN_CATEGORY_SLUG: Record<string, string> = {
   '필기구': 'writing',
   '노트/다이어리': 'paper',
@@ -24,6 +19,7 @@ export const categoriesList = (
 ): string | null => {
   if (!categoryId || !category) return null
 
+  // 받아온 데이터가 대분류만 있는지 소분류가 있는지 구분하여 데이터 반환
   const mainCategoryName = category.parent_id
     ? categoryList.find((c) => c.id === category.parent_id)?.name
     : category.name

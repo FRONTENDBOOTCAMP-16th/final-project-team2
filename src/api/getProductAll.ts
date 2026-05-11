@@ -5,6 +5,7 @@ import { Categories } from "@/app/lib/Categories"
 
 export interface ProductWithCategory extends Products {
   category_path: string
+  category_name_kr: string | null
 }
 
 interface ProductRow extends Products {
@@ -35,7 +36,17 @@ export const getProductsAll = async ({
   // 상품 정렬 기준
   switch (sort) {
     case 'average_grade':
-      query = query.order('average_grade', { ascending: false })
+      query = query.order('average_grade', { ascending: false, nullsFirst: false })
+                   .order('created_at', { ascending: false })
+      break
+    case 'discount_rate':
+      query = query.order('discount_rate', { ascending: false, nullsFirst: false })
+                    .order('created_at', { ascending: false })
+      break
+    case 'inventory':
+      query = query.gt('inventory', 0)
+                    .order('inventory', { ascending: true, nullsFirst: false })
+                    .order('created_at', { ascending: false })
       break
     default:
       query = query.order('created_at', { ascending: false })
@@ -88,7 +99,9 @@ export const getProductsAll = async ({
   const categoryList: Categories[] = [...(categoryData as Categories[] ?? []), ...(parentData as Categories[] ?? [])]
 
   const products = productRows.map((product) => {
+    // 소분류 카테고리 코드(c1000...) 뽑아오기
     const categoryId = product.product_categories?.[0]?.category_id ?? null
+    // 위에서 찾은 카테고리 코드로 소분류 카테고리와 매칭하여 해당되는 소분류 이름표 달아주기
     const category = categoryList.find((category) => category.id === categoryId) ?? null
     
     // 구조 분해 할당 시 product_categories는 화면에 불필요하므로 제외해도 됨
@@ -97,6 +110,7 @@ export const getProductsAll = async ({
     return {
       ...restProduct,
       category_path: categoriesList(categoryId, category, categoryList) ?? 'unknown',
+      category_name_kr: category?.name ?? null
     }
   })
 
