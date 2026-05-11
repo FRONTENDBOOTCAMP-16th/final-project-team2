@@ -124,15 +124,7 @@ export default function Main() {
       {/* 품절 임박 꿀템 */}
       <section className="bg-[#FFF8F3]">
         <MainCard title="품절 임박 꿀템" subTitle="서두르세요! 재고가 얼마 남지 않았어요" fullImage>
-          <ProductListFetcher
-            baseUrl="/products"
-            page={1}
-            pageSize={INVENTORY_PRODUCTS}
-            mainCategory={'paper'}
-            category={''}
-            sort={''}
-            pagination={false}
-          />
+          <ProductListFetcher page={1} pageSize={INVENTORY_PRODUCTS} mainCategory={'paper'} category={''} sort={''} pagination={false} />
         </MainCard>
       </section>
     </>
