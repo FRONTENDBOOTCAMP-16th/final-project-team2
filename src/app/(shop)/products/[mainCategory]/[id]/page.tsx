@@ -4,6 +4,10 @@ import { isMainCategory, mainCategoryConvert } from '../lib/category';
 import ProductInfoComponent from './_components/Product/ProductInfoComponent';
 import TabInfoComponent from './_components/Tab/TabInfoComponent';
 import { getProductDetail } from '@/api/productDetailApi';
+import { getProductReviews } from '@/api/review';
+import ReviewList from './_components/Review/ReviewList';
+import Review from './_components/Review/Review';
+import ReviewChart from './_components/Review/ReviewChart';
 
 type ProductDetailPageProps = {
   params: Promise<{
@@ -21,6 +25,7 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
 
   const categoryLabel = mainCategoryConvert[mainCategory];
   const product = await getProductDetail(id);
+  const reviews = await getProductReviews(id);
 
   return (
     <div aria-labelledby="product-detail-title" className="mt-5 mb-38 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -32,7 +37,10 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
         <h1>{product.name}</h1>
         <ProductInfoComponent product={product} />
         <TabInfoComponent product={product} />
-
+        <ReviewList>
+          <ReviewChart reviews={reviews} />
+          <Review reviews={reviews} />
+        </ReviewList>
         <div className="mt-15">{/* <RecomandProduct products={products} /> */}</div>
       </main>
     </div>
