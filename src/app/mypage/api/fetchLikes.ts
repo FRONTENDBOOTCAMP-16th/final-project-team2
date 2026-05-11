@@ -1,5 +1,5 @@
 import { ProductLike } from "@/app/lib/productLike";
-import { createClient } from "'@/utils/supabase/client";
+import { createClient } from "@/utils/supabase/client";
 import {
   ProductCategoriesWithCategory,
   ProductPreview,
