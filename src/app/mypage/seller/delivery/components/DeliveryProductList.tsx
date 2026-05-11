@@ -7,6 +7,8 @@ import TabFilter from "@/app/mypage/consumer/wishlist/components/tabFilter";
 import DeliveryProductHeader from "./DeliveryProductHeader";
 import useDeliveryOrders from "@/hooks/useDeliveryOrders";
 import { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { fetchDelivery } from "@/app/mypage/api/fetchDelivery";
 
 const myProductIds = [
   "prod-1",
@@ -32,11 +34,17 @@ const CATEGORIES = [
 ] as const;
 
 export default function DeliveryProductList() {
-  // 1. 정렬 + 데이터는 hook에서 처리
+  // 1. 데이터 가져오기
+  const { data: items = [] } = useQuery({
+    queryKey: ["delivery"],
+    queryFn: fetchDelivery,
+  });
+
+  // 2. 정렬 + 데이터는 hook에서 처리
   const { sortType, handleTabChange, sortedOrders } =
     useDeliveryOrders(myProductIds);
 
-  // 2. 페이지네이션
+  // 3. 페이지네이션
   const [currentPage, setCurrentPage] = useState(1);
   const { totalPages, currentItems } = usePagination(
     sortedOrders,
@@ -60,7 +68,7 @@ export default function DeliveryProductList() {
         <div>
           <DeliveryProductHeader />
           <ul>
-            {currentItems.map((item) => (
+            {items.map((item) => (
               <li key={item.id}>
                 <DeliveryProductCard order={item} />
               </li>
