@@ -4,6 +4,7 @@ import { OptionType } from "@/app/lib/products";
 import useOptionForm from "@/hooks/useOptionForm";
 import { ChangeEvent } from "react";
 import OptionList from "./OptionList";
+import { ChevronDown } from "lucide-react";
 
 type Props = {
   optionForm: ReturnType<typeof useOptionForm>;
@@ -21,27 +22,30 @@ export default function OptionInput({ optionForm }: Props) {
 
   return (
     <fieldset className="flex flex-col gap-3">
-      <legend className="text-sm">상품 옵션</legend>
-      <div className="flex flex-row gap-3">
+      <legend className="text-sm mb-3">상품 옵션</legend>
+      <div className="flex flex-row gap-3 items-baseline">
         <label htmlFor="productType" className="sr-only">
           옵션 타입
         </label>
-        <select
-          name="productType"
-          id="productType"
-          value={optionForm.state.optionType}
-          onChange={(e: ChangeEvent<HTMLSelectElement>) =>
-            optionForm.actions.handleOptionType(
-              e.target.value as OptionType | "",
-            )
-          }
-          className="p-1 text-sm"
-          aria-describedby="optionTypeHelp"
-        >
-          <option value="">선택</option>
-          <option value="color">색상</option>
-          <option value="size">사이즈</option>
-        </select>
+        <div className="relative">
+          <select
+            name="productType"
+            id="productType"
+            value={optionForm.state.optionType}
+            onChange={(e: ChangeEvent<HTMLSelectElement>) =>
+              optionForm.actions.handleOptionType(
+                e.target.value as OptionType | "",
+              )
+            }
+            className=" appearance-none border border-gray-300  rounded-md px-3 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer"
+            aria-describedby="optionTypeHelp"
+          >
+            <option value="">선택</option>
+            <option value="color">색상</option>
+            <option value="size">사이즈</option>
+          </select>
+          <ChevronDown className="absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none text-gray-500 w-4 h-4" />
+        </div>
 
         <div className="flex flex-row gap-4">
           <label htmlFor="productOptions" className="sr-only">

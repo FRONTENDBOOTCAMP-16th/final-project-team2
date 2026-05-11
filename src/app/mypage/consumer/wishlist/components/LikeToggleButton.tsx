@@ -5,7 +5,7 @@ import { Heart } from "lucide-react";
 
 interface Props {
   id: string;
-  onRemove: (id: string) => void;
+  onRemove?: (id: string) => void;
 }
 
 export default function LikeToggleButton({ id, onRemove }: Props) {
@@ -33,7 +33,7 @@ export default function LikeToggleButton({ id, onRemove }: Props) {
     timerRef.current = setTimeout(() => {
       setShowToast(false);
       if (nextLikeStatus === false) {
-        onRemove(id);
+        onRemove?.(id);
       }
     }, 1500);
   };

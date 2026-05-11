@@ -15,6 +15,7 @@ import { useActionState, useState } from "react";
 import validateProductForm, { ProductForm } from "../lib/validateProductForm";
 import useOptionForm from "@/hooks/useOptionForm";
 import CategorySelector from "./CategorySelector";
+import useRegisterImg from "../hooks/useRegisterImg";
 
 type ProductErrors = {
   productImage?: string;
@@ -48,6 +49,9 @@ export default function RegisterProductForm() {
   //옵션 상태
   const optionForm = useOptionForm();
 
+  // 이미지 업로드 상태
+  const imgForm = useRegisterImg();
+
   const validateAll = () => {
     const newErrors: ProductErrors = {};
 
@@ -76,6 +80,7 @@ export default function RegisterProductForm() {
 
     // 하나라도 폼 양식이 작성되어있지 않은 경우에, 제출을 할 수 없음
     if (Object.keys(newErrors).length > 0) {
+      imgForm.resetImg();
       e.preventDefault();
     }
   };
@@ -118,6 +123,10 @@ export default function RegisterProductForm() {
 
       <div className="flex flex-col gap-y-6 ">
         <ProductImg
+          key={imgForm.imgKey}
+          fileName={imgForm.fileName}
+          preview={imgForm.preview}
+          onChangeImg={imgForm.handleChangeImg}
           error={clientErrors.productImage || serverErrors?.productImage}
         />
         <ProductName
