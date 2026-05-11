@@ -4,6 +4,7 @@ import Link from "next/link";
 import { OrderItemStatus } from "../lib/orderItemStatus";
 import { CATEGORY_GROUPS } from "../../wishlist/lib/categoryGroup";
 import { OrderItem } from "@/app/lib/Orders";
+import { DateFormat } from "../../../../../../utils/supabase/intl";
 
 interface Props {
   order: OrderItem;
@@ -50,7 +51,7 @@ export default function OrderItemCard({
       </div>
       {/* 주문 일자 */}
       <div className="flex gap-3 w-1/6 items-center shrink-0 whitespace-nowrap">
-        <p>{new Date(createdAt).toLocaleDateString("ko-KR")}</p>
+        <p>{DateFormat(createdAt)}</p>
       </div>
       {/* 결제 금액 */}
       <div className="flex gap-3 w-1/6 items-center shrink-0 whitespace-nowrap">

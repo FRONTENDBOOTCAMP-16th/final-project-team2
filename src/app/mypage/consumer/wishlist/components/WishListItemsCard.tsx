@@ -3,6 +3,10 @@ import Link from "next/link";
 import Image from "next/image";
 import { ProductLikeWithProduct } from "@/app/lib/productLike";
 import { CATEGORY_GROUPS } from "../lib/categoryGroup";
+import {
+  DiscountPriceFormat,
+  DiscountRateFormat,
+} from "../../../../../../utils/supabase/intl";
 
 interface Props {
   order: ProductLikeWithProduct;
@@ -53,15 +57,11 @@ export default function WishListItemCard({ order, onRemove }: Props) {
         <div className="flex gap-2">
           {product.discount_rate > 0 && (
             <span className="text-red-500 font-bold text-sm">
-              {product.discount_rate}%
+              {DiscountRateFormat(product.discount_rate)}%
             </span>
           )}
           <span className="font-bold text-sm text-slate-800">
-            {(
-              product.price *
-              (1 - product.discount_rate / 100)
-            ).toLocaleString()}
-            원
+            {DiscountPriceFormat(product.price, product.discount_rate)}원
           </span>
         </div>
       </div>
