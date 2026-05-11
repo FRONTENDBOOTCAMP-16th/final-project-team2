@@ -1,21 +1,22 @@
-"use client";
 import Image from "next/image";
-import { useState } from "react";
 
 type Props = {
   error?: string;
+  preview: string | null;
+  onChangeImg: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  fileName: string;
 };
 
-export default function ProductImg({ error }: Props) {
-  const [preview, setPreview] = useState<string | null>(null);
-  const [fileName, setFileName] = useState("");
-
+export default function ProductImg({
+  error,
+  preview,
+  onChangeImg,
+  fileName,
+}: Props) {
   const handleChangeImg = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
-
-    setFileName(file.name);
-    setPreview(URL.createObjectURL(file));
+    onChangeImg(e);
   };
 
   return (
