@@ -1,17 +1,25 @@
 import Link from "next/link";
 
-export default function FindIdResultPage() {
+interface FindIdProps {
+  searchParams: Promise<{email?: string}>
+}
+
+export default async function FindIdResultPage({ searchParams }: FindIdProps) {
+  const { email } = await searchParams
+
   return (
-    <div className="bg-white w-full p-10 sm:w-160 transition-all">
-      <div>
-        <strong>아이디 찾기</strong>
+    <div className="flex flex-col bg-white w-full p-10 sm:w-160 transition-all rounded-2xl shadow-md shadow-[#c7c7c7]">
+      <div className="text-2xl text-center border-be pbe-9 border-[#e0e0e0]">
+        <strong className="text-[#575A68]">아이디 찾기</strong>
       </div>
 
-      <div className="border text-center px-8 py-5 mbs-4">
-        <strong className="text-gray-400 bold">id@gmail.com</strong>
+      <div className="bg-[#EEEEEE] text-center px-8 py-5 mbs-10">
+        <strong className="text-[#575A68] bold">{email}</strong>
       </div>
 
-      <Link href="/" className="block text-center w-full py-4 mbs-8 bg-gray-200 cursor-pointer">메인으로 돌아가기</Link>
+      <div className="flex pbs-4 mbs-10 border-bs border-[#e0e0e0]">
+        <Link href="/login" className="text-center w-full py-4 mbs-12 text-white bg-[#FF6B6B] rounded font-bold cursor-pointer">로그인으로 돌아가기</Link>
+      </div>
     </div>
   )
 }

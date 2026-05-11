@@ -86,7 +86,7 @@ async function processRegister(formData: FormData): Promise<FormState> {
     errors.productOptions = "옵션 데이터가 올바르지 않습니다.";
   }
 
-  // 👉 에러 하나라도 있으면 반환
+  // 에러 하나라도 있으면 반환
   if (Object.keys(errors).length > 0) {
     return { errors };
   }
