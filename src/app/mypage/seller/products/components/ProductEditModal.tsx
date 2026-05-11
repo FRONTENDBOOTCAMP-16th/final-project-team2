@@ -115,7 +115,7 @@ export default function ProductEditModal({ product, onClose }: Props) {
                   {formData.price.toLocaleString()}원
                 </p>
               </div>
-              <span className="text-xl font-bold text-black font-mono">
+              <span className="text-xl font-bold text-black">
                 {finalPrice.toLocaleString()}원
               </span>
             </div>
@@ -133,7 +133,7 @@ export default function ProductEditModal({ product, onClose }: Props) {
           <button
             type="button"
             onClick={handleSubmit}
-            className="flex-1 py-4 bg-black text-white text-sm font-semibold hover:bg-neutral-800 transition-all rounded-sm shadow-md active:scale-[0.98]"
+            className="flex-1 py-4 bg-black text-white text-sm font-semibold hover:bg-gray-800 transition-all rounded-sm shadow-md active:scale-[0.98]"
           >
             수정 완료
           </button>
