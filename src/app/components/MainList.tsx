@@ -98,7 +98,6 @@ export default function Main() {
              *
              * 위와 아래 내용을 참고하여주시고 주석 삭제해주세요
              *
-             *baseurl: 초기 경로
              * page: 현재 페이지 1을 넣어주세요
              * pageSize: 페이지에 들어갈 상품의 수
              *
@@ -112,15 +111,7 @@ export default function Main() {
              * pagination true 시에 백엔드에서 totalCount를 반드시 작성해주어야 합니다.
              * 참고 파일은 api의 getProducts.ts를 참고해주세요
              */}
-            <ProductListFetcher
-              baseUrl="/products"
-              page={1}
-              pageSize={MD_PRODUCTS}
-              mainCategory={'writing'}
-              category={''}
-              sort={''}
-              pagination={false}
-            />
+            <ProductListFetcher page={1} pageSize={MD_PRODUCTS} mainCategory={'writing'} category={''} sort={''} pagination={false} />
           </Suspense>
         </MainCard>
       </section>
