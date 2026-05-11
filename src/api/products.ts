@@ -1,5 +1,5 @@
 import { Products } from '@/app/lib/products';
-import { createClient } from '../../utils/supabase/server';
+import { createClient } from '@/utils/supabase/server';
 import notFound from '@/app/not-found';
 
 type ProductsResponse = {

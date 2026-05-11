@@ -3,8 +3,7 @@
 import WishListItemCard from "./WishListItemsCard";
 import TabFilter from "./tabFilter";
 import Pagination from "@/app/mypage/seller/delivery/components/Pagination";
-import { usePagination } from "@/hooks/usePagination";
-import { createClient } from "../../../../../../utils/supabase/client";
+import { usePagination } from "@/hooks/usePagination";import { createClient } from "'@/utils/supabase/client";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { fetchLikes } from "@/app/mypage/api/fetchLikes";
 import { ProductLikeWithProduct } from "@/app/lib/productLike";

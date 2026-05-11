@@ -1,9 +1,9 @@
 "use server"
 
-import { findIdSchema } from "@/app/lib/auth"
+import { findIdSchema } from "@/app/lib/Auth"
 import { authAction } from "./auth.actions"
 import { redirect } from "next/navigation"
-import { createClient } from "../../utils/supabase/server"
+import { createClient } from "@/utils/supabase/server"
 
 interface findIdStatus {
   errors: Record<string, string[]> | null
