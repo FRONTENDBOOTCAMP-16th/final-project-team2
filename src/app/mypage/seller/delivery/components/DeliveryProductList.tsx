@@ -9,22 +9,7 @@ import useDeliveryOrders from "@/hooks/useDeliveryOrders";
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { fetchDelivery } from "@/app/mypage/api/fetchDelivery";
-
-const myProductIds = [
-  "prod-1",
-  "prod-2",
-  "prod-4",
-  "prod-5",
-  "prod-7",
-  "prod-12",
-  "prod-13",
-  "prod-18",
-  "prod-19",
-  "prod-25",
-  "prod-26",
-  "prod-30",
-  "prod-32",
-];
+import MypageDeliverySkeleton from "@/app/mypage/components/MypageDeliverSkeleton";
 
 const CATEGORIES = [
   { id: "All", label: "전체", sort: "All" },
@@ -35,14 +20,13 @@ const CATEGORIES = [
 
 export default function DeliveryProductList() {
   // 1. 데이터 가져오기
-  const { data: items = [] } = useQuery({
+  const { data: items = [], isLoading } = useQuery({
     queryKey: ["delivery"],
     queryFn: fetchDelivery,
   });
 
   // 2. 정렬 + 데이터는 hook에서 처리
-  const { sortType, handleTabChange, sortedOrders } =
-    useDeliveryOrders(myProductIds);
+  const { sortType, handleTabChange, sortedOrders } = useDeliveryOrders(items);
 
   // 3. 페이지네이션
   const [currentPage, setCurrentPage] = useState(1);
@@ -56,6 +40,10 @@ export default function DeliveryProductList() {
     handleTabChange(id, CATEGORIES);
     setCurrentPage(1);
   };
+
+  if (isLoading || !items) {
+    return <MypageDeliverySkeleton count={5} />;
+  }
 
   return (
     <div className="flex flex-col">
