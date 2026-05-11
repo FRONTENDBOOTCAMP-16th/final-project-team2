@@ -5,8 +5,37 @@ import { revalidateTag, cacheTag } from 'next/cache'
 import { createClient } from '@/utils/supabase/server'
 import {z} from 'zod'
 import { createStaticClient } from '@/utils/supabase/static'
+import {z} from 'zod'
 import type { BoardCard, FormState } from '@/types/boards'
 import checkAdmin from '@/actions/checkAdminAction'
+
+// 작성 시 조드 검증
+const InquireFormSchema = z.object({
+  title: z
+    .string()
+    .trim()
+    .min(1, { message: '제목을 입력해주세요.' })
+    .max(100, { message: '제목은 100자 이내로 작성해주세요.' }),
+  content: z
+    .string()
+    .trim()
+    .min(1, { message: '질문 내용을 입력해주세요.' }),
+  product: z.string().nullable().optional(), // 상품 ID는 없을 수도 있음
+  updateId: z.string().nullable().optional(),
+})
+
+// 답변시 조드 검증
+const InquireReplySchema = z.object({
+  replyId: z
+    .string()
+    .trim()
+    .min(1, { message: '잘못된 접근입니다. (답변할 질문 ID 누락)' }),
+  content: z
+    .string()
+    .trim()
+    .min(1, { message: '답변 내용을 입력해주세요.' }),
+})
+
 
 /**
  * Zod 스키마 정의
@@ -119,10 +148,14 @@ export async function handleInquireAction(
 
   try {
     if (deleteId) {
+      // 삭제 권한 검증 및 실행
       await checkAdmin('/inquire')
 
-      // 공지사항 삭제 쿼리문
-      const { error } = await supabase.from('qna').delete().eq('id', deleteId)
+      // 수정 포인트 1: 테이블명 오타 수정 (qna -> qnas)
+      const { error } = await supabase
+        .from('qnas')
+        .delete()
+        .eq('id', deleteId)
       if (error) throw error
     } else {
       // zod로 데이터 검증
@@ -203,11 +236,19 @@ export async function handleInquireReplyAction(
 
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) return { success: false, message: '세션이 만료되었습니다.' }
+<<<<<<< HEAD
   
   // zod로 유효성 검사
   const rawData = Object.fromEntries(formData.entries())
   const validatedFields = InquireReplySchema.safeParse(rawData)
 
+=======
+const rawData = Object.fromEntries(formData.entries())
+
+  // zod로 유효성 검사
+  const validatedFields = InquireReplySchema.safeParse(rawData)
+
+>>>>>>> a3338ca (refactor: 게시판 서버 액션에 zod 추가)
   // 실패하면 출력
   if (!validatedFields.success) {
     return { 
