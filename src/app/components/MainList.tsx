@@ -6,10 +6,13 @@ import ProductTodayList from './ProductsToday';
 // import ProductsCardList from './ProductsCardList';
 import MainCard from './MainCard';
 import ProductsTodaySale from './ProductTodaySale';
+import { Suspense } from 'react';
+import ProductListFetcher from '../(shop)/products/[mainCategory]/_components/ProductListFetcher';
+import Skeleton from '../(shop)/products/[mainCategory]/skeleton';
 
-// const INVENTORY_PRODUCTS = 4;
+const INVENTORY_PRODUCTS = 4;
 const DISCOUNT_PRODUCTS = 2;
-// const MD_PRODUCTS = 4;
+const MD_PRODUCTS = 4;
 
 // 임시로 스와이프 정보 호출
 const swiperList = [
@@ -63,10 +66,9 @@ const productList = [
 ];
 
 // 특정 기준에 따라 상품을 리스트업
-const sortedList = <T extends Record<string, any>>(products: T[], key: keyof T) => {
-  return products.toSorted((a, b) => b[key] - a[key])
-}
-
+// const sortedList = <T extends Record<string, any>>(products: T[], key: keyof T) => {
+//   return products.toSorted((a, b) => b[key] - a[key]);
+// };
 
 export default function Main() {
   return (
@@ -83,9 +85,44 @@ export default function Main() {
 
       {/* MD 추천 상품 */}
       <section className="py-22.5 px-4 max-w-7xl m-auto">
-        {/* <MainCard title="MD 추천 상품" subTitle="이번주 인기상품을 확인해보세요" fullImage>
-          <RecommendMDWrapper maxProducts={MD_PRODUCTS} products={sortedList(MainProducts, 'average_grade')} />
-        </MainCard> */}
+        <MainCard title="MD 추천 상품" subTitle="이번주 인기상품을 확인해보세요" fullImage>
+          {/* <RecommendMDWrapper maxProducts={MD_PRODUCTS} products={sortedList(MainProducts, 'average_grade')} /> */}
+          <Suspense fallback={<Skeleton />}>
+            {/*
+             * 현재 사용방법만 넣은 상태입니다. maincategory가 null이라면 전체 상품을 보여주는 것으로 수정해보세요
+             * 정렬 방법도 추가 필요 시 작성해 주세요
+             * 위 두가지 코드는 api의 product.ts에서 작업 하시면 됩니다
+             * 메인카테고리를 통해 상품 데이터를 불러오게 됩니다
+             * 어떠한 값이 들어와도 해당 상품으로 이동이 가능하기 때문에 새롭게 상품을 갖고오는 코드를 작성하거나
+             * 해당 상품의 카테고리를 찾아 넣어주는 작업이 필요합니다.
+             *
+             * 위와 아래 내용을 참고하여주시고 주석 삭제해주세요
+             *
+             *baseurl: 초기 경로
+             * page: 현재 페이지 1을 넣어주세요
+             * pageSize: 페이지에 들어갈 상품의 수
+             *
+             * 아래 3개는 searchParams로 가져오는 것이 좋습니다
+             * mainCategory: 메인 카테고리
+             * category: 서브 카테고리
+             * sort: 정렬 공백 최신순
+             *
+             * pagination : boolean (켜고 끄기) 기본값 false
+             *
+             * pagination true 시에 백엔드에서 totalCount를 반드시 작성해주어야 합니다.
+             * 참고 파일은 api의 getProducts.ts를 참고해주세요
+             */}
+            <ProductListFetcher
+              baseUrl="/products"
+              page={1}
+              pageSize={MD_PRODUCTS}
+              mainCategory={'writing'}
+              category={''}
+              sort={''}
+              pagination={false}
+            />
+          </Suspense>
+        </MainCard>
       </section>
 
       {/* 오늘의 신상품 */}
@@ -95,11 +132,17 @@ export default function Main() {
 
       {/* 품절 임박 꿀템 */}
       <section className="bg-[#FFF8F3]">
-        {/* <MainCard title="품절 임박 꿀템" subTitle="서두르세요! 재고가 얼마 남지 않았어요" fullImage>
-          <ProductsCardList>
-            <ProductsCard maxProducts={INVENTORY_PRODUCTS} products={sortedList(MainProducts, 'inventory')} />
-          </ProductsCardList>
-        </MainCard> */}
+        <MainCard title="품절 임박 꿀템" subTitle="서두르세요! 재고가 얼마 남지 않았어요" fullImage>
+          <ProductListFetcher
+            baseUrl="/products"
+            page={1}
+            pageSize={INVENTORY_PRODUCTS}
+            mainCategory={'paper'}
+            category={''}
+            sort={''}
+            pagination={false}
+          />
+        </MainCard>
       </section>
     </>
   );
