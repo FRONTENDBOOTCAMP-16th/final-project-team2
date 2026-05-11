@@ -67,7 +67,7 @@ export default function Info() {
   };
 
   return (
-    <section className="p-8 bg-white w-full max-w-4xl">
+    <section className="p-8 bg-white w-full max-w-4xl mb-11.25">
       <form onSubmit={(e) => handleSubmit(e, handleSaveSuccess)}>
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-xl font-bold">상점 정보 관리</h1>

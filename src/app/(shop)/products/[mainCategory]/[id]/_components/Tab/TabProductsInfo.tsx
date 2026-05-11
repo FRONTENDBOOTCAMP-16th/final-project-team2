@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { Products } from '../../../lib/products';
+import { Products } from '@/app/lib/products';
 
 type Props = {
   product: Products;
@@ -10,7 +10,6 @@ export default function TabProductsInfo({ product, children }: Props) {
   const DETAIL_TABS = [
     { id: 'detail', label: '제품 상세' },
     { id: 'store', label: '가게 정보' },
-    { id: 'review', label: '리뷰(100)' },
   ] as const;
 
   return (
@@ -31,9 +30,8 @@ export default function TabProductsInfo({ product, children }: Props) {
 
       <section className="py-8">
         <h2 className="text-2xl font-semibold">제품 상세</h2>
-        <div className="contents">
-          <p className="mt-4 text-xl text-justify max-w-6xl leading-8 text-gray-700">{product.content}</p>
-        </div>
+        {/* 돔 퓨리파이 사용해야 하는 부분 */}
+        <div className="contents">{/* <p className="mt-4 text-xl text-justify max-w-6xl leading-8 text-gray-700">{product.content}</p> */}</div>
         {children}
       </section>
     </article>

@@ -14,6 +14,8 @@ import {
 import { useActionState, useState } from "react";
 import validateProductForm, { ProductForm } from "../lib/validateProductForm";
 import useOptionForm from "@/hooks/useOptionForm";
+import CategorySelector from "./CategorySelector";
+import useRegisterImg from "../hooks/useRegisterImg";
 
 type ProductErrors = {
   productImage?: string;
@@ -23,13 +25,14 @@ type ProductErrors = {
   productInventory?: string;
   productDiscount?: string;
   productOptions?: string;
+  productCategoryId?: string;
 };
 
 export default function RegisterProductForm() {
   // 서버 액션
   const [formState, formAction] = useActionState<FormState, FormData>(
     registerProductActionWithState,
-    null, // 폼 상태 초기값
+    null,
   );
 
   const [form, setForm] = useState<Partial<ProductForm>>({
@@ -38,12 +41,16 @@ export default function RegisterProductForm() {
     productDescription: "",
     productInventory: "",
     productDiscount: "",
+    productCategoryId: "",
   });
   const serverErrors = formState?.errors;
   const [clientErrors, setClientErrors] = useState<ProductErrors>({});
 
   //옵션 상태
   const optionForm = useOptionForm();
+
+  // 이미지 업로드 상태
+  const imgForm = useRegisterImg();
 
   const validateAll = () => {
     const newErrors: ProductErrors = {};
@@ -56,10 +63,6 @@ export default function RegisterProductForm() {
       }
     });
 
-    if (optionForm.state.options.length === 0) {
-      newErrors.productOptions = "옵션을 추가하세요.";
-    }
-
     return newErrors;
   };
 
@@ -68,7 +71,16 @@ export default function RegisterProductForm() {
 
     setClientErrors(newErrors);
 
+    if (optionForm.state.options.length === 0) {
+      optionForm.actions.setError("옵션을 추가하세요.");
+
+      e.preventDefault();
+      return;
+    }
+
+    // 하나라도 폼 양식이 작성되어있지 않은 경우에, 제출을 할 수 없음
     if (Object.keys(newErrors).length > 0) {
+      imgForm.resetImg();
       e.preventDefault();
     }
   };
@@ -77,7 +89,6 @@ export default function RegisterProductForm() {
     name: T,
     value: ProductForm[T],
   ) => {
-    // form 업데이트
     setForm((prev) => ({
       ...prev,
       [name]: value,
@@ -85,16 +96,20 @@ export default function RegisterProductForm() {
   };
 
   const handleBlur = <T extends keyof ProductForm>(name: T) => {
+    // form에서 해당 input의 현재 값을 가져오기
     const value = form[name];
     if (value === undefined) return;
     const error = validateProductForm(name, value);
 
+    // 해당 인푹의 에러만 업데이트 해서 보여줌
     setClientErrors((prev) => ({
       ...prev,
       [name]: error,
     }));
   };
 
+  // 클라이언트 또는 서버측에 둘 중 하나 에러 발생할 수 있으니 체크
+  // -> {clientErrors.name || serverErrors?.name}
   return (
     <form
       action={formAction}
@@ -108,6 +123,10 @@ export default function RegisterProductForm() {
 
       <div className="flex flex-col gap-y-6 ">
         <ProductImg
+          key={imgForm.imgKey}
+          fileName={imgForm.fileName}
+          preview={imgForm.preview}
+          onChangeImg={imgForm.handleChangeImg}
           error={clientErrors.productImage || serverErrors?.productImage}
         />
         <ProductName
@@ -143,6 +162,15 @@ export default function RegisterProductForm() {
           error={clientErrors.productDiscount || serverErrors?.productDiscount}
           onChange={(value) => handleInputChange("productDiscount", value)}
           onBlur={() => handleBlur("productDiscount")}
+        />
+        <CategorySelector
+          error={
+            clientErrors.productCategoryId || serverErrors?.productCategoryId
+          }
+          onChange={(value) => {
+            handleInputChange("productCategoryId", value);
+            setClientErrors((prev) => ({ ...prev, productCategoryId: "" }));
+          }}
         />
         <OptionInput optionForm={optionForm} />
       </div>

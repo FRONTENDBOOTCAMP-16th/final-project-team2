@@ -2,6 +2,7 @@ export interface BoardCard {
   id: string
   title: string
   created_at: string
+  writer_id?: string // 작성자 ID (권한 체크용)
   important?: boolean // 공지사항 전용 (QnA에는 없을 수 있으므로 옵셔널)
   content?: string
   
@@ -18,10 +19,25 @@ export interface BoardCard {
     name: string
     thumbnail_image: string
     price: number
+    store_id?: string
   };
 
   question_content?: string
   answer_content?: string
   answered_at?: string
   is_answered?: boolean
+}
+
+export interface FormState {
+  success: boolean
+  message: string
+}
+
+
+
+// 공지사항용
+export interface NoticeResponse {
+  importantData: BoardCard[]
+  normalData: BoardCard[]
+  normalCount: number
 }

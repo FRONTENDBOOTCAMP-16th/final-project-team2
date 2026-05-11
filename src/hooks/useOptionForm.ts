@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Option, OptionType } from "@/app/mypage/types/sellerOrderItems";
+import { Option, OptionType } from "@/app/lib/products";
 
 export default function useOptionForm() {
   const [optionType, setOptionType] = useState<OptionType | "">("");
@@ -23,15 +23,18 @@ export default function useOptionForm() {
     setOptions((prev) => [
       ...prev,
       {
-        id: Date.now(),
-        type: optionType,
-        value: optionValue,
+        name: optionType,
+        values: [optionValue],
       },
     ]);
 
     setOptionType("");
     setOptionValue("");
     setError("");
+  };
+
+  const handleDeleteOption = (name: OptionType) => {
+    setOptions((prev) => prev.filter((option) => option.name !== name));
   };
 
   const handleOptionType = (value: OptionType | "") => {
@@ -51,9 +54,11 @@ export default function useOptionForm() {
     },
     actions: {
       handleAddOptions,
+      handleDeleteOption,
       handleOptionType,
       handleInput,
       setOptions,
+      setError,
     },
   };
 }
