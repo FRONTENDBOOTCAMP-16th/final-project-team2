@@ -4,6 +4,12 @@ import Link from 'next/link';
 import NavList from './NavList';
 import { useAuth } from '@/hooks/useAuth';
 
+interface NaviProps {
+  name: string
+  href: string
+  icon: string
+}
+
 const mainMenu = [
   { name: '필기구', href: '/products/writing' },
   { name: '페이퍼', href: '/products/paper' },
@@ -16,12 +22,12 @@ export default function Header() {
 
   const convenienceMenu = [
     { name: '검색', onClick: () => console.log('검색 클릭'), icon: '🔍' },
-    { name: '마이페이지', href: '/mypage/consumer', icon: '👤' },
+    isLogin && { name: '마이페이지', href: '/mypage/consumer', icon: '👤' },
     { name: '장바구니', href: '/cart', icon: '🛒' },
     isLogin 
       ? { name: '로그아웃', onClick: handleLogout, icon: '🔓' } 
       : { name: '로그인', href: '/login', icon: '🔒' }
-  ]
+  ].filter((item): item is NaviProps => item !== false)
 
   return (
     <>
