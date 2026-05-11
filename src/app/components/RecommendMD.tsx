@@ -16,5 +16,5 @@ export default async function RecommendMD({ maxProducts }: RecommendMDProps) {
     return <p>추천 상품이 없습니다.</p>;
   }
 
-  return <RecommendMDClient products={products} maxProducts={maxProducts} />;
+  return <RecommendMDClient products={products} maxProducts={maxProducts}  />;
 }
