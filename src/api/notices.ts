@@ -1,6 +1,12 @@
+<<<<<<< HEAD
 import { createClient } from '../../utils/supabase/client';
 import type { BoardCard } from '@/types/boards';
 import { cacheTag } from 'next/cache';
+=======
+import { createClient } from '@/utils/supabase/client'
+import type { BoardCard } from '@/types/boards'
+import { cacheTag } from 'next/cache'
+>>>>>>> 8f082f3 (refactoy: utils 파일 이동)
 
 export interface NoticeResponse {
   importantData: BoardCard[];

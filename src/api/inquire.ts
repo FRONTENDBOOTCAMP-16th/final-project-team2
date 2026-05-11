@@ -1,4 +1,4 @@
-import { createClient } from '../../utils/supabase/client'
+import { createClient } from '@/utils/supabase/client'
 import type { BoardCard } from '@/types/boards'
 
 export interface NoticeResponse {

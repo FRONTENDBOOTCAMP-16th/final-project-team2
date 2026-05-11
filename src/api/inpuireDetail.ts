@@ -1,4 +1,4 @@
-import { createClient } from '../../utils/supabase/server'
+import { createClient } from '@/utils/supabase/server'
 import type { BoardCard } from '@/types/boards'
 
 export const getInquireDetail = async (id: string): Promise<BoardCard> => {

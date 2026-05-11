@@ -1,9 +1,9 @@
 "use server"
 
-import { resetPasswordSchema } from "@/app/lib/auth"
 import { authAction } from "./auth.actions"
 import { redirect } from "next/navigation"
-import { createAdminClient } from "../../utils/supabase/admin"
+import { createAdminClient } from "@/utils/supabase/admin"
+import { resetPasswordSchema } from "@/app/lib/Auth"
 interface ResetPasswordCheckProps {
   errors: Record<string, string[]> | null
   name?: string

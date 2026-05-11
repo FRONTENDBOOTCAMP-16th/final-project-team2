@@ -1,9 +1,9 @@
 "use server"
 
-import { signupSchema } from "@/app/lib/auth"
 import { authAction } from "./auth.actions"
 import { redirect } from "next/navigation"
-import { createClient } from "../../utils/supabase/server"
+import { createClient } from "@/utils/supabase/server"
+import { signupSchema } from "@/app/lib/Auth"
 
 export type SignupState = {
   errors: Record<string, string[]> | null

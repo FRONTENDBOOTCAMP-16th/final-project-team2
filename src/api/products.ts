@@ -1,6 +1,11 @@
 import { Products } from '@/app/lib/products';
+<<<<<<< HEAD
 import { createClient } from '../../utils/supabase/server';
 import { notFound } from 'next/navigation';
+=======
+import { createClient } from '@/utils/supabase/server';
+import notFound from '@/app/not-found';
+>>>>>>> 8f082f3 (refactoy: utils 파일 이동)
 
 type ProductsResponse = {
   products: Products[];

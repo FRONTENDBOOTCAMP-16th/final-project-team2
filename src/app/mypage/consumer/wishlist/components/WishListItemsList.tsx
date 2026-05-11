@@ -3,8 +3,13 @@
 import WishListItemCard from "./WishListItemsCard";
 import TabFilter from "./tabFilter";
 import Pagination from "@/app/mypage/seller/delivery/components/Pagination";
+<<<<<<< HEAD
 import { usePagination } from "@/hooks/usePagination";
 import { useQuery } from "@tanstack/react-query";
+=======
+import { usePagination } from "@/hooks/usePagination";import { createClient } from "'@/utils/supabase/client";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+>>>>>>> 8f082f3 (refactoy: utils 파일 이동)
 import { fetchLikes } from "@/app/mypage/api/fetchLikes";
 import { ProductLikeWithProduct } from "@/app/lib/productLike";
 import { useRouter, useSearchParams } from "next/navigation";

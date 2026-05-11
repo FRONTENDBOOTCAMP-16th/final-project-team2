@@ -1,6 +1,6 @@
 
 import { useEffect, useState } from "react"
-import { createClient } from "../../utils/supabase/client"
+import { createClient } from "@/utils/supabase/client"
 import { usePathname } from "next/navigation"
 
 // 한 틀만 꺼내 쓸 수 있도록 function밖에 위치
