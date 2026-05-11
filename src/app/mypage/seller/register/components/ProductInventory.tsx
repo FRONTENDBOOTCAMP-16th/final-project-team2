@@ -14,7 +14,7 @@ export default function ProductInventory({
   return (
     <div className="flex flex-col gap-2">
       {/* 상품 재고 */}
-      <label htmlFor="productInventory" className="text-lg">
+      <label htmlFor="productInventory" className="text-sm">
         상품 재고
       </label>
       <input
