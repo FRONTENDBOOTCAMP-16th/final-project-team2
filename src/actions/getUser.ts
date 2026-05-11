@@ -17,11 +17,11 @@ export async function getAuthUserInfo() {
 
     const { data: userData } = await supabase
       .from('users')
-      .select('role, nickname')
+      .select('role, nickname, id')
       .eq('id', user.id)
       .single()
 
-    return { user, role: userData?.role, nickname: userData?.nickname }
+    return { user, role: userData?.role, nickname: userData?.nickname, id: userData?.id }
   } catch (e) {
     return null
   }

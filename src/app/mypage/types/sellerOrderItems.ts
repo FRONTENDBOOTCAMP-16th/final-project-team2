@@ -1,10 +1,4 @@
-export interface Option {
-  id: number;
-  type: string;
-  value: string;
-}
-
-export type OptionType = "color" | "size";
+import { Option } from "@/app/lib/products";
 
 export interface SellerProduct {
   id: number;

@@ -26,7 +26,6 @@ export default function WishListItemsList() {
     const params = new URLSearchParams(searchParams.toString());
 
     params.set("category", slug);
-    params.set("page", "1"); // 필터 바꾸면 페이지 초기화
 
     router.push(`?${params.toString()}`);
   };
@@ -34,7 +33,6 @@ export default function WishListItemsList() {
   const onChangeSort = (value: string) => {
     const params = new URLSearchParams(searchParams.toString());
     params.set("sort", value);
-    params.set("page", "1");
 
     router.push(`?${params.toString()}`);
   };
