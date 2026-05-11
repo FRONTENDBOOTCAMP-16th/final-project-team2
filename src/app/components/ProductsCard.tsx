@@ -9,10 +9,13 @@ interface ProductCardProps {
   sort?: string;
   baseUrl: string;
   onImageLoad?: () => void;
+  inventoryTag?: boolean
 }
 
-export default function ProductsCard({ product, category, baseUrl, onImageLoad }: ProductCardProps) {
+export default function ProductsCard({ product, category, baseUrl, onImageLoad, inventoryTag }: ProductCardProps) {
   if (!product) return null;
+  const inventoryLabel = product.inventory <= 10 ? '곧 품절이에요!' : `${product.inventory}개`;
+  
   const discountPrice = product.discount_rate > 0 ? Math.floor(product.price * (1 - product.discount_rate / 100)) : product.price;
 
   const label = `제품명 ${product.name}, 원래 가격은 ${product.price.toLocaleString()}원이고 ${product.discount_rate}퍼센트 할인 중이며 현재 가격은 ${discountPrice.toLocaleString()}원입니다.`;
@@ -25,9 +28,12 @@ export default function ProductsCard({ product, category, baseUrl, onImageLoad }
         <div className="w-70.5 aspect-square relative overflow-hidden">
           <ProductImage src={product.thumbnail_image} alt={product.name} onLoadComplete={onImageLoad} />
 
-          {product.discount_rate > 0 && (
-            <div className="absolute left-0 top-0 w-16 h-8 bg-[#FF6B6B] text-white font-semibold flex items-center justify-center" aria-hidden="true">
-              {product.discount_rate}%
+          {(inventoryTag || product.discount_rate > 0) && (
+            <div className="absolute left-0 top-0 px-4 min-w-16 h-8 bg-[#FF6B6B] text-white font-semibold flex items-center justify-center" aria-hidden="true">
+              {inventoryTag 
+                ? inventoryLabel
+                : `${product.discount_rate}%`
+              }
             </div>
           )}
         </div>
