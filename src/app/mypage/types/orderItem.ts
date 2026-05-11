@@ -9,6 +9,7 @@ export interface OrderItem {
   products: {
     name: string;
     thumbnail_image: string;
+    discount_rate: number;
   };
   orders: {
     id: string;
@@ -20,4 +21,5 @@ export interface OrderItem {
     shipping_phone: string;
     created_at: string;
   };
+  email: string;
 }
