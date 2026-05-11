@@ -19,10 +19,25 @@ export interface BoardCard {
     name: string
     thumbnail_image: string
     price: number
+    store_id?: string
   };
 
   question_content?: string
   answer_content?: string
   answered_at?: string
   is_answered?: boolean
+}
+
+export interface FormState {
+  success: boolean
+  message: string
+}
+
+
+
+// 공지사항용
+export interface NoticeResponse {
+  importantData: BoardCard[]
+  normalData: BoardCard[]
+  normalCount: number
 }
