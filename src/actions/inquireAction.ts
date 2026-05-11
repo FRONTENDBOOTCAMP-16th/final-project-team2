@@ -2,9 +2,9 @@
 
 import { redirect } from 'next/navigation'
 import { revalidateTag, cacheTag } from 'next/cache'
-import { createClient } from '../../utils/supabase/server'
-import { createStaticClient } from '../../utils/supabase/static'
+import { createClient } from '@/utils/supabase/server'
 import {z} from 'zod'
+import { createStaticClient } from '@/utils/supabase/static'
 import type { BoardCard, FormState } from '@/types/boards'
 import checkAdmin from '@/actions/checkAdminAction'
 

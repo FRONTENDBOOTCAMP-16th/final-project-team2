@@ -1,6 +1,6 @@
 'use server'
 
-import { createClient } from '../../utils/supabase/server'
+import { createClient } from '@/utils/supabase/server'
 import type { Products } from '@/app/lib/products'
 
 export interface SearchState {

@@ -1,5 +1,9 @@
 import { OrdersType } from "@/app/lib/Orders";
+<<<<<<< HEAD
 import { createClient } from "../../../../utils/supabase/client";
+=======
+import { createClient } from "@/utils/supabase/client";
+>>>>>>> b52d470 (feat: utils링크 변경 및 중복코드 삭제)
 
 export const fetchOrders = async () => {
   const supabase = createClient();

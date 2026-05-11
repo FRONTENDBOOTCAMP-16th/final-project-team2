@@ -1,18 +1,13 @@
 'use server'
 
 import { redirect } from 'next/navigation'
-<<<<<<< HEAD
 import { revalidateTag, cacheTag } from 'next/cache'
 import {z} from 'zod'
-import { createClient } from '../../utils/supabase/server'
-import { createStaticClient } from '../../utils/supabase/static'
-import type { BoardCard, NoticeResponse, FormState } from '@/types/boards'
-import checkAdmin from '@/actions/checkAdminAction'
-=======
 import { createClient } from '@/utils/supabase/server'
-import { updateTag } from 'next/cache';
+import { createStaticClient } from '@/utils/supabase/static'
+import type { BoardCard, NoticeResponse, FormState } from '@/types/boards'
+// import { updateTag } from 'next/cache';
 import checkAdmin from '@/actions/checkAdminAction';
->>>>>>> 8f082f3 (refactoy: utils 파일 이동)
 
 // 신규 zod 스키마
 const NoticeFormSchema = z.object({
