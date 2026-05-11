@@ -1,6 +1,5 @@
 import { Products } from '@/app/lib/products';
 import ProductInfoTable from './ProductInfoTable';
-import Review from './ReviewChart';
 import TabProductsInfo from './TabProductsInfo';
 
 type Props = {
@@ -14,9 +13,6 @@ const TabInfoComponent = ({ product }: Props) => {
           <ProductInfoTable />
         </div>
       </TabProductsInfo>
-
-      <hr />
-      <Review />
     </>
   );
 };
