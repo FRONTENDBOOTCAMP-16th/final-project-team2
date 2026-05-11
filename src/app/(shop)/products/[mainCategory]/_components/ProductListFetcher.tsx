@@ -27,18 +27,7 @@ export default async function ProductListFetcher({ page, pageSize, mainCategory,
       {/* ProductListInner를 통해 상품에 대한 정보를 넘겨주고 없다면 빈 배열을 반환합니다 */}
       <ProductListInner baseUrl={baseUrl} products={data.products ?? []} category={mainCategory} sort={sort} />
 
-      {pagination && (
-        <Pagination
-          baseUrl={baseUrl}
-          mainCategory={mainCategory}
-          category={category}
-          sort={sort}
-          page={page}
-          pageSize={pageSize}
-          totalCount={data.totalCount}
-          products={data.products}
-        />
-      )}
+      {pagination && <Pagination pageSize={pageSize} totalCount={data.totalCount} />}
     </div>
   );
 }
