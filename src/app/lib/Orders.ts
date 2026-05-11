@@ -1,7 +1,9 @@
+import { OrderProducts } from "./Categories";
+
 export type Orders = {
   id: string;
   user_id: string;
-  order_state: string;
+  order_status: string;
   total_price: number;
   used_coupon_id: string;
   discount_amount: number;
@@ -20,4 +22,22 @@ export type Order_items = {
   unit_price: number;
   invoice_number: string;
   item_status: string;
+};
+
+// 확장 타입
+export type OrderItem = {
+  id: string;
+  product_id: string;
+  quantity: number;
+  unit_price: number;
+  item_status: string;
+  products: OrderProducts;
+};
+
+export type OrdersType = {
+  id: string;
+  order_status: string;
+  final_price: number;
+  created_at: string;
+  order_items: OrderItem[];
 };

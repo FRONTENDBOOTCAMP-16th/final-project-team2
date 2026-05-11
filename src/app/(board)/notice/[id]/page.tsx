@@ -1,6 +1,6 @@
-import { getNoticeDetail } from "@/api/noticeDetail"
+import { getNoticeDetail } from "@/actions/noticeAction"
 import { notFound } from "next/navigation"
-import DOMPurify from 'isomorphic-dompurify'
+import sanitizeHtml from 'sanitize-html'
 import Link from "next/link"
 import checkUserID from "@/actions/checkUserId"
 import NoticeDeleteAction from "@/app/components/board/NoticeDeleteAction"
@@ -26,7 +26,17 @@ export default async function NoticeDetailPage({
     notFound()
   }
 
-  const cleanHtml = DOMPurify.sanitize(notice.content || '')
+  const cleanHtml = sanitizeHtml(notice.content || '', {
+    allowedTags: sanitizeHtml.defaults.allowedTags.concat(['img', 'span', 'u', 's', 'iframe']),
+    allowedAttributes: {
+      ...sanitizeHtml.defaults.allowedAttributes,
+      '*': ['class', 'style'],
+      'iframe': ['src', 'width', 'height', 'allowfullscreen', 'frameborder'], 
+    },
+    allowedSchemes: ['http', 'https', 'ftp', 'mailto', 'data'],
+  })
+
+
   let isWriter = false
   const user = await checkUserID()
   if (notice.writer_id === user?.id || user?.role === 'ADMIN') {
@@ -44,6 +54,8 @@ export default async function NoticeDetailPage({
         className="prose"
         dangerouslySetInnerHTML={{ __html: cleanHtml }}
       />
+
+      
       <div className="flex gap-2 justify-end w-full my-6">
         {isWriter && (
           <Link

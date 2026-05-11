@@ -1,6 +1,6 @@
 import PostListCard from '@/app/components/board/PostListCard';
 import Pagination from '@/app/components/board/Pagination';
-import { getNotices } from '@/api/notices';
+import { getNotices } from '@/actions/noticeAction';
 import { getAuthUserInfo } from '@/actions/getUser';
 import Link from 'next/link';
 
@@ -12,7 +12,6 @@ export default async function NoticeList({
   const params = await searchParams;
   const currentPage = Number(params?.page) || 1;
   const { importantData, normalData, normalCount } = await getNotices(currentPage);
-
   const auth = await getAuthUserInfo();
   const isAdmin = auth?.role === 'ADMIN';
 

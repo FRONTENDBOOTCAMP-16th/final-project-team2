@@ -1,4 +1,4 @@
-type ProductOptions = {
+export type ProductOptions = {
   color?: string[];
   size?: string[];
 };
@@ -18,3 +18,12 @@ export type Products = {
   create_at: string;
   update_at: string;
 };
+
+// 상품 옵션 확장 타입
+export type Option = {
+  name: OptionType;
+  values: string[];
+};
+
+// 상품 옵션 라벨
+export type OptionType = "color" | "size";

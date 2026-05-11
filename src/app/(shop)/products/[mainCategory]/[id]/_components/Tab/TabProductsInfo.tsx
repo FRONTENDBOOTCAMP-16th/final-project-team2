@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { Products } from '../../../lib/products';
+import { Products } from '@/app/lib/products';
 
 type Props = {
   product: Products;
