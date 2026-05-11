@@ -2,11 +2,29 @@
 
 import { redirect } from 'next/navigation'
 import { revalidateTag, cacheTag } from 'next/cache'
+import {z} from 'zod'
 import { createClient } from '../../utils/supabase/server'
 import { createStaticClient } from '../../utils/supabase/static'
 import type { BoardCard, NoticeResponse, FormState } from '@/types/boards'
 import checkAdmin from '@/actions/checkAdminAction'
 
+// 신규 zod 스키마
+const NoticeFormSchema = z.object({
+  title: z
+    .string()
+    .trim()
+    .min(1, { message: '제목을 입력해주세요.' })
+    .max(100, { message: '제목은 100자 이내로 작성해주세요.' }),
+  content: z
+    .string()
+    .trim()
+    .min(1, { message: '내용을 입력해주세요.' }),
+  // 체크박스는 체크 시 'on', 미체크 시 undefined로 넘어옵니다.
+  // undefined로 하면 없음으로 false로 처리.
+  important: z
+    .preprocess((val) => val === 'on', z.boolean()), 
+  updateId: z.string().nullable().optional(),
+});
 
 /**
  * 공지사항 조회 액션 (Static Action)
@@ -86,13 +104,13 @@ export async function handleNoticeAction(
   if (!user) return { success: false, message: '세션이 만료되었습니다.' }
 
   // 수정이냐 삭제 요청이냐 get으로 받아온다.
-  const deleteId = formData.get('deleteId') as string
-  const updateId = formData.get('updateId') as string
+  // FormData를 일반 객체로 변환
+  const rawData = Object.fromEntries(formData.entries());
+  const deleteId = rawData.deleteId as string | undefined;
 
   try {
+    // 삭제 로직 (삭제는 ID만 있으면 되므로 우선 처리, 향후에 is_delete로 업데이트 해서 유지보수 기능 추가 예정)
     if (deleteId) {
-
-      // 공지사항 삭제 쿼리문
       const { error } = await supabase
         .from('notices')
         .delete()
@@ -101,33 +119,39 @@ export async function handleNoticeAction(
       if (error) throw error
 
     } else {
-      
-      // 수정이라면 수정된 내용 제목, 필수사항, 내용
-      const title = formData.get('title') as string
-      const content = formData.get('content') as string
-      const isImportant = formData.get('important') === 'on'
+      // 3. Zod를 활용한 폼 데이터 유효성 검사 (생성/수정의 경우)
+      const validatedFields = NoticeFormSchema.safeParse(rawData);
 
-      // 유효성 검사 (제목 필수)
-      if (!title?.trim()) return { success: false, message: '제목을 입력해주세요.' }
+      // 유효성 검사 실패 시
+      if (!validatedFields.success) {
+        // Zod 에러 배열에서 첫 번째 메시지를 뽑아서 클라이언트 반환
+        return { 
+          success: false, 
+          message: validatedFields.error.issues[0].message 
+        };
+      }
+
+      // 검증이 완료된 안전한 데이터 추출
+      const { title, content, important, updateId } = validatedFields.data;
 
       if (updateId) {
-        // 공지사항 수정 쿼리문
+        // 공지사항 수정
         const { error } = await supabase
           .from('notices')
-          .update({ title, content, important: isImportant })
+          .update({ title, content, important })
           .eq('id', updateId)
         if (error) throw error
       } else {
-        
-        // 아무것도 없다면 새 공지사항 작성
+        // 새 공지사항 작성
         const { error } = await supabase
           .from('notices')
-          .insert({ title, content, important: isImportant, writer_id: user.id })
+          .insert({ title, content, important, writer_id: user.id })
         if (error) throw error
       }
     }
 
-    // revalidateTag('notices', { expire: 3600 })
+    revalidateTag('notices', { expire: 3600 })
+
   } catch (error: unknown) {
     const errorMessage = error instanceof Error ? error.message : '등록 중 알 수 없는 오류가 발생했습니다.'
     return { success: false, message: errorMessage }

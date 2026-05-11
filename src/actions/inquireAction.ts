@@ -4,8 +4,41 @@ import { redirect } from 'next/navigation'
 import { revalidateTag, cacheTag } from 'next/cache'
 import { createClient } from '../../utils/supabase/server'
 import { createStaticClient } from '../../utils/supabase/static'
+import {z} from 'zod'
 import type { BoardCard, FormState } from '@/types/boards'
 import checkAdmin from '@/actions/checkAdminAction'
+
+/**
+ * Zod 스키마 정의
+ */
+
+// 작성 시 조드 검증
+const InquireFormSchema = z.object({
+  title: z
+    .string()
+    .trim()
+    .min(1, { message: '제목을 입력해주세요.' })
+    .max(100, { message: '제목은 100자 이내로 작성해주세요.' }),
+  content: z
+    .string()
+    .trim()
+    .min(1, { message: '질문 내용을 입력해주세요.' }),
+  product: z.string().nullable().optional(), // 상품 ID는 없을 수도 있음
+  updateId: z.string().nullable().optional(),
+})
+
+// 답변시 조드 검증
+const InquireReplySchema = z.object({
+  replyId: z
+    .string()
+    .trim()
+    .min(1, { message: '잘못된 접근입니다. (답변할 질문 ID 누락)' }),
+  content: z
+    .string()
+    .trim()
+    .min(1, { message: '답변 내용을 입력해주세요.' }),
+})
+
 
 /**
  * 게시판에서의 조회 액션 (Static Action)
@@ -79,51 +112,56 @@ export async function handleInquireAction(
   // 오류가 났을때 대응.
   if (!user) return { success: false, message: '세션이 만료되었습니다.' }
 
-  // 수정이냐 삭제 요청이냐 get으로 받아온다.
-  const deleteId = formData.get('deleteId') as string
-  const updateId = formData.get('updateId') as string
+  const rawData = Object.fromEntries(formData.entries())
+  const deleteId = rawData.deleteId as string | undefined
 
-  // 1:1의 경우 관리자만 삭제할 수 있어야한다.
-  // 그러므로 checkAdmin으로 방어.
   try {
     if (deleteId) {
-
+      // 삭제 권한 검증 및 실행
       await checkAdmin('/inquire')
 
-      // 공지사항 삭제 쿼리문
+      // 수정 포인트 1: 테이블명 오타 수정 (qna -> qnas)
       const { error } = await supabase
-        .from('qna')
+        .from('qnas')
         .delete()
         .eq('id', deleteId)
       if (error) throw error
 
     } else {
+      // zod로 데이터 검증
+      const validatedFields = InquireFormSchema.safeParse(rawData)
 
-      // 수정이라면 수정된 내용 제목, 필수사항, 내용
-      const title = formData.get('title') as string
-      const content = formData.get('content') as string
-      const productId = formData.get('product') as string
-      
-      // 유효성 검사 (제목 필수)
-      if (!title?.trim()) return { success: false, message: '제목을 입력해주세요.' }
+      if (!validatedFields.success) {
+        return { 
+          success: false, 
+          message: validatedFields.error.issues[0].message 
+        }
+      }
+
+      // 조드로 검증된 데이터를 구조분해할당하기.
+      const { title, content, product, updateId } = validatedFields.data
 
       if (updateId) {
-        // 업데이트 수정
+        // 업데이트
         const { error } = await supabase
           .from('qnas')
-          .update({ title, question_content: content  })
+          .update({ title, question_content: content })
           .eq('id', updateId)
         if (error) throw error
       } else {
-        // 아무것도 없다면 새 질문글 작성
+        // 새 질문글 작성
         const { error } = await supabase
           .from('qnas')
-          .insert({ title, question_content: content, writer_id: user.id, product_id: productId })
+          .insert({ 
+            title, 
+            question_content: content, 
+            writer_id: user.id, 
+            product_id: product || null 
+          })
         if (error) throw error
       }
     }
 
-    // 아예 캐싱을 빼자하니 뺍니다...
     revalidateTag('inquire', { expire: 3600 })
 
 
@@ -164,20 +202,26 @@ export async function handleInquireReplyAction(
 ): Promise<FormState> {
   const supabase = await createClient()
 
-  // 1. 현재 로그인 세션 확인
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) return { success: false, message: '세션이 만료되었습니다.' }
+const rawData = Object.fromEntries(formData.entries())
 
-  // 2. 클라이언트 폼에서 값 추출
-  const replyId = formData.get('replyId') as string
-  const answerContent = formData.get('content') as string
+  // zod로 유효성 검사
+  const validatedFields = InquireReplySchema.safeParse(rawData)
 
-  if (!replyId) return { success: false, message: '잘못된 접근입니다. (답변할 질문 ID 누락)' }
-  if (!answerContent?.trim()) return { success: false, message: '답변 내용을 입력해주세요.' }
+  // 실패하면 출력
+  if (!validatedFields.success) {
+    return { 
+      success: false, 
+      message: validatedFields.error.issues[0].message 
+    }
+  }
+
+  // 검증된 데이터 추출
+  const { replyId, content: answerContent } = validatedFields.data
 
   try {
-    // 3. 답변 작성자가 이 상품 판매자가 맞는지, 혹은 어드민인지 확인 (방어 로직)
-    // QnA 데이터와 연관된 Product의 store_id를 조회
+    // 권한 검증 로직 (판매자 또는 어드민)
     const { data: qnaData, error: qnaError } = await supabase
       .from('qnas')
       .select(`
@@ -191,7 +235,6 @@ export async function handleInquireReplyAction(
       throw new Error('해당 질문을 찾을 수 없습니다.')
     }
 
-    // 유저의 role(어드민 여부) 확인
     const { data: userData } = await supabase
       .from('users')
       .select('role')
@@ -200,7 +243,6 @@ export async function handleInquireReplyAction(
 
     const isAdmin = userData?.role === 'ADMIN'
 
-    // 관계형 데이터의 형태에 따라 안전하게 추출
     const productInfo = Array.isArray(qnaData.product) ? qnaData.product[0] : qnaData.product
     const isSeller = productInfo?.store_id === user.id
 
@@ -208,7 +250,7 @@ export async function handleInquireReplyAction(
       return { success: false, message: '권한이 없습니다. (상품 판매자 또는 관리자만 답변 가능합니다.)' }
     }
 
-    // 4. 권한 검증 통과 시 답변 데이터 업데이트
+    // 권한 검증 통과 시 답변 데이터 업데이트
     const { error: updateError } = await supabase
       .from('qnas')
       .update({
@@ -221,9 +263,7 @@ export async function handleInquireReplyAction(
 
     if (updateError) throw updateError
 
-    // 5. 성공 시 목록/상세 캐시 무효화
-    // 캐싱 설정 제거로 인한 주석
-    // revalidateTag('inquire', { expire: 3600 })
+    revalidateTag('inquire', { expire: 3600 })
 
   } catch (error: unknown) {
     const errorMessage = error instanceof Error ? error.message : '답변 등록 중 알 수 없는 오류가 발생했습니다.'
