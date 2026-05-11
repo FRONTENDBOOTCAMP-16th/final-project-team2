@@ -17,7 +17,9 @@ export default function ProductListInner({ products, category, sort, baseUrl }: 
   const [loadedCount, setLoadedCount] = useState(0);
 
   const isAllLoaded = products.length === 0 || loadedCount >= products.length;
-
+  if (products.length === 0) {
+    return '현재 등록된 상품이 없습니다';
+  }
   const handleImageLoad = () => {
     setLoadedCount(prev => prev + 1);
   };
