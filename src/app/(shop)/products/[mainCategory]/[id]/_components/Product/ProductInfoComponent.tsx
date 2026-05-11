@@ -6,12 +6,15 @@ import HeartButton from './HeartButton';
 import ProductSummary from './ProductSummary';
 import ProductImage from '../../../_components/ProductImage';
 import { Products } from '@/app/lib/products';
+import { DiscountPriceFormat } from '../../../../../../../../utils/supabase/intl';
 
 type Props = {
   product: Products;
 };
 
 const ProductInfoComponent = ({ product }: Props) => {
+  const price = product.price;
+  const discount_rate = product.discount_rate;
   return (
     <article className="mx-auto max-w-7xl">
       <div className="grid grid-cols-1 gap-10 lg:grid-cols-2 mt-6">
@@ -33,7 +36,7 @@ const ProductInfoComponent = ({ product }: Props) => {
               <Quantity />
             </div>
             <div className="mt-4">
-              <TotalPrice />
+              <TotalPrice price={Number(DiscountPriceFormat(price, discount_rate))} quantity={2} />
             </div>
             <div className="mt-6">
               <div className="mt-4 flex gap-3">
