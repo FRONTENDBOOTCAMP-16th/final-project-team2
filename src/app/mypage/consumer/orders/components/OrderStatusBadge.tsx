@@ -7,7 +7,6 @@ export default function OrderStatusBadge({
   status: OrderItemStatus;
 }) {
   const config = statusLabel[status];
-  console.log(status, config);
 
   return (
     <span

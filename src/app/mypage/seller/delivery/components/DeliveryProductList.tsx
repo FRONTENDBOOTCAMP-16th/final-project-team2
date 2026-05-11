@@ -7,9 +7,8 @@ import TabFilter from "@/app/mypage/consumer/wishlist/components/tabFilter";
 import DeliveryProductHeader from "./DeliveryProductHeader";
 import useDeliveryOrders from "@/hooks/useDeliveryOrders";
 import { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
-import { fetchDelivery } from "@/app/mypage/api/fetchDelivery";
 import MypageDeliverySkeleton from "@/app/mypage/components/MypageDeliverSkeleton";
+import { useDeliveryQuery } from "../hooks/useDeliveryQuery";
 
 const CATEGORIES = [
   { id: "All", label: "전체", sort: "All" },
@@ -20,10 +19,7 @@ const CATEGORIES = [
 
 export default function DeliveryProductList() {
   // 1. 데이터 가져오기
-  const { data: items = [], isLoading } = useQuery({
-    queryKey: ["delivery"],
-    queryFn: fetchDelivery,
-  });
+  const { data: items = [], isLoading } = useDeliveryQuery();
 
   // 2. 정렬 + 데이터는 hook에서 처리
   const { sortType, handleTabChange, sortedOrders } = useDeliveryOrders(items);
@@ -45,30 +41,40 @@ export default function DeliveryProductList() {
     return <MypageDeliverySkeleton count={5} />;
   }
 
+  const hasItems = currentItems.length > 0;
+
   return (
     <div className="flex flex-col">
-      <div className="flex  flex-col ">
-        <TabFilter
-          items={CATEGORIES}
-          selectedValue={sortType}
-          onValueChange={(id) => handleTabChangeWithReset(id)}
-        />
-        <div>
-          <DeliveryProductHeader />
-          <ul>
-            {items.map((item) => (
-              <li key={item.id}>
-                <DeliveryProductCard order={item} />
-              </li>
-            ))}
-          </ul>
+      {hasItems ? (
+        <>
+          <div className="flex  flex-col ">
+            <TabFilter
+              items={CATEGORIES}
+              selectedValue={sortType}
+              onValueChange={(id) => handleTabChangeWithReset(id)}
+            />
+            <div>
+              <DeliveryProductHeader />
+              <ul>
+                {currentItems.map((item) => (
+                  <li key={item.id}>
+                    <DeliveryProductCard order={item} />
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={setCurrentPage}
+          />
+        </>
+      ) : (
+        <div className="text-red-500 text-center pt-3">
+          <p>주문된 상품이 없습니다.</p>{" "}
         </div>
-      </div>
-      <Pagination
-        currentPage={currentPage}
-        totalPages={totalPages}
-        onPageChange={setCurrentPage}
-      />
+      )}
     </div>
   );
 }

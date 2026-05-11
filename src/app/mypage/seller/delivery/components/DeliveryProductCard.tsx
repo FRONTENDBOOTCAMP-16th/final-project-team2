@@ -5,7 +5,7 @@ import { TotalPriceFormat } from "../../../../../../utils/supabase/intl";
 
 export default function DeliveryProductCard({ order }: { order: OrderItem }) {
   const emailPrefix = order.email?.split("@")[0];
-  console.log(order.unit_price, order.products.discount_rate);
+
   return (
     <div className="flex font-semibold p-4 mb-2 border-b border-gray-300 gap-5 ">
       <div className="flex w-1/10 shrink-0">
