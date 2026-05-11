@@ -54,7 +54,6 @@ export default async function ProductListPage({
         {/* 페이지 목록 영역 입니다 Suspense로 감싸고 안에 상품에 데이터를 전달 할 수 있도록 컴포넌트를 불러와 작성해줍니다 */}
         <Suspense fallback={<Skeleton />}>
           {/*
-           * baseurl: 초기 경로
            * page: 현재 페이지
            * pageSize: 페이지에 들어갈 상품의 수
            *
@@ -68,15 +67,7 @@ export default async function ProductListPage({
            * pagination true 시에 백엔드에서 totalCount를 반드시 작성해주어야 합니다.
            * 참고 파일은 api의 getProducts.ts를 참고해주세요
            */}
-          <ProductListFetcher
-            baseUrl="/products"
-            page={page}
-            pageSize={MAX_PAGE_SIZE}
-            mainCategory={mainCategory}
-            category={category}
-            sort={sort}
-            pagination={true}
-          />
+          <ProductListFetcher page={page} pageSize={MAX_PAGE_SIZE} mainCategory={mainCategory} category={category} sort={sort} pagination={true} />
         </Suspense>
       </main>
     </div>
