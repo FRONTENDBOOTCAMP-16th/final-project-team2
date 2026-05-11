@@ -22,7 +22,7 @@ export default function SideMenu() {
       { name: "나의 상품", href: `${SELLER_PATH}/products` },
       { name: "상품 등록", href: `${SELLER_PATH}/register` },
       { name: "상점 정보 관리", href: `${SELLER_PATH}/info` },
-      { name: "배송 상태 관리", href: `${SELLER_PATH}/delivery` },
+      { name: "배송 관리", href: `${SELLER_PATH}/delivery` },
     ],
   };
 
