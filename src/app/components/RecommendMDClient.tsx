@@ -3,10 +3,10 @@
 import { useState } from 'react';
 import ProductsCard from './ProductsCard';
 import { LucideThumbsUp } from 'lucide-react';
-import { Products } from '../lib/products';
+import { ProductWithCategory } from '@/api/getProductAll';
 
-interface RecommendMDClientProps {
-  products: Products[]
+export interface RecommendMDClientProps {
+  products: ProductWithCategory[]
   maxProducts: number
 }
 
@@ -25,7 +25,12 @@ export default function RecommendMDClient({ products, maxProducts }: RecommendMD
     <>
       <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 w-full">
         {visibleProducts.map((product) => (
-          <ProductsCard key={product.id} product={product} category="all" />
+          <ProductsCard
+            baseUrl='/products'
+            key={product.id}
+            product={product}
+            category={product.category_path}
+          />
         ))}
       </ul>
 
