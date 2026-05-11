@@ -36,7 +36,7 @@ const ProductInfoComponent = ({ product }: Props) => {
               <Quantity />
             </div>
             <div className="mt-4">
-              <TotalPrice price={Number(DiscountPriceFormat(price, discount_rate))} quantity={2} />
+              <TotalPrice price={price} discount_rate={discount_rate} quantity={2} />
             </div>
             <div className="mt-6">
               <div className="mt-4 flex gap-3">

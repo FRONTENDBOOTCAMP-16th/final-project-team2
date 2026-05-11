@@ -34,7 +34,6 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
       </h1>
       <BreadCrumble category={categoryLabel} />
       <main>
-        <h1>{product.name}</h1>
         <ProductInfoComponent product={product} />
         <TabInfoComponent product={product} />
         <ReviewList>
