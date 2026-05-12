@@ -1,7 +1,7 @@
 import { ProductWithCategory } from '@/api/getProductAll'
 import Image from 'next/image'
 import MainMoreDetail from './MainMoreDetail'
-import { DiscountPriceFormat, PriceFormat } from '@/utils/supabase/intl'
+import { DiscountPriceFormat, PriceFormat } from '@/utils/intl'
 
 interface ProductsTodaySaleProps {
   products: ProductWithCategory[]

@@ -1,28 +1,13 @@
 'use client'
 
-import DeliveryProductCard from './DeliveryProductCard'
-import { usePagination } from '@/hooks/usePagination'
-import Pagination from './Pagination'
-import TabFilter from '@/app/mypage/consumer/wishlist/components/tabFilter'
-import DeliveryProductHeader from './DeliveryProductHeader'
-import useDeliveryOrders from '@/hooks/useDeliveryOrders'
-import { useState } from 'react'
-
-const myProductIds = [
-  'prod-1',
-  'prod-2',
-  'prod-4',
-  'prod-5',
-  'prod-7',
-  'prod-12',
-  'prod-13',
-  'prod-18',
-  'prod-19',
-  'prod-25',
-  'prod-26',
-  'prod-30',
-  'prod-32',
-]
+import DeliveryProductCard from "./DeliveryProductCard";
+import Pagination from "./Pagination";
+import TabFilter from "@/app/mypage/consumer/wishlist/components/tabFilter";
+import DeliveryProductHeader from "./DeliveryProductHeader";
+import useDeliveryOrders from "@/hooks/useDeliveryOrders";
+import { useState } from "react";
+import MypageDeliverySkeleton from "@/app/mypage/components/MypageDeliverSkeleton";
+import { useDeliveryQuery } from "../hooks/useDeliveryQuery";
 
 const CATEGORIES = [
   { id: 'All', label: '전체', sort: 'All' },
@@ -32,47 +17,61 @@ const CATEGORIES = [
 ] as const
 
 export default function DeliveryProductList() {
-  // 1. 정렬 + 데이터는 hook에서 처리
-  const { sortType, handleTabChange, sortedOrders } =
-    useDeliveryOrders(myProductIds)
+  // 1. 페이지네이션 및 데이터 페칭
+  const [currentPage, setCurrentPage] = useState(1);
+ 
+  const { data, isLoading } = useDeliveryQuery(currentPage, 5);
+  const items = data?.items ?? [];
+  const count = data?.count ?? 0;
+  const totalPages = Math.ceil(count / 5)
 
-  // 2. 페이지네이션
-  const [currentPage, setCurrentPage] = useState(1)
-  const { totalPages, currentItems } = usePagination(
-    sortedOrders,
-    5,
-    currentPage,
-  )
+  // 2. 정렬 + 데이터는 hook에서 처리
+  const { sortType, handleTabChange, sortedOrders } = useDeliveryOrders(items);
+  const currentItems = sortedOrders;
 
   const handleTabChangeWithReset = (id: string) => {
     handleTabChange(id, CATEGORIES)
     setCurrentPage(1)
   }
 
+  if (isLoading || !items) {
+    return <MypageDeliverySkeleton count={5} />;
+  }
+
+  const hasItems = currentItems.length > 0;
+
   return (
     <div className="flex flex-col">
-      <div className="flex flex-col">
-        <TabFilter
-          items={CATEGORIES}
-          selectedValue={sortType}
-          onValueChange={(id) => handleTabChangeWithReset(id)}
-        />
-        <div>
-          <DeliveryProductHeader />
-          <ul>
-            {currentItems.map((item) => (
-              <li key={item.id}>
-                <DeliveryProductCard order={item} />
-              </li>
-            ))}
-          </ul>
+      {hasItems ? (
+        <>
+          <div className="flex  flex-col ">
+            <TabFilter
+              items={CATEGORIES}
+              selectedValue={sortType}
+              onValueChange={(id) => handleTabChangeWithReset(id)}
+            />
+            <div>
+              <DeliveryProductHeader />
+              <ul>
+                {currentItems.map((item) => (
+                  <li key={item.id}>
+                    <DeliveryProductCard order={item} />
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={setCurrentPage}
+          />
+        </>
+      ) : (
+        <div className="text-red-500 text-center pt-3">
+          <p>주문된 상품이 없습니다.</p>{" "}
         </div>
-      </div>
-      <Pagination
-        currentPage={currentPage}
-        totalPages={totalPages}
-        onPageChange={setCurrentPage}
-      />
+      )}
     </div>
   )
 }
