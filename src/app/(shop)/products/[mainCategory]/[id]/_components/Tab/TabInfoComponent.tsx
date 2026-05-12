@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import { Products } from '@/app/lib/products';
 import { Store } from '@/app/lib/Stores';
 import ProductInfoTable from './ProductInfoTable';
@@ -31,25 +30,3 @@ export default function TabInfoComponent({ product, store, reviews, seller }: Pr
     />
   );
 }
-=======
-import { Products } from '@/app/lib/products'
-import ProductInfoTable from './ProductInfoTable'
-import TabProductsInfo from './TabProductsInfo'
-
-type Props = {
-  product: Products
-}
-const TabInfoComponent = ({ product }: Props) => {
-  return (
-    <>
-      <TabProductsInfo product={product}>
-        <div className="mt-4">
-          <ProductInfoTable />
-        </div>
-      </TabProductsInfo>
-    </>
-  )
-}
-
-export default TabInfoComponent
->>>>>>> dev
