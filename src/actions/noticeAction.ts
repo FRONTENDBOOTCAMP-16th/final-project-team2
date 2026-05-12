@@ -1,8 +1,8 @@
 'use server'
 
 import { redirect } from 'next/navigation'
-import { revalidateTag, cacheTag } from 'next/cache'
-import {z} from 'zod'
+// import { revalidateTag, cacheTag } from 'next/cache'
+import { z } from 'zod'
 import { createClient } from '@/utils/supabase/server'
 import { createStaticClient } from '@/utils/supabase/static'
 import type { BoardCard, NoticeResponse, FormState } from '@/types/boards'
@@ -22,9 +22,9 @@ const NoticeFormSchema = z.object({
   // 체크박스는 체크 시 'on', 미체크 시 undefined로 넘어옵니다.
   // undefined로 하면 없음으로 false로 처리.
   important: z
-    .preprocess((val) => val === 'on', z.boolean()), 
+    .preprocess((val) => val === 'on', z.boolean()),
   updateId: z.string().nullable().optional(),
-});
+})
 
 /**
  * 공지사항 조회 액션 (Static Action)
@@ -33,8 +33,8 @@ const NoticeFormSchema = z.object({
  * @returns data 배열로 조회결과 생성, 필독 / 일반 공지사항
  */
 export const getNotices = async (pages: number): Promise<NoticeResponse> => {
-  'use cache'
-  cacheTag('notices')
+  // 'use cache'
+  // cacheTag('notices')
 
   // env에 환경설정이랑, 캐시(정적)환경용 supabase 선언
   const ITEMS_PER_PAGE = Number(process.env.NEXT_PUBLIC_ITEMS_PER_PAGE) || 10 
@@ -105,8 +105,8 @@ export async function handleNoticeAction(
 
   // 수정이냐 삭제 요청이냐 get으로 받아온다.
   // FormData를 일반 객체로 변환
-  const rawData = Object.fromEntries(formData.entries());
-  const deleteId = rawData.deleteId as string | undefined;
+  const rawData = Object.fromEntries(formData.entries())
+  const deleteId = rawData.deleteId as string | undefined
 
   try {
     // 삭제 로직 (삭제는 ID만 있으면 되므로 우선 처리, 향후에 is_delete로 업데이트 해서 유지보수 기능 추가 예정)
@@ -119,20 +119,20 @@ export async function handleNoticeAction(
         .eq('id', deleteId)
       if (error) throw error
     } else {
-      // Zod를 활용한 폼 데이터 유효성 검사 (생성/수정의 경우)
-      const validatedFields = NoticeFormSchema.safeParse(rawData);
+      // 3. Zod를 활용한 폼 데이터 유효성 검사 (생성/수정의 경우)
+      const validatedFields = NoticeFormSchema.safeParse(rawData)
 
       // 유효성 검사 실패 시
       if (!validatedFields.success) {
         // Zod 에러 배열에서 첫 번째 메시지를 뽑아서 클라이언트 반환
-        return { 
-          success: false, 
-          message: validatedFields.error.issues[0].message 
-        };
+        return {
+          success: false,
+          message: validatedFields.error.issues[0].message
+        }
       }
 
       // 검증이 완료된 안전한 데이터 추출
-      const { title, content, important, updateId } = validatedFields.data;
+      const { title, content, important, updateId } = validatedFields.data
 
       if (updateId) {
         // 공지사항 수정
@@ -152,7 +152,7 @@ export async function handleNoticeAction(
       }
     }
 
-    revalidateTag('notices', { expire: 3600 })
+    // revalidateTag('notices', { expire: 3600 })
 
     revalidateTag('notices', { expire: 3600 })
 
