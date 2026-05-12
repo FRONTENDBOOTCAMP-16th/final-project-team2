@@ -3,7 +3,7 @@
 import { authAction } from './auth.actions'
 import { redirect } from 'next/navigation'
 import { createClient } from '@/utils/supabase/server'
-import { signupSchema } from '@/app/lib/Auth'
+import { signupSchema } from '@/app/lib/auth'
 
 export type SignupState = {
   errors: Record<string, string[]> | null
