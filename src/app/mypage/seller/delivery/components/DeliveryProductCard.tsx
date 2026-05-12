@@ -39,7 +39,11 @@ export default function DeliveryProductCard({ order }: { order: OrderItem }) {
 
       <div className="flex w-3/10 shrink-0 gap-3">
         <OrderStatusBadge status={order.item_status} />
-        <DeliverStatusButton />
+        <DeliverStatusButton
+          orderItemId={order.id}
+          currentStatus={order.item_status}
+          orderId={order.orders.id}
+        />
       </div>
     </div>
   )
