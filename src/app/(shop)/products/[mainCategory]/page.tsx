@@ -1,11 +1,11 @@
-import { notFound } from 'next/navigation'
-import { isMainCategory, mainCategoryConvert } from './lib/category'
-import BreadCrumble from './_components/BreadCrumble'
-import Sort from './_components/Sort'
-import FilterCategory from './_components/filterCategory'
-import { Suspense } from 'react'
-import ProductListFetcher from './_components/ProductListFetcher'
-import Skeleton from './skeleton'
+import { notFound } from 'next/navigation';
+import { isMainCategory, mainCategoryConvert } from './lib/category';
+import BreadCrumble from './_components/BreadCrumble';
+import Sort from './_components/Sort';
+import { Suspense } from 'react';
+import ProductListFetcher from './_components/ProductListFetcher';
+import Skeleton from './skeleton';
+import FilterCategory from './_components/filterCategory';
 
 type Product = {
   params: Promise<{
@@ -18,13 +18,10 @@ type Product = {
   }>
 }
 
-export default async function ProductListPage({
-  params,
-  searchParams,
-}: Product) {
-  const { mainCategory } = await params
-  const { category, page = 1, sort = 'latest' } = await searchParams
-  const MAX_PAGE_SIZE = 12
+export default async function ProductListPage({ params, searchParams }: Product) {
+  const { mainCategory } = await params;
+  const { category, page = 1, sort = 'latest' } = await searchParams;
+  const MAX_PAGE_SIZE = 4;
   if (!isMainCategory(mainCategory)) {
     notFound()
   }
@@ -41,14 +38,9 @@ export default async function ProductListPage({
           장인은 도구탓을 합니다
         </p>
       </div>
-      <div className="mt-18 mb-16 flex justify-between">
-        <FilterCategory
-          mainCategory={mainCategory}
-          category={category}
-          sort={sort}
-          page={page}
-        />
-        <Sort mainCategory={mainCategory} category={category} />
+      <div className="flex justify-between mb-16 mt-18">
+        <FilterCategory mainCategory={mainCategory} />
+        <Sort />
       </div>
       <main id="main-content">
         {/* 페이지 목록 영역 입니다 Suspense로 감싸고 안에 상품에 데이터를 전달 할 수 있도록 컴포넌트를 불러와 작성해줍니다 */}

@@ -56,16 +56,12 @@ export default function WishListItemCard({ order, onRemove }: Props) {
 
         <div className="flex gap-2">
           {product.discount_rate > 0 && (
-            <span className="text-sm font-bold text-red-500">
-              {product.discount_rate}%
+            <span className="text-red-500 font-bold text-sm">
+              {DiscountRateFormat(product.discount_rate)}%
             </span>
           )}
-          <span className="text-sm font-bold text-slate-800">
-            {(
-              product.price *
-              (1 - product.discount_rate / 100)
-            ).toLocaleString()}
-            원
+          <span className="font-bold text-sm text-slate-800">
+            {DiscountPriceFormat(product.price, product.discount_rate)}원
           </span>
         </div>
       </div>

@@ -6,7 +6,7 @@ import {
   DiscountPriceFormat,
   DiscountRateFormat,
   PriceFormat,
-} from '@/utils/supabase/intl'
+} from '@/utils/intl'
 
 interface ProductCardProps {
   product: Products

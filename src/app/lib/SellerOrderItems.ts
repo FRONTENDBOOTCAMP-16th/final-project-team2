@@ -1,4 +1,4 @@
-import { Option } from '@/app/lib/products'
+import { Option } from "@/app/lib/products";
 
 export interface SellerProduct {
   id: number;

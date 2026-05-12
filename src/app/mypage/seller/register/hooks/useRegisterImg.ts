@@ -7,13 +7,12 @@ export default function useRegisterImg() {
   const [imgKey, setImgKey] = useState(0)
 
   const handleChangeImg = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0]
-    if (!file) return
-    setImgFile(file)
-    setPreview(URL.createObjectURL(file))
-    setFileName(file.name)
-    setImgKey((prev) => prev + 1)
-  }
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setImgFile(file);
+    setPreview(URL.createObjectURL(file));
+    setFileName(file.name);
+  };
 
   const resetImg = () => {
     setImgFile(null)

@@ -1,5 +1,5 @@
 import WriteForm from '@/app/components/board/WriteForm'
-import { getInquireDetail } from '@/actions/inquireAction'
+import { getInquireDetail } from '@/api/inpuireDetail'
 import { notFound } from 'next/navigation'
 import { handleInquireAction } from '@/actions/inquireAction'
 

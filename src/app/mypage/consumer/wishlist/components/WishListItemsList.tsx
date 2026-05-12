@@ -1,6 +1,5 @@
 'use client'
 
-
 import WishListItemCard from './WishListItemsCard'
 import TabFilter from './tabFilter'
 import Pagination from '@/app/mypage/seller/delivery/components/Pagination'
