@@ -37,7 +37,7 @@ export default function OptionInput({ optionForm }: Props) {
                 e.target.value as OptionType | "",
               )
             }
-            className=" appearance-none border border-gray-300  rounded-md px-3 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer"
+            className=" appearance-none border border-gray-300  rounded-md px-4 py-3 pr-8 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer"
             aria-describedby="optionTypeHelp"
           >
             <option value="">선택</option>
