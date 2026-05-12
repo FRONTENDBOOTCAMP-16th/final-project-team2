@@ -1,18 +1,18 @@
-"use client";
+'use client'
 
-import { useUser } from "../context/UserContext";
+import { useUser } from '../context/UserContext'
 
 const GradeTooltip = () => (
   <div className="group relative flex items-center">
     <button
       type="button"
       aria-label="등급 산정 조건 보기"
-      className="w-4 h-4 rounded-full border border-gray-400 text-gray-400 text-[10px] flex items-center justify-center cursor-help focus:outline-none focus:ring-2 focus:ring-gray-300"
+      className="flex h-4 w-4 cursor-help items-center justify-center rounded-full border border-gray-400 text-[10px] text-gray-400 focus:ring-2 focus:ring-gray-300 focus:outline-none"
     >
       ?
     </button>
-    <div className="absolute left-7 w-64 p-3 bg-white border border-gray-200 shadow-md hidden group-hover:block group-focus-within:block z-10 text-xs text-gray-700">
-      <p className="font-bold mb-2 pb-1 border-b border-gray-100">
+    <div className="absolute left-7 z-10 hidden w-64 border border-gray-200 bg-white p-3 text-xs text-gray-700 shadow-md group-focus-within:block group-hover:block">
+      <p className="mb-2 border-b border-gray-100 pb-1 font-bold">
         등급 산정 조건
       </p>
       <ul className="space-y-1">
@@ -31,37 +31,37 @@ const GradeTooltip = () => (
       </ul>
     </div>
   </div>
-);
+)
 
 export default function UserProfile() {
   // 전역 Context에서 role을 가져옵니다.
-  const { role } = useUser();
+  const { role } = useUser()
 
   // TODO: 실제 로그인 연동 시 서버에서 받은 정보로 교체 예정
-  const userGrade = "BRONZE";
-  const userName = "사용자";
+  const userGrade = 'BRONZE'
+  const userName = '사용자'
 
   return (
-    <div className="flex flex-col mb-10">
-      <div className="w-[204px] pb-6 flex flex-col items-center bg-white">
+    <div className="mb-10 flex flex-col">
+      <div className="flex w-[204px] flex-col items-center bg-white pb-6">
         {/* 이미지 영역 */}
-        <div className="w-[204px] aspect-square bg-white shrink-0 border" />
+        <div className="aspect-square w-[204px] shrink-0 border bg-white" />
 
         <div className="flex items-center justify-center gap-2 pt-5 pb-2">
           {/* 2. role이 seller면 STORE MANAGER를, 아니면 원래 등급을 보여줍니다 */}
-          <div className="bg-black text-white inline-block px-2 py-0.5 text-xs font-bold tracking-tight">
-            {role === "seller" ? "STORE MANAGER" : userGrade}
+          <div className="inline-block bg-black px-2 py-0.5 text-xs font-bold tracking-tight text-white">
+            {role === 'seller' ? 'STORE MANAGER' : userGrade}
           </div>
 
           {/* 판매자가 아닐 때만 등급 툴팁을 보여줍니다 */}
-          {role !== "seller" && <GradeTooltip />}
+          {role !== 'seller' && <GradeTooltip />}
         </div>
 
-        <p className="text-lg w-full text-center">
+        <p className="w-full text-center text-lg">
           <strong className="font-bold text-black">{userName}</strong>님
           반갑습니다.
         </p>
       </div>
     </div>
-  );
+  )
 }

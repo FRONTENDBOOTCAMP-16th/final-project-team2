@@ -1,22 +1,22 @@
-"use client";
+'use client'
 
-import { UserCouponCombined } from "@/app/mypage/types/coupon";
-import CouponItem from "./CouponItem";
-import Pagination from "@/app/mypage/seller/delivery/components/Pagination";
-import { usePagination } from "@/hooks/usePagination";
-import { useState } from "react";
+import { UserCouponCombined } from '@/app/mypage/types/coupon'
+import CouponItem from './CouponItem'
+import Pagination from '@/app/mypage/seller/delivery/components/Pagination'
+import { usePagination } from '@/hooks/usePagination'
+import { useState } from 'react'
 
 interface Props {
-  initialCoupons: UserCouponCombined[];
+  initialCoupons: UserCouponCombined[]
 }
 
 export default function CouponList({ initialCoupons }: Props) {
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(1)
   const { currentItems, totalPages } = usePagination(
     initialCoupons,
     5,
     currentPage,
-  );
+  )
   return (
     <div className="flex flex-col gap-4">
       {currentItems.length > 0 ? (
@@ -39,5 +39,5 @@ export default function CouponList({ initialCoupons }: Props) {
         </div>
       )}
     </div>
-  );
+  )
 }

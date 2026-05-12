@@ -1,23 +1,19 @@
-import { Products } from '@/app/lib/products';
-<<<<<<< HEAD
-import { createClient } from '../../utils/supabase/server';
-import { notFound } from 'next/navigation';
-=======
-import { createClient } from '@/utils/supabase/server';
->>>>>>> 8f082f3 (refactoy: utils 파일 이동)
+import { Products } from '@/app/lib/products'
+import { createClient } from '@/utils/supabase/server'
+import { notFound } from 'next/navigation'
 
 export const getProductDetail = async (id: string): Promise<Products> => {
-  const supabase = await createClient();
+  const supabase = await createClient()
 
   const { data, error } = await supabase
     .from('products')
     .select('*')
     .eq('id', id)
-    .single();
+    .single()
 
   if (error) {
-    notFound();
+    notFound()
   }
 
-  return data;
-};
+  return data
+}

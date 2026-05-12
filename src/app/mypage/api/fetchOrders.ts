@@ -1,20 +1,25 @@
+<<<<<<< HEAD
 import { OrdersType } from "@/app/lib/Orders";
 <<<<<<< HEAD
 import { createClient } from "../../../../utils/supabase/client";
 =======
 import { createClient } from "@/utils/supabase/client";
 >>>>>>> b52d470 (feat: utils링크 변경 및 중복코드 삭제)
+=======
+import { OrdersType } from '@/app/lib/Orders'
+import { createClient } from '@/utils/supabase/client'
+>>>>>>> 730c7f5 (refactory: 프리티어 설정)
 
 export const fetchOrders = async () => {
-  const supabase = createClient();
+  const supabase = createClient()
   const {
     data: { user },
-  } = await supabase.auth.getUser();
+  } = await supabase.auth.getUser()
 
-  if (!user) return [];
+  if (!user) return []
 
   const { data, error } = await supabase
-    .from("orders")
+    .from('orders')
     .select(
       `
     id,
@@ -44,9 +49,9 @@ export const fetchOrders = async () => {
     )
   `,
     )
-    .eq("user_id", user.id)
-    .returns<OrdersType[]>();
+    .eq('user_id', user.id)
+    .returns<OrdersType[]>()
 
-  if (error) throw error;
-  return data ?? [];
-};
+  if (error) throw error
+  return data ?? []
+}

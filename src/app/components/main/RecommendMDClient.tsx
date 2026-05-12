@@ -1,32 +1,35 @@
-'use client';
+'use client'
 
-import { useState } from 'react';
-import { LucideThumbsUp } from 'lucide-react';
-import { ProductWithCategory } from '@/api/getProductAll';
-import ProductsCard from '../ProductsCard';
+import { useState } from 'react'
+import { LucideThumbsUp } from 'lucide-react'
+import { ProductWithCategory } from '@/api/getProductAll'
+import ProductsCard from '../ProductsCard'
 
 export interface RecommendMDClientProps {
   products: ProductWithCategory[]
   maxProducts: number
 }
 
-export default function RecommendMDClient({ products, maxProducts }: RecommendMDClientProps) {
-  const [productsCount, setProductsCount] = useState(maxProducts);
-  const [moreButton, setMoreButton] = useState(false);
+export default function RecommendMDClient({
+  products,
+  maxProducts,
+}: RecommendMDClientProps) {
+  const [productsCount, setProductsCount] = useState(maxProducts)
+  const [moreButton, setMoreButton] = useState(false)
 
   const moreProduct = () => {
-    setProductsCount(prev => prev + 4);
-    setMoreButton(true);
-  };
+    setProductsCount((prev) => prev + 4)
+    setMoreButton(true)
+  }
 
-  const visibleProducts = products.slice(0, productsCount);
+  const visibleProducts = products.slice(0, productsCount)
 
   return (
     <>
-      <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 w-full">
+      <ul className="grid w-full grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
         {visibleProducts.map((product) => (
           <ProductsCard
-            baseUrl='/products'
+            baseUrl="/products"
             key={product.id}
             product={product}
             category={product.category_path}
@@ -38,11 +41,11 @@ export default function RecommendMDClient({ products, maxProducts }: RecommendMD
         type="button"
         aria-disabled={moreButton}
         onClick={moreProduct}
-        className="flex justify-center w-full m-auto max-w-70 font-bold rounded-2xl mbs-15 px-3 py-3 text-white bg-[#FF6B6B] aria-disabled:hidden cursor-pointer"
+        className="m-auto mbs-15 flex w-full max-w-70 cursor-pointer justify-center rounded-2xl bg-[#FF6B6B] px-3 py-3 font-bold text-white aria-disabled:hidden"
       >
         <LucideThumbsUp className="me-2.5" />
         추천상품 더보기
       </button>
     </>
-  );
+  )
 }

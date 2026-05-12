@@ -1,26 +1,35 @@
-import { ReactNode } from 'react';
+import { ReactNode } from 'react'
 
 interface ProductTodaySaleCardProps {
-  children: ReactNode;
-  title: string;
-  subTitle?: string;
-  fullImage?: boolean;
+  children: ReactNode
+  title: string
+  subTitle?: string
+  fullImage?: boolean
 }
 
-export default function ProductTodaySaleCard({ children, title, subTitle, fullImage = false }: ProductTodaySaleCardProps) {
+export default function ProductTodaySaleCard({
+  children,
+  title,
+  subTitle,
+  fullImage = false,
+}: ProductTodaySaleCardProps) {
   return (
     <>
-      <div className="py-22.5 px-4 max-w-7xl m-auto">
+      <div className="m-auto max-w-7xl px-4 py-22.5">
         <div className="text-center">
-          <h2 className="text-5xl font-bold font-4">{title}</h2>
-          <p className="text-[#7B7979] mbs-5 mb-12.5">{subTitle}</p>
+          <h2 className="font-4 text-5xl font-bold">{title}</h2>
+          <p className="mbs-5 mb-12.5 text-[#7B7979]">{subTitle}</p>
         </div>
         {fullImage ? (
-          <div className="[&_a>div]:w-full! [&_li>button]:right-0">{children}</div>
+          <div className="[&_a>div]:w-full! [&_li>button]:right-0">
+            {children}
+          </div>
         ) : (
-          <div className="flex flex-1 gap-6 flex-col lg:flex-row">{children}</div>
+          <div className="flex flex-1 flex-col gap-6 lg:flex-row">
+            {children}
+          </div>
         )}
       </div>
     </>
-  );
+  )
 }

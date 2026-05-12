@@ -6,8 +6,7 @@ import {z} from 'zod'
 import { createClient } from '@/utils/supabase/server'
 import { createStaticClient } from '@/utils/supabase/static'
 import type { BoardCard, NoticeResponse, FormState } from '@/types/boards'
-// import { updateTag } from 'next/cache';
-import checkAdmin from '@/actions/checkAdminAction';
+import checkAdmin from '@/actions/checkAdminAction'
 
 // 신규 zod 스키마
 const NoticeFormSchema = z.object({

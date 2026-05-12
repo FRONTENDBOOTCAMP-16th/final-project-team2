@@ -1,28 +1,28 @@
 export type ReviewUser = {
-  id: string;
-  nickname: string;
-};
+  id: string
+  nickname: string
+}
 
 export type ImageType = {
-  src: string;
-  alt: string | null;
-};
+  src: string
+  alt: string | null
+}
 
 export type Reviews = {
-  id: string;
+  id: string
 
-  user_id: string;
-  product_id: string;
+  user_id: string
+  product_id: string
 
-  title: string;
-  content: string;
+  title: string
+  content: string
 
-  grade: number;
+  grade: number
 
-  images: ImageType[];
+  images: ImageType[]
 
-  created_at: string;
-  updated_at: string;
+  created_at: string
+  updated_at: string
 
-  users: ReviewUser;
-};
+  users: ReviewUser
+}

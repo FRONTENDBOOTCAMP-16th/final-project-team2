@@ -1,43 +1,64 @@
-import { ProductWithCategory } from '@/api/getProductAll';
-import Image from 'next/image';
-import MainMoreDetail from './MainMoreDetail';
-import { DiscountPriceFormat, PriceFormat } from '@/utils/supabase/intl';
+import { ProductWithCategory } from '@/api/getProductAll'
+import Image from 'next/image'
+import MainMoreDetail from './MainMoreDetail'
+import { DiscountPriceFormat, PriceFormat } from '@/utils/supabase/intl'
 
 interface ProductsTodaySaleProps {
   products: ProductWithCategory[]
 }
 
-export default function ProductsTodaySale({ products }: ProductsTodaySaleProps) {
-
-  return products.map(item => {
-    const priceLocale = PriceFormat(Number(item.price));
-    const finalPrice = DiscountPriceFormat(Number(item.price), Number(item.discount_rate))
+export default function ProductsTodaySale({
+  products,
+}: ProductsTodaySaleProps) {
+  return products.map((item) => {
+    const priceLocale = PriceFormat(Number(item.price))
+    const finalPrice = DiscountPriceFormat(
+      Number(item.price),
+      Number(item.discount_rate),
+    )
 
     return (
       <div key={item.id} className="flex flex-1 overflow-hidden">
-        <div className="flex-1 relative h-90">
-          <Image src={item.thumbnail_image} alt={`${item.name} 상품 이미지`} className="object-cover" fill sizes="w-full h-full" />
+        <div className="relative h-90 flex-1">
+          <Image
+            src={item.thumbnail_image}
+            alt={`${item.name} 상품 이미지`}
+            className="object-cover"
+            fill
+            sizes="w-full h-full"
+          />
         </div>
-        <div className="flex flex-col px-8.5 pbe-8.5 pbs-17 text-left bg-white min-w-0 flex-1">
-          <dl className='w-full min-w-0'>
+        <div className="flex min-w-0 flex-1 flex-col bg-white px-8.5 pbs-17 pbe-8.5 text-left">
+          <dl className="w-full min-w-0">
             <dt className="sr-only">상품 카테고리</dt>
-            <dd aria-label={`${item.category_name_kr}`} className="text-[#7B7979] font-extrabold">
+            <dd
+              aria-label={`${item.category_name_kr}`}
+              className="font-extrabold text-[#7B7979]"
+            >
               {item.category_name_kr}
             </dd>
 
             <dt className="sr-only">상품명</dt>
-            <dd className="text-[#2D3142] font-bold text-3xl mbs-4.5 truncate">{item.name}</dd>
+            <dd className="mbs-4.5 truncate text-3xl font-bold text-[#2D3142]">
+              {item.name}
+            </dd>
           </dl>
 
-          <dl className="flex flex-wrap items-center flex-1 mbs-4.5">
+          <dl className="mbs-4.5 flex flex-1 flex-wrap items-center">
             <dt className="sr-only">기존 금액</dt>
-            <dd className="order-3 line-through text-[#7B7979] w-full h-full">{priceLocale}원</dd>
+            <dd className="order-3 h-full w-full text-[#7B7979] line-through">
+              {priceLocale}원
+            </dd>
 
             <dt className="sr-only">할인율</dt>
-            <dd className="order-1 me-2 text-[#FF6B6B] font-black">{item.discount_rate}%</dd>
+            <dd className="order-1 me-2 font-black text-[#FF6B6B]">
+              {item.discount_rate}%
+            </dd>
 
             <dt className="sr-only">최종금액</dt>
-            <dd className="order-2 text-[#2D3142] font-black text-2xl">{finalPrice}원</dd>
+            <dd className="order-2 text-2xl font-black text-[#2D3142]">
+              {finalPrice}원
+            </dd>
           </dl>
 
           <div>
@@ -45,6 +66,6 @@ export default function ProductsTodaySale({ products }: ProductsTodaySaleProps) 
           </div>
         </div>
       </div>
-    );
-  });
+    )
+  })
 }

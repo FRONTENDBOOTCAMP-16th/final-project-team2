@@ -1,7 +1,5 @@
-import Main from "./components/main/MainList";
+import Main from './components/main/MainList'
 
 export default function Home() {
-  return (
-    <Main /> 
-  )
+  return <Main />
 }

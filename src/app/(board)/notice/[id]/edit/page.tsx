@@ -2,7 +2,11 @@ import WriteForm from '@/app/components/board/WriteForm'
 import { getNoticeDetail, handleNoticeAction } from '@/actions/noticeAction'
 import { notFound } from 'next/navigation'
 
-export default async function NoticeEditPage({ params }: { params: Promise<{ id: string }> }) {
+export default async function NoticeEditPage({
+  params,
+}: {
+  params: Promise<{ id: string }>
+}) {
   const resolvedParams = await params
   const updateId = resolvedParams.id
 
@@ -16,9 +20,8 @@ export default async function NoticeEditPage({ params }: { params: Promise<{ id:
     id: updateId,
     title: notice.title,
     content: notice.content || '',
-    important: notice.important ?? false
+    important: notice.important ?? false,
   }
-
 
   return (
     <div className="container mx-auto py-10">

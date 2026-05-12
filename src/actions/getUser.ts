@@ -11,7 +11,9 @@ import { redirect } from 'next/navigation'
 export async function getAuthUserInfo() {
   try {
     const supabase = await createClient()
-    const { data: { user } } = await supabase.auth.getUser()
+    const {
+      data: { user },
+    } = await supabase.auth.getUser()
 
     if (!user) return null
 
@@ -21,7 +23,12 @@ export async function getAuthUserInfo() {
       .eq('id', user.id)
       .single()
 
-    return { user, role: userData?.role, nickname: userData?.nickname, id: userData?.id }
+    return {
+      user,
+      role: userData?.role,
+      nickname: userData?.nickname,
+      id: userData?.id,
+    }
   } catch (e) {
     return null
   }
