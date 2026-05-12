@@ -1,6 +1,6 @@
 'use server'
 
-import { findIdSchema } from '@/app/lib/Auth'
+import { findIdSchema } from '@/app/lib/auth'
 import { authAction } from './auth.actions'
 import { redirect } from 'next/navigation'
 import { createClient } from '@/utils/supabase/server'

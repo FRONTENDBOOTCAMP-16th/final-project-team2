@@ -15,9 +15,7 @@ export const ProductFormField = ({
     </label>
     {children}
     {error && (
-      <p className="mt-1.5 ml-1 text-[10px] font-medium text-red-500">
-        {error}
-      </p>
+      <p className="text-red-500 text-sm mt-1.5 ml-1 font-medium">{error}</p>
     )}
   </div>
 )

@@ -3,7 +3,7 @@
 import { authAction } from './auth.actions'
 import { redirect } from 'next/navigation'
 import { createAdminClient } from '@/utils/supabase/admin'
-import { resetPasswordSchema } from '@/app/lib/Auth'
+import { resetPasswordSchema } from '@/app/lib/auth'
 interface ResetPasswordCheckProps {
   errors: Record<string, string[]> | null
   name?: string
