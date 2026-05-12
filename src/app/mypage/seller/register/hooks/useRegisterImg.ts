@@ -12,7 +12,6 @@ export default function useRegisterImg() {
     setImgFile(file);
     setPreview(URL.createObjectURL(file));
     setFileName(file.name);
-    setImgKey((prev) => prev + 1);
   };
 
   const resetImg = () => {
