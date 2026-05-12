@@ -1,10 +1,10 @@
-import OrderStatusBadge from "./OrderStatusBadge";
-import Image from "next/image";
-import Link from "next/link";
-import { OrderItemStatus } from "../lib/orderItemStatus";
-import { CATEGORY_GROUPS } from "../../wishlist/lib/categoryGroup";
-import { OrderItem } from "@/app/lib/Orders";
-import { DateFormat } from "@/utils/supabase/intl";
+import OrderStatusBadge from './OrderStatusBadge'
+import Image from 'next/image'
+import Link from 'next/link'
+import { OrderItemStatus } from '../lib/orderItemStatus'
+import { CATEGORY_GROUPS } from '../../wishlist/lib/categoryGroup'
+import { OrderItem } from '@/app/lib/Orders'
+import { DateFormat } from '@/utils/intl'
 
 interface Props {
   order: OrderItem
@@ -50,7 +50,7 @@ export default function OrderItemCard({
         </Link>
       </div>
       {/* 주문 일자 */}
-      <div className="flex gap-3 w-1/6 items-center shrink-0 whitespace-nowrap">
+      <div className="flex w-1/6 shrink-0 items-center gap-3 whitespace-nowrap">
         <p>{DateFormat(createdAt)}</p>
       </div>
       {/* 결제 금액 */}
