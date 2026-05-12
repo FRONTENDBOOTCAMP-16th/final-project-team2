@@ -1,4 +1,4 @@
-import { createClient } from '../../utils/supabase/client'
+import { createClient } from '@/utils/supabase/client'
 import type { BoardCard } from '@/types/boards'
 
 export interface NoticeResponse {
@@ -24,7 +24,8 @@ export const getInquires = async (pages: number): Promise<NoticeResponse> => {
 
   const { data, error } = await supabase
     .from('qnas')
-    .select(`
+    .select(
+      `
       *,
       writer:writer_id (
         id,
@@ -37,7 +38,8 @@ export const getInquires = async (pages: number): Promise<NoticeResponse> => {
         thumbnail_image,
         price
       )
-    `)
+    `,
+    )
     .order('created_at', { ascending: false })
     .range(from, to)
 
@@ -45,6 +47,6 @@ export const getInquires = async (pages: number): Promise<NoticeResponse> => {
 
   return {
     normalData: (data as unknown as BoardCard[]) || [],
-    normalCount: normalCount // 미리 구해둔 총 개수를 반환
+    normalCount: normalCount, // 미리 구해둔 총 개수를 반환
   }
 }

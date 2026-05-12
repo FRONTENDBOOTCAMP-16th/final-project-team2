@@ -1,29 +1,29 @@
-"use client";
+'use client'
 
-import { useState } from "react";
-import { SellerProduct } from "@/app/mypage/types/sellerOrderItems";
-import SellerProductItemCard from "./SellerProductItemCard";
-import Pagination from "../../delivery/components/Pagination";
-import { usePagination } from "@/hooks/usePagination";
-import ProductEditModal from "./ProductEditModal";
+import { useState } from 'react'
+import { SellerProduct } from '@/app/mypage/types/sellerOrderItems'
+import SellerProductItemCard from './SellerProductItemCard'
+import Pagination from '../../delivery/components/Pagination'
+import { usePagination } from '@/hooks/usePagination'
+import ProductEditModal from './ProductEditModal'
 
 type Props = {
-  products: SellerProduct[];
-};
+  products: SellerProduct[]
+}
 
 export default function SellerProductItemList({ products }: Props) {
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(1)
   const [selectedProduct, setSelectedProduct] = useState<SellerProduct | null>(
     null,
-  );
+  )
 
-  const itemsPerPage = 5;
+  const itemsPerPage = 5
 
   const { currentItems, totalPages } = usePagination(
     products,
     itemsPerPage,
     currentPage,
-  );
+  )
 
   return (
     <div className="flex flex-col gap-6">
@@ -51,5 +51,5 @@ export default function SellerProductItemList({ products }: Props) {
         />
       )}
     </div>
-  );
+  )
 }

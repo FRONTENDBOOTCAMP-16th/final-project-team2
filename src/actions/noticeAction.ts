@@ -2,15 +2,14 @@
 
 import { redirect } from 'next/navigation'
 import { revalidateTag, cacheTag } from 'next/cache'
-import { createClient } from '../../utils/supabase/server'
-import { createStaticClient } from '../../utils/supabase/static'
+import { createClient } from '@/utils/supabase/server'
+import { createStaticClient } from '@/utils/supabase/static'
 import type { BoardCard, NoticeResponse, FormState } from '@/types/boards'
 import checkAdmin from '@/actions/checkAdminAction'
 
-
 /**
  * 공지사항 조회 액션 (Static Action)
- * 
+ *
  * @param pages 조회하는 페이지 (?page= number)
  * @returns data 배열로 조회결과 생성, 필독 / 일반 공지사항
  */
@@ -19,7 +18,7 @@ export const getNotices = async (pages: number): Promise<NoticeResponse> => {
   cacheTag('notices')
 
   // env에 환경설정이랑, 캐시(정적)환경용 supabase 선언
-  const ITEMS_PER_PAGE = Number(process.env.NEXT_PUBLIC_ITEMS_PER_PAGE) || 10 
+  const ITEMS_PER_PAGE = Number(process.env.NEXT_PUBLIC_ITEMS_PER_PAGE) || 10
   const supabase = await createStaticClient()
 
   const { count: totalCount, error: countError } = await supabase
@@ -35,7 +34,6 @@ export const getNotices = async (pages: number): Promise<NoticeResponse> => {
   const from = (safePage - 1) * ITEMS_PER_PAGE
   const to = from + ITEMS_PER_PAGE - 1
 
-
   // 중요한것과 일반 공지사항은 따로 분리
   const [importantResult, normalResult] = await Promise.all([
     supabase
@@ -48,7 +46,7 @@ export const getNotices = async (pages: number): Promise<NoticeResponse> => {
       .select('*, writer:writer_id (nickname)')
       .eq('important', false)
       .order('created_at', { ascending: false })
-      .range(from, to)
+      .range(from, to),
   ])
 
   // 조회 중 에러 발생 시 예외 처리
@@ -58,29 +56,30 @@ export const getNotices = async (pages: number): Promise<NoticeResponse> => {
   return {
     importantData: (importantResult.data as unknown as BoardCard[]) || [],
     normalData: (normalResult.data as unknown as BoardCard[]) || [],
-    normalCount: normalCount
+    normalCount: normalCount,
   }
 }
 
 /**
  * 공지사항 생성/수정/삭제 액션 (Server Action)
  * 클라이언트 폼(useActionState)에서 호출되는 폼 제출 핸들러입니다.
- * 
+ *
  * @param prevState 이전 폼 상태 (useActionState 연동용)
  * @param formData 클라이언트에서 제출된 폼 데이터
  * @returns 폼 제출 결과 (성공 여부 및 메시지)
  */
 export async function handleNoticeAction(
   prevState: FormState,
-  formData: FormData
+  formData: FormData,
 ): Promise<FormState> {
-
   // 관리자 입증에 실패하면 작동 취소 후 공지사항으로 되돌아가기
   await checkAdmin('/notice')
 
   // supabase 리셋, 글쓴이 검증을 위한 회원 찾기 로직
   const supabase = await createClient()
-  const { data: { user } } = await supabase.auth.getUser()
+  const {
+    data: { user },
+  } = await supabase.auth.getUser()
 
   // 오류가 났을때 대응.
   if (!user) return { success: false, message: '세션이 만료되었습니다.' }
@@ -91,24 +90,22 @@ export async function handleNoticeAction(
 
   try {
     if (deleteId) {
-
       // 공지사항 삭제 쿼리문
       const { error } = await supabase
         .from('notices')
         .delete()
         .eq('id', deleteId)
-      
-      if (error) throw error
 
+      if (error) throw error
     } else {
-      
       // 수정이라면 수정된 내용 제목, 필수사항, 내용
       const title = formData.get('title') as string
       const content = formData.get('content') as string
       const isImportant = formData.get('important') === 'on'
 
       // 유효성 검사 (제목 필수)
-      if (!title?.trim()) return { success: false, message: '제목을 입력해주세요.' }
+      if (!title?.trim())
+        return { success: false, message: '제목을 입력해주세요.' }
 
       if (updateId) {
         // 공지사항 수정 쿼리문
@@ -118,18 +115,25 @@ export async function handleNoticeAction(
           .eq('id', updateId)
         if (error) throw error
       } else {
-        
         // 아무것도 없다면 새 공지사항 작성
         const { error } = await supabase
           .from('notices')
-          .insert({ title, content, important: isImportant, writer_id: user.id })
+          .insert({
+            title,
+            content,
+            important: isImportant,
+            writer_id: user.id,
+          })
         if (error) throw error
       }
     }
 
     // revalidateTag('notices', { expire: 3600 })
   } catch (error: unknown) {
-    const errorMessage = error instanceof Error ? error.message : '등록 중 알 수 없는 오류가 발생했습니다.'
+    const errorMessage =
+      error instanceof Error
+        ? error.message
+        : '등록 중 알 수 없는 오류가 발생했습니다.'
     return { success: false, message: errorMessage }
   }
 
@@ -138,13 +142,13 @@ export async function handleNoticeAction(
 
 /**
  * 공지사항 상세 조회 액션 (Server Action)
- * 
+ *
  * @param id 상세 조회할 게시물 아이디 (/notice/id)
  * @returns data 배열로 조회결과 생성
  */
 export const getNoticeDetail = async (id: string): Promise<BoardCard> => {
   const supabase = await createClient()
-  
+
   const { data, error } = await supabase
     .from('notices')
     .select('*')
