@@ -4,9 +4,11 @@ import ProductTodaySaleCard from './ProductTodaySaleCard';
 import RecommendMD from './RecommendMD';
 import TodaySale from './TodaySale';
 import ProductsNew from './ProductsNew';
-import MainCard from './MainCard';
 import ProductInventory from './ProductInventory';
 import ProductsCardList from '../ProductsCardList';
+import CardSkeleton from './skeleton/CadeSkeleton';
+import TodaySaleCardSkeleton from './skeleton/TodaySaleCardSkeleton';
+import FullSkeleton from './skeleton/FullSkeleton';
 
 const INVENTORY_PRODUCTS = 4;
 const DISCOUNT_PRODUCTS = 2;
@@ -21,37 +23,49 @@ const swiperList = [
 
 export default function Main() {
   return (
-    <Suspense>
+    <>
       {/* 스와이프 섹션 */}
-      <SwiperSection swiperList={swiperList} />
+      <Suspense fallback={<FullSkeleton />}>
+        <SwiperSection swiperList={swiperList} />
+      </Suspense>
 
       {/* 오늘의 특가 */}
-      <section className="bg-[#FFF8F3]">
+      <section className="bg-[#FFF8F3]" >
         <ProductTodaySaleCard title="오늘의 특가" subTitle="오늘만 이 가격! 특별한 가격을 확인해보세요">
-          <TodaySale maxProducts={DISCOUNT_PRODUCTS} />
+          <Suspense fallback={<TodaySaleCardSkeleton count={2} />}>
+            <TodaySale maxProducts={DISCOUNT_PRODUCTS} />
+          </Suspense>
         </ProductTodaySaleCard>
       </section>
 
       {/* MD 추천 상품 */}
       <section className="py-22.5 px-4 max-w-7xl m-auto">
         <ProductTodaySaleCard title="MD 추천 상품" subTitle="이번주 인기상품을 확인해보세요" fullImage>
-          <RecommendMD maxProducts={MD_PRODUCTS} />
+          <Suspense fallback={<CardSkeleton count={4}/>}>
+            <RecommendMD maxProducts={MD_PRODUCTS} />
+          </Suspense>
         </ProductTodaySaleCard>
       </section>
 
       {/* 오늘의 신상품 */}
       <section className="relative w-full h-138 min-h-250px sm:min-h-300px flex flex-col justify-center px-4 overflow-hidden">
-        <ProductsNew image="/new_product_bg.png" />
-      </section>
+        <Suspense fallback={<FullSkeleton />}>
+          <ProductsNew image="/new_product_bg.png" />
+        </Suspense>
+x      </section>
 
       {/* 품절 임박 꿀템 */}
-      <section className="bg-[#FFF8F3]">
-        <MainCard title="품절 임박 꿀템" subTitle="서두르세요! 재고가 얼마 남지 않았어요" fullImage>
-          <ProductsCardList className='grid-cols-1! sm:grid-cols-2! lg:grid-cols-4!'>
-            <ProductInventory maxProducts={INVENTORY_PRODUCTS} />
-          </ProductsCardList>
-        </MainCard>
+      <section className="bg-[#FFF8F3] w-full min-h-183">
+        <ProductTodaySaleCard title="품절 임박 꿀템" subTitle="서두르세요! 재고가 얼마 남지 않았어요" fullImage>
+          <div className="">
+            <Suspense fallback={<CardSkeleton count={4} />}>
+              <ProductsCardList className='grid-cols-1! sm:grid-cols-2! lg:grid-cols-4!'>
+                <ProductInventory maxProducts={INVENTORY_PRODUCTS} />
+              </ProductsCardList>
+            </Suspense>
+          </div>
+        </ProductTodaySaleCard>
       </section>
-    </Suspense>
+    </>
   );
 }
