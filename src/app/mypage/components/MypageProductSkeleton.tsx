@@ -1,6 +1,6 @@
 type ProductListSkeletonProps = {
-  count?: number;
-};
+  count?: number
+}
 
 export default function MyPageProductSkeleton({
   count = 9,
@@ -15,21 +15,21 @@ export default function MyPageProductSkeleton({
         {Array.from({ length: count }).map((_, i) => (
           <li key={i} className="animate-pulse">
             {/* 이미지 */}
-            <div className="aspect-square w-full bg-gray-200 rounded-lg" />
+            <div className="aspect-square w-full rounded-lg bg-gray-200" />
 
             {/* 텍스트 */}
             <div className="mt-3 space-y-2">
-              <div className="h-4 w-16 bg-gray-200 rounded" />
-              <div className="h-6 w-3/4 bg-gray-200 rounded" />
+              <div className="h-4 w-16 rounded bg-gray-200" />
+              <div className="h-6 w-3/4 rounded bg-gray-200" />
 
               <div className="flex gap-2">
-                <div className="h-5 w-12 bg-gray-200 rounded" />
-                <div className="h-5 w-16 bg-gray-300 rounded" />
+                <div className="h-5 w-12 rounded bg-gray-200" />
+                <div className="h-5 w-16 rounded bg-gray-300" />
               </div>
             </div>
           </li>
         ))}
       </ul>
     </section>
-  );
+  )
 }

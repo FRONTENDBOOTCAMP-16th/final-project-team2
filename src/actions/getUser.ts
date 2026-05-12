@@ -1,8 +1,7 @@
-// @/actions/auth.ts
 'use server';
 
-import { createClient } from '../../utils/supabase/server';
-import { redirect } from 'next/navigation';
+import { createClient } from '@/utils/supabase/server'
+import { redirect } from 'next/navigation'
 
 /**
  * 유저의 권한 정보만 가져오는 함수 (목록 페이지용)
@@ -10,16 +9,21 @@ import { redirect } from 'next/navigation';
  */
 export async function getAuthUserInfo() {
   try {
-    const supabase = await createClient();
+    const supabase = await createClient()
     const {
       data: { user },
-    } = await supabase.auth.getUser();
+    } = await supabase.auth.getUser()
 
     if (!user) return null;
 
     const { data: userData } = await supabase.from('users').select('role, nickname, id').eq('id', user.id).single();
 
-    return { user, role: userData?.role, nickname: userData?.nickname, id: userData?.id };
+    return {
+      user,
+      role: userData?.role,
+      nickname: userData?.nickname,
+      id: userData?.id,
+    }
   } catch (e) {
     return null;
   }

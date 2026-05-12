@@ -2,7 +2,7 @@
 
 import { ReactNode, useState } from 'react';
 import { Products } from '@/app/lib/products';
-import { Sanitize } from '../../../../../../../../utils/sanitize';
+import { Sanitize } from '@/utils/sanitize';
 
 type Props = {
   product: Products;
@@ -57,9 +57,7 @@ export default function TabProductsInfo({ product, productContent, storeContent,
         </nav>
       </header>
 
-      {/* content */}
       <section id={`${activeTab}-panel`} role="tabpanel" aria-labelledby={`${activeTab}-tab`} aria-live="polite" className="py-10">
-        {/* 제품 상세 */}
         {activeTab === 'detail' && (
           <div className="animate-in fade-in duration-300">
             <h2 className="text-3xl font-bold">제품 상세</h2>
@@ -74,13 +72,9 @@ export default function TabProductsInfo({ product, productContent, storeContent,
             <div className="mt-10">{productContent}</div>
           </div>
         )}
-
-        {/* 가게 정보 */}
         {activeTab === 'store' && <div className="animate-in fade-in duration-300">{storeContent}</div>}
-
-        {/* 리뷰 */}
         {activeTab === 'review' && <div className="animate-in fade-in duration-300">{reviewContent}</div>}
       </section>
     </article>
-  );
+  )
 }

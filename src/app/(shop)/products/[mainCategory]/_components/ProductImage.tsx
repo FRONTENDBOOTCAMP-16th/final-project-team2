@@ -1,7 +1,7 @@
-'use client';
+'use client'
 
-import Image from 'next/image';
-import { useRef, useState } from 'react';
+import Image from 'next/image'
+import { useRef, useState } from 'react'
 
 type ProductImageProps = {
   src?: string;
@@ -18,11 +18,11 @@ export default function ProductImage({ src, alt, priority = false, onLoadComplet
   const isReportedRef = useRef(false);
 
   const reportLoaded = () => {
-    if (isReportedRef.current) return;
+    if (isReportedRef.current) return
 
-    isReportedRef.current = true;
-    onLoadComplete?.();
-  };
+    isReportedRef.current = true
+    onLoadComplete?.()
+  }
 
   return (
     <Image
@@ -33,12 +33,12 @@ export default function ProductImage({ src, alt, priority = false, onLoadComplet
       className="object-cover"
       onLoad={reportLoaded}
       onError={() => {
-        reportLoaded();
+        reportLoaded()
 
         if (imgSrc !== fallback) {
-          setImgSrc(fallback);
+          setImgSrc(fallback)
         }
       }}
     />
-  );
+  )
 }

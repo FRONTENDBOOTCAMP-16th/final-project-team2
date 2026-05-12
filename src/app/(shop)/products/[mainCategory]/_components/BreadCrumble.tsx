@@ -1,9 +1,9 @@
-import { ChevronRight, HomeIcon } from 'lucide-react';
-import Link from 'next/link';
+import { ChevronRight, HomeIcon } from 'lucide-react'
+import Link from 'next/link'
 
 type categoryProps = {
-  category: string;
-};
+  category: string
+}
 
 const BreadCrumble = ({ category }: categoryProps) => {
   return (
@@ -14,11 +14,11 @@ const BreadCrumble = ({ category }: categoryProps) => {
             <HomeIcon className="w-5 h-5" />
           </Link>
         </li>
-        <ChevronRight className="w-4 h-4" />
-        <li className="text-black font-medium text-lg">{category}</li>
+        <ChevronRight className="h-4 w-4" />
+        <li className="text-lg font-medium text-black">{category}</li>
       </ol>
     </nav>
-  );
-};
+  )
+}
 
-export default BreadCrumble;
+export default BreadCrumble

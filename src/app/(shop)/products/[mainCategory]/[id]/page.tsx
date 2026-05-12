@@ -9,16 +9,18 @@ import { getSellerUser } from '@/actions/getUser';
 
 type ProductDetailPageProps = {
   params: Promise<{
-    mainCategory: string;
-    id: string;
-  }>;
-};
+    mainCategory: string
+    id: string
+  }>
+}
 
-export default async function ProductDetailPage({ params }: ProductDetailPageProps) {
-  const { mainCategory, id } = await params;
+export default async function ProductDetailPage({
+  params,
+}: ProductDetailPageProps) {
+  const { mainCategory, id } = await params
 
   if (!isMainCategory(mainCategory)) {
-    notFound();
+    notFound()
   }
 
   const categoryLabel = mainCategoryConvert[mainCategory];
@@ -27,7 +29,10 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
   const store = await getStoreDetailInfo(product.store_id);
   const seller = await getSellerUser(store.owner_id);
   return (
-    <div aria-labelledby="product-detail-title" className="mt-5 mb-38 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div
+      aria-labelledby="product-detail-title"
+      className="mx-auto mt-5 mb-38 max-w-7xl px-4 sm:px-6 lg:px-8"
+    >
       <h1 id="product-detail-title" className="sr-only">
         제품 상세 페이지
       </h1>
@@ -39,5 +44,5 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
         <div className="mt-15">{/* <RecomandProduct products={products} /> */}</div>
       </main>
     </div>
-  );
+  )
 }

@@ -1,9 +1,13 @@
-import WriteForm from '@/app/components/board/WriteForm';
-import { getInquireDetail } from '@/api/inpuireDetail';
+import WriteForm from '@/app/components/board/WriteForm'
+import { getInquireDetail } from '@/api/inpuireDetail'
 import { notFound } from 'next/navigation'
-import { handleInquireAction } from '@/actions/inquireAction';
+import { handleInquireAction } from '@/actions/inquireAction'
 
-export default async function InquireEditPage({ params }: { params: Promise<{ id: string }> }) {
+export default async function InquireEditPage({
+  params,
+}: {
+  params: Promise<{ id: string }>
+}) {
   const resolvedParams = await params
   const updateId = resolvedParams.id
 
@@ -17,7 +21,7 @@ export default async function InquireEditPage({ params }: { params: Promise<{ id
     id: updateId,
     title: inquire.title,
     content: inquire.question_content || '',
-    important: false
+    important: false,
   }
 
   return (
@@ -30,5 +34,5 @@ export default async function InquireEditPage({ params }: { params: Promise<{ id
         link={`inquire/${updateId}`}
       />
     </div>
-  );
+  )
 }

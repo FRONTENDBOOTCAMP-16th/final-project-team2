@@ -1,10 +1,10 @@
-import OrderStatusBadge from "@/app/mypage/consumer/orders/components/OrderStatusBadge";
-import { OrderItem } from "@/app/mypage/types/orderItem";
-import DeliverStatusButton from "./DeliveryStatusButton";
+import OrderStatusBadge from '@/app/mypage/consumer/orders/components/OrderStatusBadge'
+import { OrderItem } from '@/app/mypage/types/orderItem'
+import DeliverStatusButton from './DeliveryStatusButton'
 
 export default function DeliveryProductCard({ order }: { order: OrderItem }) {
   return (
-    <div className="flex font-semibold p-4 mb-2 border-b border-gray-300 gap-8 ">
+    <div className="mb-2 flex gap-8 border-b border-gray-300 p-4 font-semibold">
       {/* 주문번호 */}
       <div className="flex w-1/9 text-center">
         <h2>{order.orderId}</h2>
@@ -14,12 +14,12 @@ export default function DeliveryProductCard({ order }: { order: OrderItem }) {
         <h2>{order.name}</h2>
       </div>
       {/* 주문자 */}
-      <div className="flex w-1/9 ">
+      <div className="flex w-1/9">
         <p>{order.userId}</p>
       </div>
 
       {/* 가격 */}
-      <div className="flex w-1/9 text-center justify-center items-center">
+      <div className="flex w-1/9 items-center justify-center text-center">
         <p>
           {(order.unitPrice * (1 - order.discountRate / 100)).toLocaleString()}
           원
@@ -27,7 +27,7 @@ export default function DeliveryProductCard({ order }: { order: OrderItem }) {
       </div>
 
       {/* 주문 수량 */}
-      <div className="flex text-center justify-center  w-1/9">
+      <div className="flex w-1/9 justify-center text-center">
         <p>{order.quantity}개</p>
       </div>
       {/* 상태 */}
@@ -36,5 +36,5 @@ export default function DeliveryProductCard({ order }: { order: OrderItem }) {
         <DeliverStatusButton />
       </div>
     </div>
-  );
+  )
 }

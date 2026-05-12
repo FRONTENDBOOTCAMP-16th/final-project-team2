@@ -1,6 +1,6 @@
-import { getProductsCategory } from '@/api/products';
-import ProductListInner from './ProductListInner';
-import Pagination from '@/app/components/Pagination';
+import { getProductsCategory } from '@/api/products'
+import ProductListInner from './ProductListInner'
+import Pagination from '@/app/components/Pagination'
 
 type Props = {
   page?: number;
@@ -18,7 +18,7 @@ export default async function ProductListFetcher({ page, pageSize, mainCategory,
     mainCategory,
     category,
     sort,
-  });
+  })
 
   return (
     <div>
@@ -28,5 +28,5 @@ export default async function ProductListFetcher({ page, pageSize, mainCategory,
 
       {pagination && <Pagination pageSize={pageSize} totalCount={data.totalCount} />}
     </div>
-  );
+  )
 }

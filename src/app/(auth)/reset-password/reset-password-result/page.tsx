@@ -1,18 +1,25 @@
-import Link from "next/link";
+import Link from 'next/link'
 
 export default function ResetPasswordResultPage() {
   return (
-    <div className="flex flex-col bg-white w-full p-10 sm:w-160 transition-all rounded-2xl shadow-md shadow-[#c7c7c7]">
-      <div className="text-2xl text-center border-be pbe-9 border-[#e0e0e0]">
+    <div className="flex w-full flex-col rounded-2xl bg-white p-10 shadow-md shadow-[#c7c7c7] transition-all sm:w-160">
+      <div className="border-be border-[#e0e0e0] pbe-9 text-center text-2xl">
         <strong className="text-[#575A68]">비밀번호 재설정 완료</strong>
       </div>
 
-      <div className="bg-[#EEEEEE] text-center px-8 py-5 mbs-10">
-        <strong className="text-[#575A68] bold">비밀번호 재설정이 완료되었습니다</strong>
+      <div className="mbs-10 bg-[#EEEEEE] px-8 py-5 text-center">
+        <strong className="bold text-[#575A68]">
+          비밀번호 재설정이 완료되었습니다
+        </strong>
       </div>
 
-      <div className="flex pbs-4 mbs-10 border-bs border-[#e0e0e0]">
-        <Link href="/login" className="text-center w-full py-4 mbs-12 text-white bg-[#FF6B6B] rounded font-bold cursor-pointer">로그인으로 이동하기</Link>
+      <div className="mbs-10 flex border-bs border-[#e0e0e0] pbs-4">
+        <Link
+          href="/login"
+          className="mbs-12 w-full cursor-pointer rounded bg-[#FF6B6B] py-4 text-center font-bold text-white"
+        >
+          로그인으로 이동하기
+        </Link>
       </div>
     </div>
   )

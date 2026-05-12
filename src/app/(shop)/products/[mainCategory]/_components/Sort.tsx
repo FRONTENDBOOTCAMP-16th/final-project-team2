@@ -1,4 +1,4 @@
-'use client';
+'use client'
 
 import { useProductFilter } from '../../../../../hooks/useFiltering';
 
@@ -20,5 +20,5 @@ export default function Sort() {
       <option value="highPrice">가격 높은 순</option>
       <option value="lowPrice">가격 낮은 순</option>
     </select>
-  );
+  )
 }

@@ -1,5 +1,5 @@
-import ProductListInner from './ProductListInner';
-import { Products } from '@/app/lib/products';
+import ProductListInner from './ProductListInner'
+import { Products } from '@/app/lib/products'
 
 type Props = {
   products: Products[];

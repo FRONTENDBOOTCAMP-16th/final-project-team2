@@ -34,7 +34,10 @@ export default function Pagination({ pageSize, totalCount }: PaginationProps) {
   }
 
   return (
-    <nav aria-label="페이지네이션" className="pagination flex gap-3 justify-center mt-24 mb-20 items-center">
+    <nav
+      aria-label="페이지네이션"
+      className="pagination mt-24 mb-20 flex items-center justify-center gap-3"
+    >
       {currentPage === 1 ? (
         <span className={paginationButton.disabled} aria-hidden>
           <ChevronLeft />
@@ -62,13 +65,14 @@ export default function Pagination({ pageSize, totalCount }: PaginationProps) {
           const pageNumber = startPage + index;
           const isActive = currentPage === pageNumber;
           const isLast = index === endPage - startPage;
-          // -------------------------------------------------------------
           return (
             <li key={pageNumber} className="flex items-center">
               <Link
                 href={createFilterHref({ page: pageNumber })}
                 aria-current={isActive ? 'page' : undefined}
-                className={isActive ? paginationButton.active : paginationButton.default}
+                className={
+                  isActive ? paginationButton.active : paginationButton.default
+                }
               >
                 {pageNumber}
               </Link>
@@ -79,7 +83,7 @@ export default function Pagination({ pageSize, totalCount }: PaginationProps) {
                 </span>
               )}
             </li>
-          );
+          )
         })}
       </ul>
 
@@ -105,5 +109,5 @@ export default function Pagination({ pageSize, totalCount }: PaginationProps) {
         </Link>
       )}
     </nav>
-  );
+  )
 }
