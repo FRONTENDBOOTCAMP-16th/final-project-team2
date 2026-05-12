@@ -1,4 +1,4 @@
-import { useState, SyntheticEvent, ChangeEvent, MouseEvent } from "react";
+import { useState, SyntheticEvent, ChangeEvent, MouseEvent } from 'react'
 
 /**
  * [useFormManagement]
@@ -8,60 +8,60 @@ export default function useFormManagement<T extends Record<string, unknown>>(
   initialData: T,
   validate: (data: T) => Record<string, string>,
 ) {
-  const [isEditing, setIsEditing] = useState(false);
-  const [formData, setFormData] = useState<T>(initialData);
-  const [errors, setErrors] = useState<Record<string, string>>({});
-  const [backupData, setBackupData] = useState<T>(initialData);
+  const [isEditing, setIsEditing] = useState(false)
+  const [formData, setFormData] = useState<T>(initialData)
+  const [errors, setErrors] = useState<Record<string, string>>({})
+  const [backupData, setBackupData] = useState<T>(initialData)
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const name = e.target.name as keyof T;
-    const value = e.target.value;
+    const name = e.target.name as keyof T
+    const value = e.target.value
 
     if (errors[name as string]) {
-      setErrors((prev) => ({ ...prev, [name]: "" }));
+      setErrors((prev) => ({ ...prev, [name]: '' }))
     }
 
-    if (name === "phone") {
-      const onlyNumber = value.replace(/[^0-9]/g, "").slice(0, 11);
+    if (name === 'phone') {
+      const onlyNumber = value.replace(/[^0-9]/g, '').slice(0, 11)
       setFormData((prev) => ({
         ...prev,
         [name]: onlyNumber as T[keyof T],
-      }));
-      return;
+      }))
+      return
     }
 
     setFormData((prev) => ({
       ...prev,
       [name]: value as T[keyof T],
-    }));
-  };
+    }))
+  }
 
   const handleEdit = (e: MouseEvent) => {
-    e.preventDefault();
-    setBackupData(formData);
-    setIsEditing(true);
-  };
+    e.preventDefault()
+    setBackupData(formData)
+    setIsEditing(true)
+  }
 
   const handleCancel = (e: MouseEvent) => {
-    e.preventDefault();
-    setFormData(backupData);
-    setErrors({});
-    setIsEditing(false);
-  };
+    e.preventDefault()
+    setFormData(backupData)
+    setErrors({})
+    setIsEditing(false)
+  }
 
   const handleSubmit = (e: SyntheticEvent, onSuccess: (data: T) => void) => {
-    e.preventDefault();
-    const newErrors = validate(formData);
+    e.preventDefault()
+    const newErrors = validate(formData)
 
     if (Object.keys(newErrors).length > 0) {
-      setErrors(newErrors);
-      return;
+      setErrors(newErrors)
+      return
     }
 
-    setIsEditing(false);
-    setErrors({});
-    onSuccess(formData);
-  };
+    setIsEditing(false)
+    setErrors({})
+    onSuccess(formData)
+  }
 
   return {
     formData,
@@ -72,5 +72,5 @@ export default function useFormManagement<T extends Record<string, unknown>>(
     handleCancel,
     handleSubmit,
     setFormData,
-  };
+  }
 }

@@ -1,13 +1,13 @@
-import { ProductPreview } from "./Categories";
+import { ProductPreview } from './Categories'
 
 export type ProductLike = {
-  id: string;
-  user_id: string;
-  product_id: string;
-  created_at: string;
-};
+  id: string
+  user_id: string
+  product_id: string
+  created_at: string
+}
 
 // 확장 타입
 export type ProductLikeWithProduct = ProductLike & {
-  products: ProductPreview;
-};
+  products: ProductPreview
+}

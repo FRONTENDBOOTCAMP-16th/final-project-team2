@@ -1,39 +1,39 @@
-import { ProductLike } from "@/app/lib/productLike";
-import { createClient } from "../../../../utils/supabase/client";
+import { ProductLike } from '@/app/lib/productLike'
+import { createClient } from '@/utils/supabase/client'
 import {
   ProductCategoriesWithCategory,
   ProductPreview,
-} from "@/app/lib/Categories";
+} from '@/app/lib/Categories'
 
 // categories 포함된 products (UI용)
 export type ProductCategories = {
-  id: string;
-  product_id: string;
-  category_id: string;
-  categories: ProductCategoriesWithCategory;
-};
+  id: string
+  product_id: string
+  category_id: string
+  categories: ProductCategoriesWithCategory
+}
 
 // Supabase raw join 결과 타입
 type ProductLikeWithProductRaw = ProductLike & {
-  products: ProductPreview;
-};
+  products: ProductPreview
+}
 
 // 최종 UI 타입
 export type ProductLikeWithProduct = ProductLike & {
-  products: ProductPreview | ProductPreview[];
-};
+  products: ProductPreview | ProductPreview[]
+}
 
 export const fetchLikes = async () => {
-  const supabase = createClient();
+  const supabase = createClient()
 
   const {
     data: { user },
-  } = await supabase.auth.getUser();
+  } = await supabase.auth.getUser()
 
-  if (!user) return [];
+  if (!user) return []
 
   const { data, error } = await supabase
-    .from("product_likes")
+    .from('product_likes')
     .select(
       `
     id,
@@ -55,21 +55,21 @@ export const fetchLikes = async () => {
     )
   `,
     )
-    .eq("user_id", user.id)
-    .returns<ProductLikeWithProductRaw[]>();
+    .eq('user_id', user.id)
+    .returns<ProductLikeWithProductRaw[]>()
 
-  if (error) throw error;
+  if (error) throw error
 
-  const rows = data ?? [];
+  const rows = data ?? []
 
   return rows.map((item) => {
     const product = Array.isArray(item.products)
       ? item.products[0]
-      : item.products;
+      : item.products
 
     return {
       ...item,
       products: product,
-    };
-  });
-};
+    }
+  })
+}

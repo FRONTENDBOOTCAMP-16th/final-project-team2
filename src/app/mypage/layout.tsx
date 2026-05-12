@@ -1,20 +1,20 @@
-"use client"; // Context를 사용하기 위해 추가
+'use client' // Context를 사용하기 위해 추가
 
-import SideMenu from "./components/SideMenu";
-import SummaryMenu from "./components/SummaryMenu";
-import UserProfile from "./components/UserProfile";
-import MypageProviders from "./providers/MypageProviders";
-import { UserProvider } from "./context/UserContext";
+import SideMenu from './components/SideMenu'
+import SummaryMenu from './components/SummaryMenu'
+import UserProfile from './components/UserProfile'
+import MypageProviders from './providers/MypageProviders'
+import { UserProvider } from './context/UserContext'
 
 interface LayoutProps {
-  children: React.ReactNode;
+  children: React.ReactNode
 }
 
 export default function MyPageLayout({ children }: LayoutProps) {
   return (
     <UserProvider>
-      <section className="w-full min-h-screen bg-[#FFF8F3]">
-        <div className="flex max-w-6xl mx-auto pt-32 px-4 gap-6">
+      <section className="min-h-screen w-full bg-[#FFF8F3]">
+        <div className="mx-auto flex max-w-6xl gap-6 px-4 pt-32">
           <aside className="shrink-0">
             <UserProfile />
             <SideMenu />
@@ -28,5 +28,5 @@ export default function MyPageLayout({ children }: LayoutProps) {
         </div>
       </section>
     </UserProvider>
-  );
+  )
 }

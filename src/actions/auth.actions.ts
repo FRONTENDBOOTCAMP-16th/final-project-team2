@@ -1,12 +1,12 @@
-"use server"
+'use server'
 
-import z from "zod"
+import z from 'zod'
 
 // formData를 받아 에러를 반환
 export async function authAction<T extends z.ZodSchema>(
   _: unknown,
   formData: FormData,
-  schema: T
+  schema: T,
 ) {
   // form을 일반 객체로 변환
   const objectTransform = Object.fromEntries(formData)
@@ -39,6 +39,6 @@ export async function authAction<T extends z.ZodSchema>(
 
   return {
     errors: null,
-    data: result.data as z.infer<T>
+    data: result.data as z.infer<T>,
   }
 }

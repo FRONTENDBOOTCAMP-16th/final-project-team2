@@ -1,13 +1,19 @@
-'use client';
+'use client'
 
 type LoadingProps = {
-  text?: string;
-  fullScreen?: boolean;
-};
+  text?: string
+  fullScreen?: boolean
+}
 
-export default function Loading({ text = '잠시만 기다려 주세요', fullScreen = false }: LoadingProps) {
+export default function Loading({
+  text = '잠시만 기다려 주세요',
+  fullScreen = false,
+}: LoadingProps) {
   return (
-    <section aria-label="로딩 중" className={`flex flex-col items-center justify-center gap-5 ${fullScreen ? 'min-h-screen' : 'min-h-125'}`}>
+    <section
+      aria-label="로딩 중"
+      className={`flex flex-col items-center justify-center gap-5 ${fullScreen ? 'min-h-screen' : 'min-h-125'}`}
+    >
       <div className="relative flex items-center justify-center">
         <div className="h-16 w-16 rounded-full border border-gray-200" />
 
@@ -17,10 +23,14 @@ export default function Loading({ text = '잠시만 기다려 주세요', fullSc
       </div>
 
       <div className="flex flex-col items-center gap-1">
-        <p className="text-sm font-medium tracking-wide text-gray-900">{text}</p>
+        <p className="text-sm font-medium tracking-wide text-gray-900">
+          {text}
+        </p>
 
-        <span className="text-xs tracking-[0.2em] text-gray-400 uppercase">Loading</span>
+        <span className="text-xs tracking-[0.2em] text-gray-400 uppercase">
+          Loading
+        </span>
       </div>
     </section>
-  );
+  )
 }

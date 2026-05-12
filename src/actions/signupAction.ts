@@ -1,9 +1,9 @@
-"use server"
+'use server'
 
-import { signupSchema } from "@/app/lib/auth"
-import { authAction } from "./auth.actions"
-import { redirect } from "next/navigation"
-import { createClient } from "../../utils/supabase/server"
+import { authAction } from './auth.actions'
+import { redirect } from 'next/navigation'
+import { createClient } from '@/utils/supabase/server'
+import { signupSchema } from '@/app/lib/auth'
 
 export type SignupState = {
   errors: Record<string, string[]> | null
@@ -16,10 +16,13 @@ export type SignupState = {
   confirmPassword?: string
 }
 
-export const signupAction = async (_: unknown, formData: FormData): Promise<SignupState> => {
+export const signupAction = async (
+  _: unknown,
+  formData: FormData,
+): Promise<SignupState> => {
   // 데이터 검증 (zod)
-  const result =  await authAction(_, formData, signupSchema)
-  
+  const result = await authAction(_, formData, signupSchema)
+
   // 데이터 검증이 실패했을 시 얼리리턴
   if (result.errors) return result
 
@@ -44,7 +47,7 @@ export const signupAction = async (_: unknown, formData: FormData): Promise<Sign
       phone: phone,
       password: password,
       confirmPassword: confirmPassword,
-      role: role
+      role: role,
     }
   }
 
@@ -55,19 +58,20 @@ export const signupAction = async (_: unknown, formData: FormData): Promise<Sign
     email: email,
     name: name,
     phone: phone,
-    role: role
+    role: role,
   })
 
   // 데이터 저장 실패시 에러메세지
-  if (dbError) return {
-    errors: { root: [dbError.message] },
-    name: name,
-    email: email,
-    phone: phone,
-    password: password,
-    confirmPassword: confirmPassword,
-    role: role
-  }
-  
+  if (dbError)
+    return {
+      errors: { root: [dbError.message] },
+      name: name,
+      email: email,
+      phone: phone,
+      password: password,
+      confirmPassword: confirmPassword,
+      role: role,
+    }
+
   redirect('/signup/signup-result')
 }

@@ -10,36 +10,32 @@ next.js 기반으로 구현한 오픈마켓 서비스
 - **팀명**: 행쇼
 - **개발 기간**: 2026.04.16 ~ 2026.05.18
 - **소개**:
-    
-    Next.js와 React를 기반으로, 소상공인의 감성 문구 제품을 한 곳에 모아
-    
-    소비자가 회원으로서 상품 검색, 장바구니 담기, 구매 및 결제, 회원 정보 관리 등을
-    
-    이용할 수 있도록 구현한 문구류 중심의 오픈마켓 플랫폼입니다.
-    
+  Next.js와 React를 기반으로, 소상공인의 감성 문구 제품을 한 곳에 모아
+  소비자가 회원으로서 상품 검색, 장바구니 담기, 구매 및 결제, 회원 정보 관리 등을
+  이용할 수 있도록 구현한 문구류 중심의 오픈마켓 플랫폼입니다.
 
 ---
 
 ## 🛠 Tech Stack
 
-| 구분 | 도입 기술 | 도입 목적 및 기대효과 |
-| --- | --- | --- |
-| **Frontend** | Next.js 16, TypeScript | 빠른 렌더링, SEO 최적화 및 안정적인 타입 관리 |
+| 구분                         | 도입 기술                      | 도입 목적 및 기대효과                                  |
+| ---------------------------- | ------------------------------ | ------------------------------------------------------ |
+| **Frontend**                 | Next.js 16, TypeScript         | 빠른 렌더링, SEO 최적화 및 안정적인 타입 관리          |
 | **Styling & Interactive UI** | Tailwind CSS, Swiper, Three.js | 감각적인 UI 구현 및 부드러운 인터랙션, 3D 상품 뷰 제공 |
-| **State & Validation** | Zustand, TanStack Query, Zod | 전역 상태 관리, 서버 상태 캐싱, 폼 및 데이터 검증 |
-| **Backend & Infra** | Supabase, Vercel | 안정적인 DB(BaaS) 및 간편한 배포 환경 구축 |
+| **State & Validation**       | Zustand, TanStack Query, Zod   | 전역 상태 관리, 서버 상태 캐싱, 폼 및 데이터 검증      |
+| **Backend & Infra**          | Supabase, Vercel               | 안정적인 DB(BaaS) 및 간편한 배포 환경 구축             |
 
 ---
 
 ## 👥 Team Members
 
-| 이름 | GitHub |
-| --- | --- |
-| 이동헌 | [LDH9276](https://github.com/LDH9276) |
-| 김근영 | [sasasak](https://github.com/sasasak) |
+| 이름   | GitHub                                    |
+| ------ | ----------------------------------------- |
+| 이동헌 | [LDH9276](https://github.com/LDH9276)     |
+| 김근영 | [sasasak](https://github.com/sasasak)     |
 | 박성윤 | [psy0821-k](https://github.com/psy0821-k) |
-| 송하늬 | [songha-5](https://github.com/songha-5) |
-| 장예지 | [ruiwaa](https://github.com/ruiwaa) |
+| 송하늬 | [songha-5](https://github.com/songha-5)   |
+| 장예지 | [ruiwaa](https://github.com/ruiwaa)       |
 
 ---
 

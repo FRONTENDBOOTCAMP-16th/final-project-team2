@@ -1,15 +1,15 @@
-export type MainCategoryType = 'writing' | 'paper' | 'deco' | 'office';
+export type MainCategoryType = 'writing' | 'paper' | 'deco' | 'office'
 
 export type CategoryItem = {
-  label: string;
-  value: string;
-};
+  label: string
+  value: string
+}
 
-export const mainCategories = ['writing', 'paper', 'deco', 'office'] as const;
+export const mainCategories = ['writing', 'paper', 'deco', 'office'] as const
 
 export const isMainCategory = (value: string): value is MainCategoryType => {
-  return mainCategories.includes(value as MainCategoryType);
-};
+  return mainCategories.includes(value as MainCategoryType)
+}
 
 export const subCategory: Record<MainCategoryType, CategoryItem[]> = {
   writing: [
@@ -36,11 +36,11 @@ export const subCategory: Record<MainCategoryType, CategoryItem[]> = {
     { label: '마스킹테이프', value: 'masking-tape' },
     { label: '스티커', value: 'sticker' },
   ],
-};
+}
 
 export const mainCategoryConvert: Record<MainCategoryType, string> = {
   writing: '필기구',
   paper: '노트/다이어리',
   deco: '데코/다꾸',
   office: '사무/데스크용품',
-};
+}
