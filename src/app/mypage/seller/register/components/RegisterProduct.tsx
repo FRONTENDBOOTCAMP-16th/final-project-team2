@@ -70,7 +70,7 @@ export default function RegisterProductForm() {
     const newErrors = validateAll()
 
     if (!imgForm.preview) {
-      newErrors.productImage = "상품 이미지를 업로드해주세요.";
+      newErrors.productImage = '상품 이미지를 업로드해주세요.'
     }
 
     setClientErrors(newErrors)
@@ -84,8 +84,7 @@ export default function RegisterProductForm() {
 
     // 하나라도 폼 양식이 작성되어있지 않은 경우에, 제출을 할 수 없음
     if (Object.keys(newErrors).length > 0) {
-      imgForm.resetImg();
-      e.preventDefault();
+      e.preventDefault()
     }
   }
 
@@ -130,7 +129,10 @@ export default function RegisterProductForm() {
           key={imgForm.imgKey}
           fileName={imgForm.fileName}
           preview={imgForm.preview}
-          onChangeImg={imgForm.handleChangeImg}
+          onChangeImg={(e) => {
+            imgForm.handleChangeImg(e)
+            setClientErrors((prev) => ({ ...prev, productImage: undefined }))
+          }}
           error={clientErrors.productImage || serverErrors?.productImage}
         />
         <ProductName
