@@ -26,7 +26,7 @@ export default function OrderStatusFilter({ value, statusChange }: Props) {
           value={value}
           className="cursor-pointer border-none bg-transparent text-sm font-medium focus:ring-0"
         >
-          <option value="">전체 상태</option>
+          <option value="all">전체 상태</option>
           {STATUS_LIST.map((status) => (
             <option key={status} value={status}>
               {statusLabel[status].label}

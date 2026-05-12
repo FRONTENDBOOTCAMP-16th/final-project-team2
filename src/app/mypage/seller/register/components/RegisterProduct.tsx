@@ -67,7 +67,11 @@ export default function RegisterProductForm() {
   }
 
   const handleSubmit = (e: React.FormEvent) => {
-    const newErrors = validateAll()
+    const newErrors = validateAll();
+
+    if (!imgForm.preview) {
+      newErrors.productImage = "상품 이미지를 업로드해주세요.";
+    }
 
     setClientErrors(newErrors)
 
@@ -80,8 +84,8 @@ export default function RegisterProductForm() {
 
     // 하나라도 폼 양식이 작성되어있지 않은 경우에, 제출을 할 수 없음
     if (Object.keys(newErrors).length > 0) {
-      imgForm.resetImg()
-      e.preventDefault()
+      imgForm.resetImg();
+      e.preventDefault();
     }
   }
 
