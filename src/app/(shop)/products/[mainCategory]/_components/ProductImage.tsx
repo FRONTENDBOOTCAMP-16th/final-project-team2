@@ -11,7 +11,7 @@ type ProductImageProps = {
 };
 
 export default function ProductImage({ src, alt, priority = false, onLoadComplete }: ProductImageProps) {
-  const fallback = '/pen_dummy.jpg';
+  const fallback = '/fallback.png';
 
   const [imgSrc, setImgSrc] = useState(src || fallback);
 
