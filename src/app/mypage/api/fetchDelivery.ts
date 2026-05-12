@@ -1,9 +1,24 @@
 import { createClient } from '@/utils/supabase/client'
+import { OrderItem } from '../types/orderItem';
 
-export const fetchDelivery = async (page: number, limit: number) => {
+/**
+ * 주문 데이터 조회 (서버 페이지네이션)
+ * - from/to 계산으로 데이터 범위 제한
+ * - count는 전체 페이지 계산용
+ */
+
+// 타입 명시
+type DeliveryResponse = {
+  items: OrderItem[];
+  count: number;
+};
+
+export const fetchDelivery = async (page: number, limit: number) :Promise<DeliveryResponse> => {
+  // 페이지 별로 몇번째 데이터 부터 보여줄 건지 계산
   const from = (page - 1) * limit;
   const to = from + limit - 1;
-  {
+
+
     const supabase = createClient();
     // 유저 찾기
     const {
@@ -49,7 +64,7 @@ export const fetchDelivery = async (page: number, limit: number) => {
       .in("product_id", productIds)
       .range(from, to); // 몇 개의 데이터를 나눠서 보여줄지
 
-    if (!data) return [];
+    if (!data) return { items: [], count: 0 };
 
     // user_id 목록 추출
     const userIds = data.map((item) => item.orders.user_id);
@@ -67,5 +82,5 @@ export const fetchDelivery = async (page: number, limit: number) => {
       })),
       count: count ?? 0,
     };
-  }
+  
 };

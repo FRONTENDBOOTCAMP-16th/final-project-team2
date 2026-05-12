@@ -1,7 +1,6 @@
 'use client'
 
 import DeliveryProductCard from "./DeliveryProductCard";
-import { usePagination } from "@/hooks/usePagination";
 import Pagination from "./Pagination";
 import TabFilter from "@/app/mypage/consumer/wishlist/components/tabFilter";
 import DeliveryProductHeader from "./DeliveryProductHeader";
@@ -18,11 +17,13 @@ const CATEGORIES = [
 ] as const
 
 export default function DeliveryProductList() {
-  // 3. 페이지네이션
+  // 1. 페이지네이션 및 데이터 페칭
   const [currentPage, setCurrentPage] = useState(1);
-
-  // 1. 데이터 가져오기
-  const { data: items = [], isLoading } = useDeliveryQuery(currentPage, 5);
+ 
+  const { data, isLoading } = useDeliveryQuery(currentPage, 5);
+  const items = data?.items ?? [];
+  const count = data?.count ?? 0;
+  const totalPages = Math.ceil(count / 5)
 
   // 2. 정렬 + 데이터는 hook에서 처리
   const { sortType, handleTabChange, sortedOrders } = useDeliveryOrders(items);

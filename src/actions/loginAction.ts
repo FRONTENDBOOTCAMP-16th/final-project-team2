@@ -3,7 +3,7 @@
 import { authAction } from './auth.actions'
 import { redirect } from 'next/navigation'
 import { createClient } from '@/utils/supabase/server'
-import { loginSchema } from '@/app/lib/Auth'
+import { loginSchema } from '@/app/lib/auth'
 
 export interface LoginStatus {
   errors: Record<string, string[]> | null
