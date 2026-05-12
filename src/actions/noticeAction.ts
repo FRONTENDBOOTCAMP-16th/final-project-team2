@@ -154,8 +154,6 @@ export async function handleNoticeAction(
 
     // revalidateTag('notices', { expire: 3600 })
 
-    revalidateTag('notices', { expire: 3600 })
-
   } catch (error: unknown) {
     const errorMessage = error instanceof Error ? error.message : '등록 중 알 수 없는 오류가 발생했습니다.'
     return { success: false, message: errorMessage }
