@@ -34,26 +34,8 @@ const SUB_CATEGORY_MAP: Record<string, string> = {
   sticker: '스티커',
 }
 
-const getDiscountPrice = (
-  price: number,
-  discount: number,
-) => {
+const getDiscountPrice = (price: number, discount: number) => {
   return price * (1 - discount / 100)
-}
-
-// 추가:
-// 리뷰 평균 계산 함수
-const getAverageGrade = (
-  reviews: { grade: number }[],
-) => {
-  if (!reviews.length) return 0
-
-  return (
-    reviews.reduce(
-      (acc, review) => acc + review.grade,
-      0,
-    ) / reviews.length
-  )
 }
 
 export const getProductsCategory = async (
@@ -61,19 +43,13 @@ export const getProductsCategory = async (
 ): Promise<ProductsResponse> => {
   const supabase = await createClient()
 
-  const mainCategoryName =
-    MAIN_CATEGORY_MAP[params.mainCategory]
-      ? MAIN_CATEGORY_MAP[params.mainCategory]
-      : notFound()
-
+  const mainCategoryName = MAIN_CATEGORY_MAP[params.mainCategory]
+    ? MAIN_CATEGORY_MAP[params.mainCategory]
+    : notFound()
   const subCategoryName = params.category
     ? SUB_CATEGORY_MAP[params.category]
     : ''
-
-  const {
-    data: mainCategory,
-    error: mainCategoryError,
-  } = await supabase
+  const { data: mainCategory, error: mainCategoryError } = await supabase
     .from('categories')
     .select('id, name, parent_id')
     .eq('name', mainCategoryName)
@@ -89,10 +65,7 @@ export const getProductsCategory = async (
   let categoryIds: string[] = []
 
   if (subCategoryName) {
-    const {
-      data: subCategory,
-      error: subCategoryError,
-    } = await supabase
+    const { data: subCategory, error: subCategoryError } = await supabase
       .from('categories')
       .select('id, name, parent_id')
       .eq('name', subCategoryName)
@@ -108,10 +81,7 @@ export const getProductsCategory = async (
 
     categoryIds = [subCategory.id]
   } else {
-    const {
-      data: childCategories,
-      error: childError,
-    } = await supabase
+    const { data: childCategories, error: childError } = await supabase
       .from('categories')
       .select('id')
       .eq('parent_id', mainCategory.id)
@@ -122,30 +92,21 @@ export const getProductsCategory = async (
 
     categoryIds = [
       mainCategory.id,
-      ...(childCategories?.map(
-        item => item.id,
-      ) ?? []),
+      ...(childCategories?.map((item) => item.id) ?? []),
     ]
   }
 
-  const {
-    data: productCategoryData,
-    error: productCategoryError,
-  } = await supabase
-    .from('product_categories')
-    .select('product_id')
-    .in('category_id', categoryIds)
+  const { data: productCategoryData, error: productCategoryError } =
+    await supabase
+      .from('product_categories')
+      .select('product_id')
+      .in('category_id', categoryIds)
 
   if (productCategoryError) {
-    throw new Error(
-      productCategoryError.message,
-    )
+    throw new Error(productCategoryError.message)
   }
 
-  const productIds =
-    productCategoryData?.map(
-      item => item.product_id,
-    ) ?? []
+  const productIds = productCategoryData?.map((item) => item.product_id) ?? []
 
   if (productIds.length === 0) {
     return {
@@ -154,131 +115,44 @@ export const getProductsCategory = async (
     }
   }
 
-  // 수정:
-  // reviews relation join 추가
   let query = supabase
     .from('products')
-    .select(
-      `
-      *,
-      reviews (
-        grade
-      )
-    `,
-      { count: 'exact' },
-    )
+    .select('*', { count: 'exact' })
     .in('id', productIds)
 
   switch (params.sort) {
     case 'latest':
-      query = query.order('created_at', {
-        ascending: false,
-      })
+      query = query.order('created_at', { ascending: false })
       break
 
     case 'lowPrice':
-      query = query.order('price', {
-        ascending: true,
-      })
+      query = query.order('price', { ascending: true })
       break
 
     case 'highPrice':
-      query = query.order('price', {
-        ascending: false,
-      })
-      break
-
-    // 수정:
-    // DB 컬럼이 없기 때문에
-    // 아래에서 JS 정렬 수행
-    case 'recommend':
-    case 'popular':
-      query = query.order('created_at', {
-        ascending: false,
-      })
-      break
-
-    default:
-      query = query.order('created_at', {
-        ascending: false,
-      })
+      query = query.order('price', { ascending: false })
       break
   }
 
-  const currentPage =
-    Number(params.page) || 1
-
-  const from =
-    (currentPage - 1) * params.pageSize
-
+  const currentPage = Number(params.page) || 1
+  const from = (currentPage - 1) * params.pageSize
   const to = from + params.pageSize - 1
 
-  const { data, error, count } =
-    await query.range(from, to)
+  const { data, error, count } = await query.range(from, to)
 
   if (error) {
     throw new Error(error.message)
   }
 
-  // 수정:
-  // reviews 포함 타입
-  let products =
-    (data as (Products & {
-      reviews?: { grade: number }[]
-    })[]) ?? []
+  let products = (data as Products[]) ?? []
 
-  // 할인가 기준 정렬
-  if (
-    params.sort === 'lowPrice' ||
-    params.sort === 'highPrice'
-  ) {
-    products = [...products].sort(
-      (a, b) => {
-        const aPrice = getDiscountPrice(
-          a.price,
-          a.discount_rate,
-        )
+  if (params.sort === 'lowPrice' || params.sort === 'highPrice') {
+    products = [...products].sort((a, b) => {
+      const aPrice = getDiscountPrice(a.price, a.discount_rate)
+      const bPrice = getDiscountPrice(b.price, b.discount_rate)
 
-        const bPrice = getDiscountPrice(
-          b.price,
-          b.discount_rate,
-        )
-
-        return params.sort === 'lowPrice'
-          ? aPrice - bPrice
-          : bPrice - aPrice
-      },
-    )
-  }
-
-  // 추가:
-  // 추천순 정렬
-  if (params.sort === 'recommend') {
-    products = [...products].sort(
-      (a, b) => {
-        return (
-          getAverageGrade(
-            b.reviews ?? [],
-          ) -
-          getAverageGrade(
-            a.reviews ?? [],
-          )
-        )
-      },
-    )
-  }
-
-  // 추가:
-  // 인기순 정렬
-  if (params.sort === 'popular') {
-    products = [...products].sort(
-      (a, b) => {
-        return (
-          (b.reviews?.length ?? 0) -
-          (a.reviews?.length ?? 0)
-        )
-      },
-    )
+      return params.sort === 'lowPrice' ? aPrice - bPrice : bPrice - aPrice
+    })
   }
 
   return {
@@ -286,3 +160,4 @@ export const getProductsCategory = async (
     totalCount: count ?? 0,
   }
 }
+
