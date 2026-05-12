@@ -1,7 +1,7 @@
 // src/api/reviews.ts
 
 import { Reviews } from '@/app/lib/Reviews';
-import { createClient } from '../../utils/supabase/server';
+import { createClient } from '@/utils/supabase/server';
 
 export async function getProductReviews(productId: string): Promise<Reviews[]> {
   const supabase = await createClient();

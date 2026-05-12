@@ -6,7 +6,7 @@ import HeartButton from './HeartButton';
 import ProductSummary from './ProductSummary';
 import ProductImage from '../../../_components/ProductImage';
 import { Products } from '@/app/lib/products';
-import { DiscountPriceFormat } from '../../../../../../../../utils/supabase/intl';
+import { DiscountPriceFormat } from '@/utils/supabase/intl';
 
 type Props = {
   product: Products;
