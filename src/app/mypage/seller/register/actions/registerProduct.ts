@@ -110,8 +110,8 @@ async function processRegister(formData: FormData): Promise<FormState> {
     .single()
 
   // 실제 Supabase Storage에 업로드
-  const imageFile = image as File;
-  const ext = imageFile.name.split(".").pop();
+  const imageFile = image as File
+  const ext = imageFile.name.split('.').pop()
 
   // 고유한 영문 파일명 생성
   const fileName = `${Date.now()}.${ext}`
@@ -131,7 +131,7 @@ async function processRegister(formData: FormData): Promise<FormState> {
     .from('public-assets')
     .getPublicUrl(`products/${fileName}`)
 
-  const finalDescription = { description };
+  const finalDescription = `<img src="https://xgiayrmzgokjzwwzivzi.supabase.co/storage/v1/object/public/public-assets/products/product2.jpg" alt="상세이미지"/><br/>${description}`
 
   const { data, error } = await supabase
     .from('products')
