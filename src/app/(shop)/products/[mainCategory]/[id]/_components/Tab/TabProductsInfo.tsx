@@ -1,43 +1,85 @@
-import { ReactNode } from 'react';
+'use client';
+
+import { ReactNode, useState } from 'react';
 import { Products } from '@/app/lib/products';
 import { Sanitize } from '../../../../../../../../utils/sanitize';
 
 type Props = {
   product: Products;
-  children: ReactNode;
+  productContent: ReactNode;
+  storeContent: ReactNode;
+  reviewContent: ReactNode;
 };
 
-export default function TabProductsInfo({ product, children }: Props) {
-  const DETAIL_TABS = [
-    { id: 'detail', label: '제품 상세' },
-    { id: 'store', label: '가게 정보' },
-  ] as const;
+type TabType = 'detail' | 'store' | 'review';
+
+const DETAIL_TABS = [
+  { id: 'detail', label: '제품 상세' },
+  { id: 'store', label: '가게 정보' },
+  { id: 'review', label: '리뷰' },
+] as const;
+
+export default function TabProductsInfo({ product, productContent, storeContent, reviewContent }: Props) {
+  const [activeTab, setActiveTab] = useState<TabType>('detail');
 
   return (
     <article className="mx-auto mt-16 max-w-7xl px-4">
-      <header className="border-b border-gray-200">
+      <header className="sticky top-17 z-30 border-b border-gray-200 bg-white">
         <nav aria-label="상품 상세 탭">
-          <ul className="flex gap-6">
-            {DETAIL_TABS.map(tab => (
-              <li key={tab.id}>
-                <button type="button" className="border-b-2 border-transparent text-2xl px-1 py-4 text-gray-700 hover:text-black">
+          <div role="tablist" className="flex items-center gap-8 overflow-x-auto">
+            {DETAIL_TABS.map(tab => {
+              const isActive = activeTab === tab.id;
+
+              return (
+                <button
+                  key={tab.id}
+                  id={`${tab.id}-tab`}
+                  type="button"
+                  role="tab"
+                  aria-selected={isActive}
+                  aria-controls={`${tab.id}-panel`}
+                  onClick={() => setActiveTab(tab.id)}
+                  className={`relative py-5 text-lg font-medium whitespace-nowrap transition-all duration-200 ${
+                    isActive ? 'text-[#FF6B6B]' : 'text-gray-500 hover:text-black'
+                  }`}
+                >
                   {tab.label}
+
+                  <span
+                    className={`absolute bottom-0 left-0 h-1 w-full rounded-full transition-all duration-200 ${
+                      isActive ? 'bg-[#FF6B6B]' : 'bg-transparent'
+                    }`}
+                  />
                 </button>
-              </li>
-            ))}
-          </ul>
+              );
+            })}
+          </div>
         </nav>
       </header>
 
-      <section className="py-8">
-        <h2 className="text-2xl font-semibold">제품 상세</h2>
-        <div className="contents">
-          <div
-            className="mt-4 text-xl text-justify max-w-6xl leading-8 text-gray-700"
-            dangerouslySetInnerHTML={{ __html: Sanitize(product.content) }}
-          />
-        </div>
-        {children}
+      {/* content */}
+      <section id={`${activeTab}-panel`} role="tabpanel" aria-labelledby={`${activeTab}-tab`} aria-live="polite" className="py-10">
+        {/* 제품 상세 */}
+        {activeTab === 'detail' && (
+          <div className="animate-in fade-in duration-300">
+            <h2 className="text-3xl font-bold">제품 상세</h2>
+
+            <div
+              className="mt-6 max-w-6xl text-justify text-lg leading-9 text-gray-700"
+              dangerouslySetInnerHTML={{
+                __html: Sanitize(product.content),
+              }}
+            />
+
+            <div className="mt-10">{productContent}</div>
+          </div>
+        )}
+
+        {/* 가게 정보 */}
+        {activeTab === 'store' && <div className="animate-in fade-in duration-300">{storeContent}</div>}
+
+        {/* 리뷰 */}
+        {activeTab === 'review' && <div className="animate-in fade-in duration-300">{reviewContent}</div>}
       </section>
     </article>
   );

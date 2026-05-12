@@ -6,12 +6,15 @@ import { useRef, useState } from 'react';
 type ProductImageProps = {
   src?: string;
   alt: string;
+  priority?: boolean;
   onLoadComplete?: () => void;
 };
 
-export default function ProductImage({ src, alt, onLoadComplete }: ProductImageProps) {
+export default function ProductImage({ src, alt, priority = false, onLoadComplete }: ProductImageProps) {
   const fallback = '/pen_dummy.jpg';
+
   const [imgSrc, setImgSrc] = useState(src || fallback);
+
   const isReportedRef = useRef(false);
 
   const reportLoaded = () => {
@@ -26,7 +29,8 @@ export default function ProductImage({ src, alt, onLoadComplete }: ProductImageP
       src={imgSrc}
       alt={alt}
       fill
-      className="w-full h-full object-cover"
+      priority={priority}
+      className="object-cover"
       onLoad={reportLoaded}
       onError={() => {
         reportLoaded();

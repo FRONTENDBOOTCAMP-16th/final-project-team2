@@ -1,8 +1,8 @@
 // @/actions/auth.ts
-'use server'
+'use server';
 
-import { createClient } from '../../utils/supabase/server'
-import { redirect } from 'next/navigation'
+import { createClient } from '../../utils/supabase/server';
+import { redirect } from 'next/navigation';
 
 /**
  * 유저의 권한 정보만 가져오는 함수 (목록 페이지용)
@@ -10,20 +10,18 @@ import { redirect } from 'next/navigation'
  */
 export async function getAuthUserInfo() {
   try {
-    const supabase = await createClient()
-    const { data: { user } } = await supabase.auth.getUser()
+    const supabase = await createClient();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
 
-    if (!user) return null
+    if (!user) return null;
 
-    const { data: userData } = await supabase
-      .from('users')
-      .select('role, nickname, id')
-      .eq('id', user.id)
-      .single()
+    const { data: userData } = await supabase.from('users').select('role, nickname, id').eq('id', user.id).single();
 
-    return { user, role: userData?.role, nickname: userData?.nickname, id: userData?.id }
+    return { user, role: userData?.role, nickname: userData?.nickname, id: userData?.id };
   } catch (e) {
-    return null
+    return null;
   }
 }
 
@@ -32,11 +30,23 @@ export async function getAuthUserInfo() {
  * 관리자가 아니면 즉시 리다이렉트 시킴
  */
 export async function validateAdmin(fallbackPath: string = '/notice') {
-  const auth = await getAuthUserInfo()
+  const auth = await getAuthUserInfo();
 
   if (!auth || auth.role !== 'ADMIN') {
-    redirect(fallbackPath)
+    redirect(fallbackPath);
   }
 
-  return auth
+  return auth;
+}
+
+export async function getSellerUser(id: string) {
+  const supabase = await createClient();
+
+  const { data: userData, error } = await supabase.from('users').select('name, id').eq('id', id).single();
+
+  if (error || !userData) {
+    return null;
+  }
+
+  return userData.name;
 }
