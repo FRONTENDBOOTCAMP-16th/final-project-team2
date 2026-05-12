@@ -1,4 +1,4 @@
-import { PriceFormat } from '../../../../../../../../utils/supabase/intl';
+import { PriceFormat } from '@/utils/supabase/intl';
 
 type TotalPriceProps = {
   price: number;
