@@ -1,5 +1,6 @@
 import { ReactNode } from 'react';
 import { Products } from '@/app/lib/products';
+import { Sanitize } from '../../../../../../../../utils/sanitize';
 
 type Props = {
   product: Products;
@@ -30,8 +31,12 @@ export default function TabProductsInfo({ product, children }: Props) {
 
       <section className="py-8">
         <h2 className="text-2xl font-semibold">제품 상세</h2>
-        {/* 돔 퓨리파이 사용해야 하는 부분 */}
-        <div className="contents">{/* <p className="mt-4 text-xl text-justify max-w-6xl leading-8 text-gray-700">{product.content}</p> */}</div>
+        <div className="contents">
+          <div
+            className="mt-4 text-xl text-justify max-w-6xl leading-8 text-gray-700"
+            dangerouslySetInnerHTML={{ __html: Sanitize(product.content) }}
+          />
+        </div>
         {children}
       </section>
     </article>

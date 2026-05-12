@@ -1,6 +1,6 @@
 import { Star } from 'lucide-react';
 import { Products } from '@/app/lib/products';
-import { DiscountPrice, PriceFormat } from '../../../../../../../../utils/supabase/intl';
+import { DiscountPrice, PriceFormat } from '../../../../../../../../utils/intl';
 import { Reviews } from '@/app/lib/Reviews';
 
 interface Props {

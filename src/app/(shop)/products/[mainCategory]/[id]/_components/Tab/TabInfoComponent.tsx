@@ -5,7 +5,7 @@ import TabProductsInfo from './TabProductsInfo';
 type Props = {
   product: Products;
 };
-const TabInfoComponent = ({ product }: Props) => {
+export default function TabInfoComponent({ product }: Props) {
   return (
     <>
       <TabProductsInfo product={product}>
@@ -15,6 +15,4 @@ const TabInfoComponent = ({ product }: Props) => {
       </TabProductsInfo>
     </>
   );
-};
-
-export default TabInfoComponent;
+}

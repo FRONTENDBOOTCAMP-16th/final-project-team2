@@ -2,7 +2,7 @@ import { Heart } from 'lucide-react';
 import Link from 'next/link';
 import ProductImage from '../(shop)/products/[mainCategory]/_components/ProductImage';
 import { Products } from '../lib/products';
-import { DiscountPriceFormat, DiscountRateFormat, PriceFormat } from '../../../utils/supabase/intl';
+import { DiscountPriceFormat, DiscountRateFormat, PriceFormat } from '../../../utils/intl';
 
 interface ProductCardProps {
   product: Products;

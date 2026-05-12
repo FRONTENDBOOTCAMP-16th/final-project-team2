@@ -1,6 +1,6 @@
 import { Reviews } from '@/app/lib/Reviews';
 import { Star } from 'lucide-react';
-import { DateFormat } from '../../../../../../../../utils/supabase/intl';
+import { DateFormat } from '../../../../../../../../utils/intl';
 import Image from 'next/image';
 
 type ReviewListProps = {
