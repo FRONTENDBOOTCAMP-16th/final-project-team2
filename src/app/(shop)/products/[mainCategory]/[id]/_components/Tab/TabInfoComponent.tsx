@@ -1,10 +1,10 @@
-import { Products } from '@/app/lib/products';
-import ProductInfoTable from './ProductInfoTable';
-import TabProductsInfo from './TabProductsInfo';
+import { Products } from '@/app/lib/products'
+import ProductInfoTable from './ProductInfoTable'
+import TabProductsInfo from './TabProductsInfo'
 
 type Props = {
-  product: Products;
-};
+  product: Products
+}
 const TabInfoComponent = ({ product }: Props) => {
   return (
     <>
@@ -14,7 +14,7 @@ const TabInfoComponent = ({ product }: Props) => {
         </div>
       </TabProductsInfo>
     </>
-  );
-};
+  )
+}
 
-export default TabInfoComponent;
+export default TabInfoComponent

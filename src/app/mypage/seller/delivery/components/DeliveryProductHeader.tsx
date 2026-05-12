@@ -8,5 +8,5 @@ export default function DeliveryProductHeader() {
       <div className="w-1/10 shrink-0 text-center">주문 수량</div>
       <div className="w-2/10 shrink-0 ">주문 상태</div>
     </div>
-  );
+  )
 }

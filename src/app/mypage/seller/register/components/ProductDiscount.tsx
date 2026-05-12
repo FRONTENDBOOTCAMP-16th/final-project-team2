@@ -1,9 +1,9 @@
 type Props = {
-  value: string;
-  error?: string;
-  onChange: (value: string) => void;
-  onBlur: () => void;
-};
+  value: string
+  error?: string
+  onChange: (value: string) => void
+  onBlur: () => void
+}
 
 export default function ProductDiscount({
   value,
@@ -34,5 +34,5 @@ export default function ProductDiscount({
       </p>
       {error && <p className="text-red-500">{error}</p>}
     </div>
-  );
+  )
 }

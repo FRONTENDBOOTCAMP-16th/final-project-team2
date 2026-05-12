@@ -1,11 +1,13 @@
 'use server'
 
-import { createClient } from '../../utils/supabase/server'
+import { createClient } from '@/utils/supabase/server'
 import { redirect } from 'next/navigation'
 
 export default async function checkAdmin(fallbackPath: string = '/notice') {
   const supabase = await createClient()
-  const { data: { user } } = await supabase.auth.getUser()
+  const {
+    data: { user },
+  } = await supabase.auth.getUser()
 
   if (!user) {
     redirect(fallbackPath)
@@ -17,7 +19,7 @@ export default async function checkAdmin(fallbackPath: string = '/notice') {
     .eq('id', user.id)
     .single()
 
-  if (dbError || !userData || userData.role !== "ADMIN") {
+  if (dbError || !userData || userData.role !== 'ADMIN') {
     redirect(fallbackPath)
   }
 

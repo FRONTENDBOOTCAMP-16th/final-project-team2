@@ -1,9 +1,9 @@
 export default function notFound() {
   return (
-    <section className="w-full min-h-screen bg-[#FFF8F3] flex flex-col ">
-      <div className="w-1/2 h-1/2 aspect-square m-auto  bg-white flex flex-col justify-center items-center ">
+    <section className="flex min-h-screen w-full flex-col bg-[#FFF8F3]">
+      <div className="m-auto flex aspect-square h-1/2 w-1/2 flex-col items-center justify-center bg-white">
         <p className="text-5xl">페이지를 찾을 수 없습니다.</p>
       </div>
     </section>
-  );
+  )
 }

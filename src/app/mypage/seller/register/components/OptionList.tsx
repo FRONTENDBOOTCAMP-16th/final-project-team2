@@ -1,8 +1,8 @@
-import { Option, OptionType } from "@/app/lib/products";
+import { Option, OptionType } from '@/app/lib/products'
 
 interface Props {
-  options: Option[];
-  onRemove: (name: OptionType) => void;
+  options: Option[]
+  onRemove: (name: OptionType) => void
 }
 
 export default function OptionList({ options, onRemove }: Props) {
@@ -18,7 +18,7 @@ export default function OptionList({ options, onRemove }: Props) {
             <button
               type="button"
               onClick={() => onRemove(option.name as OptionType)}
-              className="text-sm text-white hover:scale-110 hover:text-base bg-red-500 px-4 py-2"
+              className="bg-red-500 px-4 py-2 text-sm text-white hover:scale-110 hover:text-base"
             >
               삭제
             </button>
@@ -26,5 +26,5 @@ export default function OptionList({ options, onRemove }: Props) {
         ))}
       </ul>
     </div>
-  );
+  )
 }

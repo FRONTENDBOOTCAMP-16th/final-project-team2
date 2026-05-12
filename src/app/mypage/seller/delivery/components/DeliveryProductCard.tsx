@@ -39,5 +39,5 @@ export default function DeliveryProductCard({ order }: { order: OrderItem }) {
         <DeliverStatusButton />
       </div>
     </div>
-  );
+  )
 }

@@ -1,22 +1,22 @@
-import { statusLabel } from "@/data/statusLabel";
-import { ChangeEvent } from "react";
+import { statusLabel } from '@/data/statusLabel'
+import { ChangeEvent } from 'react'
 
-const STATUS_LIST = Object.keys(statusLabel) as Array<keyof typeof statusLabel>;
+const STATUS_LIST = Object.keys(statusLabel) as Array<keyof typeof statusLabel>
 
 interface Props {
-  value: string;
-  statusChange: (status: string) => void;
+  value: string
+  statusChange: (status: string) => void
 }
 
 export default function OrderStatusFilter({ value, statusChange }: Props) {
   const handleStatusChange = (e: ChangeEvent<HTMLSelectElement>) => {
-    statusChange(e.target.value);
-  };
+    statusChange(e.target.value)
+  }
 
   return (
-    <div className="flex flex-col gap-4 px-2 py-5 justify-center">
+    <div className="flex flex-col justify-center gap-4 px-2 py-5">
       <div className="flex items-center gap-2">
-        <label htmlFor="filter" className="text-sm text-gray-500 font-medium">
+        <label htmlFor="filter" className="text-sm font-medium text-gray-500">
           배송 상태:
         </label>
         <select
@@ -24,7 +24,7 @@ export default function OrderStatusFilter({ value, statusChange }: Props) {
           id="filter"
           onChange={handleStatusChange}
           value={value}
-          className="border-none bg-transparent text-sm font-medium focus:ring-0 cursor-pointer"
+          className="cursor-pointer border-none bg-transparent text-sm font-medium focus:ring-0"
         >
           <option value="all">전체 상태</option>
           {STATUS_LIST.map((status) => (
@@ -35,5 +35,5 @@ export default function OrderStatusFilter({ value, statusChange }: Props) {
         </select>
       </div>
     </div>
-  );
+  )
 }

@@ -1,4 +1,4 @@
-"use client";
+'use client'
 
 import DeliveryProductCard from "./DeliveryProductCard";
 import { usePagination } from "@/hooks/usePagination";
@@ -11,11 +11,11 @@ import MypageDeliverySkeleton from "@/app/mypage/components/MypageDeliverSkeleto
 import { useDeliveryQuery } from "../hooks/useDeliveryQuery";
 
 const CATEGORIES = [
-  { id: "All", label: "전체", sort: "All" },
-  { id: "latest", label: "주문 날짜 순", sort: "latest" },
-  { id: "highPrice", label: "금액 높은 순", sort: "highPrice" },
-  { id: "lowPrice", label: "금액 낮은 순", sort: "lowPrice" },
-] as const;
+  { id: 'All', label: '전체', sort: 'All' },
+  { id: 'latest', label: '주문 날짜 순', sort: 'latest' },
+  { id: 'highPrice', label: '금액 높은 순', sort: 'highPrice' },
+  { id: 'lowPrice', label: '금액 낮은 순', sort: 'lowPrice' },
+] as const
 
 export default function DeliveryProductList() {
   // 3. 페이지네이션
@@ -29,9 +29,9 @@ export default function DeliveryProductList() {
   const currentItems = sortedOrders;
 
   const handleTabChangeWithReset = (id: string) => {
-    handleTabChange(id, CATEGORIES);
-    setCurrentPage(1);
-  };
+    handleTabChange(id, CATEGORIES)
+    setCurrentPage(1)
+  }
 
   if (isLoading || !items) {
     return <MypageDeliverySkeleton count={5} />;
@@ -72,5 +72,5 @@ export default function DeliveryProductList() {
         </div>
       )}
     </div>
-  );
+  )
 }
