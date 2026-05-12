@@ -10,7 +10,7 @@ export interface SellerProduct {
   inventory: number;
   price: number;
   discount_rate: number;
-  options: Option;
+  options: Option[];
   average_grade: number;
   state: "판매중" | "준비중" | "판매중지" | "품절";
   created_at: string;
