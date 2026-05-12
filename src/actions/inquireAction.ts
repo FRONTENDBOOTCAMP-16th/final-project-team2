@@ -3,39 +3,10 @@
 import { redirect } from 'next/navigation'
 // import { revalidateTag, cacheTag } from 'next/cache'
 import { createClient } from '@/utils/supabase/server'
-import {z} from 'zod'
 import { createStaticClient } from '@/utils/supabase/static'
 import {z} from 'zod'
 import type { BoardCard, FormState } from '@/types/boards'
 import checkAdmin from '@/actions/checkAdminAction'
-
-// 작성 시 조드 검증
-const InquireFormSchema = z.object({
-  title: z
-    .string()
-    .trim()
-    .min(1, { message: '제목을 입력해주세요.' })
-    .max(100, { message: '제목은 100자 이내로 작성해주세요.' }),
-  content: z
-    .string()
-    .trim()
-    .min(1, { message: '질문 내용을 입력해주세요.' }),
-  product: z.string().nullable().optional(), // 상품 ID는 없을 수도 있음
-  updateId: z.string().nullable().optional(),
-})
-
-// 답변시 조드 검증
-const InquireReplySchema = z.object({
-  replyId: z
-    .string()
-    .trim()
-    .min(1, { message: '잘못된 접근입니다. (답변할 질문 ID 누락)' }),
-  content: z
-    .string()
-    .trim()
-    .min(1, { message: '답변 내용을 입력해주세요.' }),
-})
-
 
 /**
  * Zod 스키마 정의
@@ -71,7 +42,7 @@ const InquireReplySchema = z.object({
 
 /**
  * 게시판에서의 조회 액션 (Static Action)
- *
+ * 
  * @param pages 조회하는 페이지 (?page= number)
  * @returns data 배열로 조회결과 생성, 필독 / 일반 공지사항
  */
@@ -114,8 +85,7 @@ export const getInquires = async (pages: number) => {
         thumbnail_image,
         price
       )
-    `,
-    )
+    `)
     .order('created_at', { ascending: false })
     .range(from, to)
 
@@ -123,23 +93,22 @@ export const getInquires = async (pages: number) => {
 
   return {
     normalData: (data as unknown as BoardCard[]) || [],
-    normalCount: normalCount,
+    normalCount: normalCount
   }
 }
 
 /**
  * CRUD 액션 (Static Action)
- *
+ * 
  * 답변 기능은 UPDATE로 되니, 이 부분은 추후에 추가할 예정
  */
 export async function handleInquireAction(
   prevState: FormState,
-  formData: FormData,
+  formData: FormData
 ): Promise<FormState> {
+
   const supabase = await createClient()
-  const {
-    data: { user },
-  } = await supabase.auth.getUser()
+  const { data: { user } } = await supabase.auth.getUser()
 
   // 오류가 났을때 대응.
   if (!user) return { success: false, message: '세션이 만료되었습니다.' }
@@ -158,6 +127,7 @@ export async function handleInquireAction(
         .delete()
         .eq('id', deleteId)
       if (error) throw error
+
     } else {
       // zod로 데이터 검증
       const validatedFields = InquireFormSchema.safeParse(rawData)
@@ -193,6 +163,7 @@ export async function handleInquireAction(
       }
     }
 
+    // 추후 캐싱전략을 위해 주석처리
     // revalidateTag('inquire', { expire: 3600 })
 
 
@@ -203,13 +174,9 @@ export async function handleInquireAction(
     if (error instanceof Error) {
       errorMessage = error.message
     } else if (error && typeof error === 'object' && 'message' in error) {
-      const supaError = error as {
-        code?: string
-        message: string
-        details?: string
-      }
-      errorMessage = supaError.code
-        ? `오류 코드: ${supaError.code}, ${supaError.message}`
+      const supaError = error as { code?: string; message: string; details?: string }
+      errorMessage = supaError.code 
+        ? `오류 코드: ${supaError.code}, ${supaError.message}` 
         : supaError.message
     } else {
       errorMessage = String(error)
@@ -217,7 +184,7 @@ export async function handleInquireAction(
 
     return {
       success: false,
-      message: errorMessage,
+      message: errorMessage
     }
   }
 
@@ -226,32 +193,24 @@ export async function handleInquireAction(
 
 /**
  * 질문 답변 액션 (Static Action)
- *
+ * 
  * ID를 찾아 그에 맞는 컬럼에 작성
  * 프론트에서도 스토어나 어드민 답변자만 노출이 되지만
  * 예기치 못한 오류로 넣을 수 있으니 방어로직도 추가할 예정.
  */
 export async function handleInquireReplyAction(
   prevState: FormState,
-  formData: FormData,
+  formData: FormData
 ): Promise<FormState> {
   const supabase = await createClient()
 
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) return { success: false, message: '세션이 만료되었습니다.' }
-<<<<<<< HEAD
-  
+
   // zod로 유효성 검사
   const rawData = Object.fromEntries(formData.entries())
   const validatedFields = InquireReplySchema.safeParse(rawData)
 
-=======
-const rawData = Object.fromEntries(formData.entries())
-
-  // zod로 유효성 검사
-  const validatedFields = InquireReplySchema.safeParse(rawData)
-
->>>>>>> a3338ca (refactor: 게시판 서버 액션에 zod 추가)
   // 실패하면 출력
   if (!validatedFields.success) {
     return { 
@@ -267,12 +226,10 @@ const rawData = Object.fromEntries(formData.entries())
     // 권한 검증 로직 (판매자 또는 어드민)
     const { data: qnaData, error: qnaError } = await supabase
       .from('qnas')
-      .select(
-        `
+      .select(`
         product_id, 
         product:product_id (store_id)
-      `,
-      )
+      `)
       .eq('id', replyId)
       .single()
 
@@ -292,11 +249,7 @@ const rawData = Object.fromEntries(formData.entries())
     const isSeller = productInfo?.store_id === user.id
 
     if (!isAdmin && !isSeller) {
-      return {
-        success: false,
-        message:
-          '권한이 없습니다. (상품 판매자 또는 관리자만 답변 가능합니다.)',
-      }
+      return { success: false, message: '권한이 없습니다. (상품 판매자 또는 관리자만 답변 가능합니다.)' }
     }
 
     // 권한 검증 통과 시 답변 데이터 업데이트
@@ -306,7 +259,7 @@ const rawData = Object.fromEntries(formData.entries())
         answer_content: answerContent,
         is_answered: true,
         answered_at: new Date().toISOString(),
-        answerer_id: user.id,
+        answerer_id: user.id
       })
       .eq('id', replyId)
 
@@ -315,10 +268,7 @@ const rawData = Object.fromEntries(formData.entries())
     // revalidateTag('inquire', { expire: 3600 })
 
   } catch (error: unknown) {
-    const errorMessage =
-      error instanceof Error
-        ? error.message
-        : '답변 등록 중 알 수 없는 오류가 발생했습니다.'
+    const errorMessage = error instanceof Error ? error.message : '답변 등록 중 알 수 없는 오류가 발생했습니다.'
     return { success: false, message: errorMessage }
   }
 
@@ -328,7 +278,7 @@ const rawData = Object.fromEntries(formData.entries())
 
 /**
  * 1대1 상세 조회 액션 (Server Action)
- *
+ * 
  * @param id 상세 조회할 게시물 아이디 (/notice/id)
  * @returns data 배열로 조회결과 생성
  */
@@ -337,8 +287,7 @@ export const getInquireDetail = async (id: string): Promise<BoardCard> => {
 
   const { data, error } = await supabase
     .from('qnas')
-    .select(
-      `*,
+    .select(`*,
       writer:writer_id (
         id,
         nickname,
@@ -351,8 +300,7 @@ export const getInquireDetail = async (id: string): Promise<BoardCard> => {
         price,
         store_id
       )
-      `,
-    )
+      `)
     .eq('id', id)
     .single()
 
