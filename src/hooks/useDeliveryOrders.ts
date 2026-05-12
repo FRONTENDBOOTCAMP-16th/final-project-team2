@@ -1,5 +1,5 @@
-import { OrderItem } from "@/app/mypage/types/orderItem";
-import { useMemo, useState } from "react";
+import { OrderItem } from '@/app/mypage/types/orderItem'
+import { useMemo, useState } from 'react'
 
 // 탭에서 선택되는 정렬 기준을 정의한 타입 지정
 type SortType = 'All' | 'latest' | 'oldest' | 'highPrice' | 'lowPrice'
@@ -15,7 +15,7 @@ interface Category {
 }
 
 export default function useDeliveryOrders(items: OrderItem[]) {
-  const [sortType, setSortType] = useState<SortType>("All");
+  const [sortType, setSortType] = useState<SortType>('All')
 
   // 1. 데이터 추출
   // 조건에 맞는 데이터 배열 새로 만들기
@@ -25,8 +25,8 @@ export default function useDeliveryOrders(items: OrderItem[]) {
     return items.map((item) => ({
       ...item,
       orderTime: new Date(item.orders.created_at).getTime(),
-    }));
-  }, [items]);
+    }))
+  }, [items])
 
   // 2. 데이터 가공
   // 해당 탭에 따라서 데이터 정렬해주는 핸들러 함수 만들기
@@ -59,12 +59,12 @@ export default function useDeliveryOrders(items: OrderItem[]) {
           return (
             b.unit_price * (1 - b.products.discount_rate / 100) -
             a.unit_price * (1 - a.products.discount_rate / 100)
-          );
-        case "lowPrice":
+          )
+        case 'lowPrice':
           return (
             a.unit_price * (1 - a.products.discount_rate / 100) -
             b.unit_price * (1 - b.products.discount_rate / 100)
-          );
+          )
 
         default:
           return 0
