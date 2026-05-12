@@ -31,8 +31,8 @@ export const useProductEdit = (product: SellerProduct, onClose: () => void) => {
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => {
-    const { name, value, type } = e.target;
-    let nextValue: string | number = value;
+    const { name, value, type } = e.target
+    let nextValue: string | number = value
 
     if (type === "number") {
       nextValue = value === "" ? 0 : Number(value);
@@ -41,17 +41,17 @@ export const useProductEdit = (product: SellerProduct, onClose: () => void) => {
       if (name === "discount_rate" && nextValue > 100) nextValue = 100;
     }
 
-    setFormData((prev) => ({ ...prev, [name]: nextValue }));
+    setFormData((prev) => ({ ...prev, [name]: nextValue }))
 
     // 사용자가 값을 입력하면 해당 필드의 에러 메시지 삭제
     if (errors[name]) {
       setErrors((prev) => {
-        const next = { ...prev };
-        delete next[name];
-        return next;
-      });
+        const next = { ...prev }
+        delete next[name]
+        return next
+      })
     }
-  };
+  }
 
   // 폼 제출 핸들러
   const handleSubmit = () => {
@@ -85,7 +85,7 @@ export const useProductEdit = (product: SellerProduct, onClose: () => void) => {
 
   const finalPrice = Math.floor(
     formData.price * (1 - formData.discount_rate / 100),
-  );
+  )
 
   return {
     formData,

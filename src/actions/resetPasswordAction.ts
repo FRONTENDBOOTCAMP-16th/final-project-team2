@@ -1,9 +1,9 @@
-"use server"
+'use server'
 
-import { resetPasswordSchema } from "@/app/lib/auth"
-import { authAction } from "./auth.actions"
-import { redirect } from "next/navigation"
-import { createAdminClient } from "../../utils/supabase/admin"
+import { authAction } from './auth.actions'
+import { redirect } from 'next/navigation'
+import { createAdminClient } from '@/utils/supabase/admin'
+import { resetPasswordSchema } from '@/app/lib/Auth'
 interface ResetPasswordCheckProps {
   errors: Record<string, string[]> | null
   name?: string
@@ -13,7 +13,10 @@ interface ResetPasswordCheckProps {
   confirmPassword?: string
 }
 
-export const resetPasswordAction = async (_: unknown, formData: FormData): Promise<ResetPasswordCheckProps> => {
+export const resetPasswordAction = async (
+  _: unknown,
+  formData: FormData,
+): Promise<ResetPasswordCheckProps> => {
   // zod 검사
   const result = await authAction(_, formData, resetPasswordSchema)
 
@@ -25,24 +28,28 @@ export const resetPasswordAction = async (_: unknown, formData: FormData): Promi
   // supabase 마스터 권한
   // 비로그인시 일반 권한으로는 비밀번호 변경을 할 수 없어 마스터 권한으로 설정
   const supabase = createAdminClient()
-  
+
   // id에 맞는 name, email, phone 일치 여부 확인
-  const { data, error } = await supabase.from('users').select('id').match({ name: name, email: email, phone: phone }).single()
-  
+  const { data, error } = await supabase
+    .from('users')
+    .select('id')
+    .match({ name: name, email: email, phone: phone })
+    .single()
+
   if (error || !data) {
     return {
       errors: { root: ['일치하는 아이디가 없습니다'] },
       name: name,
       email: email,
       password: password,
-      confirmPassword: confirmPassword
+      confirmPassword: confirmPassword,
     }
   }
 
   // 마스터 권한으로 password 업데이트
   const { error: updateError } = await supabase.auth.admin.updateUserById(
     data.id,
-    { password: password }
+    { password: password },
   )
 
   if (updateError) {

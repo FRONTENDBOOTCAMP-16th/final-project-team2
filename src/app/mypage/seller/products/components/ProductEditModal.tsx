@@ -1,4 +1,4 @@
-"use client";
+'use client'
 
 import { SellerProduct } from "@/app/mypage/types/sellerOrderItems";
 import { ProductFormField } from "./ProductFormField";
@@ -8,8 +8,8 @@ import OptionInput from "../../register/components/OptionInput";
 import ImageUploader from "@/app/mypage/consumer/profile/components/ImageUploader";
 
 interface Props {
-  product: SellerProduct;
-  onClose: () => void;
+  product: SellerProduct
+  onClose: () => void
 }
 
 export default function ProductEditModal({ product, onClose }: Props) {
@@ -33,7 +33,7 @@ export default function ProductEditModal({ product, onClose }: Props) {
           <h2 className="text-xl font-bold text-gray-900">상품 정보 수정</h2>
           <button onClick={onClose} className="text-gray-400 hover:text-black">
             <svg
-              className="w-6 h-6"
+              className="h-6 w-6"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -197,5 +197,5 @@ export default function ProductEditModal({ product, onClose }: Props) {
         </div>
       </div>
     </div>
-  );
+  )
 }

@@ -1,11 +1,11 @@
-import Image from "next/image";
+import Image from 'next/image'
 
 type Props = {
-  error?: string;
-  preview: string | null;
-  onChangeImg: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  fileName: string;
-};
+  error?: string
+  preview: string | null
+  onChangeImg: (e: React.ChangeEvent<HTMLInputElement>) => void
+  fileName: string
+}
 
 export default function ProductImg({
   error,
@@ -14,10 +14,10 @@ export default function ProductImg({
   fileName,
 }: Props) {
   const handleChangeImg = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-    onChangeImg(e);
-  };
+    const file = e.target.files?.[0]
+    if (!file) return
+    onChangeImg(e)
+  }
 
   return (
     <div className="flex flex-col gap-5">
@@ -25,7 +25,7 @@ export default function ProductImg({
         상품 이미지 업로드
       </p>
 
-      <div className="flex flex-row gap-4 items-center">
+      <div className="flex flex-row items-center gap-4">
         <input
           type="file"
           id="productImage"
@@ -42,26 +42,23 @@ export default function ProductImg({
             alt="상품 이미지 미리보기"
             width={300}
             height={300}
-            className="border-2 border-red-400 p-3 "
+            className="border-2 border-red-400 p-3"
           />
         )}
 
         <label
           htmlFor="productImage"
           tabIndex={0}
-          className={`cursor-pointer border p-4 h-10 flex items-center font-bold 
-            hover:bg-gray-400  hover:text-white
-            focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2
-            ${preview ? "bg-[#FF6B6B] text-white p-5" : "bg-white text-gray-600 "}`}
+          className={`flex h-10 cursor-pointer items-center border p-4 font-bold hover:bg-gray-400 hover:text-white focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:outline-none ${preview ? 'bg-[#FF6B6B] p-5 text-white' : 'bg-white text-gray-600'}`}
         >
-          {preview ? "이미지 선택 완료" : "이미지 선택"}
+          {preview ? '이미지 선택 완료' : '이미지 선택'}
         </label>
 
-        <span aria-live="polite" className="text-sm text-gray-500 shrink-0">
-          {fileName || "선택된 파일 없음"}
+        <span aria-live="polite" className="shrink-0 text-sm text-gray-500">
+          {fileName || '선택된 파일 없음'}
         </span>
       </div>
       {error && <p className="text-red-500">{error}</p>}
     </div>
-  );
+  )
 }

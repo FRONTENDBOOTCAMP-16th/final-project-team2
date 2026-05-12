@@ -1,10 +1,3 @@
-
-
 export default function SearchProducts() {
-
-
-  return (
-    <div className="">
-    </div>
-  )
+  return <div className=""></div>
 }

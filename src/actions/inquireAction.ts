@@ -2,19 +2,18 @@
 
 import { redirect } from 'next/navigation'
 import { revalidateTag, cacheTag } from 'next/cache'
-import { createClient } from '../../utils/supabase/server'
-import { createStaticClient } from '../../utils/supabase/static'
+import { createClient } from '@/utils/supabase/server'
+import { createStaticClient } from '@/utils/supabase/static'
 import type { BoardCard, FormState } from '@/types/boards'
 import checkAdmin from '@/actions/checkAdminAction'
 
 /**
  * 게시판에서의 조회 액션 (Static Action)
- * 
+ *
  * @param pages 조회하는 페이지 (?page= number)
  * @returns data 배열로 조회결과 생성, 필독 / 일반 공지사항
  */
 export const getInquires = async (pages: number) => {
-
   'use cache'
   cacheTag('inquire')
 
@@ -38,7 +37,8 @@ export const getInquires = async (pages: number) => {
   // 페이지에 맞는 목록 조회
   const { data, error } = await supabase
     .from('qnas')
-    .select(`
+    .select(
+      `
       *,
       writer:writer_id (
         id,
@@ -51,7 +51,8 @@ export const getInquires = async (pages: number) => {
         thumbnail_image,
         price
       )
-    `)
+    `,
+    )
     .order('created_at', { ascending: false })
     .range(from, to)
 
@@ -59,22 +60,23 @@ export const getInquires = async (pages: number) => {
 
   return {
     normalData: (data as unknown as BoardCard[]) || [],
-    normalCount: normalCount
+    normalCount: normalCount,
   }
 }
 
 /**
  * CRUD 액션 (Static Action)
- * 
+ *
  * 답변 기능은 UPDATE로 되니, 이 부분은 추후에 추가할 예정
  */
 export async function handleInquireAction(
   prevState: FormState,
-  formData: FormData
+  formData: FormData,
 ): Promise<FormState> {
-
   const supabase = await createClient()
-  const { data: { user } } = await supabase.auth.getUser()
+  const {
+    data: { user },
+  } = await supabase.auth.getUser()
 
   // 오류가 났을때 대응.
   if (!user) return { success: false, message: '세션이 만료되었습니다.' }
@@ -87,46 +89,44 @@ export async function handleInquireAction(
   // 그러므로 checkAdmin으로 방어.
   try {
     if (deleteId) {
-
       await checkAdmin('/inquire')
 
       // 공지사항 삭제 쿼리문
-      const { error } = await supabase
-        .from('qna')
-        .delete()
-        .eq('id', deleteId)
+      const { error } = await supabase.from('qna').delete().eq('id', deleteId)
       if (error) throw error
-
     } else {
-
       // 수정이라면 수정된 내용 제목, 필수사항, 내용
       const title = formData.get('title') as string
       const content = formData.get('content') as string
       const productId = formData.get('product') as string
-      
+
       // 유효성 검사 (제목 필수)
-      if (!title?.trim()) return { success: false, message: '제목을 입력해주세요.' }
+      if (!title?.trim())
+        return { success: false, message: '제목을 입력해주세요.' }
 
       if (updateId) {
         // 업데이트 수정
         const { error } = await supabase
           .from('qnas')
-          .update({ title, question_content: content  })
+          .update({ title, question_content: content })
           .eq('id', updateId)
         if (error) throw error
       } else {
         // 아무것도 없다면 새 질문글 작성
         const { error } = await supabase
           .from('qnas')
-          .insert({ title, question_content: content, writer_id: user.id, product_id: productId })
+          .insert({
+            title,
+            question_content: content,
+            writer_id: user.id,
+            product_id: productId,
+          })
         if (error) throw error
       }
     }
 
     // 아예 캐싱을 빼자하니 뺍니다...
     revalidateTag('inquire', { expire: 3600 })
-
-
   } catch (error: unknown) {
     console.error('오류 코드:', error)
     let errorMessage = '알 수 없는 에러가 발생했습니다.'
@@ -134,9 +134,13 @@ export async function handleInquireAction(
     if (error instanceof Error) {
       errorMessage = error.message
     } else if (error && typeof error === 'object' && 'message' in error) {
-      const supaError = error as { code?: string; message: string; details?: string }
-      errorMessage = supaError.code 
-        ? `오류 코드: ${supaError.code}, ${supaError.message}` 
+      const supaError = error as {
+        code?: string
+        message: string
+        details?: string
+      }
+      errorMessage = supaError.code
+        ? `오류 코드: ${supaError.code}, ${supaError.message}`
         : supaError.message
     } else {
       errorMessage = String(error)
@@ -144,7 +148,7 @@ export async function handleInquireAction(
 
     return {
       success: false,
-      message: errorMessage
+      message: errorMessage,
     }
   }
 
@@ -153,37 +157,46 @@ export async function handleInquireAction(
 
 /**
  * 질문 답변 액션 (Static Action)
- * 
+ *
  * ID를 찾아 그에 맞는 컬럼에 작성
  * 프론트에서도 스토어나 어드민 답변자만 노출이 되지만
  * 예기치 못한 오류로 넣을 수 있으니 방어로직도 추가할 예정.
  */
 export async function handleInquireReplyAction(
   prevState: FormState,
-  formData: FormData
+  formData: FormData,
 ): Promise<FormState> {
   const supabase = await createClient()
 
   // 1. 현재 로그인 세션 확인
-  const { data: { user } } = await supabase.auth.getUser()
+  const {
+    data: { user },
+  } = await supabase.auth.getUser()
   if (!user) return { success: false, message: '세션이 만료되었습니다.' }
 
   // 2. 클라이언트 폼에서 값 추출
   const replyId = formData.get('replyId') as string
   const answerContent = formData.get('content') as string
 
-  if (!replyId) return { success: false, message: '잘못된 접근입니다. (답변할 질문 ID 누락)' }
-  if (!answerContent?.trim()) return { success: false, message: '답변 내용을 입력해주세요.' }
+  if (!replyId)
+    return {
+      success: false,
+      message: '잘못된 접근입니다. (답변할 질문 ID 누락)',
+    }
+  if (!answerContent?.trim())
+    return { success: false, message: '답변 내용을 입력해주세요.' }
 
   try {
     // 3. 답변 작성자가 이 상품 판매자가 맞는지, 혹은 어드민인지 확인 (방어 로직)
     // QnA 데이터와 연관된 Product의 store_id를 조회
     const { data: qnaData, error: qnaError } = await supabase
       .from('qnas')
-      .select(`
+      .select(
+        `
         product_id, 
         product:product_id (store_id)
-      `)
+      `,
+      )
       .eq('id', replyId)
       .single()
 
@@ -201,11 +214,17 @@ export async function handleInquireReplyAction(
     const isAdmin = userData?.role === 'ADMIN'
 
     // 관계형 데이터의 형태에 따라 안전하게 추출
-    const productInfo = Array.isArray(qnaData.product) ? qnaData.product[0] : qnaData.product
+    const productInfo = Array.isArray(qnaData.product)
+      ? qnaData.product[0]
+      : qnaData.product
     const isSeller = productInfo?.store_id === user.id
 
     if (!isAdmin && !isSeller) {
-      return { success: false, message: '권한이 없습니다. (상품 판매자 또는 관리자만 답변 가능합니다.)' }
+      return {
+        success: false,
+        message:
+          '권한이 없습니다. (상품 판매자 또는 관리자만 답변 가능합니다.)',
+      }
     }
 
     // 4. 권한 검증 통과 시 답변 데이터 업데이트
@@ -215,7 +234,7 @@ export async function handleInquireReplyAction(
         answer_content: answerContent,
         is_answered: true,
         answered_at: new Date().toISOString(),
-        answerer_id: user.id
+        answerer_id: user.id,
       })
       .eq('id', replyId)
 
@@ -224,9 +243,11 @@ export async function handleInquireReplyAction(
     // 5. 성공 시 목록/상세 캐시 무효화
     // 캐싱 설정 제거로 인한 주석
     // revalidateTag('inquire', { expire: 3600 })
-
   } catch (error: unknown) {
-    const errorMessage = error instanceof Error ? error.message : '답변 등록 중 알 수 없는 오류가 발생했습니다.'
+    const errorMessage =
+      error instanceof Error
+        ? error.message
+        : '답변 등록 중 알 수 없는 오류가 발생했습니다.'
     return { success: false, message: errorMessage }
   }
 
@@ -236,7 +257,7 @@ export async function handleInquireReplyAction(
 
 /**
  * 1대1 상세 조회 액션 (Server Action)
- * 
+ *
  * @param id 상세 조회할 게시물 아이디 (/notice/id)
  * @returns data 배열로 조회결과 생성
  */
@@ -245,7 +266,8 @@ export const getInquireDetail = async (id: string): Promise<BoardCard> => {
 
   const { data, error } = await supabase
     .from('qnas')
-    .select(`*,
+    .select(
+      `*,
       writer:writer_id (
         id,
         nickname,
@@ -258,7 +280,8 @@ export const getInquireDetail = async (id: string): Promise<BoardCard> => {
         price,
         store_id
       )
-      `)
+      `,
+    )
     .eq('id', id)
     .single()
 

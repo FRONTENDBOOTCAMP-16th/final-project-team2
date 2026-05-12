@@ -1,16 +1,16 @@
-import { OrdersType } from "@/app/lib/Orders";
-import { createClient } from "../../../../utils/supabase/client";
+import { OrdersType } from '@/app/lib/Orders'
+import { createClient } from '@/utils/supabase/client'
 
 export const fetchOrders = async () => {
-  const supabase = createClient();
+  const supabase = createClient()
   const {
     data: { user },
-  } = await supabase.auth.getUser();
+  } = await supabase.auth.getUser()
 
-  if (!user) return [];
+  if (!user) return []
 
   const { data, error } = await supabase
-    .from("orders")
+    .from('orders')
     .select(
       `
     id,
@@ -40,9 +40,9 @@ export const fetchOrders = async () => {
     )
   `,
     )
-    .eq("user_id", user.id)
-    .returns<OrdersType[]>();
+    .eq('user_id', user.id)
+    .returns<OrdersType[]>()
 
-  if (error) throw error;
-  return data ?? [];
-};
+  if (error) throw error
+  return data ?? []
+}

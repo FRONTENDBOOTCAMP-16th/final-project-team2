@@ -1,8 +1,8 @@
-import ProductsCardList from '@/app/components/ProductsCardList';
+import ProductsCardList from '@/app/components/ProductsCardList'
 
 type ProductListSkeletonProps = {
-  count?: number;
-};
+  count?: number
+}
 
 export default function Skeleton({ count = 12 }: ProductListSkeletonProps) {
   return (
@@ -29,5 +29,5 @@ export default function Skeleton({ count = 12 }: ProductListSkeletonProps) {
         ))}
       </ProductsCardList>
     </section>
-  );
+  )
 }

@@ -1,4 +1,4 @@
-import { Minus, Plus } from 'lucide-react';
+import { Minus, Plus } from 'lucide-react'
 
 const Quantity = () => {
   return (
@@ -7,8 +7,13 @@ const Quantity = () => {
         수량
       </label>
 
-      <div className="mt-4 flex gap-1 items-center">
-        <button type="button" aria-label="한개 제거" className="border px-2.5 py-2  text-gray-600 cursor-not-allowed" disabled>
+      <div className="mt-4 flex items-center gap-1">
+        <button
+          type="button"
+          aria-label="한개 제거"
+          className="cursor-not-allowed border px-2.5 py-2 text-gray-600"
+          disabled
+        >
           <Minus className="w-4" />
         </button>
 
@@ -19,15 +24,19 @@ const Quantity = () => {
           min={1}
           value={1}
           readOnly
-          className="border w-20 py-2 text-center outline-none appearance-none"
+          className="w-20 appearance-none border py-2 text-center outline-none"
         />
 
-        <button type="button" aria-label="한개 추가" className="border bg-white px-2.5 py-2 text-black cursor-pointer">
+        <button
+          type="button"
+          aria-label="한개 추가"
+          className="cursor-pointer border bg-white px-2.5 py-2 text-black"
+        >
           <Plus className="w-4" />
         </button>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Quantity;
+export default Quantity

@@ -1,6 +1,6 @@
 type ProductListSkeletonProps = {
-  count?: number;
-};
+  count?: number
+}
 
 export default function MyPageOrdersSkeleton({
   count = 9,
@@ -15,30 +15,30 @@ export default function MyPageOrdersSkeleton({
         {Array.from({ length: count }).map((_, i) => (
           <div
             key={i}
-            className="grid grid-cols-[2fr_1fr_1fr_140px] items-center py-10 border-b border-gray-200 animate-pulse"
+            className="grid animate-pulse grid-cols-[2fr_1fr_1fr_140px] items-center border-b border-gray-200 py-10"
           >
             {/* 상품 정보 */}
             <div className="flex items-center gap-6">
-              <div className="w-30 h-30 bg-gray-200 rounded-md" />
+              <div className="h-30 w-30 rounded-md bg-gray-200" />
 
               <div className="space-y-3">
-                <div className="h-6 w-48 bg-gray-200 rounded" />
-                <div className="h-4 w-28 bg-gray-100 rounded" />
+                <div className="h-6 w-48 rounded bg-gray-200" />
+                <div className="h-4 w-28 rounded bg-gray-100" />
               </div>
             </div>
 
             <div className="flex justify-center">
-              <div className="h-6 w-28 bg-gray-200 rounded" />
+              <div className="h-6 w-28 rounded bg-gray-200" />
             </div>
             <div className="flex justify-center">
-              <div className="h-6 w-24 bg-gray-200 rounded" />
+              <div className="h-6 w-24 rounded bg-gray-200" />
             </div>
             <div className="flex justify-center">
-              <div className="h-12 w-28 bg-gray-200 rounded-lg" />
+              <div className="h-12 w-28 rounded-lg bg-gray-200" />
             </div>
           </div>
         ))}
       </div>
     </section>
-  );
+  )
 }

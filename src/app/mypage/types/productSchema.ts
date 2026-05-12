@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { z } from 'zod'
 
 export const productUpdateSchema = z.object({
   state: z.string().min(1, "판매 상태를 선택해주세요."),

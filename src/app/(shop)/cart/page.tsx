@@ -1,7 +1,3 @@
 export default function CartList() {
-  return (
-    <div>
-      
-    </div>
-  )
+  return <div></div>
 }

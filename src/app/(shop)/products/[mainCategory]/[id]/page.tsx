@@ -1,34 +1,39 @@
-import { notFound } from 'next/navigation';
-import BreadCrumble from '../_components/BreadCrumble';
-import { isMainCategory, mainCategoryConvert } from '../lib/category';
-import ProductInfoComponent from './_components/Product/ProductInfoComponent';
-import TabInfoComponent from './_components/Tab/TabInfoComponent';
-import { getProductDetail } from '@/api/productDetailApi';
-import { getProductReviews } from '@/api/review';
-import ReviewList from './_components/Review/ReviewList';
-import Review from './_components/Review/Review';
-import ReviewChart from './_components/Review/ReviewChart';
+import { notFound } from 'next/navigation'
+import BreadCrumble from '../_components/BreadCrumble'
+import { isMainCategory, mainCategoryConvert } from '../lib/category'
+import ProductInfoComponent from './_components/Product/ProductInfoComponent'
+import TabInfoComponent from './_components/Tab/TabInfoComponent'
+import { getProductDetail } from '@/api/productDetailApi'
+import { getProductReviews } from '@/api/review'
+import ReviewList from './_components/Review/ReviewList'
+import Review from './_components/Review/Review'
+import ReviewChart from './_components/Review/ReviewChart'
 
 type ProductDetailPageProps = {
   params: Promise<{
-    mainCategory: string;
-    id: string;
-  }>;
-};
+    mainCategory: string
+    id: string
+  }>
+}
 
-export default async function ProductDetailPage({ params }: ProductDetailPageProps) {
-  const { mainCategory, id } = await params;
+export default async function ProductDetailPage({
+  params,
+}: ProductDetailPageProps) {
+  const { mainCategory, id } = await params
 
   if (!isMainCategory(mainCategory)) {
-    notFound();
+    notFound()
   }
 
-  const categoryLabel = mainCategoryConvert[mainCategory];
-  const product = await getProductDetail(id);
-  const reviews = await getProductReviews(id);
+  const categoryLabel = mainCategoryConvert[mainCategory]
+  const product = await getProductDetail(id)
+  const reviews = await getProductReviews(id)
 
   return (
-    <div aria-labelledby="product-detail-title" className="mt-5 mb-38 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div
+      aria-labelledby="product-detail-title"
+      className="mx-auto mt-5 mb-38 max-w-7xl px-4 sm:px-6 lg:px-8"
+    >
       <h1 id="product-detail-title" className="sr-only">
         제품 상세 페이지
       </h1>
@@ -41,8 +46,10 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
           <ReviewChart reviews={reviews} />
           <Review reviews={reviews} />
         </ReviewList>
-        <div className="mt-15">{/* <RecomandProduct products={products} /> */}</div>
+        <div className="mt-15">
+          {/* <RecomandProduct products={products} /> */}
+        </div>
       </main>
     </div>
-  );
+  )
 }

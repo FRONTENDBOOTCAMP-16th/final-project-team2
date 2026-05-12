@@ -1,23 +1,23 @@
-import LikeToggleButton from "@/app/mypage/consumer/wishlist/components/LikeToggleButton";
-import Link from "next/link";
-import Image from "next/image";
-import { ProductLikeWithProduct } from "@/app/lib/productLike";
-import { CATEGORY_GROUPS } from "../lib/categoryGroup";
+import LikeToggleButton from '@/app/mypage/consumer/wishlist/components/LikeToggleButton'
+import Link from 'next/link'
+import Image from 'next/image'
+import { ProductLikeWithProduct } from '@/app/lib/productLike'
+import { CATEGORY_GROUPS } from '../lib/categoryGroup'
 
 interface Props {
-  order: ProductLikeWithProduct;
-  onRemove: (id: string) => void;
+  order: ProductLikeWithProduct
+  onRemove: (id: string) => void
 }
 //
 export default function WishListItemCard({ order, onRemove }: Props) {
-  const product = order.products;
-  const categoryName = product.product_categories[0]?.categories.name ?? "";
+  const product = order.products
+  const categoryName = product.product_categories[0]?.categories.name ?? ''
 
   const categoryId = CATEGORY_GROUPS.find((group) =>
     group.categories.includes(categoryName),
-  )?.id;
+  )?.id
 
-  const productId = product.id;
+  const productId = product.id
 
   return (
     <div key={order.id} className="flex flex-col">
@@ -28,7 +28,7 @@ export default function WishListItemCard({ order, onRemove }: Props) {
         className="relative flex flex-col transition-transform duration-400 hover:scale-105"
       >
         {product.discount_rate > 0 && (
-          <div className="absolute top-0 left-0  bg-[#DC2626] text-white px-2 py-1 text-sm font-bold">
+          <div className="absolute top-0 left-0 bg-[#DC2626] px-2 py-1 text-sm font-bold text-white">
             {product.discount_rate}%
           </div>
         )}
@@ -36,27 +36,27 @@ export default function WishListItemCard({ order, onRemove }: Props) {
         <Image
           width={282}
           height={282}
-          className="object-fill "
+          className="object-fill"
           src={product.thumbnail_image}
           alt=""
         />
       </Link>
-      <div className="flex flex-col  pt-4">
-        <p className="text-sm text-gray-400 ">
+      <div className="flex flex-col pt-4">
+        <p className="text-sm text-gray-400">
           {product.product_categories[0]?.categories.name}
         </p>
         <div className="flex justify-between">
-          <p className="font-bold self-center w-50 truncate">{product.name}</p>
+          <p className="w-50 self-center truncate font-bold">{product.name}</p>
           <LikeToggleButton id={order.id} onRemove={onRemove} />
         </div>
 
         <div className="flex gap-2">
           {product.discount_rate > 0 && (
-            <span className="text-red-500 font-bold text-sm">
+            <span className="text-sm font-bold text-red-500">
               {product.discount_rate}%
             </span>
           )}
-          <span className="font-bold text-sm text-slate-800">
+          <span className="text-sm font-bold text-slate-800">
             {(
               product.price *
               (1 - product.discount_rate / 100)
@@ -66,5 +66,5 @@ export default function WishListItemCard({ order, onRemove }: Props) {
         </div>
       </div>
     </div>
-  );
+  )
 }
