@@ -8,6 +8,7 @@ import useDeliveryOrders from '@/hooks/useDeliveryOrders'
 import { useState } from 'react'
 import MypageDeliverySkeleton from '@/app/mypage/components/MypageDeliverSkeleton'
 import { useDeliveryQuery } from '../hooks/useDeliveryQuery'
+import { useRouter, useSearchParams } from 'next/navigation'
 
 const CATEGORIES = [
   { id: 'All', label: '전체', sort: 'All' },
@@ -17,21 +18,27 @@ const CATEGORIES = [
 ] as const
 
 export default function DeliveryProductList() {
-  // 1. 페이지네이션 및 데이터 페칭
+  // 1. 페이지네이션, 데이터 페칭, 서치파람스
   const [currentPage, setCurrentPage] = useState(1)
-
+  const searchParams = useSearchParams()
+  const router = useRouter()
+  const category = searchParams.get('category') ?? 'All'
   const { data, isLoading } = useDeliveryQuery(currentPage, 5)
   const items = data?.items ?? []
   const count = data?.count ?? 0
   const totalPages = Math.ceil(count / 5)
 
-  // 2. 정렬 + 데이터는 hook에서 처리
-  const { sortType, handleTabChange, sortedOrders } = useDeliveryOrders(items)
+  // 2. 정렬 + 데이터는 커스텀 hook에서 처리
+  const { sortType, handleTabChange, sortedOrders } = useDeliveryOrders(
+    items,
+    category,
+  )
   const currentItems = sortedOrders
 
   const handleTabChangeWithReset = (id: string) => {
     handleTabChange(id, CATEGORIES)
     setCurrentPage(1)
+    router.push(`?category=${id}`)
   }
 
   if (isLoading || !items) {

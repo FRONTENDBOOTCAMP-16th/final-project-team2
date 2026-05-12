@@ -1,13 +1,10 @@
-'use client'
 import OrderStatusBadge from '@/app/mypage/consumer/orders/components/OrderStatusBadge'
 import { OrderItem } from '@/app/mypage/types/orderItem'
 import DeliverStatusButton from './DeliveryStatusButton'
 import { TotalPriceFormat } from '@/utils/intl'
-// import { useState } from 'react'
 
 export default function DeliveryProductCard({ order }: { order: OrderItem }) {
   const emailPrefix = order.email?.split('@')[0]
-  // const [openId, setOpenId] = useState<string | null>(null)
 
   return (
     <div className="mb-2 flex gap-5 border-b border-gray-300 p-4 font-semibold">
