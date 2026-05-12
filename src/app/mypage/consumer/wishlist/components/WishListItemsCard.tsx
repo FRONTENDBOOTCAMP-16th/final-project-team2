@@ -6,7 +6,7 @@ import { CATEGORY_GROUPS } from "../lib/categoryGroup";
 import {
   DiscountPriceFormat,
   DiscountRateFormat,
-} from "../../../../../../utils/supabase/intl";
+} from "@/utils/supabase/intl";
 
 interface Props {
   order: ProductLikeWithProduct

@@ -4,7 +4,7 @@ import Link from "next/link";
 import { OrderItemStatus } from "../lib/orderItemStatus";
 import { CATEGORY_GROUPS } from "../../wishlist/lib/categoryGroup";
 import { OrderItem } from "@/app/lib/Orders";
-import { DateFormat } from "../../../../../../utils/supabase/intl";
+import { DateFormat } from "@/utils/supabase/intl";
 
 interface Props {
   order: OrderItem

@@ -1,4 +1,4 @@
-import { createClient } from "../../../../utils/supabase/client";
+import { createClient } from '@/utils/supabase/client'
 
 export const fetchDelivery = async (page: number, limit: number) => {
   const from = (page - 1) * limit;
