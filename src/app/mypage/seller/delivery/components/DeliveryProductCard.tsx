@@ -1,7 +1,7 @@
 import OrderStatusBadge from "@/app/mypage/consumer/orders/components/OrderStatusBadge";
 import { OrderItem } from "@/app/mypage/types/orderItem";
 import DeliverStatusButton from "./DeliveryStatusButton";
-import { TotalPriceFormat } from "@/utils/supabase/intl";
+import { TotalPriceFormat } from "@/utils/intl";
 
 export default function DeliveryProductCard({ order }: { order: OrderItem }) {
   const emailPrefix = order.email?.split("@")[0];
