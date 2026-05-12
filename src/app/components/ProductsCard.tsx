@@ -9,9 +9,10 @@ interface ProductCardProps {
   category: string;
   sort?: string;
   onImageLoad?: () => void;
+  inventoryTag?: boolean;
 }
 
-export default function ProductsCard({ product, category, onImageLoad }: ProductCardProps) {
+export default function ProductsCard({ product, category, onImageLoad, inventoryTag }: ProductCardProps) {
   if (!product) return null;
   const price = product.price;
   const discount_rate = product.discount_rate;
@@ -20,6 +21,7 @@ export default function ProductsCard({ product, category, onImageLoad }: Product
   const label = `제품명 ${product.name}, 원래 가격은 ${PriceFormat(price)}원이고 ${DiscountRateFormat(discount_rate)}퍼센트 할인 중이며 현재 가격은 ${DiscountPriceFormat(price, discount_rate)}원입니다.`;
   const isLike = false;
 
+  const inventoryLabel = product.inventory <= 10 ? '상품이 곧 품절이에요':`${product.inventory}`
   return (
     <li className="relative" aria-label={label}>
       <Link href={`${baseUrl}/${category}/${product.id}`} className="block">
