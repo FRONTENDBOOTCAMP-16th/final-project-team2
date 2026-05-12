@@ -1,14 +1,5 @@
-<<<<<<< HEAD
-import { OrdersType } from "@/app/lib/Orders";
-<<<<<<< HEAD
-import { createClient } from "../../../../utils/supabase/client";
-=======
-import { createClient } from "@/utils/supabase/client";
->>>>>>> b52d470 (feat: utils링크 변경 및 중복코드 삭제)
-=======
 import { OrdersType } from '@/app/lib/Orders'
 import { createClient } from '@/utils/supabase/client'
->>>>>>> 730c7f5 (refactory: 프리티어 설정)
 
 export const fetchOrders = async () => {
   const supabase = createClient()
