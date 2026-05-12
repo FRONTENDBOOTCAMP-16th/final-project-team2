@@ -21,16 +21,16 @@ export default function ProductDiscount({
         name="productDiscount"
         id="productDiscount"
         aria-describedby="prouductDiscountHelp"
-        max="70"
+        max="100"
         min="0"
         value={value}
         className="w-2xl h-12.5 border border-[#D1D5DC] bg-[#F9FAFB] px-4 py-3"
-        placeholder="최소 0%부터 최대 70%까지 설정 가능합니다."
+        placeholder="최소 0%부터 최대100%까지 설정 가능합니다."
         onChange={(e) => onChange(e.target.value)}
         onBlur={onBlur}
       />
       <p id="prouductDiscountHelp" className="sr-only">
-        최소 0%부터 최대 70%까지 설정 가능합니다.
+        최소 0%부터 최대 100%까지 설정 가능합니다.
       </p>
       {error && <p className="text-red-500">{error}</p>}
     </div>
