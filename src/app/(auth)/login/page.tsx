@@ -1,35 +1,50 @@
-'use client';
+'use client'
 
-import Link from 'next/link';
-import { useActionState } from 'react';
-import { loginAction } from '@/actions/loginAction';
-import InputBox from '@/app/components/InputBox';
-import TypeRadioInput from '@/app/components/TypeRadioInput';
-import SimpleToast from '@/app/components/SimpleToast';
+import Link from 'next/link'
+import { useActionState } from 'react'
+import { loginAction } from '@/actions/loginAction'
+import InputBox from '@/app/components/InputBox'
+import TypeRadioInput from '@/app/components/TypeRadioInput'
+import SimpleToast from '@/app/components/SimpleToast'
 
 export default function LoginPage() {
-  const [state, formAction] = useActionState(loginAction, null);
+  const [state, formAction] = useActionState(loginAction, null)
 
   return (
-    <div className="bg-white w-full p-10 sm:w-160 transition-all rounded-2xl shadow-md shadow-[#c7c7c7]">
-      <div className="text-2xl text-center border-be pbe-9 border-[#e0e0e0]">
+    <div className="w-full rounded-2xl bg-white p-10 shadow-md shadow-[#c7c7c7] transition-all sm:w-160">
+      <div className="border-be border-[#e0e0e0] pbe-9 text-center text-2xl">
         <strong className="text-[#575A68]">환영합니다</strong>
-        <p className="text-sm mbs-1 text-[#575A68]">계정에 로그인하세요</p>
+        <p className="mbs-1 text-sm text-[#575A68]">계정에 로그인하세요</p>
       </div>
 
-      <form action={formAction} className="flex flex-col gap-2 mbs-10 pb-7">
+      <form action={formAction} className="mbs-10 flex flex-col gap-2 pb-7">
         {/* 계정 타입 */}
         <div className="flex gap-2">
-          <TypeRadioInput label="소비자" name="role" value="USER" defaultChecked={state?.role === 'USER'} />
-          <TypeRadioInput label="판매자" name="role" value="BUSINESS" defaultChecked={state?.role === 'BUSINESS'} />
-          <TypeRadioInput label="관리자" name="role" value="ADMIN" defaultChecked={state?.role === 'ADMIN'} />
+          <TypeRadioInput
+            label="소비자"
+            name="role"
+            value="USER"
+            defaultChecked={state?.role === 'USER'}
+          />
+          <TypeRadioInput
+            label="판매자"
+            name="role"
+            value="BUSINESS"
+            defaultChecked={state?.role === 'BUSINESS'}
+          />
+          <TypeRadioInput
+            label="관리자"
+            name="role"
+            value="ADMIN"
+            defaultChecked={state?.role === 'ADMIN'}
+          />
         </div>
         <p className="text-red-600" aria-live="polite" aria-hidden="true">
           {state?.errors?.role?.[0]}
         </p>
 
         {/* 아이디 패스워드 */}
-        <div className="flex flex-col gap-2 mbs-2">
+        <div className="mbs-2 flex flex-col gap-2">
           <InputBox
             type="text"
             label="이메일"
@@ -48,40 +63,68 @@ export default function LoginPage() {
           />
         </div>
 
-        <p className="mbs-1 text-red-600 text-center" aria-live="polite" aria-hidden="true">
+        <p
+          className="mbs-1 text-center text-red-600"
+          aria-live="polite"
+          aria-hidden="true"
+        >
           {state?.errors?.root?.[0]}
         </p>
 
         {/* 로그인 서브 */}
-        <div className="grid grid-cols-1 pbe-9 border-be border-[#e0e0e0]">
-          <Link href="/signup" className="text-[#575A68] row-start-1 col-start-2 text-right">
+        <div className="grid grid-cols-1 border-be border-[#e0e0e0] pbe-9">
+          <Link
+            href="/signup"
+            className="col-start-2 row-start-1 text-right text-[#575A68]"
+          >
             회원가입
           </Link>
-          <Link href="/find-id" className="text-[#575A68] row-start-2 col-start-2 text-right">
+          <Link
+            href="/find-id"
+            className="col-start-2 row-start-2 text-right text-[#575A68]"
+          >
             아이디 찾기
           </Link>
-          <Link href="/reset-password" className="text-[#575A68] row-start-3 col-start-2 text-right">
+          <Link
+            href="/reset-password"
+            className="col-start-2 row-start-3 text-right text-[#575A68]"
+          >
             비밀번호 재설정
           </Link>
         </div>
 
         {/* 로그인버튼 */}
-        <button type="submit" className="w-full py-4 mbs-12 text-white bg-[#FF6B6B] rounded font-bold cursor-pointer">
+        <button
+          type="submit"
+          className="mbs-12 w-full cursor-pointer rounded bg-[#FF6B6B] py-4 font-bold text-white"
+        >
           로그인 버튼
         </button>
       </form>
 
       {/* 간편로그인 */}
       <div className="relative border-bs border-[#e0e0e0]">
-        <span className="absolute left-1/2 -translate-1/2 bg-white text-[#575A68] px-6">간편로그인</span>
+        <span className="absolute left-1/2 -translate-1/2 bg-white px-6 text-[#575A68]">
+          간편로그인
+        </span>
         {/* 카카오로그인 */}
-        <button type="submit" className="w-full py-4 mbs-7 text-black bg-[#FEE500] rounded font-bold cursor-pointer">
+        <button
+          type="submit"
+          className="mbs-7 w-full cursor-pointer rounded bg-[#FEE500] py-4 font-bold text-black"
+        >
           카카오 로그인
         </button>
       </div>
 
       {/* 토스트 메세지 */}
-      <SimpleToast text={state?.errors?.root?.[0] ? `로그인 실패: ${state?.errors?.root?.[0]}` : undefined} trigger={state} />
+      <SimpleToast
+        text={
+          state?.errors?.root?.[0]
+            ? `로그인 실패: ${state?.errors?.root?.[0]}`
+            : undefined
+        }
+        trigger={state}
+      />
     </div>
-  );
+  )
 }

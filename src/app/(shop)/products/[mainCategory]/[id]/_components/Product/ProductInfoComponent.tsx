@@ -1,24 +1,24 @@
-import ProductOption from './ProductOption';
-import Quantity from './Quantity';
-import TotalPrice from './TotalPrice';
-import { ShoppingCart } from 'lucide-react';
-import HeartButton from './HeartButton';
-import ProductSummary from './ProductSummary';
-import ProductImage from '../../../_components/ProductImage';
-import { Products } from '@/app/lib/products';
-import { DiscountPriceFormat } from '@/utils/supabase/intl';
+import ProductOption from './ProductOption'
+import Quantity from './Quantity'
+import TotalPrice from './TotalPrice'
+import { ShoppingCart } from 'lucide-react'
+import HeartButton from './HeartButton'
+import ProductSummary from './ProductSummary'
+import ProductImage from '../../../_components/ProductImage'
+import { Products } from '@/app/lib/products'
+import { DiscountPriceFormat } from '@/utils/supabase/intl'
 
 type Props = {
-  product: Products;
-};
+  product: Products
+}
 
 const ProductInfoComponent = ({ product }: Props) => {
-  const price = product.price;
-  const discount_rate = product.discount_rate;
+  const price = product.price
+  const discount_rate = product.discount_rate
   return (
     <article className="mx-auto max-w-7xl">
-      <div className="grid grid-cols-1 gap-10 lg:grid-cols-2 mt-6">
-        <div className="w-148 aspect-square relative overflow-hidden">
+      <div className="mt-6 grid grid-cols-1 gap-10 lg:grid-cols-2">
+        <div className="relative aspect-square w-148 overflow-hidden">
           <ProductImage src={product.thumbnail_image} alt="" />
         </div>
 
@@ -36,21 +36,25 @@ const ProductInfoComponent = ({ product }: Props) => {
               <Quantity />
             </div>
             <div className="mt-4">
-              <TotalPrice price={Number(DiscountPriceFormat(price, discount_rate))} quantity={2} />
+              <TotalPrice
+                price={Number(DiscountPriceFormat(price, discount_rate))}
+                quantity={2}
+              />
             </div>
             <div className="mt-6">
               <div className="mt-4 flex gap-3">
                 <button
                   type="button"
-                  className="bg-white hover:bg-[#f8ddddfa] border-2 w-full flex items-center justify-center gap-3 transition duration-300"
+                  className="flex w-full items-center justify-center gap-3 border-2 bg-white transition duration-300 hover:bg-[#f8ddddfa]"
                 >
-                  <ShoppingCart className="w-5 h-5" /> <span>장바구니</span>
+                  <ShoppingCart className="h-5 w-5" /> <span>장바구니</span>
                 </button>
                 <button
                   type="button"
-                  className="bg-[#FF6B6B] hover:bg-[#ee6767] w-full flex items-center justify-center gap-3 transition duration-300"
+                  className="flex w-full items-center justify-center gap-3 bg-[#FF6B6B] transition duration-300 hover:bg-[#ee6767]"
                 >
-                  <ShoppingCart className="text-white w-5 h-5" /> <span className="text-white">구매하기</span>
+                  <ShoppingCart className="h-5 w-5 text-white" />{' '}
+                  <span className="text-white">구매하기</span>
                 </button>
                 <HeartButton />
               </div>
@@ -59,7 +63,7 @@ const ProductInfoComponent = ({ product }: Props) => {
         </section>
       </div>
     </article>
-  );
-};
+  )
+}
 
-export default ProductInfoComponent;
+export default ProductInfoComponent

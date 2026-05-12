@@ -1,32 +1,32 @@
-"use client";
+'use client'
 
-import ImageUploader from "@/app/mypage/consumer/profile/components/ImageUploader";
-import { SellerProduct } from "@/app/mypage/types/sellerOrderItems";
-import { ProductFormField } from "./ProductFormField";
-import { useProductEdit } from "@/hooks/useProductEdit";
+import ImageUploader from '@/app/mypage/consumer/profile/components/ImageUploader'
+import { SellerProduct } from '@/app/mypage/types/sellerOrderItems'
+import { ProductFormField } from './ProductFormField'
+import { useProductEdit } from '@/hooks/useProductEdit'
 
 interface Props {
-  product: SellerProduct;
-  onClose: () => void;
+  product: SellerProduct
+  onClose: () => void
 }
 
 export default function ProductEditModal({ product, onClose }: Props) {
   const { formData, errors, handleChange, handleSubmit, finalPrice } =
-    useProductEdit(product, onClose);
+    useProductEdit(product, onClose)
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
-      <div className="bg-white w-[480px] p-8 rounded-lg shadow-2xl overflow-y-auto max-h-[95vh]">
-        <div className="flex justify-between items-center mb-10">
+      <div className="max-h-[95vh] w-[480px] overflow-y-auto rounded-lg bg-white p-8 shadow-2xl">
+        <div className="mb-10 flex items-center justify-between">
           <h2 className="text-xl font-bold tracking-tight text-gray-900">
             상품 정보 수정
           </h2>
           <button
             onClick={onClose}
-            className="text-gray-400 hover:text-black transition-colors"
+            className="text-gray-400 transition-colors hover:text-black"
           >
             <svg
-              className="w-6 h-6"
+              className="h-6 w-6"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -42,7 +42,7 @@ export default function ProductEditModal({ product, onClose }: Props) {
         </div>
 
         <div className="space-y-10">
-          <div className="border border-dashed border-gray-200 p-6 rounded-md bg-gray-50/30">
+          <div className="rounded-md border border-dashed border-gray-200 bg-gray-50/30 p-6">
             <ImageUploader
               key={product.id}
               label="상품 이미지"
@@ -56,7 +56,7 @@ export default function ProductEditModal({ product, onClose }: Props) {
                 name="state"
                 value={formData.state}
                 onChange={handleChange}
-                className="w-full border-b border-gray-200 py-2 outline-none focus:border-black transition-colors bg-transparent cursor-pointer text-sm font-medium"
+                className="w-full cursor-pointer border-b border-gray-200 bg-transparent py-2 text-sm font-medium transition-colors outline-none focus:border-black"
               >
                 <option value="">상태 선택</option>
                 <option value="판매중">판매중</option>
@@ -70,23 +70,23 @@ export default function ProductEditModal({ product, onClose }: Props) {
               <input
                 type="number"
                 name="inventory"
-                value={formData.inventory === 0 ? "" : formData.inventory}
+                value={formData.inventory === 0 ? '' : formData.inventory}
                 onChange={handleChange}
                 placeholder="0"
-                className="w-full border-b border-gray-200 py-2 outline-none focus:border-black transition-colors text-sm font-medium"
+                className="w-full border-b border-gray-200 py-2 text-sm font-medium transition-colors outline-none focus:border-black"
               />
             </ProductFormField>
 
-            <div className="flex gap-8 items-start">
+            <div className="flex items-start gap-8">
               <div className="flex-1">
                 <ProductFormField label="원가 (원)" error={errors.price}>
                   <input
                     type="number"
                     name="price"
-                    value={formData.price === 0 ? "" : formData.price}
+                    value={formData.price === 0 ? '' : formData.price}
                     onChange={handleChange}
                     placeholder="0"
-                    className="w-full border-b border-gray-200 py-2 outline-none focus:border-black transition-colors text-sm font-medium"
+                    className="w-full border-b border-gray-200 py-2 text-sm font-medium transition-colors outline-none focus:border-black"
                   />
                 </ProductFormField>
               </div>
@@ -96,49 +96,49 @@ export default function ProductEditModal({ product, onClose }: Props) {
                     type="number"
                     name="discount_rate"
                     value={
-                      formData.discount_rate === 0 ? "" : formData.discount_rate
+                      formData.discount_rate === 0 ? '' : formData.discount_rate
                     }
                     onChange={handleChange}
                     placeholder="0"
-                    className="w-full border-b border-gray-200 py-2 outline-none focus:border-black transition-colors text-sm font-medium"
+                    className="w-full border-b border-gray-200 py-2 text-sm font-medium transition-colors outline-none focus:border-black"
                   />
                 </ProductFormField>
               </div>
             </div>
 
-            <div className="bg-gray-50 p-5 rounded-sm flex justify-between items-center border border-gray-100 mt-4">
+            <div className="mt-4 flex items-center justify-between rounded-sm border border-gray-100 bg-gray-50 p-5">
               <div className="flex flex-col gap-1">
-                <span className="text-[10px] font-bold text-gray-400 uppercase tracking-tight">
+                <span className="text-[10px] font-bold tracking-tight text-gray-400 uppercase">
                   예상 판매가
                 </span>
-                <p className="text-xs text-gray-400 line-through font-normal">
+                <p className="text-xs font-normal text-gray-400 line-through">
                   {formData.price.toLocaleString()}원
                 </p>
               </div>
-              <span className="text-xl font-bold text-black font-mono">
+              <span className="font-mono text-xl font-bold text-black">
                 {finalPrice.toLocaleString()}원
               </span>
             </div>
           </div>
         </div>
 
-        <div className="flex gap-3 mt-12">
+        <div className="mt-12 flex gap-3">
           <button
             type="button"
             onClick={onClose}
-            className="flex-1 py-4 border border-gray-200 text-sm font-semibold text-gray-500 hover:bg-gray-50 transition-all rounded-sm"
+            className="flex-1 rounded-sm border border-gray-200 py-4 text-sm font-semibold text-gray-500 transition-all hover:bg-gray-50"
           >
             취소
           </button>
           <button
             type="button"
             onClick={handleSubmit}
-            className="flex-1 py-4 bg-black text-white text-sm font-semibold hover:bg-neutral-800 transition-all rounded-sm shadow-md active:scale-[0.98]"
+            className="flex-1 rounded-sm bg-black py-4 text-sm font-semibold text-white shadow-md transition-all hover:bg-neutral-800 active:scale-[0.98]"
           >
             수정 완료
           </button>
         </div>
       </div>
     </div>
-  );
+  )
 }

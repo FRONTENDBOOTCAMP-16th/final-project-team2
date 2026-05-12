@@ -4,7 +4,9 @@ import { createClient } from '@/utils/supabase/server'
 
 export default async function checkUserID() {
   const supabase = await createClient()
-  const { data: { user } } = await supabase.auth.getUser()
+  const {
+    data: { user },
+  } = await supabase.auth.getUser()
 
   if (!user) {
     return null
@@ -15,10 +17,10 @@ export default async function checkUserID() {
     .select('role')
     .eq('id', user.id)
     .single()
-  
+
   if (error) {
     throw new Error(error.message)
   }
-  
-  return {id: user.id, role: data.role}
+
+  return { id: user.id, role: data.role }
 }

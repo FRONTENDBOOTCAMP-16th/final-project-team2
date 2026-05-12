@@ -11,7 +11,7 @@ export default function InquireFindProdctAction() {
     <>
       <button
         onClick={() => setIsOpen(true)}
-        className="flex items-center justify-center px-8 py-2 bg-red-500 text-white hover:bg-red-600 transition-colors"
+        className="flex items-center justify-center bg-red-500 px-8 py-2 text-white transition-colors hover:bg-red-600"
       >
         문의할 제품 찾기
       </button>
@@ -26,8 +26,8 @@ export default function InquireFindProdctAction() {
           </div>
         }
       >
-        <div className=''>
-            <SearchProducts onSelectClose={() => setIsOpen(false)} />
+        <div className="">
+          <SearchProducts onSelectClose={() => setIsOpen(false)} />
         </div>
       </Modal>
     </>

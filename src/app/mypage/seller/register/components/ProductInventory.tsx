@@ -1,9 +1,9 @@
 type Props = {
-  value: string;
-  error?: string;
-  onChange: (value: string) => void;
-  onBlur: () => void;
-};
+  value: string
+  error?: string
+  onChange: (value: string) => void
+  onBlur: () => void
+}
 
 export default function ProductInventory({
   value,
@@ -28,12 +28,12 @@ export default function ProductInventory({
         value={value}
         onChange={(e) => onChange(e.target.value)}
         onBlur={onBlur}
-        className="w-2xl h-12.5 border border-[#D1D5DC] bg-[#F9FAFB] px-4 py-3"
+        className="h-12.5 w-2xl border border-[#D1D5DC] bg-[#F9FAFB] px-4 py-3"
       />
       <p id="productInventoryHelp" className="sr-only">
         최소 10개부터 최대 100개까지 설정 가능합니다.
       </p>
       {error && <p className="text-red-500">{error}</p>}
     </div>
-  );
+  )
 }

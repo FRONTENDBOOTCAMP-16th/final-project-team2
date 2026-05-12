@@ -1,6 +1,6 @@
 type FullSkeletonProps = {
-  count?: number;
-};
+  count?: number
+}
 
 export default function FullSkeleton({ count = 1 }: FullSkeletonProps) {
   return (
@@ -10,10 +10,10 @@ export default function FullSkeleton({ count = 1 }: FullSkeletonProps) {
       </h2>
 
       {Array.from({ length: count }).map((_, i) => (
-        <div key={i} className="animate-pulse w-full">
-          <div className="aspect-square w-full h-163 bg-gray-200" />
+        <div key={i} className="w-full animate-pulse">
+          <div className="aspect-square h-163 w-full bg-gray-200" />
         </div>
       ))}
     </section>
-  );
+  )
 }

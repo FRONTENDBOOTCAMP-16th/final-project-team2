@@ -1,11 +1,11 @@
-import { Reviews } from '@/app/lib/Reviews';
-import { Star } from 'lucide-react';
-import { DateFormat } from '@/utils/supabase/intl';
-import Image from 'next/image';
+import { Reviews } from '@/app/lib/Reviews'
+import { Star } from 'lucide-react'
+import { DateFormat } from '@/utils/supabase/intl'
+import Image from 'next/image'
 
 type ReviewListProps = {
-  reviews: Reviews[];
-};
+  reviews: Reviews[]
+}
 
 export default function Review({ reviews }: ReviewListProps) {
   if (reviews.length === 0) {
@@ -14,24 +14,31 @@ export default function Review({ reviews }: ReviewListProps) {
         <h2 className="text-2xl font-bold">리뷰</h2>
         <p className="mt-6 text-gray-500">아직 등록된 리뷰가 없습니다.</p>
       </section>
-    );
+    )
   }
 
   return (
     <section className="mx-auto max-w-7xl px-4 py-12">
       <ul>
-        {reviews.map(review => (
-          <li key={review.id} className="rounded-2xl border border-gray-200 p-6">
+        {reviews.map((review) => (
+          <li
+            key={review.id}
+            className="rounded-2xl border border-gray-200 p-6"
+          >
             <div className="flex items-start justify-between gap-4">
               <div>
                 <div className="flex items-center gap-2">
-                  <strong className="font-semibold">{review.users.nickname}</strong>
+                  <strong className="font-semibold">
+                    {review.users.nickname}
+                  </strong>
 
-                  <time className="text-sm text-gray-400">{DateFormat(review.created_at)}</time>
+                  <time className="text-sm text-gray-400">
+                    {DateFormat(review.created_at)}
+                  </time>
 
                   <div className="flex items-center gap-1">
                     {Array.from({ length: 5 }).map((_, index) => {
-                      const isFilled = index < review.grade;
+                      const isFilled = index < review.grade
 
                       return (
                         <Star
@@ -39,7 +46,7 @@ export default function Review({ reviews }: ReviewListProps) {
                           className={`h-4 w-4 ${isFilled ? 'text-yellow-400' : 'text-gray-300'}`}
                           fill={isFilled ? 'currentColor' : 'none'}
                         />
-                      );
+                      )
                     })}
 
                     <span className="sr-only">평점 {review.grade}점</span>
@@ -68,5 +75,5 @@ export default function Review({ reviews }: ReviewListProps) {
         ))}
       </ul>
     </section>
-  );
+  )
 }

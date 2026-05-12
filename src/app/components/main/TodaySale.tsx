@@ -1,5 +1,5 @@
-import { getProductsAll } from '@/api/getProductAll';
-import ProductsTodaySale from './ProductTodaySale';
+import { getProductsAll } from '@/api/getProductAll'
+import ProductsTodaySale from './ProductTodaySale'
 
 interface TodaySaleProps {
   maxProducts: number

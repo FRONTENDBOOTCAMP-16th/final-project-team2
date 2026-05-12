@@ -1,7 +1,7 @@
 'use client'
 
-import { useState } from "react"
-import InputBox from "./InputBox"
+import { useState } from 'react'
+import InputBox from './InputBox'
 
 interface PasswordGroupProps {
   passwordError?: string
@@ -10,10 +10,15 @@ interface PasswordGroupProps {
   defaultConfirm?: string
 }
 
-export default function PasswordGroup({ passwordError, confirmError, defaultPassword, defaultConfirm }: PasswordGroupProps) {
+export default function PasswordGroup({
+  passwordError,
+  confirmError,
+  defaultPassword,
+  defaultConfirm,
+}: PasswordGroupProps) {
   // 비밀번호, 비밀번호재확인, 포커스 여부
-  const [password, setPassword] = useState(defaultPassword || "")
-  const [confirmPassword, setConfirmPassword] = useState(defaultPassword || "")
+  const [password, setPassword] = useState(defaultPassword || '')
+  const [confirmPassword, setConfirmPassword] = useState(defaultPassword || '')
   const [isConfirmFocus, setIsConfirmFocus] = useState(false)
 
   // 비밀번호 매칭 메세지 표시 조건
@@ -23,11 +28,11 @@ export default function PasswordGroup({ passwordError, confirmError, defaultPass
 
   return (
     <>
-      <InputBox 
+      <InputBox
         type="password"
         label="비밀번호"
         name="password"
-        placeholder="비밀번호를 입력하세요" 
+        placeholder="비밀번호를 입력하세요"
         error={passwordError}
         defaultValue={defaultPassword}
         onChange={(e) => setPassword(e.target.value)}
@@ -39,15 +44,19 @@ export default function PasswordGroup({ passwordError, confirmError, defaultPass
         label="비밀번호 재입력"
         name="confirmPassword"
         placeholder="비밀번호를 재입력하세요"
-        error={confirmError} 
+        error={confirmError}
         defaultValue={defaultConfirm}
         onChange={(e) => setConfirmPassword(e.target.value)}
         onFocus={() => setIsConfirmFocus(true)}
         onBlur={() => setIsConfirmFocus(false)}
       />
       {showMessage && (
-        <p className={`text-xs font-bold ${isMatched ? 'text-green-600' : 'text-gray-500'}`}>
-          {isMatched ? '✓ 비밀번호가 일치합니다' : '• 비밀번호가 일치하지 않습니다'}
+        <p
+          className={`text-xs font-bold ${isMatched ? 'text-green-600' : 'text-gray-500'}`}
+        >
+          {isMatched
+            ? '✓ 비밀번호가 일치합니다'
+            : '• 비밀번호가 일치하지 않습니다'}
         </p>
       )}
     </>

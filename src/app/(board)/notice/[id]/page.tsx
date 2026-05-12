@@ -1,17 +1,15 @@
-import { getNoticeDetail } from "@/actions/noticeAction"
-import { notFound } from "next/navigation"
+import { getNoticeDetail } from '@/actions/noticeAction'
+import { notFound } from 'next/navigation'
 import sanitizeHtml from 'sanitize-html'
-import Link from "next/link"
-import checkUserID from "@/actions/checkUserId"
-import NoticeDeleteAction from "@/app/components/board/NoticeDeleteAction"
-
+import Link from 'next/link'
+import checkUserID from '@/actions/checkUserId'
+import NoticeDeleteAction from '@/app/components/board/NoticeDeleteAction'
 
 export default async function NoticeDetailPage({
-  params
+  params,
 }: {
   params: Promise<{ id: string }>
 }) {
-
   let notice
   const { id } = await params
 
@@ -19,7 +17,7 @@ export default async function NoticeDetailPage({
     notice = await getNoticeDetail(id)
   } catch (err) {
     console.error(err)
-    throw new Error("데이터를 불러오지 못했습니다.")
+    throw new Error('데이터를 불러오지 못했습니다.')
   }
 
   if (!notice) {
@@ -27,15 +25,20 @@ export default async function NoticeDetailPage({
   }
 
   const cleanHtml = sanitizeHtml(notice.content || '', {
-    allowedTags: sanitizeHtml.defaults.allowedTags.concat(['img', 'span', 'u', 's', 'iframe']),
+    allowedTags: sanitizeHtml.defaults.allowedTags.concat([
+      'img',
+      'span',
+      'u',
+      's',
+      'iframe',
+    ]),
     allowedAttributes: {
       ...sanitizeHtml.defaults.allowedAttributes,
       '*': ['class', 'style'],
-      'iframe': ['src', 'width', 'height', 'allowfullscreen', 'frameborder'], 
+      iframe: ['src', 'width', 'height', 'allowfullscreen', 'frameborder'],
     },
     allowedSchemes: ['http', 'https', 'ftp', 'mailto', 'data'],
   })
-
 
   let isWriter = false
   const user = await checkUserID()
@@ -44,38 +47,31 @@ export default async function NoticeDetailPage({
   }
 
   return (
-    <div className="w-full max-w-4xl p-8 mx-auto">
+    <div className="mx-auto w-full max-w-4xl p-8">
       <h1 className="text-2xl font-bold">{notice.title}</h1>
       <p className="text-gray-500">
         작성일: {new Date(notice.created_at).toLocaleDateString()}
       </p>
       <hr className="my-4" />
-      <div
-        className="prose"
-        dangerouslySetInnerHTML={{ __html: cleanHtml }}
-      />
+      <div className="prose" dangerouslySetInnerHTML={{ __html: cleanHtml }} />
 
-      
-      <div className="flex gap-2 justify-end w-full my-6">
+      <div className="my-6 flex w-full justify-end gap-2">
         {isWriter && (
           <Link
             href={`/notice/${notice.id}/edit`}
-            className="flex items-center justify-center px-8 py-2 bg-gray-200 text-black"
+            className="flex items-center justify-center bg-gray-200 px-8 py-2 text-black"
           >
             수정
           </Link>
         )}
-        {isWriter && (
-          <NoticeDeleteAction id={notice.id} />
-        )}
+        {isWriter && <NoticeDeleteAction id={notice.id} />}
         <Link
           href="/notice"
-          className="flex items-center justify-center px-8 py-2 bg-slate-800 text-white  hover:bg-slate-700"
+          className="flex items-center justify-center bg-slate-800 px-8 py-2 text-white hover:bg-slate-700"
         >
           목록
         </Link>
       </div>
-
     </div>
   )
 }

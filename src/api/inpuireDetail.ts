@@ -3,10 +3,11 @@ import type { BoardCard } from '@/types/boards'
 
 export const getInquireDetail = async (id: string): Promise<BoardCard> => {
   const supabase = await createClient()
-  
+
   const { data, error } = await supabase
     .from('qnas')
-    .select(`*,
+    .select(
+      `*,
       writer:writer_id (
         id,
         nickname,
@@ -18,7 +19,8 @@ export const getInquireDetail = async (id: string): Promise<BoardCard> => {
         thumbnail_image,
         price
       )
-      `)
+      `,
+    )
     .eq('id', id)
     .single()
 

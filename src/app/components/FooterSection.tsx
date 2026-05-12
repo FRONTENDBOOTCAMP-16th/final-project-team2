@@ -1,9 +1,9 @@
-import Link from "next/link"
+import Link from 'next/link'
 
 export default function Footer() {
   return (
     <footer className="w-full bg-gray-200 px-4 pbs-14 pbe-8">
-      <div className="max-w-7xl mx-auto">
+      <div className="mx-auto max-w-7xl">
         <strong className="font-extrabold">행쇼마켓</strong>
 
         <div className="mbs-4">
@@ -12,13 +12,15 @@ export default function Footer() {
           <p>주말 및 공휴일 휴무</p>
         </div>
 
-        <div className="flex gap-4 mbs-6">
-          <Link href='/inquire'>1:1문의하기</Link>
-          <Link href='/notice'>공지사항</Link>
+        <div className="mbs-6 flex gap-4">
+          <Link href="/inquire">1:1문의하기</Link>
+          <Link href="/notice">공지사항</Link>
           <button type="button">이미지 저작권 및 AI 사용</button>
         </div>
 
-        <small className="block text-base font-extrabold mbs-10 text-[#2D3142] opacity-80">copyright by 2026</small>
+        <small className="mbs-10 block text-base font-extrabold text-[#2D3142] opacity-80">
+          copyright by 2026
+        </small>
       </div>
     </footer>
   )

@@ -1,12 +1,12 @@
-export type Category = { 
-  id: string; 
-  name: string; 
-  parent_id: string | null;
+export type Category = {
+  id: string
+  name: string
+  parent_id: string | null
 }
 
 // 영어로 변환할 리스트
 const MAIN_CATEGORY_SLUG: Record<string, string> = {
-  '필기구': 'writing',
+  필기구: 'writing',
   '노트/다이어리': 'paper',
   '데코/다꾸': 'deco',
   '사무/데스크용품': 'office',
@@ -15,7 +15,7 @@ const MAIN_CATEGORY_SLUG: Record<string, string> = {
 export const categoriesList = (
   categoryId: string | null,
   category: Category | null,
-  categoryList: Category[]
+  categoryList: Category[],
 ): string | null => {
   if (!categoryId || !category) return null
 

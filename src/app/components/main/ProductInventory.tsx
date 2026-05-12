@@ -1,15 +1,17 @@
-import { getProductsAll } from '@/api/getProductAll';
-import ProductsCard from '../ProductsCard';
+import { getProductsAll } from '@/api/getProductAll'
+import ProductsCard from '../ProductsCard'
 
 interface ProductInventoryProps {
   maxProducts: number
 }
 
-export default async function ProductInventory({ maxProducts }: ProductInventoryProps) {
+export default async function ProductInventory({
+  maxProducts,
+}: ProductInventoryProps) {
   const { products } = await getProductsAll({
     sort: 'inventory',
     page: 1,
-    pageSize: maxProducts, 
+    pageSize: maxProducts,
   })
 
   if (!products || products.length === 0) {
@@ -20,7 +22,7 @@ export default async function ProductInventory({ maxProducts }: ProductInventory
     <>
       {products.map((product) => (
         <ProductsCard
-          baseUrl='/products'
+          baseUrl="/products"
           key={product.id}
           product={product}
           category={product.category_path}
