@@ -2,6 +2,7 @@ import { getCarts } from "@/actions/cartAction"
 import QuantityComponent from "./_components/Quantity"
 import Image from "next/image"
 import PriceBox from "./_components/PriceBox"
+import CartDeleteButton from "./_components/CartDeleteButton"
 
 export default async function CartList() {
 
@@ -70,6 +71,7 @@ export default async function CartList() {
             </div>
 
             {/* 삭제버튼 */}
+            <CartDeleteButton />
 
           </li>
         ))}

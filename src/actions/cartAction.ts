@@ -2,6 +2,7 @@
 import { createClient } from '../../utils/supabase/server'
 import { z } from 'zod'
 import { getAuthUserInfo } from './getUser'
+import { revalidatePath } from 'next/cache'
 
 const productSchema = z.object({
   name: z.string(),
@@ -102,6 +103,7 @@ export async function updateCartQuantity(input: UpdateCartQuantity) {
     console.error(error.message)
     return { success: false, message: '수량 업데이트에 실패했습니다.' }
   }
-
+  revalidatePath('/cart')
+  
   return { success: true }
 }
