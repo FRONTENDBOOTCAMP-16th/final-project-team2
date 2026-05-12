@@ -45,9 +45,10 @@ export default async function ProductDetailPage({
         <TabInfoComponent product={product} store={store} reviews={reviews} seller={seller} />
 
         <div className="mt-15">
-          <Suspense fallback={<Skeleton />}>
-            <ProductListFetcher sort={'recommend'} pageSize={4} mainCategory={mainCategory} pagination={false} />
-          </Suspense>
+          <h2 className='text-3xl font-bold'>추천 상품</h2>
+            <Suspense fallback={<Skeleton />}>
+              <ProductListFetcher page={1} pageSize={4} mainCategory={mainCategory} sort={'latest'} pagination={false} />
+            </Suspense>
         </div>
       </main>
     </div>
