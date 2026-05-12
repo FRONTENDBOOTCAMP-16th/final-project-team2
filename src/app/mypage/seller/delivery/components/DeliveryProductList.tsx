@@ -18,19 +18,15 @@ const CATEGORIES = [
 ] as const;
 
 export default function DeliveryProductList() {
+  // 3. 페이지네이션
+  const [currentPage, setCurrentPage] = useState(1);
+
   // 1. 데이터 가져오기
-  const { data: items = [], isLoading } = useDeliveryQuery();
+  const { data: items = [], isLoading } = useDeliveryQuery(currentPage, 5);
 
   // 2. 정렬 + 데이터는 hook에서 처리
   const { sortType, handleTabChange, sortedOrders } = useDeliveryOrders(items);
-
-  // 3. 페이지네이션
-  const [currentPage, setCurrentPage] = useState(1);
-  const { totalPages, currentItems } = usePagination(
-    sortedOrders,
-    5,
-    currentPage,
-  );
+  const currentItems = sortedOrders;
 
   const handleTabChangeWithReset = (id: string) => {
     handleTabChange(id, CATEGORIES);
