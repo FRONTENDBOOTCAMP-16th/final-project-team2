@@ -1,6 +1,7 @@
 import { ProductWithCategory } from '@/api/getProductAll';
 import Image from 'next/image';
 import MainMoreDetail from './MainMoreDetail';
+import { DiscountPriceFormat, PriceFormat } from '@/utils/supabase/intl';
 
 interface ProductsTodaySaleProps {
   products: ProductWithCategory[]
@@ -9,23 +10,23 @@ interface ProductsTodaySaleProps {
 export default function ProductsTodaySale({ products }: ProductsTodaySaleProps) {
 
   return products.map(item => {
-    const priceLocale = Number(item.price).toLocaleString();
-    const finalPrice = Math.round(Number(item.price) * (1 - Number(item.discount_rate) / 100)).toLocaleString()
+    const priceLocale = PriceFormat(Number(item.price));
+    const finalPrice = DiscountPriceFormat(Number(item.price), Number(item.discount_rate))
 
     return (
-      <div key={item.id} className="grid grid-cols-13 bg-white">
-        <div className="relative h-90 col-span-6">
+      <div key={item.id} className="flex flex-1 overflow-hidden">
+        <div className="flex-1 relative h-90">
           <Image src={item.thumbnail_image} alt={`${item.name} 상품 이미지`} className="object-cover" fill sizes="w-full h-full" />
         </div>
-        <div className="flex flex-col col-span-7 px-8.5 pbe-8.5 pbs-17 text-left">
-          <dl>
+        <div className="flex flex-col px-8.5 pbe-8.5 pbs-17 text-left bg-white min-w-0 flex-1">
+          <dl className='w-full min-w-0'>
             <dt className="sr-only">상품 카테고리</dt>
             <dd aria-label={`${item.category_name_kr}`} className="text-[#7B7979] font-extrabold">
               {item.category_name_kr}
             </dd>
 
             <dt className="sr-only">상품명</dt>
-            <dd className="text-[#2D3142] font-bold text-3xl mbs-4.5">{item.name}</dd>
+            <dd className="text-[#2D3142] font-bold text-3xl mbs-4.5 truncate">{item.name}</dd>
           </dl>
 
           <dl className="flex flex-wrap items-center flex-1 mbs-4.5">

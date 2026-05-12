@@ -18,7 +18,7 @@ export default function ProductTodaySaleCard({ children, title, subTitle, fullIm
         {fullImage ? (
           <div className="[&_a>div]:w-full! [&_li>button]:right-0">{children}</div>
         ) : (
-          <div className="grid lg:grid-cols-2 gap-6">{children}</div>
+          <div className="flex flex-1 gap-6 flex-col lg:flex-row">{children}</div>
         )}
       </div>
     </>
