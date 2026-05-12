@@ -1,5 +1,3 @@
-// src/api/reviews.ts
-
 import { Reviews } from '@/app/lib/Reviews'
 import { createClient } from '@/utils/supabase/server'
 
