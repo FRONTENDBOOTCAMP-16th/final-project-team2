@@ -3,14 +3,7 @@
 import Link from 'next/link'
 import NavList from './NavList'
 import Header from './Header'
-
-
-const mainMenu = [
-  { name: '필기구', href: '/products/writing' },
-  { name: '페이퍼', href: '/products/paper' },
-  { name: '다꾸/데코', href: '/products/deco' },
-  { name: '소품/액세서리', href: '/products/accessory' },
-]
+import SubHeader from './SubHeader'
 
 export default function Navi() {
   return (
@@ -43,12 +36,7 @@ export default function Navi() {
           </a>
 
           {/* 메뉴 리스트 */}
-          <NavList
-            label="main-menu"
-            items={mainMenu}
-            className="md:absolute md:left-1/2 md:-translate-x-1/2"
-            mainMenu
-          />
+          <SubHeader />
 
           {/* 헤더 */}
           <Header />
