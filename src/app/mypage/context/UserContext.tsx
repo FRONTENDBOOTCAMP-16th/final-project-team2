@@ -1,27 +1,62 @@
 'use client'
 
-import { createContext, useContext, useState, ReactNode } from 'react'
+import {
+  createContext,
+  useContext,
+  useState,
+  ReactNode,
+  useEffect,
+} from 'react'
+import { createClient } from '@/utils/supabase/client'
 
-type Role = 'consumer' | 'seller'
+type Role = 'USER' | 'BUSINESS' | null
+
 interface UserContextType {
   role: Role
-  setRole: (role: Role) => void
+  isLoading: boolean
 }
 
 const UserContext = createContext<UserContextType | undefined>(undefined)
 
 export function UserProvider({ children }: { children: ReactNode }) {
-  // 나중에 DB 연동 전까지 여기서 "consumer"나 "seller"를 바꿔가며 테스트할 수 있습니다.
-  const [role, setRole] = useState<Role>('seller')
+  const [role, setRole] = useState<Role>(null)
+  const [isLoading, setIsLoading] = useState(true)
+  const supabase = createClient()
+
+  useEffect(() => {
+    const fetchUserRole = async () => {
+      setIsLoading(true)
+
+      // 현재 로그인한 유저 정보 가져오기
+      const {
+        data: { user },
+      } = await supabase.auth.getUser()
+
+      if (user) {
+        // 해당 유저의 role을 DB(users 테이블)에서 조회
+        const { data: profile } = await supabase
+          .from('users')
+          .select('role')
+          .eq('id', user.id)
+          .single()
+
+        setRole(profile?.role || null)
+      } else {
+        setRole(null)
+      }
+      setIsLoading(false)
+    }
+
+    fetchUserRole()
+  }, [supabase])
 
   return (
-    <UserContext.Provider value={{ role, setRole }}>
+    <UserContext.Provider value={{ role, isLoading }}>
       {children}
     </UserContext.Provider>
   )
 }
 
-// 컴포넌트에서 쉽게 꺼내 쓰기 위한 커스텀 훅
 export function useUser() {
   const context = useContext(UserContext)
   if (!context) throw new Error('UserProvider 안에서만 사용 가능합니다.')
