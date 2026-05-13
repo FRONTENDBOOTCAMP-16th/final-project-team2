@@ -13,7 +13,7 @@ interface LayoutProps {
 export default function MyPageLayout({ children }: LayoutProps) {
   return (
     <UserProvider>
-      <section className="min-h-screen w-full bg-[#FFF8F3]">
+      <section className="min-h-screen w-full bg-[#FFF8F3] dark:bg-gray-900 dark:text-black">
         <div className="mx-auto flex max-w-6xl gap-6 px-4 pt-32">
           <aside className="shrink-0">
             <UserProfile />
