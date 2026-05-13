@@ -11,3 +11,4 @@ export const sellerInfoSchema = z.object({
   email: z.string().optional(),
   name: z.string().min(1, '가게명을 작성해주세요.'),
 })
+export type SellerInfoData = z.infer<typeof sellerInfoSchema>
