@@ -37,7 +37,7 @@ export default function WishListItemCard({ order, onRemove }: Props) {
         <Image
           width={282}
           height={282}
-          className="object-fill"
+          className="h-70.5 w-full"
           src={product.thumbnail_image}
           alt=""
         />
