@@ -6,6 +6,8 @@ import SellerProductItemCard from './SellerProductItemCard'
 import Pagination from '../../delivery/components/Pagination'
 import { usePagination } from '@/hooks/usePagination'
 import ProductEditModal from './ProductEditModal'
+import { useUser } from '@/app/mypage/context/UserContext'
+import { SellerProductItemSkeleton } from './SellerProductItemSkeleton'
 
 type Props = {
   products: SellerProduct[]
@@ -17,6 +19,8 @@ export default function SellerProductItemList({ products }: Props) {
     null,
   )
 
+  const { isLoading } = useUser()
+
   const itemsPerPage = 5
 
   const { currentItems, totalPages } = usePagination(
@@ -24,6 +28,20 @@ export default function SellerProductItemList({ products }: Props) {
     itemsPerPage,
     currentPage,
   )
+
+  if (isLoading) {
+    return (
+      <div className="flex flex-col gap-6">
+        <ul>
+          {[1, 2, 3, 4, 5].map((i) => (
+            <li key={i}>
+              <SellerProductItemSkeleton />
+            </li>
+          ))}
+        </ul>
+      </div>
+    )
+  }
 
   return (
     <div className="flex flex-col gap-6">
