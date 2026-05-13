@@ -1,4 +1,4 @@
-export type QnAs = {
+export interface QnAs {
   id: string
   writer_id: string
   product_id: string

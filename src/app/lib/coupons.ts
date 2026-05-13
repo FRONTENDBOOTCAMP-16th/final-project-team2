@@ -1,4 +1,4 @@
-export type Coupons = {
+export interface Coupons {
   id: string
   name: string
   discount_rate: number
@@ -8,7 +8,7 @@ export type Coupons = {
   updated_at: string
 }
 
-export type UserCoupons = {
+export interface UserCoupons {
   id: string
   user_id: string
   coupon_id: string

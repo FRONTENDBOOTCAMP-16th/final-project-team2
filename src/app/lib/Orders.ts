@@ -1,6 +1,6 @@
 import { OrderProducts } from './categories'
 
-export type Orders = {
+export interface Orders {
   id: string
   user_id: string
   order_status: string
@@ -14,7 +14,7 @@ export type Orders = {
   update_at: string
 }
 
-export type Order_items = {
+export interface Order_items {
   id: string
   order_id: string
   product_id: string
@@ -25,7 +25,7 @@ export type Order_items = {
 }
 
 // 확장 타입
-export type OrderItem = {
+export interface OrderItem {
   id: string
   product_id: string
   quantity: number
@@ -34,7 +34,7 @@ export type OrderItem = {
   products: OrderProducts
 }
 
-export type OrdersType = {
+export interface Ordersinterface {
   id: string
   order_status: string
   final_price: number
