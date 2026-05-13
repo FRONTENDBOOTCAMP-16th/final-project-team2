@@ -1,9 +1,9 @@
-export type ProductOptions = {
+export interface ProductOptions {
   color?: string[]
   size?: string[]
 }
 
-export type Products = {
+export interface Products {
   id: string
   store_id: string
   name: string
@@ -20,7 +20,7 @@ export type Products = {
 }
 
 // 상품 옵션 확장 타입
-export type Option = {
+export interface Option {
   name: OptionType
   values: string[]
 }
