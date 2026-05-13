@@ -35,14 +35,14 @@ export const loginAction = async (
     })
 
   if (authError) {
-    return {
+    return { 
       errors: { root: ['이메일, 비밀번호 또는 회원 구분이 올바르지 않습니다'] },
       email: email,
       password: password,
       role: role,
     }
   }
-
+  
   // 로그인 시 타입확인
   const { data: roleData } = await supabase
     .from('users')
