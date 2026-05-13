@@ -1,13 +1,12 @@
 'use client'
 
-import { resetPasswordAction } from '@/actions/resetPasswordAction'
-import InputBox from '@/app/components/InputBox'
+import { passwordChangeAction } from '@/actions/passwordChangeAction'
 import PasswordGroup from '@/app/components/PasswordGroup'
 import SimpleToast from '@/app/components/SimpleToast'
 import { useActionState } from 'react'
 
-export default function ResetPasswordPage() {
-  const [state, formAction] = useActionState(resetPasswordAction, null)
+export default function ChangePasswordPage() {
+  const [state, formAction] = useActionState(passwordChangeAction, null)
 
   return (
     <div className="w-full rounded-2xl bg-white p-10 shadow-md shadow-[#c7c7c7] transition-all sm:w-160">
@@ -17,29 +16,11 @@ export default function ResetPasswordPage() {
 
       <form action={formAction} className="mbs-10 flex flex-col gap-2 pb-4">
         <div className="mbe-4">
-          <InputBox
-            type="text"
-            label="이름"
-            name="name"
-            placeholder="이름을 입력하세요"
-            error={state?.errors?.name?.[0]}
-            defaultValue={state?.name}
-          />
-          <InputBox
-            type="text"
-            label="이메일"
-            name="email"
-            placeholder="이메일을 입력하세요"
-            error={state?.errors?.email?.[0]}
-            defaultValue={state?.email}
-          />
-          <InputBox
-            type="text"
-            label="핸드폰 번호"
-            name="phone"
-            placeholder="핸드폰 번호를 입력하세요 (010-0000-0000)"
-            error={state?.errors?.phone?.[0]}
-            defaultValue={state?.phone}
+          <PasswordGroup
+            passwordError={state?.errors?.password?.[0]}
+            confirmError={state?.errors?.confirmPassword?.[0]}
+            defaultPassword={state?.password}
+            defaultConfirm={state?.confirmPassword}
           />
         </div>
         <p className="border-bs border-[#e0e0e0] pbs-4 text-center text-red-500">
