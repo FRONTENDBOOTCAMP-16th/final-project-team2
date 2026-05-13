@@ -1,6 +1,8 @@
-export interface ProductOptions {
-  color?: string[]
-  size?: string[]
+export type OptionType = 'color' | 'size'
+
+export interface ProductOptionType {
+  name: OptionType
+  values: string[]
 }
 
 export interface Products {
@@ -13,17 +15,8 @@ export interface Products {
   inventory: number
   price: number
   discount_rate: number
-  options: ProductOptions | null
+  options: ProductOptionType[] | null
   average_grade: number
   create_at: string
   update_at: string
 }
-
-// 상품 옵션 확장 타입
-export interface Option {
-  name: OptionType
-  values: string[]
-}
-
-// 상품 옵션 라벨
-export type OptionType = 'color' | 'size'
