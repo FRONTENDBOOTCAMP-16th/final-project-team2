@@ -80,12 +80,6 @@ export default function LoginPage() {
             회원가입
           </Link>
           <Link
-            href="/find-id"
-            className="col-start-2 row-start-2 text-right text-[#575A68]"
-          >
-            아이디 찾기
-          </Link>
-          <Link
             href="/reset-password"
             className="col-start-2 row-start-3 text-right text-[#575A68]"
           >
