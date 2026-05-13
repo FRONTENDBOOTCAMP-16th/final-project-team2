@@ -3,9 +3,10 @@ import { Star } from 'lucide-react'
 
 type ReviewProps = {
   reviews: Reviews[]
+  average_grade:number|null
 }
 
-const ReviewChart = ({ reviews }: ReviewProps) => {
+const ReviewChart = ({ reviews,average_grade }: ReviewProps) => {
   const review_avg =
     reviews.length > 0
       ? (
@@ -39,13 +40,13 @@ const ReviewChart = ({ reviews }: ReviewProps) => {
 
       <div className="mt-6 grid gap-6 rounded-2xl border border-gray-200 bg-white p-6 md:grid-cols-[260px_1fr]">
         <div className="flex flex-col items-center justify-center border-b border-gray-200 pb-6 md:border-r md:border-b-0 md:pr-6 md:pb-0">
-          <p className="text-5xl font-bold">{review_avg}</p>
+          <p className="text-5xl font-bold">{average_grade}</p>
 
           <div className="mt-3 flex">
             {Array.from({ length: 5 }).map((_, index) => (
               <Star
                 key={index}
-                className={`h-5 w-5 ${index < Math.floor(Number(review_avg)) ? 'text-yellow-400' : 'text-gray-200'}`}
+                className={`h-5 w-5 ${index < Math.floor(Number(average_grade)) ? 'text-yellow-400' : 'text-gray-200'}`}
                 fill={index < 5 ? 'currentColor' : 'none'}
               />
             ))}

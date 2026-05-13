@@ -13,9 +13,11 @@ type Props = {
   store: Store;
   reviews: Reviews[];
   seller: string;
+  average_grade: number|null;
 };
 
-export default function TabInfoComponent({ product, store, reviews, seller }: Props) {
+export default function TabInfoComponent({ product, store, reviews, seller,average_grade }: Props) {
+
   return (
     <TabProductsInfo
       product={product}
@@ -23,7 +25,7 @@ export default function TabInfoComponent({ product, store, reviews, seller }: Pr
       storeContent={<TabStoreInfo store={store} seller={seller} />}
       reviewContent={
         <ReviewList>
-          <ReviewChart reviews={reviews} />
+          <ReviewChart reviews={reviews} average_grade={average_grade} />
           <Review reviews={reviews} />
         </ReviewList>
       }
