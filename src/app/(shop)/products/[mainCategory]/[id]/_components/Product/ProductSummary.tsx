@@ -50,7 +50,7 @@ const ProductSummary = ({ products, mainCategory, reviews, average_grade }: Prop
           <dt className="sr-only">할인가</dt>
           <dd className="order-1 text-2xl font-semibold">{DiscountPrice(products.price, products.discount_rate)}</dd>
         </dl>
-        <div className="discountBadge mt-2 flex h-7 w-20.5 items-center justify-center bg-black pt-1 pr-3 pb-1 pl-3">
+        <div className="discountBadge mt-2 flex h-7 w-20.5 items-center justify-center bg-red-500 pt-1 pr-3 pb-1 pl-3">
           <p className="text-white">{products.discount_rate}%</p>
         </div>
       </div>

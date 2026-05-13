@@ -31,7 +31,7 @@ export default async function ProductDetailPage({
   const reviews = await getProductReviews(id);
   const store = await getStoreDetailInfo(product.store_id);
   const seller = await getSellerUser(store.owner_id);
-  const average_grade = await getAverageGrade(id)
+  const average_grade = await getAverageGrade(product.id)
 
   return (
     <div
@@ -43,11 +43,11 @@ export default async function ProductDetailPage({
       </h1>
       <BreadCrumble category={categoryLabel} />
       <main>
-        <ProductInfoComponent reviews={reviews} product={product} category={categoryLabel} average_grade={average_grade}/>
+        <ProductInfoComponent reviews={reviews} product={product} category={categoryLabel} average_grade={average_grade} />
         <TabInfoComponent product={product} store={store} reviews={reviews} seller={seller} average_grade={average_grade} />
 
         <div className="mt-15">
-          <h2 className='text-3xl font-bold mt-4 mb-8'>추천 상품</h2>
+          <h2 className='text-3xl font-bold mt-4 mb-4'>추천 상품</h2>
             <Suspense fallback={<Skeleton />}>
               <ProductListFetcher page={1} pageSize={4} mainCategory={mainCategory} sort={'latest'} pagination={false} />
             </Suspense>

@@ -7,13 +7,13 @@ type ReviewProps = {
 }
 
 const ReviewChart = ({ reviews,average_grade }: ReviewProps) => {
-  const review_avg =
-    reviews.length > 0
-      ? (
-          reviews.reduce((acc, review) => acc + review.grade, 0) /
-          reviews.length
-        ).toFixed(1)
-      : '0.0'
+  // const review_avg =
+  //   reviews.length > 0
+  //     ? (
+  //         reviews.reduce((acc, review) => acc + review.grade, 0) /
+  //         reviews.length
+  //       ).toFixed(1)
+  //     : '0.0'
   const reviewStats = {
     5: reviews.filter((r) => r.grade === 5).length,
     4: reviews.filter((r) => r.grade === 4).length,
