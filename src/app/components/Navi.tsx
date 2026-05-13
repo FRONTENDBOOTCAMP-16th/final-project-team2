@@ -1,7 +1,6 @@
 'use client'
 
 import Link from 'next/link'
-import NavList from './NavList'
 import Header from './Header'
 import SubHeader from './SubHeader'
 
