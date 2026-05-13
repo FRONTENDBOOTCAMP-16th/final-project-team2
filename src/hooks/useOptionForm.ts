@@ -8,14 +8,14 @@ import { Option, OptionType } from '@/app/lib/products'
  */
 
 export default function useOptionForm(initialOptions: Option[] = []) {
-  const [optionType, setOptionType] = useState<OptionType | "">("");
-  const [optionValue, setOptionValue] = useState("");
+  const [optionType, setOptionType] = useState<OptionType | ''>('')
+  const [optionValue, setOptionValue] = useState('')
 
   // 초기값이 배열인지 검사하여 에러를 방지합니다.
   const [options, setOptions] = useState<Option[]>(
     Array.isArray(initialOptions) ? initialOptions : [],
-  );
-  const [error, setError] = useState("");
+  )
+  const [error, setError] = useState('')
 
   const handleAddOptions = () => {
     if (!optionType) {
@@ -30,15 +30,22 @@ export default function useOptionForm(initialOptions: Option[] = []) {
 
     setOptions((prev) => {
       // prev가 배열이 아닐 경우(iterable 에러)를 대비한 방어 로직
-      const safePrev = Array.isArray(prev) ? prev : [];
+      const safePrev = Array.isArray(prev) ? prev : []
+
+      // 쉼표를 기준으로 나눠서 배열로 생성
+      const parsedValues = optionValue
+        .split(',')
+        .map((value) => value.trim())
+        .filter(Boolean)
+
       return [
         ...safePrev,
         {
           name: optionType as OptionType,
-          values: [optionValue],
+          values: parsedValues,
         },
-      ];
-    });
+      ]
+    })
 
     setOptionType('')
     setOptionValue('')
@@ -48,10 +55,10 @@ export default function useOptionForm(initialOptions: Option[] = []) {
   const handleDeleteOption = (name: OptionType) => {
     setOptions((prev) => {
       // prev가 배열이 아닐 경우를 대비한 방어 로직
-      const safePrev = Array.isArray(prev) ? prev : [];
-      return safePrev.filter((option) => option.name !== name);
-    });
-  };
+      const safePrev = Array.isArray(prev) ? prev : []
+      return safePrev.filter((option) => option.name !== name)
+    })
+  }
 
   const handleOptionType = (value: OptionType | '') => {
     setOptionType(value)

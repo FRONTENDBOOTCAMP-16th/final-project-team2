@@ -12,7 +12,7 @@ import { useRouter, useSearchParams } from 'next/navigation'
 
 const CATEGORIES = [
   { id: 'All', label: '전체', sort: 'All' },
-  { id: 'latest', label: '주문 최신순', sort: 'latest' },
+  { id: 'latest', label: '최신순', sort: 'latest' },
   { id: 'highPrice', label: '금액 높은 순', sort: 'highPrice' },
   { id: 'lowPrice', label: '금액 낮은 순', sort: 'lowPrice' },
 ] as const

@@ -6,14 +6,14 @@ interface Props {
 }
 
 export default function OptionList({ options, onRemove }: Props) {
-  const safeOptions = Array.isArray(options) ? options : [];
+  const safeOptions = Array.isArray(options) ? options : []
   return (
     <div className="flex flex-col">
       <ul>
         {safeOptions.map((option) => (
-          <li key={option.name} className="flex flex-row gap-4 mb-3 ">
-            <span className="w-80 border-2 border-gray-400 self-center p-2">
-              {option.name}: {option.values}
+          <li key={option.name} className="mb-3 flex flex-row gap-4">
+            <span className="w-80 self-center border-2 border-gray-400 p-2">
+              {option.name}: {option.values.join(', ')}
             </span>
             <button
               type="button"
