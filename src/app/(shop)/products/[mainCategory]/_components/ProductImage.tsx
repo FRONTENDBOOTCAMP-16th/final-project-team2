@@ -6,11 +6,12 @@ import { useRef, useState } from 'react'
 type ProductImageProps = {
   src?: string;
   alt: string;
+  sizes?: string;
   priority?: boolean;
   onLoadComplete?: () => void;
 };
 
-export default function ProductImage({ src, alt, priority = false, onLoadComplete }: ProductImageProps) {
+export default function ProductImage({ src, alt, sizes, priority = false, onLoadComplete }: ProductImageProps) {
   const fallback = '/fallback.png';
 
   const [imgSrc, setImgSrc] = useState(src || fallback);
@@ -29,6 +30,7 @@ export default function ProductImage({ src, alt, priority = false, onLoadComplet
       src={imgSrc}
       alt={alt}
       fill
+      sizes={sizes}
       priority={priority}
       className="object-cover"
       onLoad={reportLoaded}

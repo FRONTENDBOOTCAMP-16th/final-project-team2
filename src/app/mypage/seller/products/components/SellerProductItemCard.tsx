@@ -12,7 +12,7 @@ export default function SellerProductItemCard({ product, onEdit }: CardProps) {
   const stateStyles =
     product.state === '판매중'
       ? 'bg-[#00C37E] text-white'
-      : 'bg-[#FF6B6B] text-white'
+      : 'bg-black text-white'
 
   return (
     <div className="flex flex-row items-center gap-x-4 border-b border-gray-100 px-6 py-8 text-sm font-medium transition-colors hover:bg-gray-50">

@@ -40,7 +40,7 @@ export default function NavList({
                   <>{item.name}</>
                 )}
                 {mainMenu ? (
-                  <span className="absolute -bottom-2 left-1/2 h-0.5 w-0 -translate-x-1/2 bg-[#FF6B6B] transition-all duration-300 group-hover:w-full"></span>
+                  <span className="absolute -bottom-2 left-1/2 h-0.5 w-0 -translate-x-1/2 bg-black transition-all duration-300 group-hover:w-full"></span>
                 ) : (
                   <></>
                 )}

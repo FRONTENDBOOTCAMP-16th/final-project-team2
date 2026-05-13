@@ -47,7 +47,7 @@ export default function TabProductsInfo({ product, productContent, storeContent,
 
                   <span
                     className={`absolute bottom-0 left-0 h-1 w-full rounded-full transition-all duration-200 ${
-                      isActive ? 'bg-[#FF6B6B]' : 'bg-transparent'
+                      isActive ? 'bg-black' : 'bg-transparent'
                     }`}
                   />
                 </button>

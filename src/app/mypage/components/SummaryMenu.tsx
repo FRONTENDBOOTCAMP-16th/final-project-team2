@@ -60,7 +60,7 @@ const STATS_CONFIG: Record<'consumer' | 'seller', StatData[]> = {
 const StatCard = ({ label, value, href, icon: Icon }: StatCardProps) => (
   <Link
     href={href}
-    className="flex h-[190px] flex-1 cursor-pointer flex-col items-center justify-center gap-6 border-4 border-[#FF6B6B]/50 bg-white transition-colors hover:bg-[#FF6B6B]/5"
+    className="flex h-[190px] flex-1 cursor-pointer flex-col items-center justify-center gap-6 border-4 border-[#FF6B6B]/50 bg-white transition-colors hover:bg-black/5"
   >
     <span className="text-5xl font-black">{value}</span>
     <span className="flex items-center gap-1 text-base font-black text-[#FF6B6B]">

@@ -41,7 +41,7 @@ export default function RecommendMDClient({
         type="button"
         aria-disabled={moreButton}
         onClick={moreProduct}
-        className="m-auto mbs-15 flex w-full max-w-70 cursor-pointer justify-center rounded-2xl bg-[#FF6B6B] px-3 py-3 font-bold text-white aria-disabled:hidden"
+        className="m-auto mbs-15 flex w-full max-w-70 cursor-pointer justify-center rounded-2xl bg-black px-3 py-3 font-bold text-white aria-disabled:hidden"
       >
         <LucideThumbsUp className="me-2.5" />
         추천상품 더보기

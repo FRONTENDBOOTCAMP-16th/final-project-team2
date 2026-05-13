@@ -55,7 +55,7 @@ export default function ResetPasswordPage() {
 
         <button
           type="submit"
-          className="mbs-12 w-full cursor-pointer rounded bg-[#FF6B6B] py-4 text-center font-bold text-white"
+          className="mbs-12 w-full cursor-pointer rounded bg-black py-4 text-center font-bold text-white"
         >
           확인
         </button>

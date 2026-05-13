@@ -29,7 +29,7 @@ export default function ProductsCard({ product, category, onImageLoad, inventory
   return (
     <li className="relative" aria-label={label}>
       <Link href={`${baseUrl}/${category}/${product.id}`} className="block">
-        <div className="relative aspect-square w-70.5 overflow-hidden">
+        <div className="relative aspect-square w-70.5 overflow-hidden border-2 border-gray-200">
           <ProductImage
             src={product.thumbnail_image}
             alt={product_name}
@@ -38,7 +38,7 @@ export default function ProductsCard({ product, category, onImageLoad, inventory
 
           {(inventoryTag || product.discount_rate > 0) && (
             <div
-              className="absolute top-0 left-0 flex h-8 min-w-16 items-center justify-center bg-[#FF6B6B] px-4 font-semibold text-white"
+              className="absolute top-0 left-0 flex h-8 min-w-16 items-center justify-center bg-black px-4 font-semibold text-white"
               aria-hidden="true"
             >
               {inventoryTag ? inventoryLabel : `${product.discount_rate}%`}
@@ -61,7 +61,7 @@ export default function ProductsCard({ product, category, onImageLoad, inventory
             {product.discount_rate > 0 && (
               <>
                 <dt className="sr-only">할인율</dt>
-                <dd className="mt-2 text-xl font-bold text-[#FF6B6B]">
+                <dd className="mt-2 text-xl font-bold text-red-600">
                   {DiscountRateFormat(discount_rate)}%
                 </dd>
               </>
