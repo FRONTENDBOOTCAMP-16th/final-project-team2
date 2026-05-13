@@ -3,7 +3,7 @@ import { createClient } from '@/utils/supabase/client'
 import {
   ProductCategoriesWithCategory,
   ProductPreview,
-} from '@/app/lib/Categories'
+} from '@/app/lib/categories'
 
 // categories 포함된 products (UI용)
 export type ProductCategories = {
