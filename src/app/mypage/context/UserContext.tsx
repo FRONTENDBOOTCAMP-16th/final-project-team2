@@ -7,7 +7,7 @@ import {
   ReactNode,
   useEffect,
 } from 'react'
-import { createClient } from '@/utils/supabase/client' // 이 경로가 맞는지 꼭 확인하세요!
+import { createClient } from '@/utils/supabase/client'
 
 type Role = 'USER' | 'BUSINESS' | null
 
