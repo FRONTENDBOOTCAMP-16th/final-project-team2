@@ -181,7 +181,6 @@ export default function ProductOptionClient({
               (hasSizeOption && !optionData?.size)
             }
           />
-
           <button
             type="button"
             disabled
@@ -191,8 +190,9 @@ export default function ProductOptionClient({
             <Coins className="h-5 w-5 text-white" />
             <span className="text-white">구매하기</span>
           </button>
-
-          <HeartButton />
+          <div className="mt-2 flex aspect-square w-15 items-center justify-center rounded-xl border border-gray-300 bg-white p-2 transition hover:bg-gray-100">
+            <HeartButton productId={productId} initialLiked={false} />
+          </div>
         </div>
       </div>
     </>
