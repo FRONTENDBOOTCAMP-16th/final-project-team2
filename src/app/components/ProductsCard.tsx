@@ -38,7 +38,7 @@ export default function ProductsCard({ product, category, onImageLoad, inventory
 
           {(inventoryTag || product.discount_rate > 0) && (
             <div
-              className="absolute top-0 left-0 flex h-8 min-w-16 items-center justify-center bg-black px-4 font-semibold text-white"
+              className="absolute top-0 left-0 flex h-8 min-w-16 items-center justify-center bg-red-500 px-4 font-semibold text-white"
               aria-hidden="true"
             >
               {inventoryTag ? inventoryLabel : `${product.discount_rate}%`}
@@ -47,10 +47,13 @@ export default function ProductsCard({ product, category, onImageLoad, inventory
         </div>
 
         <div>
-          <dl>
+          <dl className='flex items-baseline gap-3'>
             <dt className="sr-only">제품 타입</dt>
             <dd className="mt-4 text-gray-700">필기구</dd>
-
+            <dt className="sr-only">평점</dt>
+            <dd>{ product.average_grade?product.average_grade:0 }점</dd>
+          </dl>
+          <dl >
             <dt className="sr-only">제품 명</dt>
             <dd className="mt-2 w-60 truncate text-2xl font-medium">
               {product_name}
@@ -61,7 +64,7 @@ export default function ProductsCard({ product, category, onImageLoad, inventory
             {product.discount_rate > 0 && (
               <>
                 <dt className="sr-only">할인율</dt>
-                <dd className="mt-2 text-xl font-bold text-red-600">
+                <dd className="mt-2 text-xl font-bold text-red-500">
                   {DiscountRateFormat(discount_rate)}%
                 </dd>
               </>
