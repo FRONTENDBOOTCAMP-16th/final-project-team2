@@ -16,7 +16,7 @@ export default function SubmitButton() {
       type="submit"
       aria-disabled={pending}
       onClick={handleClick}
-      className={`flex flex-row self-end p-2 ${pending ? 'cursor-not-allowed opacity-50' : 'bg-[#FF6B6B] text-white'} cursor-pointer`}
+      className={`flex flex-row self-end p-2 ${pending ? 'cursor-not-allowed opacity-50' : 'bg-black text-white'} cursor-pointer`}
     >
       <Pen className="mr-2" />
       {pending ? '등록 중...' : '상품 등록'}

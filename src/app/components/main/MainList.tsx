@@ -44,7 +44,7 @@ export default function Main() {
       </Suspense>
 
       {/* 오늘의 특가 */}
-      <section className="bg-[#FFF8F3]">
+      <section className="">
         <ProductTodaySaleCard
           title="오늘의 특가"
           subTitle="오늘만 이 가격! 특별한 가격을 확인해보세요"
@@ -77,7 +77,7 @@ export default function Main() {
       </section>
 
       {/* 품절 임박 꿀템 */}
-      <section className="min-h-183 w-full bg-[#FFF8F3]">
+      <section className="min-h-183 w-full">
         <ProductTodaySaleCard
           title="품절 임박 꿀템"
           subTitle="서두르세요! 재고가 얼마 남지 않았어요"

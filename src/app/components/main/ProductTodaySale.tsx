@@ -19,7 +19,7 @@ export default function ProductsTodaySale({
 
     return (
       <div key={item.id} className="flex flex-1 overflow-hidden">
-        <div className="relative h-90 flex-1">
+        <div className="relative h-90 flex-1 border-2 border-gray-200">
           <Image
             src={item.thumbnail_image}
             alt={`${item.name} 상품 이미지`}
@@ -28,7 +28,7 @@ export default function ProductsTodaySale({
             sizes="w-full h-full"
           />
         </div>
-        <div className="flex min-w-0 flex-1 flex-col bg-white px-8.5 pbs-17 pbe-8.5 text-left">
+        <div className="flex min-w-0 flex-1 flex-col bg-white px-8.5 pbs-17 pbe-8.5 text-left border-2 border-gray-200">
           <dl className="w-full min-w-0">
             <dt className="sr-only">상품 카테고리</dt>
             <dd
@@ -51,7 +51,7 @@ export default function ProductsTodaySale({
             </dd>
 
             <dt className="sr-only">할인율</dt>
-            <dd className="order-1 me-2 font-black text-[#FF6B6B]">
+            <dd className="order-1 me-2 font-black text-red-500">
               {item.discount_rate}%
             </dd>
 

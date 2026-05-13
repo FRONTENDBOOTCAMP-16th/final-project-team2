@@ -22,7 +22,6 @@ export default async function ProductInventory({
     <>
       {products.map((product) => (
         <ProductsCard
-          baseUrl="/products"
           key={product.id}
           product={product}
           category={product.category_path}
