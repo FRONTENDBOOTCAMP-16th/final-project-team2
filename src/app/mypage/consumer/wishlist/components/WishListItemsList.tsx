@@ -16,10 +16,10 @@ import { useRemoveWishList } from '../hooks/useRemoveWishList'
 export default function WishListItemsList() {
   const router = useRouter()
   const searchParams = useSearchParams()
-  const category = searchParams.get('category') ?? 'all'
-  const sort = (searchParams.get('sort') as SORTTYPE) ?? 'latest'
   const page = Number(searchParams.get('page') ?? 1)
   const limit = 9
+  const category = searchParams.get('category') ?? 'all'
+  const sort = (searchParams.get('sort') as SORTTYPE) ?? 'latest'
 
   const onChangeCategory = (slug: string) => {
     const params = new URLSearchParams(searchParams.toString())
@@ -60,9 +60,6 @@ export default function WishListItemsList() {
 
   // 데이터에서 카테고리 네임 탭 설정
   const categoryTabs = getWishListCategoryTabs()
-
-  // 선택된 카테고리 기준으로 찜한 상품 필터링
-  // const filteredItems = filterWishListItems(safeItems, category)
 
   // 정렬할 아이템
   const sortedItems = sortWishListItems(safeItems, sort)
