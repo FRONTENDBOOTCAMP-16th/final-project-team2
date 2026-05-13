@@ -89,7 +89,7 @@ export default function SummaryMenu() {
     )
   }
 
-  // TODO. 요약 메뉴 데이터 연동 (실제 데이터 연동 시 이 로직을 활용하세요)
+  // TODO. 요약 메뉴 데이터 연동
   const mockData = {
     USER: { orders: 3, coupons: 6, reviews: 10 },
     BUSINESS: { orderStatus: 12, products: 45, reviews: 88 },
