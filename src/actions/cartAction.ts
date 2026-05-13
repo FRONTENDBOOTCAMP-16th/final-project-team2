@@ -132,6 +132,32 @@ export async function addCartItem({
 
   const supabase = await createClient()
 
+  const { data: existingItem, error: selectError } = await supabase
+    .from('cart_items')
+    .select('id, quantity')
+    .eq('user_id', auth.id)
+    .eq('product_id', productId)
+    .maybeSingle()
+
+  if (selectError) {
+    throw new Error(selectError.message)
+  }
+  // 제품이 이미 있으면 갯수 추가
+  if (existingItem) {
+    const { error: updateError } = await supabase
+      .from('cart_items')
+      .update({
+        quantity: existingItem.quantity + quantity,
+      })
+      .eq('id', existingItem.id)
+
+    if (updateError) {
+      throw new Error(updateError.message)
+    }
+
+    return
+  }
+
   const { error } = await supabase.from('cart_items').insert({
     user_id: auth.id,
     product_id: productId,
