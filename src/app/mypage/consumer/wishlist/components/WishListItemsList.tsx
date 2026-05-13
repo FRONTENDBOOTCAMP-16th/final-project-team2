@@ -92,8 +92,8 @@ export default function WishListItemsList() {
           onChange={(e) => onChangeSort(e.target.value)}
         >
           <option value="latest">최신순</option>
-          <option value="price-high">가격 높은 순</option>
-          <option value="price-low">가격 낮은 순</option>
+          <option value="price-high">금액 높은 순</option>
+          <option value="price-low">금액 낮은 순</option>
         </select>
       </div>
       {hasItems ? (
