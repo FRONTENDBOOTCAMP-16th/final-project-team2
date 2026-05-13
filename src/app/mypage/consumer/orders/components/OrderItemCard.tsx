@@ -29,7 +29,6 @@ export default function OrderItemCard({
 
   return (
     <div className="mb-2 flex border-b border-gray-300 p-4 font-semibold">
-      {/* 상품 이미지 및 정보 */}
       <div className="flex w-3/6">
         <Link
           href={{
@@ -49,11 +48,9 @@ export default function OrderItemCard({
           </h2>
         </Link>
       </div>
-      {/* 주문 일자 */}
       <div className="flex w-1/6 shrink-0 items-center gap-3 whitespace-nowrap">
         <p>{DateFormat(createdAt)}</p>
       </div>
-      {/* 결제 금액 */}
       <div className="flex w-1/6 shrink-0 items-center gap-3 whitespace-nowrap">
         <p>{finalPrice.toLocaleString()}원</p>
       </div>
