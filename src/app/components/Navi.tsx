@@ -2,33 +2,10 @@
 
 import Link from 'next/link'
 import NavList from './NavList'
-import { useAuth } from '@/hooks/useAuth'
+import Header from './Header'
+import SubHeader from './SubHeader'
 
-interface NaviProps {
-  name: string
-  href: string
-  icon: string
-}
-
-const mainMenu = [
-  { name: '필기구', href: '/products/writing' },
-  { name: '페이퍼', href: '/products/paper' },
-  { name: '다꾸/데코', href: '/products/deco' },
-  { name: '소품/액세서리', href: '/products/accessory' },
-]
-
-export default function Header() {
-  const { isLogin, handleLogout } = useAuth()
-
-  const convenienceMenu = [
-    { name: '검색', onClick: () => console.log('검색 클릭'), icon: '🔍' },
-    isLogin && { name: '마이페이지', href: '/mypage/consumer', icon: '👤' },
-    { name: '장바구니', href: '/cart', icon: '🛒' },
-    isLogin
-      ? { name: '로그아웃', onClick: handleLogout, icon: '🔓' }
-      : { name: '로그인', href: '/login', icon: '🔒' },
-  ].filter((item): item is NaviProps => item !== false)
-
+export default function Navi() {
   return (
     <>
       {/* 쿠폰 */}
@@ -59,15 +36,10 @@ export default function Header() {
           </a>
 
           {/* 메뉴 리스트 */}
-          <NavList
-            label="main-menu"
-            items={mainMenu}
-            className="md:absolute md:left-1/2 md:-translate-x-1/2"
-            mainMenu
-          />
+          <SubHeader />
 
-          {/* 유저 메뉴 */}
-          <NavList label="convenience-menu" items={convenienceMenu} />
+          {/* 헤더 */}
+          <Header />
         </div>
       </header>
     </>

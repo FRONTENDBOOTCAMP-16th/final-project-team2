@@ -63,17 +63,21 @@ export const findIdSchema = z.object({
   phone: phoneSchema,
 })
 
-// 비밀번호 변경 베이스
-export const baseResetPassangeSchema = z.object({
+// 비밀번호 재설정 유저 확인
+export const resetPasswordSchema = z.object({
   name: nameSchema,
   email: emailSchema,
   phone: phoneSchema,
+})
+
+// 비밀번호 변경 베이스
+export const baseChangePassangeSchema = z.object({
   password: passwordSchema,
   confirmPassword: passwordConfirmSchema,
 })
 
 // 실제 사용되는 비밀번호 변경 스키마
-export const resetPasswordSchema = baseResetPassangeSchema.superRefine(
+export const resetChangeSchema = baseChangePassangeSchema.superRefine(
   (data, context) => {
     // 값이 일치하지 않을때 메세지 출력
     if (data.password !== data.confirmPassword) {
@@ -90,3 +94,4 @@ type signupSchema = z.infer<typeof signupSchema>
 type loginSchema = z.infer<typeof loginSchema>
 type findIdSchema = z.infer<typeof findIdSchema>
 type resetPasswordSchema = z.infer<typeof resetPasswordSchema>
+type resetChangeSchema = z.infer<typeof resetChangeSchema>
