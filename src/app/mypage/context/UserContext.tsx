@@ -8,10 +8,12 @@ import {
   useEffect,
 } from 'react'
 import { createClient } from '@/utils/supabase/client'
+import { User } from '@supabase/supabase-js'
 
 type Role = 'USER' | 'BUSINESS' | null
 
 interface UserContextType {
+  user: User | null
   role: Role
   isLoading: boolean
 }
@@ -19,6 +21,7 @@ interface UserContextType {
 const UserContext = createContext<UserContextType | undefined>(undefined)
 
 export function UserProvider({ children }: { children: ReactNode }) {
+  const [user, setUser] = useState<User | null>(null)
   const [role, setRole] = useState<Role>(null)
   const [isLoading, setIsLoading] = useState(true)
   const supabase = createClient()
@@ -27,21 +30,21 @@ export function UserProvider({ children }: { children: ReactNode }) {
     const fetchUserRole = async () => {
       setIsLoading(true)
 
-      // 현재 로그인한 유저 정보 가져오기
       const {
-        data: { user },
+        data: { user: authUser },
       } = await supabase.auth.getUser()
 
-      if (user) {
-        // 해당 유저의 role을 DB(users 테이블)에서 조회
+      if (authUser) {
+        setUser(authUser) // 유저 정보 저장
         const { data: profile } = await supabase
           .from('users')
           .select('role')
-          .eq('id', user.id)
+          .eq('id', authUser.id)
           .single()
 
         setRole(profile?.role || null)
       } else {
+        setUser(null)
         setRole(null)
       }
       setIsLoading(false)
@@ -51,7 +54,7 @@ export function UserProvider({ children }: { children: ReactNode }) {
   }, [supabase])
 
   return (
-    <UserContext.Provider value={{ role, isLoading }}>
+    <UserContext.Provider value={{ user, role, isLoading }}>
       {children}
     </UserContext.Provider>
   )
