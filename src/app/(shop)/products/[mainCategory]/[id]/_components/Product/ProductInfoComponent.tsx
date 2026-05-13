@@ -1,5 +1,4 @@
 import ProductOption from './ProductOption';
-import Quantity from './Quantity';
 import TotalPrice from './TotalPrice';
 import { ShoppingCart } from 'lucide-react';
 import HeartButton from './HeartButton';
@@ -11,12 +10,14 @@ import ProductImage from '@/app/(shop)/products/[mainCategory]/_components/Produ
 type Props = {
   product: Products;
   category: string;
+  average_grade: number|null;
   reviews: Reviews[];
 };
 
-const ProductInfoComponent = ({ product, reviews, category }: Props) => {
+const ProductInfoComponent = ({ product, reviews, category, average_grade }: Props) => {
   const price = product.price;
   const discount_rate = product.discount_rate;
+  const product_id = product.id
   return (
     <article className="mx-auto max-w-7xl">
       <div className="mt-6 grid grid-cols-1 gap-10 lg:grid-cols-2">
@@ -30,13 +31,11 @@ const ProductInfoComponent = ({ product, reviews, category }: Props) => {
           </h2>
 
           <div>
-            <ProductSummary mainCategory={category} reviews={reviews} products={product} />
+            <ProductSummary mainCategory={category} reviews={reviews} products={product} average_grade={average_grade} />
             <div className="mt-8">
-              <ProductOption />
+              <ProductOption productId={product_id}/>
             </div>
-            <div className="mt-4">
-              <Quantity />
-            </div>
+        
             <div className="mt-4">
               <TotalPrice price={price} discount_rate={discount_rate} quantity={2} />
             </div>

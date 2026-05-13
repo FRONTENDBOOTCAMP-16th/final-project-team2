@@ -2,16 +2,17 @@ import { Star } from 'lucide-react';
 import { Products } from '@/app/lib/products';
 import { DiscountPrice, PriceFormat } from '@/utils/intl';
 import { Reviews } from '@/app/lib/Reviews';
+import { getAverageGrade } from '@/api/review';
 
 interface Props {
   products: Products;
   mainCategory: string;
+  average_grade: number | null;
   reviews: Reviews[];
 }
 
-const ProductSummary = ({ products, mainCategory, reviews }: Props) => {
-  const review_avg = reviews.length > 0 ? (reviews.reduce((acc, review) => acc + review.grade, 0) / reviews.length).toFixed(1) : '0.0';
-
+const ProductSummary = ({ products, mainCategory, reviews, average_grade }: Props) => {
+  // const review_avg = reviews.length > 0 ? (reviews.reduce((acc, review) => acc + review.grade, 0) / reviews.length).toFixed(1) : '0.0';
   return (
     <>
       <dl className="space-y-3">
@@ -27,12 +28,12 @@ const ProductSummary = ({ products, mainCategory, reviews }: Props) => {
           {Array.from({ length: 5 }).map((_, index) => (
             <Star
               key={index}
-              className={`h-5 w-5 ${index < Math.floor(Number(review_avg)) ? 'text-yellow-400' : 'text-gray-200'}`}
+              className={`h-5 w-5 ${index < Math.floor(Number(average_grade)) ? 'text-yellow-400' : 'text-gray-200'}`}
               fill={index < 5 ? 'currentColor' : 'none'}
               aria-hidden
             />
           ))}
-          <span className="ml-2">{review_avg}점</span>
+          <span className="ml-2">{average_grade? `${average_grade}점`: '현재 평점이 없습니다'}</span>
         </dd>
 
         <dt className="sr-only">리뷰 개수</dt>
@@ -49,7 +50,7 @@ const ProductSummary = ({ products, mainCategory, reviews }: Props) => {
           <dt className="sr-only">할인가</dt>
           <dd className="order-1 text-2xl font-semibold">{DiscountPrice(products.price, products.discount_rate)}</dd>
         </dl>
-        <div className="discountBadge mt-2 flex h-7 w-20.5 items-center justify-center bg-[#ff6b6b] pt-1 pr-3 pb-1 pl-3">
+        <div className="discountBadge mt-2 flex h-7 w-20.5 items-center justify-center bg-black pt-1 pr-3 pb-1 pl-3">
           <p className="text-white">{products.discount_rate}%</p>
         </div>
       </div>

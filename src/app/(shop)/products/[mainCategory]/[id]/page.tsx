@@ -43,7 +43,7 @@ export default async function ProductDetailPage({
       </h1>
       <BreadCrumble category={categoryLabel} />
       <main>
-        <ProductInfoComponent reviews={reviews} product={product} category={categoryLabel} />
+        <ProductInfoComponent reviews={reviews} product={product} category={categoryLabel} average_grade={average_grade}/>
         <TabInfoComponent product={product} store={store} reviews={reviews} seller={seller} average_grade={average_grade} />
 
         <div className="mt-15">
