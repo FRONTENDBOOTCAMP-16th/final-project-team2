@@ -1,13 +1,10 @@
-'use client'
 import OrderStatusBadge from '@/app/mypage/consumer/orders/components/OrderStatusBadge'
 import { OrderItem } from '@/app/mypage/types/orderItem'
 import DeliverStatusButton from './DeliveryStatusButton'
 import { TotalPriceFormat } from '@/utils/intl'
-// import { useState } from 'react'
 
 export default function DeliveryProductCard({ order }: { order: OrderItem }) {
   const emailPrefix = order.email?.split('@')[0]
-  // const [openId, setOpenId] = useState<string | null>(null)
 
   return (
     <div className="mb-2 flex gap-5 border-b border-gray-300 p-4 font-semibold">
@@ -39,7 +36,11 @@ export default function DeliveryProductCard({ order }: { order: OrderItem }) {
 
       <div className="flex w-3/10 shrink-0 gap-3">
         <OrderStatusBadge status={order.item_status} />
-        <DeliverStatusButton />
+        <DeliverStatusButton
+          orderItemId={order.id}
+          currentStatus={order.item_status}
+          orderId={order.orders.id}
+        />
       </div>
     </div>
   )

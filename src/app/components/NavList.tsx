@@ -2,10 +2,11 @@
 
 import Link from 'next/link'
 
-interface NaviProps {
+export interface NaviProps {
   name: string
   href?: string
-  icon?: string
+  icon?: React.ReactNode
+  text?: string
   onClick?: () => void
 }
 
@@ -26,16 +27,16 @@ export default function NavList({
     <nav aria-label={label} className={className}>
       <ul className="flex gap-3">
         {items.map((item, index) => (
-          <li key={index} className="group relative">
+          <li key={index} className="group relative items-center flex">
             {item.href ? (
               <Link
-                className="cursor-pointer text-[#2D3142] opacity-80 transition-all hover:font-medium hover:text-[#FF6B6B] hover:opacity-100"
-                href={item.href}
+                className="cursor-pointer text-[#2D3142] opacity-80 transition-all hover:font-medium hover:opacity-100"
+                href={item.href || ""}
               >
                 {item.icon ? (
-                  <div className="rounded-full bg-[#F5F5F5] p-1.5">
+                  <p className="rounded-full bg-[#F5F5F5] p-1.5">
                     {item.icon}
-                  </div>
+                  </p>
                 ) : (
                   <>{item.name}</>
                 )}
@@ -52,11 +53,11 @@ export default function NavList({
                 type="button"
               >
                 {item.icon ? (
-                  <div className="rounded-full bg-[#F5F5F5] p-1.5">
+                  <p className="rounded-full bg-[#F5F5F5] p-1.5">
                     {item.icon}
-                  </div>
+                  </p>
                 ) : (
-                  <>{item.name}</>
+                  <>{item.text}</>
                 )}
               </button>
             )}

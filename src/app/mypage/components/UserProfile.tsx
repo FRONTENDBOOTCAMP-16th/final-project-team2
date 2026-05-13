@@ -34,8 +34,23 @@ const GradeTooltip = () => (
 )
 
 export default function UserProfile() {
-  // 전역 Context에서 role을 가져옵니다.
-  const { role } = useUser()
+  const { role, isLoading } = useUser()
+
+  // 스켈레톤 추가
+  if (isLoading) {
+    return (
+      <div className="mb-10 flex animate-pulse flex-col">
+        <div className="flex w-[204px] flex-col items-center bg-white pb-6">
+          <div className="aspect-square w-[204px] shrink-0 border bg-gray-200" />
+
+          <div className="flex items-center justify-center gap-2 pt-5 pb-2">
+            <div className="h-5 w-24 rounded bg-gray-200" />
+          </div>
+          <div className="mt-1 h-6 w-32 rounded bg-gray-200" />
+        </div>
+      </div>
+    )
+  }
 
   // TODO: 실제 로그인 연동 시 서버에서 받은 정보로 교체 예정
   const userGrade = 'BRONZE'
@@ -44,17 +59,14 @@ export default function UserProfile() {
   return (
     <div className="mb-10 flex flex-col">
       <div className="flex w-[204px] flex-col items-center bg-white pb-6">
-        {/* 이미지 영역 */}
         <div className="aspect-square w-[204px] shrink-0 border bg-white" />
 
         <div className="flex items-center justify-center gap-2 pt-5 pb-2">
-          {/* 2. role이 seller면 STORE MANAGER를, 아니면 원래 등급을 보여줍니다 */}
           <div className="inline-block bg-black px-2 py-0.5 text-xs font-bold tracking-tight text-white">
-            {role === 'seller' ? 'STORE MANAGER' : userGrade}
+            {role === 'BUSINESS' ? 'STORE MANAGER' : userGrade}
           </div>
 
-          {/* 판매자가 아닐 때만 등급 툴팁을 보여줍니다 */}
-          {role !== 'seller' && <GradeTooltip />}
+          {role !== 'BUSINESS' && <GradeTooltip />}
         </div>
 
         <p className="w-full text-center text-lg">
