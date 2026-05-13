@@ -1,4 +1,4 @@
-import { ProductPreview } from './Categories'
+import { ProductPreview } from './categories'
 
 export type ProductLike = {
   id: string

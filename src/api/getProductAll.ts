@@ -1,7 +1,7 @@
 import { Products } from '@/app/lib/products'
 import { createClient } from '@/utils/supabase/server'
 import { categoriesList } from './categoriesList'
-import { Categories } from '@/app/lib/Categories'
+import { Categories } from '@/app/lib/categories'
 
 export interface ProductWithCategory extends Products {
   category_path: string

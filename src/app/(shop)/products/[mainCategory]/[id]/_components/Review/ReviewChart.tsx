@@ -1,12 +1,12 @@
-import { Reviews } from '@/app/lib/Reviews'
+import { Reviews } from '@/app/lib/reviews'
 import { Star } from 'lucide-react'
 
 type ReviewProps = {
   reviews: Reviews[]
-  average_grade:number|null
+  average_grade: number | null
 }
 
-const ReviewChart = ({ reviews,average_grade }: ReviewProps) => {
+const ReviewChart = ({ reviews, average_grade }: ReviewProps) => {
   // const review_avg =
   //   reviews.length > 0
   //     ? (
