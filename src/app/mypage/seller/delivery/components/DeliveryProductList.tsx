@@ -18,11 +18,12 @@ const CATEGORIES = [
 ] as const
 
 export default function DeliveryProductList() {
-  // 1. 페이지네이션, 데이터 페칭, 서치파람스
-  const [currentPage, setCurrentPage] = useState(1)
+  // 1. , 서치파람스, 페이지네이션, 데이터 페칭
   const searchParams = useSearchParams()
   const router = useRouter()
   const category = searchParams.get('category') ?? 'All'
+  const pageParam = Number(searchParams.get('page') ?? 1) // 현재 페이지 번호. URL 쿼리스트링 ?page=N 기반, 기본값: 1
+  const [currentPage, setCurrentPage] = useState(pageParam)
   const { data, isLoading } = useDeliveryQuery(currentPage, 5)
   const items = data?.items ?? []
   const count = data?.count ?? 0
@@ -39,6 +40,11 @@ export default function DeliveryProductList() {
     handleTabChange(id, CATEGORIES)
     setCurrentPage(1)
     router.push(`?category=${id}`)
+  }
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page)
+    router.push(`?category=${category}&page=${page}`)
   }
 
   if (isLoading || !items) {
@@ -71,7 +77,7 @@ export default function DeliveryProductList() {
           <Pagination
             currentPage={currentPage}
             totalPages={totalPages}
-            onPageChange={setCurrentPage}
+            onPageChange={handlePageChange}
           />
         </>
       ) : (
