@@ -31,12 +31,12 @@ export default function PriceBox({ totalOriginPrice, totalDiscountedPrice }: Pri
         </div>
 
         {/* 구분선 */}
-        <div className="border-t border-dashed my-4" role="presentation" />
+        <div className="border-t my-4" role="presentation" />
 
         {/* 최종 결제 금액 */}
         <div className="flex justify-between items-center text-xl font-bold">
           <dt>총 결제금액</dt>
-          <dd className="text-blue-600">
+          <dd className="text-black-600">
             <span className="sr-only">최종 결제 예정 금액은</span>
             {totalDiscountedPrice.toLocaleString()}원
           </dd>

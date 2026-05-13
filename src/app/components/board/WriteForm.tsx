@@ -88,7 +88,7 @@ export default function WriteForm({
     <form
       action={formAction}
       onSubmit={handleSubmit}
-      className="mx-auto flex w-full max-w-4xl flex-col gap-6 rounded-lg bg-white p-6 shadow-sm"
+      className="mx-auto flex w-full max-w-6xl flex-col gap-6 rounded-lg bg-white p-6 shadow-sm"
     >
       {/* 질문 작성 시 제품정보 위한 히든 input 추가 */}
       {type === 'inquire' && (

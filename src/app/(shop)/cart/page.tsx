@@ -71,7 +71,7 @@ export default async function CartList() {
             </div>
 
             {/* 삭제버튼 */}
-            <CartDeleteButton />
+            <CartDeleteButton deleteId={item.id} />
 
           </li>
         ))}
