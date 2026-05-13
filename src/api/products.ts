@@ -133,8 +133,10 @@ export const getProductsCategory = async (
       query = query.order('price', { ascending: false })
       break
     case 'popular':
-      query = query.order('average_grade', { ascending: false })
-      break
+      query = query
+        .order('average_grade', { ascending: false, nullsFirst: false })
+        .order('created_at', { ascending: false })
+        break
   }
 
   const currentPage = Number(params.page) || 1
@@ -156,11 +158,6 @@ export const getProductsCategory = async (
 
       return params.sort === 'lowPrice' ? aPrice - bPrice : bPrice - aPrice
     })
-  }
-  if (params.sort === 'popular') {
-    products = [...products].sort((a, b) => {
-      return b.average_grade - a.average_grade;
-    });
   }
 
   return {
