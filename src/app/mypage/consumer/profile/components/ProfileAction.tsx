@@ -19,7 +19,7 @@ export default function ProfileAction() {
         className="h-12 w-24 bg-red-700 text-sm text-white transition hover:bg-red-800"
       >
         {/* Context에서 가져온 role에 따라 텍스트가 바뀝니다 */}
-        {role === 'seller' ? '폐점 신청' : '회원 탈퇴'}
+        {role === 'BUSINESS' ? '폐점 신청' : '회원 탈퇴'}
       </button>
     </div>
   )

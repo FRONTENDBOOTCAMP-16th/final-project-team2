@@ -1,11 +1,11 @@
-export type Categories = {
+export interface Categories {
   id: string
   name: string
   create_at: string
   parent_id: string | null
 }
 
-export type ProductCategories = {
+export interface ProductCategories {
   id: string
   product_id: string
   category_id: string
@@ -17,7 +17,7 @@ export type ProductCategoriesWithCategory = ProductCategories & {
 }
 
 // 확장 타입 (supabase 원본 타입 아님)
-export type ProductPreview = {
+export interface ProductPreview {
   id: string
   name: string
   thumbnail_image: string
@@ -26,7 +26,7 @@ export type ProductPreview = {
   product_categories: ProductCategoriesWithCategory[]
 }
 
-export type OrderProducts = {
+export interface OrderProducts {
   id: string
   name: string
   thumbnail_image: string

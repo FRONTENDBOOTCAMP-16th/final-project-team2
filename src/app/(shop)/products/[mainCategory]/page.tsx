@@ -35,7 +35,7 @@ export default async function ProductListPage({ params, searchParams }: Product)
       <div className="text-center">
         <h1 className="mt-3 text-4xl font-bold">{categoryLabel}</h1>
         <p className="mt-3 text-base font-semibold text-gray-600">
-          장인은 도구탓을 합니다
+          나만의 개성있는 문구류를 찾아보세요
         </p>
       </div>
       <div className="flex justify-between mb-16 mt-18">

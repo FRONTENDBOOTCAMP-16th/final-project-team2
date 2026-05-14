@@ -1,4 +1,4 @@
-import { OrderProducts } from './Categories'
+import { OrderProducts } from './categories.types'
 
 export type Orders = {
   id: string

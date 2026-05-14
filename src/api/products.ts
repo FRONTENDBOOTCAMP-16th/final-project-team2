@@ -1,4 +1,4 @@
-import { Products } from '@/app/lib/products'
+import { Products } from '@/app/lib/products.types'
 import { createClient } from '@/utils/supabase/server'
 import { notFound } from 'next/navigation'
 
@@ -131,6 +131,11 @@ export const getProductsCategory = async (
 
     case 'highPrice':
       query = query.order('price', { ascending: false })
+      break
+    case 'popular':
+      query = query
+        .order('average_grade', { ascending: false, nullsFirst: false })
+        .order('created_at', { ascending: false })
       break
   }
 

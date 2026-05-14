@@ -20,7 +20,7 @@ export default async function FindIdResultPage({ searchParams }: FindIdProps) {
       <div className="mbs-10 flex border-bs border-[#e0e0e0] pbs-4">
         <Link
           href="/login"
-          className="mbs-12 w-full cursor-pointer rounded bg-[#FF6B6B] py-4 text-center font-bold text-white"
+          className="mbs-12 w-full cursor-pointer rounded bg-black py-4 text-center font-bold text-white"
         >
           로그인으로 돌아가기
         </Link>

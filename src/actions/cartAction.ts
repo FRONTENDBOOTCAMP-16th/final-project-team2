@@ -3,6 +3,7 @@ import { createClient } from '@/utils/supabase/server'
 import { z } from 'zod'
 import { getAuthUserInfo } from './getUser'
 import { revalidatePath } from 'next/cache'
+import { SelectedOption } from '@/app/lib/cart.types'
 
 const productSchema = z.object({
   name: z.string(),
@@ -24,10 +25,11 @@ const cartItemSchema = z.object({
 const getCartsResponseSchema = z.array(cartItemSchema)
 
 const updateCartQuantitySchema = z.object({
-  cartItemId: z.string({ message: "장바구니 아이템 ID가 필요합니다." }),
-  newQuantity: z.number({ message: "수량이 필요합니다." })
-    .int("수량은 정수여야 합니다.")
-    .min(1, "수량은 1 이상이어야 합니다."),
+  cartItemId: z.string({ message: '장바구니 아이템 ID가 필요합니다.' }),
+  newQuantity: z
+    .number({ message: '수량이 필요합니다.' })
+    .int('수량은 정수여야 합니다.')
+    .min(1, '수량은 1 이상이어야 합니다.'),
 })
 
 export type UpdateCartQuantity = z.infer<typeof updateCartQuantitySchema>
@@ -39,7 +41,7 @@ export async function getCarts() {
   const auth = await getAuthUserInfo()
 
   if (!auth) {
-    console.log("로그인된 사용자가 없습니다.")
+    console.log('로그인된 사용자가 없습니다.')
     return { success: false, message: '세션이 만료되었습니다.' }
   }
 
@@ -47,7 +49,8 @@ export async function getCarts() {
 
   const { data, error } = await supabase
     .from('cart_items')
-    .select(`
+    .select(
+      `
         *,
         product:product_id (
         name,
@@ -56,7 +59,8 @@ export async function getCarts() {
         options,
         discount_rate
       )
-      `)
+      `,
+    )
     .eq('user_id', auth.id)
     .order('created_at', { ascending: true })
 
@@ -68,7 +72,7 @@ export async function getCarts() {
   // Zod를 통한 데이터 검증
   const parsedData = getCartsResponseSchema.safeParse(data)
   if (!parsedData.success) {
-    console.error("데이터 검증 실패:", parsedData.error)
+    console.error('데이터 검증 실패:', parsedData.error)
     // 에러 시 빈 배열을 반환하거나 적절하게 처리
     return []
   }
@@ -86,7 +90,8 @@ export async function updateCartQuantity(input: UpdateCartQuantity) {
   // Zod를 통한 입력 파라미터 검증
   const parsedInput = updateCartQuantitySchema.safeParse(input)
   if (!parsedInput.success) {
-    const errorMessage = parsedInput.error.issues[0]?.message || '잘못된 입력값입니다.'
+    const errorMessage =
+      parsedInput.error.issues[0]?.message || '잘못된 입력값입니다.'
     return { success: false, message: errorMessage }
   }
 
@@ -104,6 +109,63 @@ export async function updateCartQuantity(input: UpdateCartQuantity) {
     return { success: false, message: '수량 업데이트에 실패했습니다.' }
   }
   revalidatePath('/cart')
-  
+
   return { success: true }
+}
+
+type AddCartParams = {
+  productId: string
+  optionData: SelectedOption
+  quantity: number
+}
+
+export async function addCartItem({
+  productId,
+  optionData,
+  quantity,
+}: AddCartParams) {
+  const auth = await getAuthUserInfo()
+
+  if (!auth?.id) {
+    throw new Error('로그인이 필요합니다.')
+  }
+
+  const supabase = await createClient()
+
+  const { data: existingItem, error: selectError } = await supabase
+    .from('cart_items')
+    .select('id, quantity')
+    .eq('user_id', auth.id)
+    .eq('product_id', productId)
+    .maybeSingle()
+
+  if (selectError) {
+    throw new Error(selectError.message)
+  }
+  // 제품이 이미 있으면 갯수 추가
+  if (existingItem) {
+    const { error: updateError } = await supabase
+      .from('cart_items')
+      .update({
+        quantity: existingItem.quantity + quantity,
+      })
+      .eq('id', existingItem.id)
+
+    if (updateError) {
+      throw new Error(updateError.message)
+    }
+
+    return
+  }
+
+  const { error } = await supabase.from('cart_items').insert({
+    user_id: auth.id,
+    product_id: productId,
+    selected_options: optionData,
+    quantity,
+  })
+
+  if (error) {
+    throw new Error(error.message)
+  }
 }
