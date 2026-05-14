@@ -1,5 +1,4 @@
 import { useQuery } from '@tanstack/react-query'
-import { getNotices } from '@/api/notices'
 
 export const noticeKeys = {
   all: ['notices'] as const,

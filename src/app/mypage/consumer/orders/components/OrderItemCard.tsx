@@ -3,7 +3,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { OrderItemStatus } from '../lib/orderItemStatus'
 import { CATEGORY_GROUPS } from '../../wishlist/lib/categoryGroup'
-import { OrderItem } from '@/app/lib/orderss'
+import { OrderItem } from '@/app/lib/orders.types'
 import { DateFormat } from '@/utils/intl'
 
 interface Props {

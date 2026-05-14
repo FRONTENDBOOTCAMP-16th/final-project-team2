@@ -29,7 +29,6 @@ export default function RecommendMDClient({
       <ul className="grid w-full grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
         {visibleProducts.map((product) => (
           <ProductsCard
-            baseUrl="/products"
             key={product.id}
             product={product}
             category={product.category_path}
