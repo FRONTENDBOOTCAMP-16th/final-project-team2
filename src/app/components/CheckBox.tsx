@@ -23,7 +23,7 @@ export default function CheckBox({
       <div className="flex">
         <div className="relative flex items-center">
           <input
-            className="peer h-5 w-5 cursor-pointer appearance-none rounded border border-[#F0F1F1] bg-[#F0F1F1] checked:bg-[#FF6B6B]"
+            className="peer h-5 w-5 cursor-pointer appearance-none rounded border border-[#F0F1F1] bg-[#F0F1F1] checked:bg-black"
             id={uniqueId}
             name={name}
             type="checkbox"

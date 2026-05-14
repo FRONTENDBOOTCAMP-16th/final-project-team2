@@ -1,7 +1,7 @@
-import { Option, OptionType } from '@/app/lib/products'
+import { OptionType, ProductOptionType } from '@/app/lib/products.types'
 
 interface Props {
-  options: Option[]
+  options: ProductOptionType[]
   onRemove: (name: OptionType) => void
 }
 

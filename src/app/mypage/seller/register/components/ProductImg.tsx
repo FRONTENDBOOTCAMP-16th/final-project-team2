@@ -49,7 +49,7 @@ export default function ProductImg({
         <label
           htmlFor="productImage"
           tabIndex={0}
-          className={`flex h-10 cursor-pointer items-center border p-4 font-bold hover:bg-gray-400 hover:text-white focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:outline-none ${preview ? 'bg-[#FF6B6B] p-5 text-white' : 'bg-white text-gray-600'}`}
+          className={`flex h-10 cursor-pointer items-center border p-4 font-bold hover:bg-gray-400 hover:text-white focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:outline-none ${preview ? 'bg-black p-5 text-white' : 'bg-white text-gray-600'}`}
         >
           {preview ? '이미지 선택 완료' : '이미지 선택'}
         </label>
