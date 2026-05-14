@@ -21,7 +21,7 @@ export default function PriceBox({ totalOriginPrice, totalDiscountedPrice }: Pri
         </div>
 
         {/* 할인 금액 */}
-        <div className="flex justify-between text-red-600">
+        <div className="flex justify-between text-red-500">
           <dt>할인금액</dt>
           <dd>
             <span aria-hidden="true">-</span>

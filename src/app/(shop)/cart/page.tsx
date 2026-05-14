@@ -26,7 +26,7 @@ export default async function CartList() {
   }, 0);
 
   return (
-    <div className="flex">
+    <div className="flex max-w-7xl mx-auto">
       <ul className="w-2/3">
         {cart.map((item) => (
           <li key={item.id} className="flex items-start gap-4 p-4 bg-white relative">
@@ -79,6 +79,7 @@ export default async function CartList() {
 
       <div className="w-1/3">
         <PriceBox
+          cart={cart}
           totalOriginPrice={totalOriginPrice}
           totalDiscountedPrice={totalDiscountedPrice}
         />

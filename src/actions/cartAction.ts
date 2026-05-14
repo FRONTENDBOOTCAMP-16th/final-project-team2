@@ -46,7 +46,7 @@ export async function getCarts() {
   const auth = await getAuthUserInfo()
 
   if (!auth) {
-    console.log("로그인된 사용자가 없습니다.")
+    console.log("로그인 상태가 아닙니다.")
     return { success: false, message: '세션이 만료되었습니다.' }
   }
 
