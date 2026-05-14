@@ -4,6 +4,13 @@ import { createClient } from '@/utils/supabase/server'
 import { z } from 'zod'
 import { getAuthUserInfo } from './getUser'
 import { revalidatePath } from 'next/cache'
+import { SelectedOption } from '@/app/lib/cart.types'
+
+type AddCartParams = {
+  productId: string
+  optionData: SelectedOption
+  quantity: number
+}
 
 const productSchema = z.object({
   name: z.string(),
@@ -119,6 +126,56 @@ export async function updateCartQuantity(input: UpdateCartQuantity) {
   return { success: true }
 }
 
+export async function addCartItem({
+  productId,
+  optionData,
+  quantity,
+}: AddCartParams) {
+  const auth = await getAuthUserInfo()
+
+  if (!auth?.id) {
+    throw new Error('로그인이 필요합니다.')
+  }
+
+  const supabase = await createClient()
+
+  const { data: existingItem, error: selectError } = await supabase
+    .from('cart_items')
+    .select('id, quantity')
+    .eq('user_id', auth.id)
+    .eq('product_id', productId)
+    .maybeSingle()
+
+  if (selectError) {
+    throw new Error(selectError.message)
+  }
+  // 제품이 이미 있으면 갯수 추가
+  if (existingItem) {
+    const { error: updateError } = await supabase
+      .from('cart_items')
+      .update({
+        quantity: existingItem.quantity + quantity,
+      })
+      .eq('id', existingItem.id)
+
+    if (updateError) {
+      throw new Error(updateError.message)
+    }
+
+    return
+  }
+
+  const { error } = await supabase.from('cart_items').insert({
+    user_id: auth.id,
+    product_id: productId,
+    selected_options: optionData,
+    quantity,
+  })
+
+  if (error) {
+    throw new Error(error.message)
+  }
+}
 
 // 장바구니 아이템 삭제 Server Action 추가
 export async function deleteCartItem(input: DeleteCartItem) {
