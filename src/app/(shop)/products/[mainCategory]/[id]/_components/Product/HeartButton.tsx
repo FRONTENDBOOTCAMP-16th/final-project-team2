@@ -74,20 +74,20 @@ const HeartButton = ({ productId, initialLiked = false }: HeartButtonProps) => {
           </div>
 
           <div className="grid grid-cols-2 gap-3">
-            <button
-              type="button"
-              onClick={() => setIsOpen(false)}
-              className="rounded-xl border border-gray-300 bg-white py-3 text-sm font-semibold text-gray-700 transition hover:bg-gray-100"
-            >
-              아니요
-            </button>
-
             <Link
-              href="/login"
-              className="flex items-center justify-center rounded-xl bg-gray-900 py-3 text-sm font-semibold text-white transition hover:bg-gray-800"
+              href="/cart"
+              className="flex items-center justify-center rounded-xl bg-blue-700 py-3 text-sm font-semibold text-white transition hover:bg-blue-800"
             >
               예
             </Link>
+
+            <button
+              type="button"
+              onClick={() => setIsOpen(false)}
+              className="rounded-xl border border-gray-300 bg-red-500 py-3 text-sm font-semibold text-white transition hover:bg-red-600"
+            >
+              아니요
+            </button>
           </div>
         </div>
       </Modal>
