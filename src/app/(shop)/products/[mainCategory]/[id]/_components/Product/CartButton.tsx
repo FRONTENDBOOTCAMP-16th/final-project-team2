@@ -79,13 +79,6 @@ const CartButton = ({
             </div>
 
             <div className="grid grid-cols-2 gap-3">
-              <Link
-                href="/cart"
-                className="flex items-center justify-center rounded-xl bg-blue-700 py-3 text-sm font-semibold text-white transition hover:bg-blue-800"
-              >
-                예
-              </Link>
-
               <button
                 type="button"
                 onClick={() => setIsOpen(false)}
@@ -93,6 +86,12 @@ const CartButton = ({
               >
                 아니요
               </button>
+              <Link
+                href="/cart"
+                className="flex items-center justify-center rounded-xl bg-blue-700 py-3 text-sm font-semibold text-white transition hover:bg-blue-800"
+              >
+                예
+              </Link>
             </div>
           </div>
         ) : (
