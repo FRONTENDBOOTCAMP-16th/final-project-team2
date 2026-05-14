@@ -3,14 +3,17 @@ import NavList, { NaviProps } from "./NavList"
 import { LucideSearch, LucideShoppingCart, LucideUser } from "lucide-react"
 import { useState } from "react"
 import ConfirmModal from "./main/ConfirmModal"
+import Modal from "./Modal"
+import SearchForm from "../search/_components/SearchForm"
 
 export default function Header() {
   const { isLogin, handleLogout } = useAuth()
   const [ isLogoutModal, setIsLogoutModal ] = useState(false)
+  const [ isSearchModal, setSearchModal ] = useState(false)
 
   {/* 유저 메뉴 */}
   const convenienceMenu = [
-    { name: '검색', onClick: () => console.log('검색 클릭'), icon: <LucideSearch /> },
+    { name: '검색', onClick: () => setSearchModal(true), icon: <LucideSearch /> },
     isLogin && { name: '마이페이지', href: '/mypage/consumer', icon: <LucideUser /> },
     { name: '장바구니', href: '/cart', icon: <LucideShoppingCart /> },
     isLogin
@@ -22,6 +25,7 @@ export default function Header() {
     <>
       <NavList label="convenience-menu" items={convenienceMenu} />
 
+      {/* 로그인 모달 */}
       {isLogoutModal && (
         <ConfirmModal
           isOpen={isLogoutModal}
@@ -37,6 +41,19 @@ export default function Header() {
         >
           로그아웃 하시겠습니까?
         </ConfirmModal>
+      )}
+
+      {/* 검색 모달 */}
+      {isSearchModal && (
+        <Modal
+          isOpen={isSearchModal}
+          onClose={() => setSearchModal(false)}
+          title="제품 검색"
+        >
+          <div className="">
+            <SearchForm onClose={() => setSearchModal(false)} />
+          </div>
+        </Modal>
       )}
     </>
   ) 
