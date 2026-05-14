@@ -28,7 +28,7 @@ export default function ProductsTodaySale({
             sizes="w-full h-full"
           />
         </div>
-        <div className="flex min-w-0 flex-1 flex-col bg-white px-8.5 pbs-17 pbe-8.5 text-left border-2 border-gray-200 dark:bg-[#1b1b1b]">
+        <div className="flex min-w-0 flex-1 flex-col px-8.5 pbs-17 pbe-8.5 text-left border-2 border-gray-200 bg-gray-200 dark:bg-[#1b1b1b]">
           <dl className="w-full min-w-0">
             <dt className="sr-only">상품 카테고리</dt>
             <dd
