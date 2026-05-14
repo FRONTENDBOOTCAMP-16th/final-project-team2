@@ -1,10 +1,12 @@
 import { PackageCheck } from "lucide-react"
 import Link from "next/link"
 
-export default async function ResultPage({ params }: { params: { id: string } }) {
+interface Props {
+  params: Promise<{ id: string }>
+}
 
-  // TODO: params.id 를 이용해 DB에서 주문 내역을 불러오는 로직을 추가할 수 있습니다.
-  // const order = await getOrderById(params.id)
+export default async function ResultPage({ params }: Props) {
+  const { id } = await params
 
   return (
     <div className="flex flex-col items-center justify-center py-20 gap-4">
@@ -15,7 +17,7 @@ export default async function ResultPage({ params }: { params: { id: string } })
       <div className="w-full max-w-md mt-8 bg-gray-50 dark:bg-gray-800 p-6 rounded-lg border border-gray-200 dark:border-gray-700">
         <dl className="flex justify-between mb-3">
           <dt className="text-gray-500 dark:text-gray-400">주문번호</dt>
-          <dd className="font-semibold text-gray-800 dark:text-gray-100">{params.id}</dd>
+          <dd className="font-semibold text-gray-800 dark:text-gray-100">{id}</dd>
         </dl>
         <dl className="flex justify-between">
           <dt className="text-gray-500 dark:text-gray-400">주문일시</dt>
