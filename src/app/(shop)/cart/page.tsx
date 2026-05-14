@@ -4,6 +4,7 @@ import Image from "next/image"
 import PriceBox from "./_components/PriceBox"
 import CartDeleteButton from "./_components/CartDeleteButton"
 import Link from "next/link"
+import { ShoppingBag } from "lucide-react"
 
 export default async function CartList() {
 
@@ -11,8 +12,9 @@ export default async function CartList() {
 
   if (!Array.isArray(cart) || cart.length === 0) {
     return (
-      <div>
-        <p>장바구니가 비었어요!</p>
+      <div className="w-full h-full min-h-180 gap-4 flex flex-col justify-center items-center">
+        <p className="text-8xl"><ShoppingBag size={96} /></p>
+        <p className="font-bold text-2xl">장바구니가 비었어요!</p>
       </div>
     )
   }
@@ -30,7 +32,7 @@ export default async function CartList() {
     <div className="max-w-7xl mx-auto flex gap-6 py-6">
       <ul className="w-full">
         {cart.map((item) => (
-          <li key={item.id} className="flex items-start gap-4 p-4 bg-white relative">
+          <li key={item.id} className="flex items-start gap-4 p-4 relative">
             {/* 상품 이미지 */}
             <div className="relative w-20 h-20 sm:w-24 sm:h-24 shrink-0 bg-gray-100 rounded-md overflow-hidden">
               <Image
@@ -50,7 +52,7 @@ export default async function CartList() {
                 {item.selected_options && (
                   <div className="flex flex-wrap gap-2 text-sm text-gray-600">
                     {Object.entries(item.selected_options).map(([key, value]) => (
-                      <span key={key} className="py-0.5 rounded-full text-xs">
+                      <span key={key} className="py-0.5 rounded-full text-xs  dark:text-gray-300">
                         {key}: {String(value)}
                       </span>
                     ))}
@@ -80,7 +82,6 @@ export default async function CartList() {
 
       <div className="w-1/3 min-w-75 pl-6">
         <PriceBox
-          cart={cart}
           totalOriginPrice={totalOriginPrice}
           totalDiscountedPrice={totalDiscountedPrice}
         />

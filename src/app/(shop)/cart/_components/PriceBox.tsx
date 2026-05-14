@@ -9,14 +9,14 @@ export default function PriceBox({ totalOriginPrice, totalDiscountedPrice }: Pri
 
   return (
 
-    <section aria-labelledby="summary-heading" className="bg-white">
+    <section aria-labelledby="summary-heading">
 
       <h2 id="summary-heading" className="font-bold mb-6 text-2xl">결제 금액 요약</h2>
 
       <dl className="space-y-3">
         {/* 상품 금액 */}
         <div className="flex justify-between">
-          <dt className="text-gray-600">상품금액</dt>
+          <dt className="text-gray-600 dark:text-gray-300">상품금액</dt>
           <dd className="font-medium">{totalOriginPrice.toLocaleString()}원</dd>
         </div>
 

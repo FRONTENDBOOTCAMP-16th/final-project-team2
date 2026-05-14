@@ -1,5 +1,6 @@
-'use server';
+'use server'
 
+import { redirect } from 'next/navigation'
 import { createClient } from '@/utils/supabase/server'
 import { getCarts } from './cartAction'
 
@@ -11,9 +12,9 @@ export async function getLocationUserInfo() {
       data: { user },
     } = await supabase.auth.getUser()
 
-    if (!user) return null;
+    if (!user) return null
 
-    const { data: userData } = await supabase.from('users').select('phone, address, name, id').eq('id', user.id).single();
+    const { data: userData } = await supabase.from('users').select('phone, address, name, id').eq('id', user.id).single()
 
     return {
       phone: userData?.phone,
@@ -22,13 +23,13 @@ export async function getLocationUserInfo() {
       id: userData?.id,
     }
   } catch (e) {
-    console.error("유저 정보 로드 실패:", e);
-    return null;
+    console.error("유저 정보 로드 실패:", e)
+    return null
   }
 }
 
-// 결제(주문) 처리하기
-export async function submitPayment(formData: FormData) {
+// 결제(주문) 처리하기 내부 로직 분리 (redirect 에러 방지)
+async function processPayment(formData: FormData) {
   try {
     const supabase = await createClient()
     const { data: { user } } = await supabase.auth.getUser()
@@ -38,7 +39,7 @@ export async function submitPayment(formData: FormData) {
     const zipCode = formData.get('zipCode') as string
     const streetAdr = formData.get('streetAdr') as string
     const detailAdr = formData.get('detailAdr') as string
-    const phone = formData.get('userPhone') as string
+    const phone = formData.get('phone') as string
     const totalAdr = `[${zipCode}] ${streetAdr} || ${detailAdr}`
 
     const productList = await getCarts()
@@ -46,7 +47,7 @@ export async function submitPayment(formData: FormData) {
       throw new Error('결제할 장바구니 내역이 없습니다.')
     }
 
-    
+
     let total_price = 0
     let discount_amount = 0
 
@@ -56,7 +57,7 @@ export async function submitPayment(formData: FormData) {
       const itemDiscountRate = item.product?.discount_rate || 0
 
       const originalPrice = itemPrice * itemQuantity
-      const discountedPrice = (itemPrice * (1 - itemDiscountRate / 100)) * itemQuantity
+      const discountedPrice = Math.floor((itemPrice * (1 - itemDiscountRate / 100)) * itemQuantity)
       const itemDiscountAmount = originalPrice - discountedPrice
 
       total_price += originalPrice
@@ -65,7 +66,7 @@ export async function submitPayment(formData: FormData) {
       return {
         product_id: item.product_id,
         quantity: itemQuantity,
-        unit_price: itemPrice, 
+        unit_price: itemPrice,
         item_status: 'PENDING',
       }
     })
@@ -73,14 +74,14 @@ export async function submitPayment(formData: FormData) {
     const orderData = {
       user_id: user.id,
       order_status: 'PENDING',
-      total_price: total_price,
-      discount_amount: discount_amount,
-      final_price: total_price - discount_amount,
+      total_price: Math.floor(total_price),
+      discount_amount: Math.floor(discount_amount),
+      final_price: Math.floor(total_price - discount_amount),
       shipping_address: totalAdr,
       shipping_phone: phone,
     }
 
-    
+
     const { data: createdOrder, error: orderError } = await supabase
       .from('orders')
       .insert([orderData])
@@ -109,9 +110,29 @@ export async function submitPayment(formData: FormData) {
     }
 
     await supabase.from('cart_items').delete().eq('user_id', user.id)
-    return { success: true, orderId: createdOrder.id }
+    return createdOrder.id // 성공 시 orderId 반환 (try 블록 밖에서 redirect 하기 위함)
 
   } catch (error) {
     return { success: false, message: (error as Error).message }
+  }
+}
+
+export async function submitPayment(formData: FormData) {
+  let orderId: string | null = null
+
+  try {
+    const result = await processPayment(formData)
+
+    if (typeof result === 'string') {
+      orderId = result
+    } else {
+      return result
+    }
+  } catch (error) {
+    return { success: false, message: (error as Error).message }
+  }
+
+  if (orderId) {
+    redirect(`/payment/finish/${orderId}`)
   }
 }

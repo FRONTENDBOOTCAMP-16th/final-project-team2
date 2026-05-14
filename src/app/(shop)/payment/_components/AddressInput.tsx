@@ -38,7 +38,7 @@ export default function AddressInput() {
       <div className="flex gap-2">
         <input
           type="text"
-          className="mbs-1 rounded bg-[#F0F1F1] px-3 py-2.5 w-40 cursor-pointer"
+          className="mbs-1 rounded bg-[#F0F1F1] px-3 py-2.5 w-40 cursor-pointer dark:bg-gray-500 dark:text-white dark:placeholder:text-white"
           id="zipCode"
           name="zipCode"
           placeholder="우편번호"
@@ -49,7 +49,7 @@ export default function AddressInput() {
         <button
           type="button"
           onClick={handleClick}
-          className="mbs-1 rounded bg-gray-800 text-white px-4 py-2.5 text-sm hover:bg-gray-700 transition-colors"
+          className="mbs-1 rounded bg-gray-800 text-white px-4 py-2.5 text-sm hover:bg-gray-700 transition-colors dark:bg-gray-700 dark:text-white dark:placeholder:text-white"
         >
           우편번호 찾기
         </button>
@@ -57,7 +57,7 @@ export default function AddressInput() {
       <div>
         <input
           type="text"
-          className="mbs-1 rounded bg-[#F0F1F1] px-3 py-2.5 w-full cursor-pointer"
+          className="mbs-1 rounded bg-[#F0F1F1] px-3 py-2.5 w-full cursor-pointer  dark:bg-gray-500 dark:text-white dark:placeholder:text-white"
           id="streetAdr"
           name="streetAdr"
           placeholder="도로명 주소"
@@ -69,7 +69,7 @@ export default function AddressInput() {
       <div>
         <input
           type="text"
-          className="mbs-1 rounded bg-white border border-gray-300 px-3 py-2.5 w-full focus:outline-none focus:border-gray-500"
+          className="mbs-1 rounded bg-white border border-gray-300 px-3 py-2.5 w-full focus:outline-none focus:border-gray-500  dark:bg-gray-500 dark:text-white dark:placeholder:text-white dark:focus-within:bg-gray-900"
           id="detailAdr"
           name="detailAdr"
           placeholder="상세 주소 입력"
