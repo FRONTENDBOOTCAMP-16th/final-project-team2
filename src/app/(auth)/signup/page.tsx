@@ -94,7 +94,7 @@ export default function SignupPage() {
 
           <button
             type="submit"
-            className="mbs-12 w-full cursor-pointer rounded bg-[#FF6B6B] py-4 font-bold text-white"
+            className="mbs-12 w-full cursor-pointer rounded bg-black py-4 font-bold text-white"
           >
             회원가입
           </button>

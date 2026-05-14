@@ -4,18 +4,25 @@ import Image from 'next/image'
 import { useRef, useState } from 'react'
 
 type ProductImageProps = {
-  src?: string;
-  alt: string;
-  priority?: boolean;
-  onLoadComplete?: () => void;
-};
+  src?: string
+  alt: string
+  sizes?: string
+  priority?: boolean
+  onLoadComplete?: () => void
+}
 
-export default function ProductImage({ src, alt, priority = false, onLoadComplete }: ProductImageProps) {
-  const fallback = '/pen_dummy.jpg';
+export default function ProductImage({
+  src,
+  alt,
+  sizes = '(max-width: 768px) 100vw, 25vw',
+  priority = false,
+  onLoadComplete,
+}: ProductImageProps) {
+  const fallback = '/fallback.png'
 
-  const [imgSrc, setImgSrc] = useState(src || fallback);
+  const [imgSrc, setImgSrc] = useState(src || fallback)
 
-  const isReportedRef = useRef(false);
+  const isReportedRef = useRef(false)
 
   const reportLoaded = () => {
     if (isReportedRef.current) return
@@ -29,9 +36,11 @@ export default function ProductImage({ src, alt, priority = false, onLoadComplet
       src={imgSrc}
       alt={alt}
       fill
+      sizes={sizes}
       priority={priority}
       className="object-cover"
       onLoad={reportLoaded}
+      loading="eager"
       onError={() => {
         reportLoaded()
 

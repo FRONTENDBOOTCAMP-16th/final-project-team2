@@ -1,21 +1,28 @@
-import { Products } from '@/app/lib/products';
-import { Store } from '@/app/lib/Stores';
-import ProductInfoTable from './ProductInfoTable';
-import TabProductsInfo from './TabProductsInfo';
-import TabStoreInfo from './TabStoreInfo';
-import { Reviews } from '@/app/lib/Reviews';
-import ReviewList from '../Review/ReviewList';
-import ReviewChart from '../Review/ReviewChart';
-import Review from '../Review/Review';
+import { Products } from '@/app/lib/products.types'
+import { Store } from '@/app/lib/stores.types'
+import ProductInfoTable from './ProductInfoTable'
+import TabProductsInfo from './TabProductsInfo'
+import TabStoreInfo from './TabStoreInfo'
+import { Reviews } from '@/app/lib/reviews.types'
+import ReviewList from '../Review/ReviewList'
+import ReviewChart from '../Review/ReviewChart'
+import Review from '../Review/Review'
 
 type Props = {
-  product: Products;
-  store: Store;
-  reviews: Reviews[];
-  seller: string;
-};
+  product: Products
+  store: Store
+  reviews: Reviews[]
+  seller: string
+  average_grade: number | null
+}
 
-export default function TabInfoComponent({ product, store, reviews, seller }: Props) {
+export default function TabInfoComponent({
+  product,
+  store,
+  reviews,
+  seller,
+  average_grade,
+}: Props) {
   return (
     <TabProductsInfo
       product={product}
@@ -23,10 +30,10 @@ export default function TabInfoComponent({ product, store, reviews, seller }: Pr
       storeContent={<TabStoreInfo store={store} seller={seller} />}
       reviewContent={
         <ReviewList>
-          <ReviewChart reviews={reviews} />
+          <ReviewChart reviews={reviews} average_grade={average_grade} />
           <Review reviews={reviews} />
         </ReviewList>
       }
     />
-  );
+  )
 }

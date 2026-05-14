@@ -1,6 +1,6 @@
-import { ProductPreview } from './Categories'
+import { ProductPreview } from './categories.types'
 
-export type ProductLike = {
+export interface ProductLike {
   id: string
   user_id: string
   product_id: string

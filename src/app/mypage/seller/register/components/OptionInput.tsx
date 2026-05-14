@@ -1,6 +1,6 @@
 'use client'
 
-import { OptionType } from '@/app/lib/products'
+import { OptionType } from '@/app/lib/products.types'
 import useOptionForm from '@/hooks/useOptionForm'
 import { ChangeEvent } from 'react'
 import OptionList from './OptionList'
@@ -37,7 +37,7 @@ export default function OptionInput({ optionForm }: Props) {
                 e.target.value as OptionType | '',
               )
             }
-            className=" appearance-none border border-gray-300  rounded-md px-4 py-3 pr-8 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer"
+            className="cursor-pointer appearance-none rounded-md border border-gray-300 px-4 py-3 pr-8 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
             aria-describedby="optionTypeHelp"
           >
             <option value="">선택</option>
