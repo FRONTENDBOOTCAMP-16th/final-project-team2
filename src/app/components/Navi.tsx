@@ -1,7 +1,6 @@
 'use client'
 
 import Link from 'next/link'
-import NavList from './NavList'
 import Header from './Header'
 import SubHeader from './SubHeader'
 
@@ -17,9 +16,9 @@ export default function Navi() {
         🎉 신규가입 시 5,000원 할인쿠폰 증정!
       </Link>
 
-      <header className="sticky top-0 z-20 w-full border-be border-be-[#2D3142]/9 bg-white">
+      <header className="sticky top-0 z-20 w-full border-be border-be-[#2D3142]/9 bg-white dark:border-be-black">
         {/* 편의 메뉴 */}
-        <div className="relative mx-auto flex max-w-7xl items-center justify-between px-4 py-4 md:px-4">
+        <div className="relative mx-auto flex max-w-7xl items-center justify-between px-4 py-4 md:px-4 dark:bg-[#1b1b1b]">
           {/* 타이틀 */}
           <h1>
             <Link href="/" className="text-2xl font-bold">

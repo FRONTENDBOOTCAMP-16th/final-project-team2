@@ -28,25 +28,25 @@ export default function ProductsTodaySale({
             sizes="w-full h-full"
           />
         </div>
-        <div className="flex min-w-0 flex-1 flex-col bg-white px-8.5 pbs-17 pbe-8.5 text-left border-2 border-gray-200">
+        <div className="flex min-w-0 flex-1 flex-col px-8.5 pbs-17 pbe-8.5 text-left border-2 border-gray-200 bg-gray-200 dark:bg-[#1b1b1b]">
           <dl className="w-full min-w-0">
             <dt className="sr-only">상품 카테고리</dt>
             <dd
               aria-label={`${item.category_name_kr}`}
-              className="font-extrabold text-[#7B7979]"
+              className="font-extrabold text-[#7B7979] dark:text-[#e2e2e2]"
             >
               {item.category_name_kr}
             </dd>
 
             <dt className="sr-only">상품명</dt>
-            <dd className="mbs-4.5 truncate text-3xl font-bold text-[#2D3142]">
+            <dd className="mbs-4.5 truncate text-3xl font-bold text-[#2D3142] dark:text-white">
               {item.name}
             </dd>
           </dl>
 
           <dl className="mbs-4.5 flex flex-1 flex-wrap items-center">
             <dt className="sr-only">기존 금액</dt>
-            <dd className="order-3 h-full w-full text-[#7B7979] line-through">
+            <dd className="order-3 h-full w-full text-[#7B7979] line-through dark:text-[#e2e2e2]">
               {priceLocale}원
             </dd>
 
@@ -56,7 +56,7 @@ export default function ProductsTodaySale({
             </dd>
 
             <dt className="sr-only">최종금액</dt>
-            <dd className="order-2 text-2xl font-black text-[#2D3142]">
+            <dd className="order-2 text-2xl font-black text-[#2D3142] dark:text-white">
               {finalPrice}원
             </dd>
           </dl>

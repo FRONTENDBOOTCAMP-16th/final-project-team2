@@ -30,11 +30,11 @@ export default function NavList({
           <li key={index} className="group relative items-center flex">
             {item.href ? (
               <Link
-                className="cursor-pointer text-[#2D3142] opacity-80 transition-all hover:font-medium hover:opacity-100"
+                className="cursor-pointer text-[#2D3142] opacity-80 transition-all hover:font-medium hover:opacity-100 dark:text-white"
                 href={item.href || ""}
               >
                 {item.icon ? (
-                  <p className="rounded-full bg-[#F5F5F5] p-1.5">
+                  <p className="rounded-full bg-[#F5F5F5] p-1.5 dark:bg-black">
                     {item.icon}
                   </p>
                 ) : (
@@ -53,7 +53,7 @@ export default function NavList({
                 type="button"
               >
                 {item.icon ? (
-                  <p className="rounded-full bg-[#F5F5F5] p-1.5">
+                  <p className="rounded-full bg-[#F5F5F5] p-1.5 dark:bg-black">
                     {item.icon}
                   </p>
                 ) : (
