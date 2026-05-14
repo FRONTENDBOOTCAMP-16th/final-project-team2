@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { createClient } from '@/utils/supabase/client'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 
 // 한 틀만 꺼내 쓸 수 있도록 function밖에 위치
 const supabase = createClient()
@@ -8,6 +8,7 @@ const supabase = createClient()
 export function useAuth() {
   const [isLogin, setIsLogin] = useState(false)
   const pathname = usePathname()
+  const router = useRouter()
 
   // 경로가 변경되면 로그인/로그아웃 확인하여 값 전달
   // getSession으로 현재 유저로그인데이터가 있는지(값이 있으면 로그인상태)확인
@@ -38,6 +39,8 @@ export function useAuth() {
   // 로그아웃 기능
   const handleLogout = async () => {
     await supabase.auth.signOut()
+    router.push('/')
+    router.refresh()
   }
 
   return { isLogin, handleLogout }
