@@ -28,36 +28,35 @@ export default function OrderItemCard({
   const productId = order.product_id
 
   return (
-    <div className="mb-2 flex border-b border-gray-300 p-4 font-semibold">
-      <div className="flex w-3/6">
-        <Link
-          href={{
-            pathname: `/products/${categoryId}/${productId}`,
-          }}
-          className="flex shrink-0 flex-row gap-4"
-        >
+    <div className="h-25 border-b border-gray-300 px-3 py-3 font-semibold hover:bg-gray-100">
+      <Link
+        href={{
+          pathname: `/products/${categoryId}/${productId}`,
+        }}
+        className="grid h-24 grid-cols-[2fr_1fr_1fr_1fr] items-center gap-6 pb-5"
+      >
+        <div className="flex items-center gap-4">
           <Image
             width={80}
             height={80}
-            className="shrink-0 object-fill"
+            className="shrink-0 object-cover"
             src={order.products.thumbnail_image}
             alt=""
           />
-          <h2 className="self-center truncate hover:font-extrabold hover:text-red-500">
+          <h2 className="min-w-0 truncate hover:font-extrabold hover:text-red-500">
             {order.products.name}
           </h2>
-        </Link>
-      </div>
-      <div className="flex w-1/6 shrink-0 items-center gap-3 whitespace-nowrap">
-        <p>{DateFormat(createdAt)}</p>
-      </div>
-      <div className="flex w-1/6 shrink-0 items-center gap-3 whitespace-nowrap">
-        <p>{finalPrice.toLocaleString()}원</p>
-      </div>
-      {/* 배송 상태  */}
-      <div className="flex w-1/6 shrink-0 items-center gap-3 whitespace-nowrap">
-        <OrderStatusBadge status={orderStatus as OrderItemStatus} />
-      </div>
+        </div>
+        <p className="text-left whitespace-nowrap tabular-nums">
+          {DateFormat(createdAt)}
+        </p>
+        <p className="text-center whitespace-nowrap tabular-nums">
+          {finalPrice.toLocaleString()}원
+        </p>
+        <div className="flex justify-center">
+          <OrderStatusBadge status={orderStatus as OrderItemStatus} />
+        </div>
+      </Link>
     </div>
   )
 }
