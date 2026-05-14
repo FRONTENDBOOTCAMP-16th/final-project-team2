@@ -26,7 +26,7 @@ export default function WishListItemCard({ order, onRemove }: Props) {
         href={{
           pathname: `/products/${categoryId}/${productId}`,
         }}
-        className="relative flex flex-col transition-transform duration-400 hover:scale-105"
+        className="relative flex flex-col shadow-md transition-transform duration-400 hover:scale-105"
       >
         {product.discount_rate > 0 && (
           <div className="absolute top-0 left-0 bg-red-500 px-2 py-1 text-sm font-bold text-white">

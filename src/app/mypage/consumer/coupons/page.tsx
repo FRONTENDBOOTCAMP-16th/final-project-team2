@@ -6,7 +6,7 @@ export default function CouponPage() {
   const coupons = dummyUserCoupons
 
   return (
-    <div className="flex w-full flex-col bg-white px-18 py-12">
+    <div className="mb-20 flex w-full flex-col bg-white px-18 py-12">
       <h1 className="mb-8 text-2xl font-bold">내 쿠폰함</h1>
       <CouponList initialCoupons={coupons} />
     </div>
