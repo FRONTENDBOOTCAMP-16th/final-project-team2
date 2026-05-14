@@ -105,7 +105,6 @@ export default function Info() {
             label="상점 로고 이미지"
             defaultImage={formData.profileImage}
             onUploadSuccess={(url) => {
-              console.log('업로드된 이미지 URL:', url) // 이 로그가 찍히는지 확인하세요!
               setFormData((prev) => ({ ...prev, profileImage: url }))
             }}
             isEditing={isEditing}
