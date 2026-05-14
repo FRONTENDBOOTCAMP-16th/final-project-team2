@@ -70,7 +70,7 @@ export default function InputBox({
         {label}
       </label>
       <input
-        className="mbs-1 rounded bg-[#F0F1F1] px-3 py-2.5"
+        className="mbs-1 rounded bg-[#F0F1F1] px-3 py-2.5 dark:bg-[#b1b1b1] dark:placeholder:text-black"
         id={uniqueId}
         type={type}
         placeholder={placeholder}
