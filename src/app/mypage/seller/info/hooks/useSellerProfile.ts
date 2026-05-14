@@ -64,7 +64,9 @@ export const useSellerProfile = ({
       { onConflict: 'owner_id' },
     )
     if (storeError) throw storeError
+    // 현재는 시간 관계상 저장 성공 후 데이터 반영을 위해 전체 페이지를 새로고침합니다.
+    // 리팩토링이 진행된다면 tanstack query를 도입한 로직으로 변경할 예정입니다.
+    window.location.reload()
   }
-
   return { saveProfile }
 }

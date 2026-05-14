@@ -8,7 +8,16 @@ import {
   useEffect,
 } from 'react'
 import { createClient } from '@/utils/supabase/client'
-import { User } from '@supabase/supabase-js'
+
+interface User {
+  id: string
+  email?: string
+  name: string
+  role: 'USER' | 'BUSINESS'
+  grade?: string
+  profile_image?: string
+  store_image?: string
+}
 
 type Role = 'USER' | 'BUSINESS' | null
 
@@ -27,7 +36,7 @@ export function UserProvider({ children }: { children: ReactNode }) {
   const supabase = createClient()
 
   useEffect(() => {
-    const fetchUserRole = async () => {
+    const fetchFullUserData = async () => {
       setIsLoading(true)
 
       const {
@@ -35,14 +44,30 @@ export function UserProvider({ children }: { children: ReactNode }) {
       } = await supabase.auth.getUser()
 
       if (authUser) {
-        setUser(authUser) // 유저 정보 저장
         const { data: profile } = await supabase
           .from('users')
-          .select('role')
+          .select('id, email, name, role, grade, profile_image')
           .eq('id', authUser.id)
           .single()
 
-        setRole(profile?.role || null)
+        if (profile) {
+          const finalUserData: User = { ...profile }
+
+          if (profile.role === 'BUSINESS') {
+            const { data: storeData } = await supabase
+              .from('stores')
+              .select('profile_image')
+              .eq('owner_id', profile.id)
+              .single()
+
+            if (storeData) {
+              finalUserData.store_image = storeData.profile_image
+            }
+          }
+
+          setUser(finalUserData)
+          setRole(profile.role as Role)
+        }
       } else {
         setUser(null)
         setRole(null)
@@ -50,7 +75,7 @@ export function UserProvider({ children }: { children: ReactNode }) {
       setIsLoading(false)
     }
 
-    fetchUserRole()
+    fetchFullUserData()
   }, [supabase])
 
   return (
