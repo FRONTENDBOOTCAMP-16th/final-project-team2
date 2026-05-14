@@ -1,4 +1,4 @@
-import { Coupons, UserCoupons } from '@/app/lib/coupons'
+import { Coupons, UserCoupons } from '@/app/lib/coupons.types'
 
 type CouponDetails = Pick<
   Coupons,

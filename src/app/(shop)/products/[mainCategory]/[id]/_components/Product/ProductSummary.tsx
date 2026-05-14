@@ -1,7 +1,7 @@
 import { Star } from 'lucide-react'
-import { Products } from '@/app/lib/products'
+import { Products } from '@/app/lib/products.types'
 import { DiscountPrice, PriceFormat } from '@/utils/intl'
-import { Reviews } from '@/app/lib/reviews'
+import { Reviews } from '@/app/lib/reviews.types'
 import { getAverageGrade } from '@/api/review'
 
 interface Props {

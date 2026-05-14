@@ -1,4 +1,4 @@
-import { Reviews } from '@/app/lib/reviews'
+import { Reviews } from '@/app/lib/reviews.types'
 import { Star } from 'lucide-react'
 
 type ReviewProps = {

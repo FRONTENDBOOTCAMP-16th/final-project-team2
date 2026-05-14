@@ -3,17 +3,17 @@
 import { useState } from 'react'
 import ProductsCard from '@/app/components/ProductsCard'
 import ProductsCardList from '@/app/components/ProductsCardList'
-import { Products } from '@/app/lib/products'
+import { Products } from '@/app/lib/products.types'
 import Skeleton from '../skeleton'
 
 type Props = {
-  products: Products[];
-  category: string;
-  sort?: string;
-};
+  products: Products[]
+  category: string
+  sort?: string
+}
 
 export default function ProductListInner({ products, category, sort }: Props) {
-  const [loadedCount, setLoadedCount] = useState(0);
+  const [loadedCount, setLoadedCount] = useState(0)
 
   const isAllLoaded = products.length === 0 || loadedCount >= products.length
   if (products.length === 0) {
@@ -30,8 +30,14 @@ export default function ProductListInner({ products, category, sort }: Props) {
       <ProductsCardList
         className={`transition-opacity duration-150 ${isAllLoaded ? 'opacity-100' : 'pointer-events-none absolute inset-0 opacity-0'}`}
       >
-        {products.map(product => (
-          <ProductsCard key={product.id} sort={sort} category={category} product={product} onImageLoad={handleImageLoad} />
+        {products.map((product) => (
+          <ProductsCard
+            key={product.id}
+            sort={sort}
+            category={category}
+            product={product}
+            onImageLoad={handleImageLoad}
+          />
         ))}
       </ProductsCardList>
     </div>

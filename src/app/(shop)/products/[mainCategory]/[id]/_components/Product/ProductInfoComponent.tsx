@@ -1,8 +1,8 @@
 import { Coins } from 'lucide-react'
 import HeartButton from './HeartButton'
 import ProductSummary from './ProductSummary'
-import { Products } from '@/app/lib/products'
-import { Reviews } from '@/app/lib/reviews'
+import { Products } from '@/app/lib/products.types'
+import { Reviews } from '@/app/lib/reviews.types'
 import ProductImage from '@/app/(shop)/products/[mainCategory]/_components/ProductImage'
 import ProductOption from './ProductOption'
 

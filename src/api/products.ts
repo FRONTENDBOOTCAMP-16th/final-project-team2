@@ -1,4 +1,4 @@
-import { Products } from '@/app/lib/products'
+import { Products } from '@/app/lib/products.types'
 import { createClient } from '@/utils/supabase/server'
 import { notFound } from 'next/navigation'
 
@@ -136,7 +136,7 @@ export const getProductsCategory = async (
       query = query
         .order('average_grade', { ascending: false, nullsFirst: false })
         .order('created_at', { ascending: false })
-        break
+      break
   }
 
   const currentPage = Number(params.page) || 1
@@ -165,4 +165,3 @@ export const getProductsCategory = async (
     totalCount: count ?? 0,
   }
 }
-

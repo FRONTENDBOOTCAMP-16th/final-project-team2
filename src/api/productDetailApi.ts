@@ -1,5 +1,5 @@
-import { Products } from '@/app/lib/products'
-import { Store } from '@/app/lib/stores'
+import { Products } from '@/app/lib/products.types'
+import { Store } from '@/app/lib/stores.types'
 import { createClient } from '@/utils/supabase/server'
 import { notFound } from 'next/navigation'
 

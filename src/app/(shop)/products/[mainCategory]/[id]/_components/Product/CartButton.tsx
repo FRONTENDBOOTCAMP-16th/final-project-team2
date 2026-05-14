@@ -2,7 +2,7 @@
 
 import Modal from '@/app/components/Modal'
 import { addCartItem } from '@/actions/cartAction'
-import { SelectedOption } from '@/app/lib/cart'
+import { SelectedOption } from '@/app/lib/cart.types'
 import { useAuth } from '@/hooks/useAuth'
 import { ShoppingCart } from 'lucide-react'
 import Link from 'next/link'

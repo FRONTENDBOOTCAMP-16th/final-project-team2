@@ -1,9 +1,9 @@
-import { ProductLike } from '@/app/lib/productLike'
+import { ProductLike } from '@/app/lib/productLike.types'
 import { createClient } from '@/utils/supabase/client'
 import {
   ProductCategoriesWithCategory,
   ProductPreview,
-} from '@/app/lib/categories'
+} from '@/app/lib/categories.types'
 import { CATEGORY_GROUPS } from '../consumer/wishlist/lib/categoryGroup'
 
 // categories 포함된 products (UI용)

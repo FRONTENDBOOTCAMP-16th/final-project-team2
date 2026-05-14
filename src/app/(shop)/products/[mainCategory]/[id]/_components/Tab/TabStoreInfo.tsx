@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import { MapPin, StoreIcon, User } from 'lucide-react'
-import { Store } from '@/app/lib/stores'
+import { Store } from '@/app/lib/stores.types'
 
 type Props = {
   store: Store
