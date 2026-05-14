@@ -4,7 +4,6 @@ import { createClient } from '@/utils/supabase/server'
 import { z } from 'zod'
 import { getAuthUserInfo } from './getUser'
 import { revalidatePath } from 'next/cache'
-import { SelectedOption } from '@/app/lib/cart.types'
 
 const productSchema = z.object({
   name: z.string(),
@@ -118,68 +117,6 @@ export async function updateCartQuantity(input: UpdateCartQuantity) {
   revalidatePath('/cart')
 
   return { success: true }
-}
-
-// 장바구니 아이템 삭제 Server Action 추가
-export async function deleteCartItem(input: DeleteCartItem) {
-  const auth = await getAuthUserInfo()
-
-  if (!auth) {
-    return { success: false, message: '인증이 필요합니다.' }
-  }
-
-  // Zod를 통한 입력 파라미터 검증
-  const parsedInput = deleteCartItemSchema.safeParse(input)
-  if (!parsedInput.success) {
-    const errorMessage = parsedInput.error.issues[0]?.message || '잘못된 입력값입니다.'
-    return { success: false, message: errorMessage }
-  }
-
-  const { cartItemId } = parsedInput.data
-
-  const supabase = await createClient()
-
-  const { data: existingItem, error: selectError } = await supabase
-    .from('cart_items')
-    .select('id, quantity')
-    .eq('user_id', auth.id)
-    .eq('product_id', productId)
-    .maybeSingle()
-
-  if (selectError) {
-    throw new Error(selectError.message)
-  }
-  // 제품이 이미 있으면 갯수 추가
-  if (existingItem) {
-    const { error: updateError } = await supabase
-      .from('cart_items')
-      .update({
-        quantity: existingItem.quantity + quantity,
-      })
-      .eq('id', existingItem.id)
-
-    if (updateError) {
-      throw new Error(updateError.message)
-    }
-
-    return
-  }
-
-  const { error } = await supabase.from('cart_items').insert({
-    user_id: auth.id,
-    product_id: productId,
-    selected_options: optionData,
-    quantity,
-  })
-
-  if (error) {
-    console.error(error.message)
-    return { success: false, message: '상품 삭제에 실패했습니다.' }
-  }
-  
-  revalidatePath('/cart')
-  
-  return { success: true, message: '상품이 장바구니에서 삭제되었습니다.' }
 }
 
 
