@@ -89,7 +89,7 @@ export default function Info() {
               className={`${
                 isEditing
                   ? 'bg-green-500 hover:bg-green-600'
-                  : 'bg-red-400 hover:bg-red-500'
+                  : 'bg-black hover:bg-red-500'
               } px-6 py-2 font-medium text-white transition`}
             >
               <div className="flex items-center gap-2">
