@@ -41,16 +41,16 @@ export default function Modal({
 
       {/* Modal Window */}
       <section
-        className="animate-in zoom-in-95 relative flex w-full max-w-[800px] flex-col overflow-hidden rounded-3xl bg-white shadow-[0_20px_50px_rgba(0,0,0,0.1)] duration-200"
+        className="animate-in zoom-in-95 relative flex w-full max-w-200 flex-col overflow-hidden rounded-3xl bg-white shadow-[0_20px_50px_rgba(0,0,0,0.1)] duration-200"
         role="dialog"
         aria-modal="true"
       >
         {/* Header / Close Button Area */}
-        <div className="flex h-[64px] items-center justify-between px-4 sm:px-6 lg:px-10">
+        <div className="flex h-16 items-center justify-between px-4 sm:px-6 lg:px-10">
           <h2 className="truncate text-xl font-bold text-[#1a1a1a]">{title}</h2>
           <button
             onClick={onClose}
-            className="flex h-[48px] w-[48px] items-center justify-center rounded-full transition-all hover:bg-gray-50 active:scale-90"
+            className="flex h-12 w-12 items-center justify-center rounded-full transition-all hover:bg-gray-50 active:scale-90"
             aria-label="Close modal"
           >
             <X size={24} strokeWidth={2} className="text-[#333]" />
