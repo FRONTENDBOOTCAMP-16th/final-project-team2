@@ -5,7 +5,7 @@ import Modal from '@/app/components/Modal'
 import { useAuth } from '@/hooks/useAuth'
 import { Heart } from 'lucide-react'
 import Link from 'next/link'
-import { Fragment, useState, useTransition } from 'react'
+import { Fragment, useEffect, useRef, useState, useTransition } from 'react'
 
 type HeartButtonProps = {
   productId: string
@@ -17,8 +17,19 @@ const HeartButton = ({ productId, initialLiked = false }: HeartButtonProps) => {
 
   const [isOpen, setIsOpen] = useState(false)
   const [isLiked, setIsLiked] = useState(initialLiked)
+  const [showToast, setShowToast] = useState(false)
+
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   const [isPending, startTransition] = useTransition()
+
+  useEffect(() => {
+    return () => {
+      if (timerRef.current) {
+        clearTimeout(timerRef.current)
+      }
+    }
+  }, [])
 
   const handleClick = () => {
     if (isPending) return
@@ -28,11 +39,19 @@ const HeartButton = ({ productId, initialLiked = false }: HeartButtonProps) => {
       return
     }
 
+    setShowToast(true)
+
+    if (timerRef.current) {
+      clearTimeout(timerRef.current)
+    }
+
+    timerRef.current = setTimeout(() => {
+      setShowToast(false)
+    }, 1500)
+
     startTransition(async () => {
       try {
-        const result = await toggleWishlist({
-          productId,
-        })
+        const result = await toggleWishlist({ productId })
 
         setIsLiked(result.liked)
       } catch (error) {
@@ -51,11 +70,21 @@ const HeartButton = ({ productId, initialLiked = false }: HeartButtonProps) => {
         className="disabled:cursor-not-allowed disabled:opacity-50"
       >
         <Heart
-          className={`h-5 w-5 transition duration-200 ${
-            isLiked ? 'fill-red-500 text-red-500' : 'text-gray-700'
+          className={`h-10 w-10 p-2 text-gray-700 transition-transform duration-200 hover:scale-125 ${
+            isLiked ? 'fill-red-500 text-red-500' : 'hover:fill-pink-200'
           } ${isPending ? 'scale-90 opacity-70' : ''}`}
         />
       </button>
+
+      {showToast && (
+        <div className="fixed bottom-10 left-1/2 z-20 -translate-x-1/2">
+          <div className="rounded-full bg-gray-800 px-6 py-3 text-sm text-white shadow-lg">
+            {isLiked
+              ? '찜한 상품을 추가하였습니다.'
+              : '찜한 상품을 해제하였습니다.'}
+          </div>
+        </div>
+      )}
 
       <Modal
         isOpen={isOpen}

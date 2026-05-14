@@ -88,7 +88,7 @@ export default function ProductsCard({
       </Link>
 
       <div
-        className="absolute right-3 bottom-17 flex aspect-square w-10 items-center justify-center rounded-full border-2 border-gray-200 p-1 transition hover:bg-pink-100"
+        className="absolute right-3 bottom-17 flex aspect-square"
         aria-label={`${product_name} 찜하기`}
       >
         <HeartButton productId={product.id} initialLiked={false} />
