@@ -1,5 +1,3 @@
-import { Coins } from 'lucide-react'
-import HeartButton from './HeartButton'
 import ProductSummary from './ProductSummary'
 import { Products } from '@/app/lib/products.types'
 import { Reviews } from '@/app/lib/reviews.types'
