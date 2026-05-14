@@ -32,7 +32,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
       {/* 검색 결과 헤더 */}
       <div className="text-center mt-15">
         <h1 className="mt-3 text-4xl font-bold">{keyword ? keyword : '전체 상품'}</h1>
-        <p className="mt-3 text-base font-semibold text-gray-600">
+        <p className="mt-3 text-base font-semibold text-gray-600 dark:text-[#e2e2e2]">
           총 {data.totalCount}개의 상품이 검색되었습니다.
         </p>
       </div>
