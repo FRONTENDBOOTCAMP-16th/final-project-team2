@@ -1,4 +1,4 @@
-import { ProductPreview } from './categories'
+import { ProductPreview } from './categories.types'
 
 export interface ProductLike {
   id: string

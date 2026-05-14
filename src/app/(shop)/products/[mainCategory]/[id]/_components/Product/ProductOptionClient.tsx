@@ -5,8 +5,8 @@ import { useMemo, useState } from 'react'
 import TotalPrice from './TotalPrice'
 import CartButton from './CartButton'
 import { Minus, Plus } from 'lucide-react'
-import { ProductOptionType } from '@/app/lib/products'
-import { SelectedOption } from '@/app/lib/cart'
+import { ProductOptionType } from '@/app/lib/products.types'
+import { SelectedOption } from '@/app/lib/cart.types'
 import HeartButton from './HeartButton'
 
 interface Props {

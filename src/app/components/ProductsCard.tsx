@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import ProductImage from '../(shop)/products/[mainCategory]/_components/ProductImage'
-import { Products } from '../lib/products'
+import { Products } from '../lib/products.types'
 import {
   DiscountPriceFormat,
   DiscountRateFormat,

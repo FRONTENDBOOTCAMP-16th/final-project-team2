@@ -1,4 +1,4 @@
-import { OrdersType } from '@/app/lib/orders'
+import { OrdersType } from '@/app/lib/orderss'
 import { createClient } from '@/utils/supabase/client'
 
 export const fetchOrders = async (

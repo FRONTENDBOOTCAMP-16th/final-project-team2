@@ -1,4 +1,4 @@
-import { OrderProducts } from './categories'
+import { OrderProducts } from './categories.types'
 
 export interface Orders {
   id: string

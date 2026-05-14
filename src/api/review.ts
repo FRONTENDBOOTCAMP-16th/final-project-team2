@@ -1,4 +1,4 @@
-import { Reviews } from '@/app/lib/reviews'
+import { Reviews } from '@/app/lib/reviews.types'
 import { createClient } from '@/utils/supabase/server'
 
 export async function getProductReviews(productId: string): Promise<Reviews[]> {

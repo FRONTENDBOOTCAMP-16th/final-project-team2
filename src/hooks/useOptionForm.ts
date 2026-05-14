@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { Option, OptionType } from '@/app/lib/products'
+import { Option, OptionType } from '@/app/lib/products.types'
 
 /**
  * @param initialOptions 수정 페이지 등에서 기존 옵션을 불러올 때 사용하는 초기값

@@ -1,7 +1,7 @@
 import LikeToggleButton from '@/app/mypage/consumer/wishlist/components/LikeToggleButton'
 import Link from 'next/link'
 import Image from 'next/image'
-import { ProductLikeWithProduct } from '@/app/lib/productLike'
+import { ProductLikeWithProduct } from '@/app/lib/productLike.types'
 import { CATEGORY_GROUPS } from '../lib/categoryGroup'
 import { DiscountPriceFormat, DiscountRateFormat } from '@/utils/intl'
 

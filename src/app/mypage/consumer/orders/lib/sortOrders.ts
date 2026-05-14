@@ -1,4 +1,4 @@
-import { OrdersType } from '@/app/lib/orders'
+import { OrdersType } from '@/app/lib/orderss'
 import { CategoryId } from './orderTabGroups'
 
 export const sortOrders = (items: OrdersType[], sort: CategoryId) => {

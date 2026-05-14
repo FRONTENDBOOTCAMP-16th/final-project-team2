@@ -1,4 +1,4 @@
-import { ProductLikeWithProduct } from '@/app/lib/productLike'
+import { ProductLikeWithProduct } from '@/app/lib/productLike.types'
 
 export type SORTTYPE = 'latest' | 'price-high' | 'price-low'
 

@@ -4,7 +4,7 @@ import { createClient } from '@/utils/supabase/server'
 import { z } from 'zod'
 import { getAuthUserInfo } from './getUser'
 import { revalidatePath } from 'next/cache'
-import { SelectedOption } from '@/app/lib/cart'
+import { SelectedOption } from '@/app/lib/cart.types'
 
 const productSchema = z.object({
   name: z.string(),

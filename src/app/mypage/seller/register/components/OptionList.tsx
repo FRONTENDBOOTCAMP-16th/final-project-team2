@@ -1,4 +1,4 @@
-import { Option, OptionType } from '@/app/lib/products'
+import { Option, OptionType } from '@/app/lib/products.types'
 
 interface Props {
   options: Option[]
