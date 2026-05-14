@@ -27,7 +27,7 @@ export default function useDeliveryOrders(
   // 조건에 맞는 데이터 배열 새로 만들기
   const myOrders = useMemo(() => {
     // items가 변경될 때만 필터링 + 변환 다시 실행
-    // 필터링한 데이터를 map을 사용하여 새로운 배열 반환 (주문 날짜는 숫자로 변환)
+    // 필터링한 데이터를 map을 사용하여 새로운 배열 반환
     return items.map((item) => ({
       ...item,
       orderTime: new Date(item.orders.created_at).getTime(),
@@ -48,8 +48,9 @@ export default function useDeliveryOrders(
   function getFinalPrice(item: OrderItem) {
     const price = Number(item.unit_price)
     const discount = Number(item.products?.discount_rate ?? 0)
+    const quantity = Number(item.quantity)
 
-    return price * (1 - discount / 100)
+    return price * (1 - discount / 100) * quantity
   }
 
   // 탭 종류에 따라 해당 데이터 키값을 반환해주는 함수
