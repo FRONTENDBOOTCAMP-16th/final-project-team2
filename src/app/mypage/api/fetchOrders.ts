@@ -66,7 +66,6 @@ export const fetchOrders = async (
     .returns<OrdersType[]>()
 
   if (error) throw error
-  console.log(data)
 
   return {
     items: data ?? [],
