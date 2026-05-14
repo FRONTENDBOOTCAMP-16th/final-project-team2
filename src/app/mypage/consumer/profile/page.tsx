@@ -71,7 +71,7 @@ export default function Profile() {
   }
 
   return (
-    <section className="w-full max-w-4xl bg-white p-8">
+    <section className="mb-20 w-full max-w-4xl bg-white p-8">
       <form onSubmit={(e) => handleSubmit(e, handleSaveSuccess)}>
         <div className="mb-6 flex items-center justify-between">
           <h1 className="text-xl font-bold">프로필 수정</h1>
