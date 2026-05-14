@@ -65,8 +65,10 @@ export default function AddressSection({ userInfo }: { userInfo: UserInfo }) {
       </fieldset>
 
       <div className="mt-2">
+        <span className="font-semibold text-sm">배송지 *</span>
         {mode === 'saved' ? (
           <div className="">
+
             <input type='hidden' name='zipCode' />
             <input type='hidden' name='detailAdr' />
             <input type='text' name='streetAdr' className="mt-1 rounded border border-gray-300 bg-white px-3 py-2.5 focus:outline-none focus:border-gray-500 w-full dark:bg-gray-500 dark:text-white dark:placeholder:text-white dark:focus-within:bg-gray-900" value={userInfo?.address} readOnly />
