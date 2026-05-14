@@ -1,7 +1,7 @@
 'use server'
 
 import { createClient } from '@/utils/supabase/server'
-import type { Products } from '@/app/lib/products'
+import type { Products } from '@/app/lib/products.types'
 
 export interface SearchState {
   success: boolean

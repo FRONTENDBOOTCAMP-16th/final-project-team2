@@ -1,14 +1,14 @@
-export type ReviewUser = {
+export interface ReviewUser {
   id: string
   nickname: string
 }
 
-export type ImageType = {
+export interface Imageinterface {
   src: string
   alt: string | null
 }
 
-export type Reviews = {
+export interface Reviews {
   id: string
 
   user_id: string
@@ -19,7 +19,7 @@ export type Reviews = {
 
   grade: number
 
-  images: ImageType[]
+  images: Imageinterface[]
 
   created_at: string
   updated_at: string
