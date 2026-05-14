@@ -2,7 +2,7 @@ import Link from 'next/link'
 
 export default function Footer() {
   return (
-    <footer className="w-full bg-gray-200 px-4 pbs-14 pbe-8">
+    <footer className="w-full bg-gray-200 px-4 pbs-14 pbe-8 dark:bg-[#1b1b1b]">
       <div className="mx-auto max-w-7xl">
         <strong className="font-extrabold">행쇼마켓</strong>
 
@@ -18,7 +18,7 @@ export default function Footer() {
           <button type="button">이미지 저작권 및 AI 사용</button>
         </div>
 
-        <small className="mbs-10 block text-base font-extrabold text-[#2D3142] opacity-80">
+        <small className="mbs-10 block text-base font-extrabold text-[#2D3142] opacity-80 dark:text-white">
           copyright by 2026
         </small>
       </div>

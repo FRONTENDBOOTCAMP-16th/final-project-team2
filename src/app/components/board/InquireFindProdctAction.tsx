@@ -11,7 +11,7 @@ export default function InquireFindProdctAction() {
     <>
       <button
         onClick={() => setIsOpen(true)}
-        className="flex items-center justify-center bg-red-500 px-8 py-2 text-white transition-colors hover:bg-red-600"
+        className="flex items-center justify-center bg-red-500 px-8 py-2 text-white transition-colors hover:bg-red-600 max-w-48"
       >
         문의할 제품 찾기
       </button>

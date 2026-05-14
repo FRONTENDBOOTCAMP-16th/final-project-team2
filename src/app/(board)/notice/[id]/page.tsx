@@ -47,19 +47,19 @@ export default async function NoticeDetailPage({
   }
 
   return (
-    <div className="mx-auto w-full max-w-4xl p-8">
+    <div className="mx-auto w-full max-w-4xl p-8 dark:text-gray-200">
       <h1 className="text-2xl font-bold">{notice.title}</h1>
-      <p className="text-gray-500">
+      <p className="text-gray-500 dark:text-gray-400">
         작성일: {new Date(notice.created_at).toLocaleDateString()}
       </p>
       <hr className="my-4" />
-      <div className="prose" dangerouslySetInnerHTML={{ __html: cleanHtml }} />
+      <div className="prose dark:prose-invert" dangerouslySetInnerHTML={{ __html: cleanHtml }} />
 
       <div className="my-6 flex w-full justify-end gap-2">
         {isWriter && (
           <Link
             href={`/notice/${notice.id}/edit`}
-            className="flex items-center justify-center bg-gray-200 px-8 py-2 text-black"
+            className="flex items-center justify-center bg-gray-200 dark:bg-gray-800 px-8 py-2 text-black dark:text-white"
           >
             수정
           </Link>

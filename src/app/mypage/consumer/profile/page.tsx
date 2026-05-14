@@ -1,53 +1,42 @@
 'use client'
 
-import { z } from 'zod'
 import { Pen, Check } from 'lucide-react'
 import useFormManagement from '@/hooks/useFormManagement'
 import ImageUploader from '../../consumer/profile/components/ImageUploader'
 import ProfileForm from '../../consumer/profile/components/ProfileForm'
 import ProfileAction from '../../consumer/profile/components/ProfileAction'
-
-const profileSchema = z.object({
-  nickname: z.string().min(1, '닉네임을 입력해주세요.'),
-  phone: z
-    .string()
-    .min(1, '전화번호를 입력해주세요.')
-    .min(10, '전화번호가 너무 짧습니다.'),
-  address: z.string().min(1, '주소를 입력해주세요.'),
-  profileImage: z.string().optional(),
-  name: z.string().optional(),
-  email: z.string().optional(),
-  birthday: z.string().optional(),
-})
+import { useUser } from '@/app/mypage/context/UserContext'
+import { ConsumerInfoData, profileSchema } from '../../types/infoSchema'
+import { useUserProfile } from './hooks/useUserProfile'
 
 const PROFILE_FIELDS = [
   { label: '이메일', name: 'email', type: 'email', isReadOnly: true },
-  { label: '이름', name: 'name', type: 'text', isReadOnly: true },
+  { label: '이름', name: 'name', type: 'text', isReadOnly: false },
   { label: '닉네임', name: 'nickname', type: 'text', isReadOnly: false },
   { label: '휴대전화', name: 'phone', type: 'tel', isReadOnly: false },
   { label: '주소', name: 'address', type: 'text', isReadOnly: false },
-  { label: '생일', name: 'birthday', type: 'date', isReadOnly: true },
-]
+  { label: '생일', name: 'birthday', type: 'date', isReadOnly: false },
+] as const
 
 export default function Profile() {
-  const initialData = {
+  const { user } = useUser()
+
+  const initialData: ConsumerInfoData = {
     profileImage: '',
-    name: '홍길동',
-    email: 'user01@example.com',
-    nickname: '행쇼마켓너무좋아요',
-    phone: '01012345678',
-    address: '서울시 강남구 테헤란로 123',
-    birthday: '1990-01-01',
+    name: '',
+    email: '',
+    nickname: '',
+    phone: '',
+    address: '',
+    birthday: '',
   }
 
-  const validate = (data: typeof initialData) => {
+  const validate = (data: ConsumerInfoData) => {
     const result = profileSchema.safeParse(data)
-
     if (!result.success) {
       const newErrors: Record<string, string> = {}
       result.error.issues.forEach((issue) => {
-        const fieldName = issue.path[0] as string
-        newErrors[fieldName] = issue.message
+        newErrors[issue.path[0] as string] = issue.message
       })
       return newErrors
     }
@@ -62,15 +51,27 @@ export default function Profile() {
     handleEdit,
     handleCancel,
     handleSubmit,
-  } = useFormManagement(initialData, validate)
+    setFormData,
+  } = useFormManagement<ConsumerInfoData>(initialData, validate)
 
-  const handleSaveSuccess = (data: typeof initialData) => {
-    console.log('저장할 데이터:', data)
-    alert('프로필이 수정되었습니다.')
+  // 커스텀 훅 연결
+  const { saveUserProfile } = useUserProfile({
+    user: user ? { id: user.id } : null,
+    setFormData,
+  })
+
+  const handleSaveSuccess = async (data: ConsumerInfoData) => {
+    try {
+      await saveUserProfile(data)
+      alert('프로필이 수정되었습니다.')
+    } catch (error) {
+      console.error('저장 에러:', error)
+      alert('저장 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.')
+    }
   }
 
   return (
-    <section className="w-full max-w-4xl bg-white p-8">
+    <section className="mb-20 w-full max-w-4xl bg-white p-8">
       <form onSubmit={(e) => handleSubmit(e, handleSaveSuccess)}>
         <div className="mb-6 flex items-center justify-between">
           <h1 className="text-xl font-bold">프로필 수정</h1>
@@ -93,17 +94,10 @@ export default function Profile() {
                   : 'bg-red-400 hover:bg-red-500'
               } px-6 py-2 font-medium text-white transition`}
             >
-              {isEditing ? (
-                <span className="flex items-center justify-center gap-2">
-                  <Check size={16} strokeWidth={2.5} />
-                  저장하기
-                </span>
-              ) : (
-                <span className="flex items-center justify-center gap-2">
-                  <Pen size={16} strokeWidth={2.5} />
-                  수정하기
-                </span>
-              )}
+              <div className="flex items-center gap-2">
+                {isEditing ? <Check size={16} /> : <Pen size={16} />}
+                {isEditing ? '저장하기' : '수정하기'}
+              </div>
             </button>
           </div>
         </div>
@@ -111,7 +105,12 @@ export default function Profile() {
         <div className="flex flex-col gap-5">
           <ImageUploader
             label="프로필 이미지"
-            defaultImage={formData.profileImage as string}
+            defaultImage={formData.profileImage}
+            onUploadSuccess={(url) => {
+              console.log('업로드된 이미지 URL:', url)
+              setFormData((prev) => ({ ...prev, profileImage: url }))
+            }}
+            isEditing={isEditing}
           />
 
           {PROFILE_FIELDS.map((field) => (
@@ -121,7 +120,7 @@ export default function Profile() {
               name={field.name}
               type={field.type}
               value={String(
-                formData[field.name as keyof typeof formData] || '',
+                formData[field.name as keyof ConsumerInfoData] || '',
               )}
               onChange={handleChange}
               disabled={!isEditing}
@@ -129,6 +128,7 @@ export default function Profile() {
               error={errors[field.name]}
             />
           ))}
+
           <ProfileAction />
         </div>
       </form>

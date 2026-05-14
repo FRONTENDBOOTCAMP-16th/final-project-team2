@@ -1,4 +1,4 @@
-export type Notices = {
+export interface Notices {
   id: string
   writer_id: string
   title: string

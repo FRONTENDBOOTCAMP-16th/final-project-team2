@@ -32,7 +32,7 @@ export default function SwiperList({ swiperList }: swiperProps) {
         delay: 3000,
         disableOnInteraction: false,
       }}
-      className="[&_.swiper-button-next]:right-5! [&_.swiper-button-next]:rounded-full [&_.swiper-button-next]:bg-white [&_.swiper-button-next]:p-3.5 [&_.swiper-button-next]:ps-4.5 [&_.swiper-button-next]:shadow-lg [&_.swiper-button-prev]:left-5! [&_.swiper-button-prev]:rounded-full [&_.swiper-button-prev]:bg-white [&_.swiper-button-prev]:p-3.5 [&_.swiper-button-prev]:pe-4.5 [&_.swiper-button-prev]:shadow-lg [&_.swiper-navigation-icon]:text-black [&_.swiper-pagination-bullet]:bg-white! [&_.swiper-pagination-bullet]:opacity-100! [&_.swiper-pagination-bullet]:transition-all [&_.swiper-pagination-bullet]:duration-400 [&_.swiper-pagination-bullet-active]:w-16! [&_.swiper-pagination-bullet-active]:rounded-full! [&_.swiper-pagination-bullet-active]:bg-[#FF6B6B]! [&_.swiper-pagination-bullets]:bottom-10!"
+      className="[&_.swiper-button-next]:right-5! [&_.swiper-button-next]:rounded-full [&_.swiper-button-next]:bg-white [&_.swiper-button-next]:p-3.5 [&_.swiper-button-next]:ps-4.5 [&_.swiper-button-next]:shadow-lg [&_.swiper-button-prev]:left-5! [&_.swiper-button-prev]:rounded-full [&_.swiper-button-prev]:bg-white [&_.swiper-button-prev]:p-3.5 [&_.swiper-button-prev]:pe-4.5 [&_.swiper-button-prev]:shadow-lg [&_.swiper-navigation-icon]:text-black [&_.swiper-pagination-bullet]:bg-white! [&_.swiper-pagination-bullet]:opacity-100! [&_.swiper-pagination-bullet]:transition-all [&_.swiper-pagination-bullet]:duration-400 [&_.swiper-pagination-bullet-active]:w-16! [&_.swiper-pagination-bullet-active]:rounded-full! [&_.swiper-pagination-bullet-active]:bg-black! [&_.swiper-pagination-bullets]:bottom-10!"
     >
       {swiperList.map((item, index) => (
         <SwiperSlide key={index}>
@@ -46,16 +46,16 @@ export default function SwiperList({ swiperList }: swiperProps) {
             />
             <div className="absolute inset-x-30 inset-y-35 content-center text-right whitespace-pre-wrap">
               {item.tag && (
-                <span className="center mbe-4 inline-flex rounded-4xl bg-[#FF6B6B] px-5.5 py-2 font-medium text-white">
+                <span className="center mbe-4 inline-flex rounded-4xl bg-black px-5.5 py-2 font-medium text-white">
                   <LucideBadgePercent className="me-2" />
                   {item.tag}
                 </span>
               )}
-              <strong className="block text-5xl/tight font-extrabold text-[#2D3142]">
+              <strong className="block text-5xl/tight font-extrabold text-[#2D3142] dark:text-white">
                 {item.title}
               </strong>
               {item.subText && (
-                <p className="mbs-3 text-[#7B7979]">{item.subText}</p>
+                <p className="mbs-3 text-[#7B7979] dark:text-white">{item.subText}</p>
               )}
             </div>
           </div>

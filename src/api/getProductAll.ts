@@ -1,7 +1,7 @@
-import { Products } from '@/app/lib/products'
+import { Products } from '@/app/lib/products.types'
 import { createClient } from '@/utils/supabase/server'
 import { categoriesList } from './categoriesList'
-import { Categories } from '@/app/lib/Categories'
+import { Categories } from '@/app/lib/categories.types'
 
 export interface ProductWithCategory extends Products {
   category_path: string
@@ -25,6 +25,7 @@ export const getProductsAll = async ({
   sort = 'latest',
   pageSize = 8,
   page = 1,
+  search = '',
 }: GetProductsAllProps) => {
   const supabase = await createClient()
 
@@ -32,6 +33,11 @@ export const getProductsAll = async ({
   let query = supabase
     .from('products')
     .select('*, product_categories(category_id)', { count: 'exact' })
+
+  // ilike(대소문자 구분X)를 통해 검색어가 단어에 포함되어있으면 전부찾기(%)
+  if (search) {
+    query = query.ilike('name', `%${search}%`) 
+  }
 
   // 상품 정렬 기준
   switch (sort) {

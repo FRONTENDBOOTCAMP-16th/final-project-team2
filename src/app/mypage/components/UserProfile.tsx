@@ -1,6 +1,7 @@
 'use client'
 
 import { useUser } from '../context/UserContext'
+import NextImage from 'next/image'
 
 const GradeTooltip = () => (
   <div className="group relative flex items-center">
@@ -34,7 +35,7 @@ const GradeTooltip = () => (
 )
 
 export default function UserProfile() {
-  const { role, isLoading } = useUser()
+  const { user, role, isLoading } = useUser()
 
   // 스켈레톤 추가
   if (isLoading) {
@@ -42,7 +43,6 @@ export default function UserProfile() {
       <div className="mb-10 flex animate-pulse flex-col">
         <div className="flex w-[204px] flex-col items-center bg-white pb-6">
           <div className="aspect-square w-[204px] shrink-0 border bg-gray-200" />
-
           <div className="flex items-center justify-center gap-2 pt-5 pb-2">
             <div className="h-5 w-24 rounded bg-gray-200" />
           </div>
@@ -52,21 +52,41 @@ export default function UserProfile() {
     )
   }
 
-  // TODO: 실제 로그인 연동 시 서버에서 받은 정보로 교체 예정
-  const userGrade = 'BRONZE'
-  const userName = '사용자'
+  const isBusiness = role === 'BUSINESS'
+
+  // 판매자일 때는 스토어 이미지, 소비자일 때는 프로필 이미지를 우선순위로 둡니다.
+  const displayImage = isBusiness
+    ? user?.store_image // 판매자 상점 썸네일
+    : user?.profile_image // 소비자 프로필 이미지
+
+  const userGrade = user?.grade || 'BRONZE'
+  const userName = user?.name || '사용자'
 
   return (
     <div className="mb-10 flex flex-col">
       <div className="flex w-[204px] flex-col items-center bg-white pb-6">
-        <div className="aspect-square w-[204px] shrink-0 border bg-white" />
+        <div className="relative aspect-square w-[204px] shrink-0 overflow-hidden border border-gray-100 bg-white">
+          {displayImage ? (
+            <NextImage
+              src={displayImage}
+              alt={isBusiness ? '상점 썸네일' : '프로필 이미지'}
+              fill
+              sizes="204px"
+              priority
+              className="object-cover"
+            />
+          ) : (
+            <div className="h-full w-full bg-white" />
+          )}
+        </div>
 
+        {/* 등급 표시 영역 (판매자는 STORE MANAGER 고정) */}
         <div className="flex items-center justify-center gap-2 pt-5 pb-2">
           <div className="inline-block bg-black px-2 py-0.5 text-xs font-bold tracking-tight text-white">
-            {role === 'BUSINESS' ? 'STORE MANAGER' : userGrade}
+            {isBusiness ? 'STORE MANAGER' : userGrade}
           </div>
-
-          {role !== 'BUSINESS' && <GradeTooltip />}
+          {/* 소비자인 경우에만 등급 툴팁을 보여줍니다. */}
+          {!isBusiness && <GradeTooltip />}
         </div>
 
         <p className="w-full text-center text-lg">

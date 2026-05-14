@@ -15,15 +15,15 @@ export default async function qnaList({
   const user = await getAuthUserInfo()
 
   if (normalData.length === 0) {
-    return <div>등록된 QNA가 없습니다.</div>
+    return <div className="dark:text-gray-200">등록된 QNA가 없습니다.</div>
   }
 
   return (
-    <div className="mx-auto w-full max-w-4xl space-y-4 p-4">
+    <div className="mx-auto w-full max-w-4xl space-y-4 p-4 dark:text-gray-200">
       <h1 className="mb-6 text-2xl font-bold">1:1 문의</h1>
 
       {normalData.length === 0 ? (
-        <div className="py-20 text-center text-gray-500">
+        <div className="py-20 text-center text-gray-500 dark:text-gray-400">
           등록된 QNA가 없습니다.
         </div>
       ) : (
@@ -44,7 +44,7 @@ export default async function qnaList({
         <div className="flex justify-end">
           <Link
             href={'/inquire/write'}
-            className="bg-gray-100 px-4 py-2 text-black"
+            className="bg-gray-100 dark:bg-gray-800 px-4 py-2 text-black dark:text-white"
           >
             글쓰기
           </Link>
