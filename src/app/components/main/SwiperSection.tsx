@@ -51,11 +51,11 @@ export default function SwiperList({ swiperList }: swiperProps) {
                   {item.tag}
                 </span>
               )}
-              <strong className="block text-5xl/tight font-extrabold text-[#2D3142]">
+              <strong className="block text-5xl/tight font-extrabold text-[#2D3142] dark:text-white">
                 {item.title}
               </strong>
               {item.subText && (
-                <p className="mbs-3 text-[#7B7979]">{item.subText}</p>
+                <p className="mbs-3 text-[#7B7979] dark:text-white">{item.subText}</p>
               )}
             </div>
           </div>
