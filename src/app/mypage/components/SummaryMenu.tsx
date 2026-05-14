@@ -60,10 +60,10 @@ const STATS_CONFIG: Record<'USER' | 'BUSINESS', StatData[]> = {
 const StatCard = ({ label, value, href, icon: Icon }: StatCardProps) => (
   <Link
     href={href}
-    className="flex h-[190px] flex-1 cursor-pointer flex-col items-center justify-center gap-6 border-4 border-[#FF6B6B]/50 bg-white transition-colors hover:bg-black/5"
+    className="flex h-47.5 flex-1 cursor-pointer flex-col items-center justify-center gap-6 border-4 border-gray-300 bg-white transition-colors hover:bg-[#FF6B6B]/5 dark:hover:bg-lime-50"
   >
     <span className="text-5xl font-black">{value}</span>
-    <span className="flex items-center gap-1 text-base font-black text-[#FF6B6B]">
+    <span className="flex items-center gap-1 text-base font-black">
       {Icon && <Icon size={18} strokeWidth={2.5} />}
       {label}
     </span>
@@ -79,7 +79,7 @@ export default function SummaryMenu() {
         {[1, 2, 3].map((i) => (
           <div
             key={i}
-            className="flex h-[190px] flex-1 flex-col items-center justify-center gap-6 border-4 border-gray-100 bg-white"
+            className="flex h-47.5 flex-1 flex-col items-center justify-center gap-6 border-4 border-gray-100 bg-white"
           >
             <div className="h-12 w-16 rounded bg-gray-200" />
             <div className="h-4 w-24 rounded bg-gray-200" />
