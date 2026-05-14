@@ -88,7 +88,7 @@ export default function WriteForm({
     <form
       action={formAction}
       onSubmit={handleSubmit}
-      className="mx-auto flex w-full max-w-6xl flex-col gap-6 rounded-lg bg-white p-6 shadow-sm"
+      className="mx-auto flex w-full max-w-6xl flex-col gap-6 rounded-lg p-6 shadow-sm"
     >
       {/* 질문 작성 시 제품정보 위한 히든 input 추가 */}
       {type === 'inquire' && (
@@ -104,7 +104,7 @@ export default function WriteForm({
       {updateID && <input type="hidden" name="updateId" value={updateID} />}
       {replyID && <input type="hidden" name="replyId" value={replyID} />}
 
-      <h2 className="mb-2 text-2xl font-bold text-gray-800">{board}</h2>
+      <h2 className="mb-2 text-2xl font-bold text-gray-800 dark:text-gray-200">{board}</h2>
 
       {(clientError || (!state.success && state.message)) && (
         <div className="animate-pulse rounded-md border border-red-200 bg-red-50 p-4 text-sm font-medium text-red-600">
@@ -121,12 +121,12 @@ export default function WriteForm({
             id="important"
             checked={isImportant}
             onChange={(e) => setIsImportant(e.target.checked)}
-            className="h-5 w-5 cursor-pointer rounded border-gray-300 text-orange-600 focus:ring-orange-500 disabled:opacity-50"
+            className="h-5 w-5 cursor-pointer rounded border-gray-300 text-orange-600 focus:ring-orange-500 disabled:opacity-50 dark:border-gray-700 dark:text-orange-500 dark:focus:ring-orange-500"
             disabled={isPending}
           />
           <label
             htmlFor="important"
-            className="cursor-pointer text-sm font-bold text-gray-800"
+            className="cursor-pointer text-sm font-bold text-gray-800 dark:text-gray-200"
           >
             긴급 공지사항으로 등록
           </label>
@@ -135,7 +135,7 @@ export default function WriteForm({
 
       {!replyID && (
         <div className="flex flex-col gap-2">
-          <label htmlFor="title" className="text-sm font-bold text-gray-800">
+          <label htmlFor="title" className="text-sm font-bold text-gray-800 dark:text-gray-200">
             제목{' '}
             <span className="text-red-500" aria-hidden="true">
               *
@@ -157,7 +157,7 @@ export default function WriteForm({
       <div className="flex flex-col gap-2">
         <label
           htmlFor="content-editor"
-          className="text-sm font-bold text-gray-800"
+          className="text-sm font-bold text-gray-800 dark:text-gray-200"
         >
           본문{' '}
           <span className="text-red-500" aria-hidden="true">
