@@ -6,7 +6,6 @@ import { useFormStatus } from 'react-dom'
 export default function SubmitButton() {
   const { pending } = useFormStatus()
 
-  // 팬딩(pending) 상태일 경우, 브라우저 기본 작동 방지
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (pending) e.preventDefault()
   }

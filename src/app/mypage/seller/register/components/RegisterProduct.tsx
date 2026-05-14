@@ -101,7 +101,7 @@ export default function RegisterProductForm() {
   const handleBlur = <T extends keyof ProductForm>(name: T) => {
     // form에서 해당 input의 현재 값을 가져오기
     const value = form[name]
-    if (value === undefined) return
+    if (typeof value !== 'string') return
     const error = validateProductForm(name, value)
 
     // 해당 인푹의 에러만 업데이트 해서 보여줌
