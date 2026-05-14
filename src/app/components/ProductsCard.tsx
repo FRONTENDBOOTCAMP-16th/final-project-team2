@@ -9,11 +9,11 @@ import {
 import HeartButton from '../(shop)/products/[mainCategory]/[id]/_components/Product/HeartButton'
 
 interface ProductCardProps {
-  product: Products;
-  category: string;
-  sort?: string;
-  onImageLoad?: () => void;
-  inventoryTag?: boolean;
+  product: Products
+  category: string
+  sort?: string
+  onImageLoad?: () => void
+  inventoryTag?: boolean
 }
 
 export default function ProductsCard({

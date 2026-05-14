@@ -9,9 +9,20 @@ import {
 } from 'react'
 import { createClient } from '@/utils/supabase/client'
 
+interface User {
+  id: string
+  email?: string
+  name: string
+  role: 'USER' | 'BUSINESS'
+  grade?: string
+  profile_image?: string
+  store_image?: string
+}
+
 type Role = 'USER' | 'BUSINESS' | null
 
 interface UserContextType {
+  user: User | null
   role: Role
   isLoading: boolean
 }
@@ -19,39 +30,56 @@ interface UserContextType {
 const UserContext = createContext<UserContextType | undefined>(undefined)
 
 export function UserProvider({ children }: { children: ReactNode }) {
+  const [user, setUser] = useState<User | null>(null)
   const [role, setRole] = useState<Role>(null)
   const [isLoading, setIsLoading] = useState(true)
   const supabase = createClient()
 
   useEffect(() => {
-    const fetchUserRole = async () => {
+    const fetchFullUserData = async () => {
       setIsLoading(true)
 
-      // 현재 로그인한 유저 정보 가져오기
       const {
-        data: { user },
+        data: { user: authUser },
       } = await supabase.auth.getUser()
 
-      if (user) {
-        // 해당 유저의 role을 DB(users 테이블)에서 조회
+      if (authUser) {
         const { data: profile } = await supabase
           .from('users')
-          .select('role')
-          .eq('id', user.id)
+          .select('id, email, name, role, grade, profile_image')
+          .eq('id', authUser.id)
           .single()
 
-        setRole(profile?.role || null)
+        if (profile) {
+          const finalUserData: User = { ...profile }
+
+          if (profile.role === 'BUSINESS') {
+            const { data: storeData } = await supabase
+              .from('stores')
+              .select('profile_image')
+              .eq('owner_id', profile.id)
+              .single()
+
+            if (storeData) {
+              finalUserData.store_image = storeData.profile_image
+            }
+          }
+
+          setUser(finalUserData)
+          setRole(profile.role as Role)
+        }
       } else {
+        setUser(null)
         setRole(null)
       }
       setIsLoading(false)
     }
 
-    fetchUserRole()
+    fetchFullUserData()
   }, [supabase])
 
   return (
-    <UserContext.Provider value={{ role, isLoading }}>
+    <UserContext.Provider value={{ user, role, isLoading }}>
       {children}
     </UserContext.Provider>
   )

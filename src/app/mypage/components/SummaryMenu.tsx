@@ -79,7 +79,7 @@ export default function SummaryMenu() {
         {[1, 2, 3].map((i) => (
           <div
             key={i}
-            className="flex h-[190px] flex-1 flex-col items-center justify-center gap-6 border-4 border-gray-100 bg-white"
+            className="flex h-47.5 flex-1 flex-col items-center justify-center gap-6 border-4 border-gray-100 bg-white"
           >
             <div className="h-12 w-16 rounded bg-gray-200" />
             <div className="h-4 w-24 rounded bg-gray-200" />

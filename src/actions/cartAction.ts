@@ -126,6 +126,12 @@ export async function updateCartQuantity(input: UpdateCartQuantity) {
   return { success: true }
 }
 
+type AddCartParams = {
+  productId: string
+  optionData: SelectedOption
+  quantity: number
+}
+
 export async function addCartItem({
   productId,
   optionData,
