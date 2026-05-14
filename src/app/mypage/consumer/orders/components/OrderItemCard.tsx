@@ -42,6 +42,9 @@ export default function OrderItemCard({
             className="shrink-0 object-cover"
             src={order.products.thumbnail_image}
             alt=""
+            onError={(e) => {
+              ;(e.currentTarget as HTMLImageElement).src = '/fallback.png'
+            }}
           />
           <h2 className="min-w-0 truncate hover:font-extrabold hover:text-red-500">
             {order.products.name}
