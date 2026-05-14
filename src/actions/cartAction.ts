@@ -1,9 +1,16 @@
 'use server'
+
 import { createClient } from '@/utils/supabase/server'
 import { z } from 'zod'
 import { getAuthUserInfo } from './getUser'
 import { revalidatePath } from 'next/cache'
 import { SelectedOption } from '@/app/lib/cart.types'
+
+type AddCartParams = {
+  productId: string
+  optionData: SelectedOption
+  quantity: number
+}
 
 const productSchema = z.object({
   name: z.string(),
@@ -32,7 +39,13 @@ const updateCartQuantitySchema = z.object({
     .min(1, '수량은 1 이상이어야 합니다.'),
 })
 
+// 삭제를 위한 Zod 스키마 추가
+const deleteCartItemSchema = z.object({
+  cartItemId: z.string({ message: "삭제할 장바구니 아이템 ID가 필요합니다." }),
+})
+
 export type UpdateCartQuantity = z.infer<typeof updateCartQuantitySchema>
+export type DeleteCartItem = z.infer<typeof deleteCartItemSchema> // 타입 추출
 
 export async function getCarts() {
   // 'use cache'
@@ -168,4 +181,39 @@ export async function addCartItem({
   if (error) {
     throw new Error(error.message)
   }
+}
+
+// 장바구니 아이템 삭제 Server Action 추가
+export async function deleteCartItem(input: DeleteCartItem) {
+  const auth = await getAuthUserInfo()
+
+  if (!auth) {
+    return { success: false, message: '인증이 필요합니다.' }
+  }
+
+  // Zod를 통한 입력 파라미터 검증
+  const parsedInput = deleteCartItemSchema.safeParse(input)
+  if (!parsedInput.success) {
+    const errorMessage = parsedInput.error.issues[0]?.message || '잘못된 입력값입니다.'
+    return { success: false, message: errorMessage }
+  }
+
+  const { cartItemId } = parsedInput.data
+
+  const supabase = await createClient()
+  
+  const { error } = await supabase
+    .from('cart_items')
+    .delete()
+    .eq('id', cartItemId)
+    .eq('user_id', auth.id)
+
+  if (error) {
+    console.error(error.message)
+    return { success: false, message: '상품 삭제에 실패했습니다.' }
+  }
+  
+  revalidatePath('/cart')
+  
+  return { success: true, message: '상품이 장바구니에서 삭제되었습니다.' }
 }

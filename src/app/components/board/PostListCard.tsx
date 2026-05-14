@@ -19,7 +19,7 @@ export default function PostListCard({
   const important = isImportant ?? data.important
 
   return (
-    <li className="w-full border-b border-gray-100 transition-colors hover:bg-gray-50">
+    <li className="w-full border-b border-gray-100 dark:border-gray-700 transition-colors hover:bg-gray-50 dark:hover:bg-gray-800">
       <Link
         href={`/${link}/${data.id}`}
         className="flex w-full items-center gap-4 py-4"
@@ -77,7 +77,7 @@ export default function PostListCard({
             <p className="truncate">{data.writer?.nickname || '관리자'}</p>
           </div>
 
-          <div className="w-1/4 shrink-0 text-center text-gray-500">
+          <div className="w-1/4 shrink-0 text-center text-gray-500 dark:text-gray-400">
             <span className="sr-only">작성일</span>
             {formattedDate}
           </div>
