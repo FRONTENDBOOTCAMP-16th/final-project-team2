@@ -1,50 +1,40 @@
 'use client'
 
-import { z } from 'zod'
+import { sellerInfoSchema, type SellerInfoData } from '../../types/infoSchema'
 import { Pen, Check } from 'lucide-react'
 import useFormManagement from '@/hooks/useFormManagement'
+import { useUser } from '@/app/mypage/context/UserContext'
+import { useSellerProfile } from './hooks/useSellerProfile'
 import ImageUploader from '../../consumer/profile/components/ImageUploader'
 import ProfileForm from '../../consumer/profile/components/ProfileForm'
 import ProfileAction from '../../consumer/profile/components/ProfileAction'
 
-const sellerInfoSchema = z.object({
-  phone: z
-    .string()
-    .min(1, '전화번호를 입력해주세요.')
-    .min(10, '전화번호가 너무 짧습니다.'),
-  location: z.string().min(1, '가게 주소를 입력해주세요.'),
-  intro: z.string().min(1, '소개글을 입력해주세요.'),
-  profileImage: z.string().optional(),
-  email: z.string().optional(),
-  name: z.string().optional(),
-})
-
 const PROFILE_FIELDS = [
   { label: '이메일', name: 'email', type: 'email', isReadOnly: true },
-  { label: '가게명', name: 'name', type: 'text', isReadOnly: true },
+  { label: '가게명', name: 'name', type: 'text', isReadOnly: false },
   { label: '휴대전화', name: 'phone', type: 'tel', isReadOnly: false },
   { label: '가게 주소', name: 'location', type: 'text', isReadOnly: false },
   { label: '소개글', name: 'intro', type: 'text', isReadOnly: false },
-]
+] as const
 
 export default function Info() {
-  const initialData = {
+  const { user } = useUser()
+
+  const initialData: SellerInfoData = {
     profileImage: '',
-    email: 'seller@example.com',
-    name: '예찌마켓',
-    phone: '01012345678',
-    location: '서울시 종로구 광화문 D타워',
-    intro: '예찌마켓에 어서오세요 :)',
+    email: '',
+    name: '',
+    phone: '',
+    location: '',
+    intro: '',
   }
 
-  const validate = (data: typeof initialData) => {
+  const validate = (data: SellerInfoData) => {
     const result = sellerInfoSchema.safeParse(data)
-
     if (!result.success) {
       const newErrors: Record<string, string> = {}
       result.error.issues.forEach((issue) => {
-        const fieldName = issue.path[0] as string
-        newErrors[fieldName] = issue.message
+        newErrors[issue.path[0] as string] = issue.message
       })
       return newErrors
     }
@@ -59,11 +49,23 @@ export default function Info() {
     handleEdit,
     handleCancel,
     handleSubmit,
+    setFormData,
   } = useFormManagement(initialData, validate)
 
-  const handleSaveSuccess = (data: typeof initialData) => {
-    console.log('판매자 정보 저장:', data)
-    alert('상점 정보가 수정되었습니다.')
+  // 커스텀 훅에 user 정보와 setFormData를 넘겨 로직을 실행합니다.
+  const { saveProfile } = useSellerProfile({
+    user: user ? { id: user.id } : null,
+    setFormData,
+  })
+
+  const handleSaveSuccess = async (data: SellerInfoData) => {
+    try {
+      await saveProfile(data)
+      alert('상점 정보가 저장되었습니다.')
+    } catch (error) {
+      console.error('저장 에러:', error)
+      alert('저장 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.')
+    }
   }
 
   return (
@@ -90,17 +92,10 @@ export default function Info() {
                   : 'bg-black hover:bg-red-500'
               } px-6 py-2 font-medium text-white transition`}
             >
-              {isEditing ? (
-                <span className="flex items-center justify-center gap-2">
-                  <Check size={16} strokeWidth={2.5} />
-                  저장하기
-                </span>
-              ) : (
-                <span className="flex items-center justify-center gap-2">
-                  <Pen size={16} strokeWidth={2.5} />
-                  수정하기
-                </span>
-              )}
+              <div className="flex items-center gap-2">
+                {isEditing ? <Check size={16} /> : <Pen size={16} />}
+                {isEditing ? '저장하기' : '수정하기'}
+              </div>
             </button>
           </div>
         </div>
@@ -108,18 +103,20 @@ export default function Info() {
         <div className="flex flex-col gap-5">
           <ImageUploader
             label="상점 로고 이미지"
-            defaultImage={formData.profileImage as string}
+            defaultImage={formData.profileImage}
+            onUploadSuccess={(url) => {
+              console.log('업로드된 이미지 URL:', url) // 이 로그가 찍히는지 확인하세요!
+              setFormData((prev) => ({ ...prev, profileImage: url }))
+            }}
+            isEditing={isEditing}
           />
-
           {PROFILE_FIELDS.map((field) => (
             <ProfileForm
               key={field.name}
               label={field.label}
               name={field.name}
               type={field.type}
-              value={String(
-                formData[field.name as keyof typeof formData] || '',
-              )}
+              value={String(formData[field.name as keyof SellerInfoData] || '')}
               onChange={handleChange}
               disabled={!isEditing}
               readOnly={field.isReadOnly}
