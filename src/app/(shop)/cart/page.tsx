@@ -3,6 +3,7 @@ import QuantityComponent from "./_components/Quantity"
 import Image from "next/image"
 import PriceBox from "./_components/PriceBox"
 import CartDeleteButton from "./_components/CartDeleteButton"
+import Link from "next/link"
 
 export default async function CartList() {
 
@@ -26,8 +27,8 @@ export default async function CartList() {
   }, 0);
 
   return (
-    <div className="flex max-w-7xl mx-auto">
-      <ul className="w-2/3">
+    <div className="max-w-7xl mx-auto flex gap-6 py-6">
+      <ul className="w-full">
         {cart.map((item) => (
           <li key={item.id} className="flex items-start gap-4 p-4 bg-white relative">
             {/* 상품 이미지 */}
@@ -77,12 +78,13 @@ export default async function CartList() {
         ))}
       </ul>
 
-      <div className="w-1/3">
+      <div className="w-1/3 min-w-75 pl-6">
         <PriceBox
           cart={cart}
           totalOriginPrice={totalOriginPrice}
           totalDiscountedPrice={totalDiscountedPrice}
         />
+        <Link className="flex justify-center items-center w-full mt-6 bg-black text-white py-4 rounded-md font-bold cursor-pointer" href='/payment'>결제하기</Link>
       </div>
     </div>
   )

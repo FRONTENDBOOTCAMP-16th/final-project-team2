@@ -26,7 +26,7 @@ export default async function Payment() {
 
   return (
     <div className="max-w-7xl mx-auto flex gap-6 py-6">
-      <form id="payment-form" action={async (formData) => { await submitPayment(formData) }} className="w-full flex flex-col gap-6">
+      <form id="payment-form" action={submitPayment} method="POST" className="w-full flex flex-col gap-6">
 
         {/* --- 주문자 정보 영역 --- */}
         <fieldset className="flex flex-col gap-3">

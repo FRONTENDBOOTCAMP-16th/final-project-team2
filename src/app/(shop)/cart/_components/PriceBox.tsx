@@ -9,7 +9,7 @@ export default function PriceBox({ totalOriginPrice, totalDiscountedPrice }: Pri
 
   return (
 
-    <section aria-labelledby="summary-heading" className="p-6 bg-white">
+    <section aria-labelledby="summary-heading" className="bg-white">
 
       <h2 id="summary-heading" className="font-bold mb-6 text-2xl">결제 금액 요약</h2>
 
