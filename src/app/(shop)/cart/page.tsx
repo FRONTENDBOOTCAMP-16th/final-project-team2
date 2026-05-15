@@ -6,6 +6,8 @@ import CartDeleteButton from "./_components/CartDeleteButton"
 import Link from "next/link"
 import { ShoppingBag } from "lucide-react"
 
+import ProductImage from "../products/[mainCategory]/_components/ProductImage"
+
 export default async function CartList() {
 
   const cart = await getCarts()
@@ -35,10 +37,9 @@ export default async function CartList() {
           <li key={item.id} className="flex items-start gap-4 p-4 relative">
             {/* 상품 이미지 */}
             <div className="relative w-20 h-20 sm:w-24 sm:h-24 shrink-0 bg-gray-100 rounded-md overflow-hidden">
-              <Image
+              <ProductImage
                 src={item.product?.thumbnail_image || ''}
                 alt={item.product?.name || ''}
-                fill
               />
             </div>
 
