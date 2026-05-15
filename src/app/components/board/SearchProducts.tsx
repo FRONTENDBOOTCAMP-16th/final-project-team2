@@ -54,10 +54,12 @@ export default function SearchProducts({ onSelectClose }: SearchProductsProps) {
               key={item.id}
               className="flex items-center justify-between p-4"
             >
-              <div className="relative w-14 h-14">
-                <ProductImage src={item.thumbnail_image} alt={item.name} />
+              <div className="flex gap-4 items-center">
+                <div className="relative w-14 h-14">
+                  <ProductImage src={item.thumbnail_image} alt={item.name} />
+                </div>
+                <p className="font-bold">{item.name}</p>
               </div>
-              <p className="font-bold">{item.name}</p>
               <button
                 type="button"
                 onClick={() => handleAddProduct(item)}
