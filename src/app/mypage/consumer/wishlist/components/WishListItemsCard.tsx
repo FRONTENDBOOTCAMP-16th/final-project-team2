@@ -4,6 +4,7 @@ import Image from 'next/image'
 import { ProductLikeWithProduct } from '@/app/lib/productLike.types'
 import { CATEGORY_GROUPS } from '../lib/categoryGroup'
 import { DiscountPriceFormat, DiscountRateFormat } from '@/utils/intl'
+import HeartButton from '@/app/(shop)/products/[mainCategory]/[id]/_components/Product/HeartButton'
 
 interface Props {
   order: ProductLikeWithProduct
@@ -58,11 +59,12 @@ export default function WishListItemCard({ order, onToggleLike }: Props) {
         </p>
         <div className="flex justify-between">
           <p className="w-50 self-center truncate font-bold">{product.name}</p>
-          <LikeToggleButton
+          {/* <LikeToggleButton
             id={order.product_id}
             isLiked={true}
             onToggleLike={onToggleLike}
-          />
+          /> */}
+          <HeartButton productId={order.product_id} initialLiked={true} />
         </div>
 
         <div className="flex gap-2">

@@ -1,3 +1,4 @@
+'use client'
 import Link from 'next/link'
 import ProductImage from '../(shop)/products/[mainCategory]/_components/ProductImage'
 import { Products } from '../lib/products.types'
@@ -7,6 +8,8 @@ import {
   PriceFormat,
 } from '@/utils/intl'
 import HeartButton from '../(shop)/products/[mainCategory]/[id]/_components/Product/HeartButton'
+import { useQuery } from '@tanstack/react-query'
+import { fetchLikes } from '../mypage/api/fetchLikes'
 
 interface ProductCardProps {
   product: Products
@@ -22,7 +25,13 @@ export default function ProductsCard({
   onImageLoad,
   inventoryTag,
 }: ProductCardProps) {
+  const { data } = useQuery({
+    queryKey: ['likes'],
+    queryFn: () => fetchLikes(1, 1000, 'all'),
+    staleTime: 0,
+  })
   if (!product) return null
+  const isLiked = data?.items.some((l) => l.product_id === product.id)
   const inventoryLabel =
     product.inventory <= 10 ? '곧 품절이에요!' : `${product.inventory}개`
 
@@ -91,7 +100,7 @@ export default function ProductsCard({
         className="absolute right-3 bottom-17 flex aspect-square"
         aria-label={`${product_name} 찜하기`}
       >
-        <HeartButton productId={product.id} initialLiked={false} />
+        <HeartButton productId={product.id} initialLiked={isLiked} />
       </div>
     </li>
   )
