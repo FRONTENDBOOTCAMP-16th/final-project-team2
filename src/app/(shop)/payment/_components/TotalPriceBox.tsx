@@ -1,4 +1,4 @@
-
+import PaymentSubmitButton from './PaymentSubmitButton'
 interface CartItem {
   id: string
   product_id: string
@@ -92,16 +92,7 @@ export default function TotalPriceBox({ cart, totalOriginPrice, totalDiscountedP
         </div>
       </dl>
 
-      {/* 값을 보내기 위한 hidden Input */}
-      <div>
-        <input type="hidden" name="totalOriginPrice" />
-        <input type="hidden" name="totalDiscountAmount" />
-        <input type="hidden" name="totalDiscountedPrice" />
-      </div>
-
-      <button type="submit" form="payment-form" className="w-full mt-6 bg-black text-white py-4 rounded-md font-bold cursor-pointer dark:bg-gray-600">
-        결제하기
-      </button>
+      <PaymentSubmitButton />
     </section>
   )
 }
