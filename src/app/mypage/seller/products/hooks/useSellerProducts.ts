@@ -14,7 +14,7 @@ export const useSellerProducts = (storeId: string | undefined) => {
         .from('products')
         .select(
           `
-          id, name, store_id, content, price, discount_rate, inventory, status, thumbnail_image,
+          id, name, store_id, content, price, discount_rate, inventory, status, thumbnail_image,options,
           product_categories (categories (id, name))
         `,
         )

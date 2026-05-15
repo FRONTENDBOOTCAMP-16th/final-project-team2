@@ -1,25 +1,37 @@
 'use client'
 
 import { SellerProduct } from '@/app/mypage/types/sellerOrderItems'
+
 import { ProductFormField } from './ProductFormField'
+
 import { useProductEdit } from '@/hooks/useProductEdit'
+
 import CategorySelector from '../../register/components/CategorySelector'
+
 import OptionInput from '../../register/components/OptionInput'
+
 import ImageUploader from '@/app/mypage/consumer/profile/components/ImageUploader'
 
 interface Props {
   product: SellerProduct
+
   onClose: () => void
 }
 
 export default function ProductEditModal({ product, onClose }: Props) {
   const {
     formData,
+
     errors,
+
     handleChange,
+
     handleSubmit,
+
     finalPrice,
+
     optionForm,
+
     clearOptionError,
   } = useProductEdit(product, onClose)
 
@@ -31,6 +43,7 @@ export default function ProductEditModal({ product, onClose }: Props) {
       <div className="flex max-h-[95vh] w-full max-w-[800px] flex-col overflow-hidden rounded-md bg-white shadow-2xl">
         <div className="flex items-center justify-between border-b border-gray-200 px-8 py-6">
           <h2 className="text-xl font-bold text-gray-900">상품 정보 수정</h2>
+
           <button onClick={onClose} className="text-gray-400 hover:text-black">
             <svg
               className="h-6 w-6"
@@ -53,6 +66,7 @@ export default function ProductEditModal({ product, onClose }: Props) {
             <label className="mb-3 block text-sm font-medium">
               상품 이미지
             </label>
+
             <div className="rounded-md border border-[#D1D5DC] bg-[#F9FAFB] p-6">
               <ImageUploader
                 key={product.id}
@@ -67,6 +81,7 @@ export default function ProductEditModal({ product, onClose }: Props) {
             <ProductFormField label="카테고리 설정" error={errors.category}>
               <div className="mt-2">
                 <CategorySelector
+                  value={formData.category}
                   onChange={(categoryId) => {
                     handleChange({
                       target: { name: 'category', value: categoryId },
@@ -82,27 +97,29 @@ export default function ProductEditModal({ product, onClose }: Props) {
           <section>
             <ProductFormField label="옵션 설정" error={errors.options}>
               <div onClick={clearOptionError}>
-                {' '}
-                {/* 클릭이나 변경 시 에러 즉시 삭제 */}
                 <OptionInput optionForm={optionForm} />
               </div>
             </ProductFormField>
           </section>
 
           <section className="grid grid-cols-2 gap-6">
-            <ProductFormField label="판매 상태" error={errors.state}>
+            <ProductFormField label="판매 상태" error={errors.status}>
               <div className="relative mt-2">
                 <select
-                  name="state"
-                  value={formData.state}
+                  name="status"
+                  value={formData.status}
                   onChange={handleChange}
                   className={`${inputStyle} cursor-pointer appearance-none`}
                 >
-                  <option value="판매중">판매중</option>
-                  <option value="품절">품절</option>
-                  <option value="판매중지">판매중지</option>
-                  <option value="준비중">준비중</option>
+                  <option value="ON_SALE">판매중</option>
+
+                  <option value="SOLD_OUT">품절</option>
+
+                  <option value="HIDDEN">판매중지</option>
+
+                  <option value="PREPARING">준비중</option>
                 </select>
+
                 <div className="pointer-events-none absolute top-1/2 right-3 -translate-y-1/2 text-gray-500">
                   <svg
                     className="h-4 w-4"
@@ -168,10 +185,12 @@ export default function ProductEditModal({ product, onClose }: Props) {
               <span className="text-[10px] font-bold tracking-wider text-gray-400 uppercase">
                 최종 판매가
               </span>
+
               <p className="text-xs text-gray-400 line-through">
                 {formData.price.toLocaleString()}원
               </p>
             </div>
+
             <div className="text-right">
               <span className="text-2xl font-bold text-black">
                 {finalPrice.toLocaleString()}원
@@ -188,6 +207,7 @@ export default function ProductEditModal({ product, onClose }: Props) {
           >
             취소
           </button>
+
           <button
             type="button"
             onClick={handleSubmit}
