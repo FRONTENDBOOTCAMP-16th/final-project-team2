@@ -1,6 +1,7 @@
 'use client'
 
 import { useId, useState } from 'react'
+import { ZodType } from 'zod'
 
 interface InputBoxProps {
   label: string
@@ -8,6 +9,7 @@ interface InputBoxProps {
   name: string
   error?: string
   type?: 'text' | 'password'
+  schema?: ZodType,
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
   onFocus?: (e: React.ChangeEvent<HTMLInputElement>) => void
   onBlur?: (e: React.ChangeEvent<HTMLInputElement>) => void
@@ -20,6 +22,7 @@ export default function InputBox({
   error,
   name,
   type = 'text',
+  schema,
   onChange,
   onFocus,
   onBlur,
@@ -28,33 +31,46 @@ export default function InputBox({
   const uniqueId = useId()
   const [localValue, setLocalValue] = useState(defaultValue || '')
   const [isFocused, setIsFocused] = useState(false)
+  const [localError, setLocalError] = useState('')
 
   const PASSWORD_REGEX = /(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*?_])/
-
   // onChange, Focus, Blur 이벤트 - 기본값외에 받아오는 값있으면 적용
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setLocalValue(e.target.value)
 
-    if (onChange) {
-      onChange(e)
-    }
+    // 타이핑시 에러 삭제
+    if (localError) setLocalError('')
+
+    // 외부에서 onChange값을 받으면 해당 onChange 실행
+    if (onChange) onChange(e)
   }
 
   const handleFocus = (e: React.FocusEvent<HTMLInputElement>) => {
     setIsFocused(true)
 
-    if (onFocus) {
-      onFocus(e)
-    }
+    // 외부에서 onFocus값을 받으면 해당 onFocus 실행
+    if (onFocus) onFocus(e)
   }
 
   const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
     setIsFocused(false)
 
-    if (onBlur) {
-      onBlur(e)
+    if (schema) {
+      const result = schema.safeParse(e.target.value)
+      
+      if (!result.success) {
+        setLocalError(result.error.issues[0].message)
+      } else {
+        setLocalError('')
+      }
     }
+
+    // 외부에서 onBlur값을 받으면 해당 onBlur 실행
+    if (onBlur) onBlur(e)
   }
+
+  // 표시할 에러 - 부모가 내려준에러 우선표시, 없으면 스스로 검증한 에러
+  const displayError = error || localError
 
   // 정규식 및 규칙
   const isPasswordInput = type === 'password' && name === 'password'
@@ -81,7 +97,7 @@ export default function InputBox({
         onBlur={handleBlur}
       />
       <p className="mbs-1 text-red-600" aria-live="polite" aria-hidden="true">
-        {error}
+        {displayError}
       </p>
 
       {showValid && (
