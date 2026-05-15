@@ -1,3 +1,5 @@
+import { notFound } from 'next/navigation'
+
 export type MainCategoryType = 'writing' | 'paper' | 'deco' | 'office'
 
 export type CategoryItem = {
@@ -43,4 +45,29 @@ export const mainCategoryConvert: Record<MainCategoryType, string> = {
   paper: '노트/다이어리',
   deco: '데코/다꾸',
   office: '사무/데스크용품',
+}
+
+export function getMainCategoryName(mainCategory: string) {
+  if (!isMainCategory(mainCategory)) {
+    notFound()
+  }
+
+  return mainCategoryConvert[mainCategory]
+}
+
+export function getSubCategoryName(
+  mainCategory: MainCategoryType,
+  category?: string,
+) {
+  if (!category) return ''
+
+  const found = subCategory[mainCategory].find(
+    (item) => item.value === category,
+  )
+
+  if (!found) {
+    notFound()
+  }
+
+  return found.label
 }
