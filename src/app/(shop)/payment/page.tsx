@@ -26,7 +26,7 @@ export default async function Payment() {
 
   return (
     <div className="max-w-7xl mx-auto py-6">
-      <form id="payment-form" action={submitPayment} method="POST" className="flex gap-6">
+      <form id="payment-form" action={submitPayment} className="flex gap-6">
         <div className="w-full flex flex-col gap-6">
 
           {/* 주문영역 */}
