@@ -51,7 +51,6 @@ export default function WishListItemsList() {
   }>({
     queryKey: ['likes', page, category],
     queryFn: () => fetchLikes(page, limit, category),
-    staleTime: 1000 * 60 * 5,
   })
   const safeItems = data?.items ?? []
 

@@ -21,7 +21,7 @@ type ProductLikeWithProductRaw = ProductLike & {
 
 // 최종 UI 타입
 export type ProductLikeWithProduct = ProductLike & {
-  products: ProductPreview | ProductPreview[]
+  products: ProductPreview
 }
 
 export const fetchLikes = async (

@@ -33,6 +33,11 @@ export default function OrderList() {
 
   const safeItems = data?.items ?? []
 
+  const filteredOrders =
+    status === 'all'
+      ? safeItems
+      : safeItems.filter((order) => order.order_status === status)
+
   const onValueChange = (slug: string) => {
     params.set('sort', slug)
     params.set('page', '1')
@@ -73,7 +78,7 @@ export default function OrderList() {
       {hasOrder ? (
         <>
           <ul>
-            {safeItems?.map((orders) =>
+            {filteredOrders?.map((orders) =>
               orders.order_items.map((item) => (
                 <li key={item.id}>
                   <OrderItemCard

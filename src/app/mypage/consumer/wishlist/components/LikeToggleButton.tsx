@@ -25,7 +25,7 @@ export default function LikeToggleButton({ id, onToggleLike, isLiked }: Props) {
 
     setTimeout(() => {
       setShowToast(false)
-    }, 1500)
+    }, 2000)
   }
 
   return (

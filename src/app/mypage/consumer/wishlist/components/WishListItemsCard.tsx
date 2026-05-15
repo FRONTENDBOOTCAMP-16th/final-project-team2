@@ -18,7 +18,8 @@ interface Props {
 //
 export default function WishListItemCard({ order, onToggleLike }: Props) {
   const product = order.products
-  const categoryName = product.product_categories[0]?.categories.name ?? ''
+  console.log(product.product_categories)
+  const categoryName = product.product_categories.categories.name
 
   const categoryId = CATEGORY_GROUPS.find((group) =>
     group.categories.includes(categoryName),
@@ -53,7 +54,7 @@ export default function WishListItemCard({ order, onToggleLike }: Props) {
       </Link>
       <div className="flex flex-col pt-4">
         <p className="text-sm text-gray-400">
-          {product.product_categories[0]?.categories.name}
+          {product.product_categories?.categories.name}
         </p>
         <div className="flex justify-between">
           <p className="w-50 self-center truncate font-bold">{product.name}</p>
