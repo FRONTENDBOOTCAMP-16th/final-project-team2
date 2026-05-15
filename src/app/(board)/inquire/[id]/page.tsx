@@ -4,6 +4,7 @@ import { getAuthUserInfo } from '@/actions/getUser'
 import sanitizeHtml from 'sanitize-html'
 import Link from 'next/link'
 import Image from 'next/image'
+import InquireDeleteAction from '@/app/components/board/InquireDeleteAction'
 
 export default async function QnaDetailPage({
   params,
@@ -60,11 +61,11 @@ export default async function QnaDetailPage({
 
   return (
     <div className="mx-auto w-full max-w-4xl space-y-8 p-8">
-      <section className="rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-6 shadow-sm">
+      <section className="lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-6 shadow-sm">
         <div className="mb-4">
           <div className="flex w-full items-center justify-between">
             <div className="flex items-center gap-2">
-              <span className="inline-block rounded bg-blue-100 px-2 py-1 text-xs font-semibold text-blue-600">
+              <span className="inline-block bg-blue-100 px-2 py-1 text-xs font-semibold text-blue-600">
                 Q. 질문
               </span>
               <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">{qna.title}</h1>
@@ -82,7 +83,7 @@ export default async function QnaDetailPage({
               src={qna.product?.thumbnail_image || ''}
               alt={qna.product?.name || ''}
               fill
-              className="rounded object-cover"
+              className="object-cover"
             />
           </div>
           <p className="text-sm">{qna.product?.name}</p>
@@ -98,16 +99,11 @@ export default async function QnaDetailPage({
       {(user?.role === 'ADMIN' || qna?.product?.store_id === user?.id) && (
         <div className="flex justify-end gap-2">
           {user?.role === 'ADMIN' && (
-            <Link
-              href={`/inquire/${id}/reply`}
-              className="mb-4 inline-block rounded bg-red-500 px-4 py-2 text-white hover:bg-red-700"
-            >
-              삭제하기
-            </Link>
+            <InquireDeleteAction id={qna.id} />
           )}
           <Link
             href={`/inquire/${id}/reply`}
-            className="mb-4 inline-block rounded bg-slate-800 px-4 py-2 text-white hover:bg-slate-700"
+            className="mb-4 inline-block bg-slate-800 px-4 py-2 text-white hover:bg-slate-700"
           >
             답변하기
           </Link>
@@ -115,12 +111,12 @@ export default async function QnaDetailPage({
       )}
 
       <section
-        className={`rounded-lg border p-6 shadow-sm ${qna.is_answered ? 'border-blue-100 bg-blue-50 dark:border-blue-900 dark:bg-blue-950' : 'border-dashed border-gray-200 bg-gray-50 dark:border-gray-700 dark:bg-gray-800'}`}
+        className={`lg border p-6 shadow-sm ${qna.is_answered ? 'border-blue-100 bg-blue-50 dark:border-blue-900 dark:bg-blue-950' : 'border-dashed border-gray-200 bg-gray-50 dark:border-gray-700 dark:bg-gray-800'}`}
       >
         {qna.is_answered ? (
           <>
             <div className="mb-4 flex items-center justify-between">
-              <span className="inline-block rounded bg-green-100 px-2 py-1 text-xs font-semibold text-green-600">
+              <span className="inline-block bg-green-100 px-2 py-1 text-xs font-semibold text-green-600">
                 A. 답변 완료
               </span>
               {qna.answered_at && (
@@ -164,17 +160,20 @@ export default async function QnaDetailPage({
       {/* 수정 및 목록 버튼 */}
       <div className="flex justify-end gap-2">
         {(user?.role === 'ADMIN' || qna?.writer_id === user?.id) && (
-          <Link
-            href={`/inquire/${id}/edit`}
-            className="mb-4 inline-block rounded bg-slate-800 px-4 py-2 text-white hover:bg-slate-700"
-          >
-            수정
-          </Link>
+          <div className='flex gap-2'>
+            <InquireDeleteAction id={qna.id} />
+            <Link
+              href={`/inquire/${id}/edit`}
+              className="inline-block bg-slate-800 px-4 py-2 text-white hover:bg-slate-700"
+            >
+              수정
+            </Link>
+          </div>
         )}
 
         <Link
           href="/inquire"
-          className="mb-4 inline-block rounded bg-slate-800 px-4 py-2 text-white hover:bg-slate-700"
+          className="inline-block bg-slate-800 px-4 py-2 text-white hover:bg-slate-700"
         >
           목록
         </Link>
