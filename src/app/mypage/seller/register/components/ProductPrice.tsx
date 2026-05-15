@@ -13,7 +13,6 @@ export default function ProductPrice({
 }: Props) {
   return (
     <div className="flex flex-col gap-2">
-      {/* 상품 가격 */}
       <label htmlFor="productPrice" className="text-sm">
         상품 가격
       </label>
