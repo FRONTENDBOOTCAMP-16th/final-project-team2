@@ -4,6 +4,7 @@ import './globals.css'
 import Header from './components/Navi'
 import Footer from './components/FooterSection'
 import localFont from 'next/font/local'
+import QueryProviders from './mypage/providers/QueryProviders'
 
 const suit = localFont({
   src: '../fonts/suit/SUIT-Variable.woff2',
@@ -28,10 +29,11 @@ export default function RootLayout({
         <Suspense fallback={null}>
           <Header />
         </Suspense>
-
-        <main id="main-content" className="h-full min-h-full w-full flex-1">
-          <Suspense fallback={null}>{children}</Suspense>
-        </main>
+        <QueryProviders>
+          <main id="main-content" className="h-full min-h-full w-full flex-1">
+            <Suspense fallback={null}>{children}</Suspense>
+          </main>
+        </QueryProviders>
 
         <Footer />
       </body>
