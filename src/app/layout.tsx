@@ -4,6 +4,7 @@ import './globals.css'
 import Header from './components/Navi'
 import Footer from './components/FooterSection'
 import localFont from 'next/font/local'
+import { ThemeProvider } from './components/provider/theme-provider'
 
 const suit = localFont({
   src: '../fonts/suit/SUIT-Variable.woff2',
@@ -23,17 +24,28 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="ko" className={`${suit.className} h-full antialiased`}>
+    <html
+      lang="ko"
+      className={`${suit.className} h-full antialiased`}
+      suppressHydrationWarning
+    >
       <body className="flex min-h-full flex-col">
-        <Suspense fallback={null}>
-          <Header />
-        </Suspense>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <Suspense fallback={null}>
+            <Header />
+          </Suspense>
 
-        <main id="main-content" className="h-full min-h-full w-full flex-1">
-          <Suspense fallback={null}>{children}</Suspense>
-        </main>
+          <main id="main-content" className="h-full min-h-full w-full flex-1">
+            <Suspense fallback={null}>{children}</Suspense>
+          </main>
 
-        <Footer />
+          <Footer />
+        </ThemeProvider>
       </body>
     </html>
   )
