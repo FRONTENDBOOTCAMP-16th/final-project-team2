@@ -23,6 +23,9 @@ export default function SellerProductItemCard({ product, onEdit }: CardProps) {
             className="object-cover"
             src={product.thumbnail_image}
             alt={product.name}
+            onError={(e) => {
+              ;(e.currentTarget as HTMLImageElement).src = '/fallback.png'
+            }}
           />
         </div>
         <div className="flex items-center gap-2 overflow-hidden">
