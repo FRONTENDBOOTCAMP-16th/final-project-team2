@@ -65,7 +65,7 @@ export default function ProductsCard({
         <div>
           <dl className="flex items-baseline gap-3">
             <dt className="sr-only">제품 타입</dt>
-            <dd className="mt-4 text-gray-700">필기구</dd>
+            <dd className="mt-4 text-gray-700 dark:text-white">필기구</dd>
             <dt className="sr-only">평점</dt>
             <dd>{product.average_grade ? product.average_grade : 0}점</dd>
           </dl>

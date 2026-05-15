@@ -11,9 +11,10 @@ export interface StatCardProps {
 export interface UserData {
   orders?: number
   coupons?: number
-  reviews?: number
+  wishlist?: number
   orderStatus?: number // 판매자용 추가
   products?: number // 판매자용 추가
+  profile?: string
 }
 
 export interface StatData {

@@ -12,7 +12,7 @@ import ProfileAction from '../../consumer/profile/components/ProfileAction'
 const PROFILE_FIELDS = [
   { label: '이메일', name: 'email', type: 'email', isReadOnly: true },
   { label: '가게명', name: 'name', type: 'text', isReadOnly: false },
-  { label: '휴대전화', name: 'phone', type: 'tel', isReadOnly: false },
+  { label: '휴대전화', name: 'phone', type: 'tel', isReadOnly: true },
   { label: '가게 주소', name: 'location', type: 'text', isReadOnly: false },
   { label: '소개글', name: 'intro', type: 'text', isReadOnly: false },
 ] as const

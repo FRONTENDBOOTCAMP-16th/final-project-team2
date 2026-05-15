@@ -2,6 +2,7 @@ import { ProductWithCategory } from '@/api/getProductAll'
 import Image from 'next/image'
 import MainMoreDetail from './MainMoreDetail'
 import { DiscountPriceFormat, PriceFormat } from '@/utils/intl'
+import { mainCategories } from '@/app/(shop)/products/[mainCategory]/lib/category'
 
 interface ProductsTodaySaleProps {
   products: ProductWithCategory[]
@@ -10,7 +11,7 @@ interface ProductsTodaySaleProps {
 export default function ProductsTodaySale({
   products,
 }: ProductsTodaySaleProps) {
-  return products.map((item) => {
+  return products.map((item, i) => {
     const priceLocale = PriceFormat(Number(item.price))
     const finalPrice = DiscountPriceFormat(
       Number(item.price),
@@ -28,7 +29,7 @@ export default function ProductsTodaySale({
             sizes="w-full h-full"
           />
         </div>
-        <div className="flex min-w-0 flex-1 flex-col px-8.5 pbs-17 pbe-8.5 text-left border-2 border-gray-200 bg-gray-200 dark:bg-[#1b1b1b]">
+        <div className="flex min-w-0 flex-1 flex-col border-2 border-gray-200 bg-gray-200 px-8.5 pbs-17 pbe-8.5 text-left dark:bg-[#1b1b1b]">
           <dl className="w-full min-w-0">
             <dt className="sr-only">상품 카테고리</dt>
             <dd
@@ -62,7 +63,7 @@ export default function ProductsTodaySale({
           </dl>
 
           <div>
-            <MainMoreDetail id={item.id} category_path={item.category_path} />
+            <MainMoreDetail id={item.id} category_path={mainCategories[i]} />
           </div>
         </div>
       </div>

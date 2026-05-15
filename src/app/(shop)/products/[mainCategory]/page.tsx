@@ -32,12 +32,14 @@ export default async function ProductListPage({
   const categoryLabel = mainCategoryConvert[mainCategory]
 
   return (
-    <div className="mx-auto mt-5 max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div className="mx-auto mt-5 max-w-7xl px-4 sm:px-6 lg:px-8 dark:bg-[#25292D]">
       <BreadCrumble category={categoryLabel} />
 
       <div className="text-center">
-        <h1 className="mt-3 text-4xl font-bold">{categoryLabel}</h1>
-        <p className="mt-3 text-base font-semibold text-gray-600">
+        <h1 className="mt-3 text-4xl font-bold dark:text-white">
+          {categoryLabel}
+        </h1>
+        <p className="mt-3 text-base font-semibold text-gray-600 dark:text-white">
           나만의 개성있는 문구류를 찾아보세요
         </p>
       </div>
