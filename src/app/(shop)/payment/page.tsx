@@ -25,8 +25,9 @@ export default async function Payment() {
   }, 0);
 
   return (
-    <div className="max-w-7xl mx-auto flex gap-6 py-6">
-      <form id="payment-form" action={submitPayment} method="POST" className="w-full flex flex-col gap-6">
+    <div className="max-w-7xl mx-auto py-6">
+      <form id="payment-form" action={submitPayment} method="POST" className="flex gap-6">
+        <div className="w-full flex flex-col gap-6">
 
         {/* --- 주문자 정보 영역 --- */}
         <fieldset className="flex flex-col gap-3">
@@ -51,7 +52,7 @@ export default async function Payment() {
             <span className="text-sm opacity-70">계좌이체 결제</span>
           </label>
         </fieldset>
-      </form>
+        </div>
 
       <aside className="w-1/3 min-w-75">
         <TotalPriceBox
@@ -60,6 +61,7 @@ export default async function Payment() {
           totalDiscountedPrice={totalDiscountedPrice}
         />
       </aside>
+      </form>
     </div>
   )
 }
