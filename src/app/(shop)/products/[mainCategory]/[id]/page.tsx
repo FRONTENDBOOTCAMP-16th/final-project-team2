@@ -8,7 +8,7 @@ import { getAverageGrade, getProductReviews } from '@/api/review'
 import { getSellerUser } from '@/actions/getUser'
 import { Suspense } from 'react'
 import Skeleton from '../skeleton'
-import ProductListFetcher from '../_components/ProductListFetcher'
+import RecommendProducts from './_components/Product/RecommendProduct'
 
 type ProductDetailPageProps = {
   params: Promise<{
@@ -60,12 +60,9 @@ export default async function ProductDetailPage({
         <div className="mt-15">
           <h2 className="mt-4 mb-4 text-3xl font-bold">추천 상품</h2>
           <Suspense fallback={<Skeleton />}>
-            <ProductListFetcher
-              page={1}
-              pageSize={4}
-              mainCategory={mainCategory}
-              sort={'latest'}
-              pagination={false}
+            <RecommendProducts
+              mainCategoryName={categoryLabel}
+              productId={product.id}
             />
           </Suspense>
         </div>
