@@ -1,4 +1,3 @@
-import LikeToggleButton from '@/app/mypage/consumer/wishlist/components/LikeToggleButton'
 import Link from 'next/link'
 import Image from 'next/image'
 import { ProductLikeWithProduct } from '@/app/lib/productLike.types'
@@ -8,18 +7,10 @@ import HeartButton from '@/app/(shop)/products/[mainCategory]/[id]/_components/P
 
 interface Props {
   order: ProductLikeWithProduct
-  onToggleLike: ({
-    productId,
-    isLiked,
-  }: {
-    productId: string
-    isLiked: boolean
-  }) => void
 }
 //
-export default function WishListItemCard({ order, onToggleLike }: Props) {
+export default function WishListItemCard({ order }: Props) {
   const product = order.products
-  console.log(product.product_categories)
   const categoryName = product.product_categories.categories.name
 
   const categoryId = CATEGORY_GROUPS.find((group) =>
