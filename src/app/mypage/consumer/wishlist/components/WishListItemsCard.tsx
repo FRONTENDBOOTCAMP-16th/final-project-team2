@@ -7,10 +7,16 @@ import { DiscountPriceFormat, DiscountRateFormat } from '@/utils/intl'
 
 interface Props {
   order: ProductLikeWithProduct
-  onRemove: (id: string) => void
+  onToggleLike: ({
+    productId,
+    isLiked,
+  }: {
+    productId: string
+    isLiked: boolean
+  }) => void
 }
 //
-export default function WishListItemCard({ order, onRemove }: Props) {
+export default function WishListItemCard({ order, onToggleLike }: Props) {
   const product = order.products
   const categoryName = product.product_categories[0]?.categories.name ?? ''
 
@@ -51,7 +57,11 @@ export default function WishListItemCard({ order, onRemove }: Props) {
         </p>
         <div className="flex justify-between">
           <p className="w-50 self-center truncate font-bold">{product.name}</p>
-          <LikeToggleButton id={order.id} onRemove={onRemove} />
+          <LikeToggleButton
+            id={order.product_id}
+            isLiked={true}
+            onToggleLike={onToggleLike}
+          />
         </div>
 
         <div className="flex gap-2">

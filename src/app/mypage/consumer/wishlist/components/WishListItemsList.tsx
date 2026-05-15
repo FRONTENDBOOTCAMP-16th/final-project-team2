@@ -11,7 +11,7 @@ import EmptyWishlist from './EmptyWishlist'
 import MyPageProductSkeleton from '@/app/mypage/components/MypageProductSkeleton'
 import { SORTTYPE, sortWishListItems } from '../utils/sortWishListItems'
 import { getWishListCategoryTabs } from '../utils/getWishListCategoryTabs'
-import { useRemoveWishList } from '../hooks/useRemoveWishList'
+import { useToggleWishList } from '../hooks/useToggleWishList'
 
 export default function WishListItemsList() {
   const router = useRouter()
@@ -56,7 +56,7 @@ export default function WishListItemsList() {
   const safeItems = data?.items ?? []
 
   // 아이템의 찜하기 버튼 해체 시 해당 아이템 카드 사라지게 하기
-  const { mutate: removeWishlist } = useRemoveWishList()
+  const { mutate: onToggleLikeList } = useToggleWishList()
 
   // 데이터에서 카테고리 네임 탭 설정
   const categoryTabs = getWishListCategoryTabs()
@@ -101,7 +101,10 @@ export default function WishListItemsList() {
           <ul className="grid grid-cols-2 gap-x-6 gap-y-15 md:grid-cols-3">
             {sortedItems.map((item) => (
               <li key={item.id}>
-                <WishListItemCard order={item} onRemove={removeWishlist} />
+                <WishListItemCard
+                  order={item}
+                  onToggleLike={onToggleLikeList}
+                />
               </li>
             ))}
           </ul>
