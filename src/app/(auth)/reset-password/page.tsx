@@ -4,6 +4,7 @@ import { resetPasswordAction } from '@/actions/resetPasswordAction'
 import InputBox from '@/app/components/InputBox'
 import PasswordGroup from '@/app/components/PasswordGroup'
 import SimpleToast from '@/app/components/SimpleToast'
+import { emailSchema, nameSchema, phoneSchema } from '@/app/lib/auth'
 import { useActionState } from 'react'
 
 export default function ResetPasswordPage() {
@@ -22,24 +23,21 @@ export default function ResetPasswordPage() {
             label="이름"
             name="name"
             placeholder="이름을 입력하세요"
-            error={state?.errors?.name?.[0]}
-            defaultValue={state?.name}
+            schema={nameSchema}
           />
           <InputBox
             type="text"
             label="이메일"
             name="email"
             placeholder="이메일을 입력하세요"
-            error={state?.errors?.email?.[0]}
-            defaultValue={state?.email}
+            schema={emailSchema}
           />
           <InputBox
             type="text"
             label="핸드폰 번호"
             name="phone"
             placeholder="핸드폰 번호를 입력하세요 (010-0000-0000)"
-            error={state?.errors?.phone?.[0]}
-            defaultValue={state?.phone}
+            schema={phoneSchema}
           />
         </div>
         <p className="border-bs border-[#e0e0e0] pbs-4 text-center text-red-500">
