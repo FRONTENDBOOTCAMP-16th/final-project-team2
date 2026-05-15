@@ -1,8 +1,7 @@
 import { Star } from 'lucide-react'
 import { Products } from '@/app/lib/products.types'
-import { DiscountPrice, PriceFormat } from '@/utils/intl'
+import { DiscountPriceFormat, PriceFormat } from '@/utils/intl'
 import { Reviews } from '@/app/lib/reviews.types'
-import { getAverageGrade } from '@/api/review'
 
 interface Props {
   products: Products
@@ -58,7 +57,7 @@ const ProductSummary = ({
 
           <dt className="sr-only">할인가</dt>
           <dd className="order-1 text-2xl font-semibold">
-            {DiscountPrice(products.price, products.discount_rate)}
+            {DiscountPriceFormat(products.price, products.discount_rate)}
           </dd>
         </dl>
         <div className="discountBadge mt-2 flex h-7 w-20.5 items-center justify-center bg-red-500 pt-1 pr-3 pb-1 pl-3">

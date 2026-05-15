@@ -27,6 +27,7 @@ export async function getProductReviews(productId: string): Promise<Reviews[]> {
     )
     .eq('product_id', productId)
     .order('created_at', { ascending: false })
+    .limit(4)
 
   if (error) {
     console.error('리뷰 불러오기 실패:', error.message)

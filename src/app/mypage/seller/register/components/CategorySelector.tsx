@@ -1,16 +1,38 @@
+'use client'
+
 import { CATEGORY_GROUPS } from '@/app/mypage/consumer/wishlist/lib/categoryGroup'
 import { CATEGORY_NAME_TO_ID } from '@/app/mypage/consumer/wishlist/lib/categoryNameToId'
 import { ChevronDown } from 'lucide-react'
 import { ChangeEvent, useState } from 'react'
 
 type Props = {
+  value?: string
   error?: string
   onChange: (value: string) => void
 }
 
-export default function CategorySelector({ error, onChange }: Props) {
+export default function CategorySelector({ value, error, onChange }: Props) {
   const [selectedGroup, setSelectedGroup] = useState('')
   const [selectedCategory, setSelectedCategory] = useState('')
+  const [prevValue, setPrevValue] = useState<string | undefined>(undefined)
+
+  if (value !== prevValue) {
+    setPrevValue(value)
+    if (value) {
+      const categoryName = Object.keys(CATEGORY_NAME_TO_ID).find(
+        (key) => CATEGORY_NAME_TO_ID[key] === value,
+      )
+      if (categoryName) {
+        const group = CATEGORY_GROUPS.find((g) =>
+          g.categories.includes(categoryName),
+        )
+        if (group) {
+          setSelectedGroup(group.label)
+          setSelectedCategory(value)
+        }
+      }
+    }
+  }
 
   const currentGroup = CATEGORY_GROUPS.find(
     (group) => group.label === selectedGroup,
@@ -23,10 +45,11 @@ export default function CategorySelector({ error, onChange }: Props) {
   }
 
   const handleCategoryChange = (e: ChangeEvent<HTMLSelectElement>) => {
-    const name = e.target.value
-    setSelectedCategory(name)
-    onChange(name)
+    const categoryId = e.target.value
+    setSelectedCategory(categoryId)
+    onChange(categoryId)
   }
+
   return (
     <div className="flex gap-2">
       <div className="relative flex gap-2">
@@ -49,7 +72,6 @@ export default function CategorySelector({ error, onChange }: Props) {
         </select>
         <ChevronDown className="pointer-events-none absolute top-1/2 right-2 h-4 w-4 -translate-y-1/2 text-gray-500" />
       </div>
-
       {/* 소분류 */}
       {currentGroup && (
         <select
