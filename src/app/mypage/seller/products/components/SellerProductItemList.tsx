@@ -1,15 +1,14 @@
-// @/app/mypage/seller/products/components/SellerProductItemList.tsx
 'use client'
 
 import { useState } from 'react'
 import { useUser } from '@/app/mypage/context/UserContext'
-import { usePagination } from '@/hooks/usePagination'
 import { SellerProduct } from '@/app/mypage/types/sellerOrderItems'
 import SellerProductItemCard from './SellerProductItemCard'
-import Pagination from '../../delivery/components/Pagination'
 import { SellerProductItemSkeleton } from './SellerProductItemSkeleton'
 import ProductEditModal from './ProductEditModal'
 import { useSellerProducts } from '../hooks/useSellerProducts'
+import Pagination from '@/app/components/Pagination'
+import { useProductFilter } from '@/hooks/useFiltering'
 
 interface CustomUser {
   id: string
@@ -18,13 +17,12 @@ interface CustomUser {
 }
 
 export default function SellerProductItemList() {
-  const [currentPage, setCurrentPage] = useState(1)
+  const { page } = useProductFilter()
   const [selectedProduct, setSelectedProduct] = useState<SellerProduct | null>(
     null,
   )
 
   const { user, isLoading: isUserLoading } = useUser()
-
   const storeId = (user as unknown as CustomUser)?.store_id
 
   const {
@@ -34,11 +32,10 @@ export default function SellerProductItemList() {
   } = useSellerProducts(storeId)
 
   const itemsPerPage = 5
-  const { currentItems, totalPages } = usePagination(
-    products,
-    itemsPerPage,
-    currentPage,
-  )
+  const totalCount = products.length
+
+  const start = (page - 1) * itemsPerPage
+  const currentItems = products.slice(start, start + itemsPerPage)
 
   if (isUserLoading || (isDataLoading && products.length === 0)) {
     return (
@@ -65,11 +62,7 @@ export default function SellerProductItemList() {
             ))}
           </ul>
 
-          <Pagination
-            currentPage={currentPage}
-            totalPages={totalPages}
-            onPageChange={setCurrentPage}
-          />
+          <Pagination pageSize={itemsPerPage} totalCount={totalCount} />
         </>
       ) : (
         <div className="py-20 text-center text-gray-500">
