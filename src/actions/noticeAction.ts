@@ -1,7 +1,7 @@
 'use server'
 
 import { redirect } from 'next/navigation'
-// import { revalidateTag, cacheTag } from 'next/cache'
+import { revalidateTag, cacheTag } from 'next/cache'
 import { z } from 'zod'
 import { createClient } from '@/utils/supabase/server'
 import { createStaticClient } from '@/utils/supabase/static'
@@ -33,8 +33,12 @@ const NoticeFormSchema = z.object({
  * @returns data 배열로 조회결과 생성, 필독 / 일반 공지사항
  */
 export const getNotices = async (pages: number): Promise<NoticeResponse> => {
-  // 'use cache'
-  // cacheTag('notices')
+
+  // revalidate (주기적 갱신)
+  // ISR (Incremental Static Regeneration) 점진적으로 시간이거나, 뭘할때 재생성해주는 전략.
+  'use cache'
+  cacheTag('notice')
+
 
   // env에 환경설정이랑, 캐시(정적)환경용 supabase 선언
   const ITEMS_PER_PAGE = Number(process.env.NEXT_PUBLIC_ITEMS_PER_PAGE) || 10 
@@ -152,7 +156,7 @@ export async function handleNoticeAction(
       }
     }
 
-    // revalidateTag('notices', { expire: 3600 })
+    revalidateTag('notice', { expire: 3600 })
 
   } catch (error: unknown) {
     const errorMessage = error instanceof Error ? error.message : '등록 중 알 수 없는 오류가 발생했습니다.'

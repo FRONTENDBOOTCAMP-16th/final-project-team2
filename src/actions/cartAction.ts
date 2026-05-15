@@ -3,7 +3,6 @@
 import { createClient } from '@/utils/supabase/server'
 import { z } from 'zod'
 import { getAuthUserInfo } from './getUser'
-import { cacheLife, cacheTag, revalidatePath } from 'next/cache'
 import { SelectedOption } from '@/app/lib/cart.types'
 
 type AddCartParams = {
@@ -48,10 +47,6 @@ export type UpdateCartQuantity = z.infer<typeof updateCartQuantitySchema>
 export type DeleteCartItem = z.infer<typeof deleteCartItemSchema> // 타입 추출
 
 export async function getCarts() {
-  'use cache'
-  cacheTag('cart', 'max')
-  cacheLife('minutes')
-
   const auth = await getAuthUserInfo()
 
   if (!auth) {
@@ -122,7 +117,6 @@ export async function updateCartQuantity(input: UpdateCartQuantity) {
     console.error(error.message)
     return { success: false, message: '수량 업데이트에 실패했습니다.' }
   }
-  revalidatePath('/cart')
 
   return { success: true }
 }
@@ -177,7 +171,6 @@ export async function addCartItem({
     throw new Error(error.message)
   }
 
-  revalidatePath('/cart')
 }
 
 // 장바구니 아이템 삭제 Server Action 추가
@@ -210,8 +203,6 @@ export async function deleteCartItem(input: DeleteCartItem) {
     console.error(error.message)
     return { success: false, message: '상품 삭제에 실패했습니다.' }
   }
-
-  revalidatePath('/cart')
 
   return { success: true, message: '상품이 장바구니에서 삭제되었습니다.' }
 }
