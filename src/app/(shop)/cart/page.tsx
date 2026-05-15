@@ -1,6 +1,5 @@
 import { getCarts } from "@/actions/cartAction"
 import QuantityComponent from "./_components/Quantity"
-import Image from "next/image"
 import PriceBox from "./_components/PriceBox"
 import CartDeleteButton from "./_components/CartDeleteButton"
 import Link from "next/link"
