@@ -53,8 +53,8 @@ export default function Pagination({ count, current, link }: PaginationProps) {
           href={isFirstPage ? '#' : `/${link}?page=1`}
           className={`flex items-center justify-center rounded-md p-2 transition-colors ${
             isFirstPage
-              ? 'pointer-events-none cursor-not-allowed text-gray-300'
-              : 'text-gray-500 hover:bg-gray-100 hover:text-black'
+              ? 'pointer-events-none cursor-not-allowed text-gray-300 dark:text-gray-600'
+              : 'text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-black dark:hover:text-white'
           }`}
           aria-label="첫 페이지로 이동"
           aria-disabled={isFirstPage}
@@ -69,8 +69,8 @@ export default function Pagination({ count, current, link }: PaginationProps) {
           href={isFirstPage ? '#' : `/${link}?page=${prevJumpPage}`}
           className={`flex items-center justify-center rounded-md p-2 transition-colors ${
             isFirstPage
-              ? 'pointer-events-none cursor-not-allowed text-gray-300'
-              : 'text-gray-500 hover:bg-gray-100 hover:text-black'
+              ? 'pointer-events-none cursor-not-allowed text-gray-300 dark:text-gray-600'
+              : 'text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-black dark:hover:text-white'
           }`}
           aria-label="이전 5페이지로 이동"
           aria-disabled={isFirstPage}
@@ -88,8 +88,8 @@ export default function Pagination({ count, current, link }: PaginationProps) {
                 href={`/${link}?page=${page}`}
                 className={`flex h-8 w-8 items-center justify-center rounded-md transition-colors ${
                   page === safeCurrent
-                    ? 'bg-orange-50 font-bold text-orange-600' // 현재 페이지 강조 추가
-                    : 'text-gray-600 hover:bg-gray-100'
+                    ? 'bg-orange-50 dark:bg-orange-900/30 font-bold text-orange-600 dark:text-orange-400' // 현재 페이지 강조 추가
+                    : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800'
                 }`}
                 aria-current={page === safeCurrent ? 'page' : undefined}
               >
@@ -106,8 +106,8 @@ export default function Pagination({ count, current, link }: PaginationProps) {
           href={isLastPage ? '#' : `/${link}?page=${nextJumpPage}`}
           className={`flex items-center justify-center rounded-md p-2 transition-colors ${
             isLastPage
-              ? 'pointer-events-none cursor-not-allowed text-gray-300'
-              : 'text-gray-500 hover:bg-gray-100 hover:text-black'
+              ? 'pointer-events-none cursor-not-allowed text-gray-300 dark:text-gray-600'
+              : 'text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-black dark:hover:text-white'
           }`}
           aria-label="다음 5페이지로 이동"
           aria-disabled={isLastPage}
@@ -122,8 +122,8 @@ export default function Pagination({ count, current, link }: PaginationProps) {
           href={isLastPage ? '#' : `/${link}?page=${totalPage}`}
           className={`flex items-center justify-center rounded-md p-2 transition-colors ${
             isLastPage
-              ? 'pointer-events-none cursor-not-allowed text-gray-300'
-              : 'text-gray-500 hover:bg-gray-100 hover:text-black'
+              ? 'pointer-events-none cursor-not-allowed text-gray-300 dark:text-gray-600'
+              : 'text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-black dark:hover:text-white'
           }`}
           aria-label="마지막 페이지로 이동"
           aria-disabled={isLastPage}

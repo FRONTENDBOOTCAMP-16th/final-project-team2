@@ -9,19 +9,19 @@ export default function PriceBox({ totalOriginPrice, totalDiscountedPrice }: Pri
 
   return (
 
-    <section aria-labelledby="summary-heading" className="p-6 bg-white">
+    <section aria-labelledby="summary-heading">
 
       <h2 id="summary-heading" className="font-bold mb-6 text-2xl">결제 금액 요약</h2>
 
       <dl className="space-y-3">
         {/* 상품 금액 */}
         <div className="flex justify-between">
-          <dt className="text-gray-600">상품금액</dt>
+          <dt className="text-gray-600 dark:text-gray-300">상품금액</dt>
           <dd className="font-medium">{totalOriginPrice.toLocaleString()}원</dd>
         </div>
 
         {/* 할인 금액 */}
-        <div className="flex justify-between text-red-600">
+        <div className="flex justify-between text-red-500">
           <dt>할인금액</dt>
           <dd>
             <span aria-hidden="true">-</span>
@@ -31,12 +31,12 @@ export default function PriceBox({ totalOriginPrice, totalDiscountedPrice }: Pri
         </div>
 
         {/* 구분선 */}
-        <div className="border-t border-dashed my-4" role="presentation" />
+        <div className="border-t my-4" role="presentation" />
 
         {/* 최종 결제 금액 */}
         <div className="flex justify-between items-center text-xl font-bold">
           <dt>총 결제금액</dt>
-          <dd className="text-blue-600">
+          <dd className="text-black-600">
             <span className="sr-only">최종 결제 예정 금액은</span>
             {totalDiscountedPrice.toLocaleString()}원
           </dd>

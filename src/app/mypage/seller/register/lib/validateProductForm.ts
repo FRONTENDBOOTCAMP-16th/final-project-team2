@@ -26,7 +26,7 @@ const validators: Partial<
     const trimmed = value.trim()
     if (!trimmed) return '가격을 입력하세요.'
     if (!/^\d+$/.test(trimmed)) return '숫자만 입력하세요.'
-    if (Number(trimmed) <= 5000)
+    if (Number(trimmed) < 5000)
       return '최소 금액은 5000원 이상부터 입력 가능합니다.'
     return ''
   },
@@ -48,12 +48,12 @@ const validators: Partial<
     return ''
   },
   productDiscount: (value) => {
-    const trimmed = value.trim();
-    if (!trimmed) return "상품 할인율을 입력하세요.";
-    if (!/^\d+$/.test(trimmed)) return "숫자만 입력하세요.";
+    const trimmed = value.trim()
+    if (!trimmed) return '상품 할인율을 입력하세요.'
+    if (!/^\d+$/.test(trimmed)) return '숫자만 입력하세요.'
     if (Number(trimmed) < 0 || Number(trimmed) > 100)
-      return "상품 할인율은 0%부터 100%까지 입력 가능합니다.";
-    return "";
+      return '상품 할인율은 0%부터 100%까지 입력 가능합니다.'
+    return ''
   },
   productCategoryId: (value) => {
     if (!value.trim()) return '카테고리를 선택하세요.'

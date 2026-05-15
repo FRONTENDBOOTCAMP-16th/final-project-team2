@@ -5,7 +5,7 @@ import InquireFindProdctAction from '@/app/components/board/InquireFindProdctAct
 
 export default function NoticeWritePage() {
   return (
-    <div className="container mx-auto py-10">
+    <div className="container mx-auto py-10 max-w-6xl flex flex-col gap-6">
       <InquireFindProdctAction />
 
       <WriteForm

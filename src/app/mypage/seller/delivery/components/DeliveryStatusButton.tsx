@@ -24,7 +24,7 @@ export default function DeliverStatusButton({
   currentStatus,
   orderId,
 }: Props) {
-  const [isClose, setIsOpen] = useState(false)
+  const [isOpen, setIsOpen] = useState(false)
   const { mutate } = useDeliveryStatus()
   const handleStatusChange = (status: OrderItem['item_status']) => {
     mutate({ orderItemId, status, orderId })
@@ -36,23 +36,23 @@ export default function DeliverStatusButton({
   )
 
   return (
-    <div className="flex flex-col pr-3">
+    <div className="relative flex flex-col pr-3">
       <button
-        onClick={() => setIsOpen(!isClose)}
+        onClick={() => setIsOpen(!isOpen)}
         aria-disabled={currentStatus === 'DELIVERED'}
-        className={`${currentStatus === 'DELIVERED' ? 'cursor-not-allowed opacity-50' : 'hover:bg-gray-400 hover:text-white'} mb-2 shrink-0 rounded-md border border-gray-300 px-3 py-1 font-semibold hover:bg-gray-300 hover:text-white`}
+        className={`${currentStatus === 'DELIVERED' ? 'cursor-not-allowed opacity-50' : 'hover:bg-gray-400 hover:text-white'} shrink-0 rounded-md border border-gray-300 px-3 py-1 font-semibold hover:bg-gray-300 hover:text-white`}
       >
         관리
       </button>
-      {currentStatus !== 'DELIVERED' && isClose && (
-        <ul>
+      {currentStatus !== 'DELIVERED' && isOpen && (
+        <ul className="absolute top-1/2 -left-5 z-10 w-25 rounded-2xl bg-white/70 p-2 shadow-xl backdrop-blur-md">
           {filteredStatus.map((status) => {
             const config = statusLabel[status]
             return (
-              <li key={status} className="flex flex-col gap-3">
+              <li key={status} className="flex flex-col items-center">
                 <button
                   type="button"
-                  className={`${config.color} mb-3 cursor-pointer rounded-2xl p-2 text-center transition-all duration-200 hover:scale-[1.02]`}
+                  className={`${config.color} mt-3 w-20 cursor-pointer rounded-2xl p-2 text-center whitespace-nowrap transition-all duration-200 hover:scale-[1.02]`}
                   onMouseEnter={(e) => {
                     e.currentTarget.style.boxShadow = `0 0 14px ${config.glow}`
                   }}

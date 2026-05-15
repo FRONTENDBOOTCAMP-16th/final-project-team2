@@ -17,7 +17,7 @@ export async function toggleWishlist({ productId }: ToggleWishlistParams) {
   const supabase = await createClient()
 
   const { data: existingItem, error: selectError } = await supabase
-    .from('wishlists')
+    .from('product_likes')
     .select('id')
     .eq('user_id', auth.id)
     .eq('product_id', productId)
@@ -29,7 +29,7 @@ export async function toggleWishlist({ productId }: ToggleWishlistParams) {
 
   if (existingItem) {
     const { error: deleteError } = await supabase
-      .from('wishlists')
+      .from('product_likes')
       .delete()
       .eq('id', existingItem.id)
 
@@ -40,7 +40,7 @@ export async function toggleWishlist({ productId }: ToggleWishlistParams) {
     return { liked: false }
   }
 
-  const { error: insertError } = await supabase.from('wishlists').insert({
+  const { error: insertError } = await supabase.from('product_likes').insert({
     user_id: auth.id,
     product_id: productId,
   })

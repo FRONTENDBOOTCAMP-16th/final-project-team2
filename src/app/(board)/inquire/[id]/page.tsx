@@ -60,14 +60,14 @@ export default async function QnaDetailPage({
 
   return (
     <div className="mx-auto w-full max-w-4xl space-y-8 p-8">
-      <section className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm">
+      <section className="rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-6 shadow-sm">
         <div className="mb-4">
           <div className="flex w-full items-center justify-between">
             <div className="flex items-center gap-2">
               <span className="inline-block rounded bg-blue-100 px-2 py-1 text-xs font-semibold text-blue-600">
                 Q. 질문
               </span>
-              <h1 className="text-2xl font-bold text-gray-900">{qna.title}</h1>
+              <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">{qna.title}</h1>
             </div>
             <p className="mt-2 w-1/3 text-right text-sm text-gray-500">
               작성일: {new Date(qna.created_at).toLocaleDateString()}
@@ -89,7 +89,7 @@ export default async function QnaDetailPage({
         </div>
 
         <div
-          className="prose max-w-none text-gray-800"
+          className="prose max-w-none text-gray-800 dark:text-gray-200 dark:prose-invert"
           dangerouslySetInnerHTML={{ __html: cleanQuestion }}
         />
       </section>
@@ -115,7 +115,7 @@ export default async function QnaDetailPage({
       )}
 
       <section
-        className={`rounded-lg border p-6 shadow-sm ${qna.is_answered ? 'border-blue-100 bg-blue-50' : 'border-dashed border-gray-200 bg-gray-50'}`}
+        className={`rounded-lg border p-6 shadow-sm ${qna.is_answered ? 'border-blue-100 bg-blue-50 dark:border-blue-900 dark:bg-blue-950' : 'border-dashed border-gray-200 bg-gray-50 dark:border-gray-700 dark:bg-gray-800'}`}
       >
         {qna.is_answered ? (
           <>
@@ -131,7 +131,7 @@ export default async function QnaDetailPage({
             </div>
             <hr className="my-4 border-blue-200" />
             <div
-              className="prose max-w-none text-gray-800"
+              className="prose max-w-none text-gray-800 dark:text-gray-200 dark:prose-invert"
               dangerouslySetInnerHTML={{ __html: cleanAnswer }}
             />
           </>

@@ -40,6 +40,9 @@ export default function WishListItemCard({ order, onRemove }: Props) {
           className="h-70.5 w-full"
           src={product.thumbnail_image}
           alt=""
+          onError={(e) => {
+            ;(e.currentTarget as HTMLImageElement).src = '/fallback.png'
+          }}
         />
       </Link>
       <div className="flex flex-col pt-4">

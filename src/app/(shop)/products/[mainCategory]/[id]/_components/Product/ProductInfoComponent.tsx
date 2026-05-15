@@ -1,5 +1,3 @@
-import { Coins } from 'lucide-react'
-import HeartButton from './HeartButton'
 import ProductSummary from './ProductSummary'
 import { Products } from '@/app/lib/products.types'
 import { Reviews } from '@/app/lib/reviews.types'
@@ -42,7 +40,7 @@ const ProductInfoComponent = ({
             />
 
             <div className="mt-8">
-              <ProductOption productId={product_id} />
+              <ProductOption productId={product_id} mainCategory={category} />
             </div>
           </div>
         </section>

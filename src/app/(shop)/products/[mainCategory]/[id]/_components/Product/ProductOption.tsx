@@ -3,10 +3,17 @@ import ProductOptionClient from './ProductOptionClient'
 
 type ProductOptionProps = {
   productId: string
+  mainCategory: string
 }
 
-const ProductOption = async ({ productId }: ProductOptionProps) => {
-  const product = await getProductDetail(productId)
+const ProductOption = async ({
+  productId,
+  mainCategory,
+}: ProductOptionProps) => {
+  const product = await getProductDetail({
+    id: productId,
+    mainCategory,
+  })
 
   if (!product) return null
 
