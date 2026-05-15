@@ -3,6 +3,7 @@
 import { findIdAction } from '@/actions/findIdAction'
 import InputBox from '@/app/components/InputBox'
 import SimpleToast from '@/app/components/SimpleToast'
+import { nameSchema, phoneSchema } from '@/app/lib/auth'
 import { useActionState } from 'react'
 
 export default function FIndIdPage() {
@@ -21,16 +22,14 @@ export default function FIndIdPage() {
             label="이름"
             name="name"
             placeholder="이름을 입력하세요"
-            error={state?.errors?.name?.[0]}
-            defaultValue={state?.name}
+            schema={nameSchema}
           />
           <InputBox
             type="text"
             label="핸드폰 번호"
             name="phone"
             placeholder="핸드폰 번호를 입력하세요 (010-0000-0000)"
-            error={state?.errors?.phone?.[0]}
-            defaultValue={state?.phone}
+            schema={phoneSchema}
           />
         </div>
         <p
