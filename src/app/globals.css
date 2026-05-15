@@ -1,4 +1,5 @@
 @import 'tailwindcss';
+@custom-variant dark (&:where(.dark, .dark *));
 @font-face {
   font-family: 'SUITE';
   font-weight: 300;
@@ -61,4 +62,8 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans);
+}
+
+.dark body {
+  @apply bg-[#25292D] text-white;
 }
