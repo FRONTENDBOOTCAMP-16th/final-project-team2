@@ -1,23 +1,33 @@
-import { useAuth } from "@/hooks/useAuth"
-import NavList, { NaviProps } from "./NavList"
-import { LucideSearch, LucideShoppingCart, LucideUser } from "lucide-react"
-import { useState } from "react"
-import ConfirmModal from "./main/ConfirmModal"
-import Modal from "./Modal"
-import SearchForm from "../search/_components/SearchForm"
+import { useAuth } from '@/hooks/useAuth'
+import NavList, { NaviProps } from './NavList'
+import { LucideSearch, LucideShoppingCart, LucideUser } from 'lucide-react'
+import { useState } from 'react'
+import ConfirmModal from './main/ConfirmModal'
+import Modal from './Modal'
+import SearchForm from '../search/_components/SearchForm'
 
 export default function Header() {
   const { isLogin, handleLogout } = useAuth()
-  const [ isLogoutModal, setIsLogoutModal ] = useState(false)
-  const [ isSearchModal, setSearchModal ] = useState(false)
+  const [isLogoutModal, setIsLogoutModal] = useState(false)
+  const [isSearchModal, setSearchModal] = useState(false)
 
-  {/* 유저 메뉴 */}
+  {
+    /* 유저 메뉴 */
+  }
   const convenienceMenu = [
-    { name: '검색', onClick: () => setSearchModal(true), icon: <LucideSearch /> },
-    isLogin && { name: '마이페이지', href: '/mypage/consumer', icon: <LucideUser /> },
+    {
+      name: '검색',
+      onClick: () => setSearchModal(true),
+      icon: <LucideSearch />,
+    },
+    isLogin && { name: '마이페이지', href: '/mypage', icon: <LucideUser /> },
     { name: '장바구니', href: '/cart', icon: <LucideShoppingCart /> },
     isLogin
-      ? { name: '로그아웃', onClick: () => setIsLogoutModal(true), text: '로그아웃' }
+      ? {
+          name: '로그아웃',
+          onClick: () => setIsLogoutModal(true),
+          text: '로그아웃',
+        }
       : { name: '로그인', href: '/login', text: '로그인' },
   ].filter(Boolean) as NaviProps[]
 
@@ -56,5 +66,5 @@ export default function Header() {
         </Modal>
       )}
     </>
-  ) 
+  )
 }
