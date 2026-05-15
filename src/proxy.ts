@@ -55,6 +55,10 @@ export async function proxy(request: NextRequest) {
     if (path.startsWith('/mypage/seller') && role === 'USER') {
       return NextResponse.redirect(new URL('/mypage/consumer', request.url))
     }
+
+    if (path === '/products') {
+      return NextResponse.redirect(new URL('/products/write', request.url))
+    }
   }
   return supabaseResponse
 }
