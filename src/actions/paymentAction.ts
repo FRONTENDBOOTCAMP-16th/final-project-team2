@@ -6,8 +6,8 @@ import { getCarts } from './cartAction'
 
 // 유저 정보 불러오기
 export async function getLocationUserInfo() {
+  const supabase = await createClient()
   try {
-    const supabase = await createClient()
     const {
       data: { user },
     } = await supabase.auth.getUser()
@@ -30,8 +30,8 @@ export async function getLocationUserInfo() {
 
 // 결제(주문) 처리하기 내부 로직 분리 (redirect 에러 방지)
 async function processPayment(formData: FormData) {
+  const supabase = await createClient()
   try {
-    const supabase = await createClient()
     const { data: { user } } = await supabase.auth.getUser()
 
     if (!user) throw new Error('로그인이 필요합니다.')
