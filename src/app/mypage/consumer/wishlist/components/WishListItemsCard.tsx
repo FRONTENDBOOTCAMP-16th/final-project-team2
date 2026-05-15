@@ -1,18 +1,17 @@
-import LikeToggleButton from '@/app/mypage/consumer/wishlist/components/LikeToggleButton'
 import Link from 'next/link'
 import Image from 'next/image'
 import { ProductLikeWithProduct } from '@/app/lib/productLike.types'
 import { CATEGORY_GROUPS } from '../lib/categoryGroup'
 import { DiscountPriceFormat, DiscountRateFormat } from '@/utils/intl'
+import HeartButton from '@/app/(shop)/products/[mainCategory]/[id]/_components/Product/HeartButton'
 
 interface Props {
   order: ProductLikeWithProduct
-  onRemove: (id: string) => void
 }
-//
-export default function WishListItemCard({ order, onRemove }: Props) {
+
+export default function WishListItemCard({ order }: Props) {
   const product = order.products
-  const categoryName = product.product_categories[0]?.categories.name ?? ''
+  const categoryName = product.product_categories.categories.name
 
   const categoryId = CATEGORY_GROUPS.find((group) =>
     group.categories.includes(categoryName),
@@ -47,11 +46,11 @@ export default function WishListItemCard({ order, onRemove }: Props) {
       </Link>
       <div className="flex flex-col pt-4">
         <p className="text-sm text-gray-400">
-          {product.product_categories[0]?.categories.name}
+          {product.product_categories?.categories.name}
         </p>
         <div className="flex justify-between">
           <p className="w-50 self-center truncate font-bold">{product.name}</p>
-          <LikeToggleButton id={order.id} onRemove={onRemove} />
+          <HeartButton productId={order.product_id} initialLiked={true} />
         </div>
 
         <div className="flex gap-2">

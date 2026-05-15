@@ -7,6 +7,7 @@ import TypeRadioInput from '@/app/components/TypeRadioInput'
 import { signupAction } from '@/actions/signupAction'
 import PasswordGroup from '@/app/components/PasswordGroup'
 import SimpleToast from '@/app/components/SimpleToast'
+import { emailSchema, nameSchema, phoneSchema } from '@/app/lib/auth'
 
 export default function SignupPage() {
   const [state, formAction] = useActionState(signupAction, null)
@@ -55,32 +56,24 @@ export default function SignupPage() {
               type="text"
               label="이름"
               name="name"
-              placeholder="이름을 입력하세요"
-              error={state?.errors?.name?.[0]}
-              defaultValue={state?.name}
+              placeholder='이름을 입력해주세요'
+              schema={nameSchema}
             />
             <InputBox
               type="text"
               label="이메일"
               name="email"
               placeholder="이메일을 입력하세요"
-              error={state?.errors?.email?.[0]}
-              defaultValue={state?.email}
+              schema={emailSchema}
             />
             <InputBox
               type="text"
               label="핸드폰 번호"
               name="phone"
               placeholder="핸드폰 번호를 입력하세요 (010-0000-0000)"
-              error={state?.errors?.phone?.[0]}
-              defaultValue={state?.phone}
+              schema={phoneSchema}
             />
-            <PasswordGroup
-              passwordError={state?.errors?.password?.[0]}
-              confirmError={state?.errors?.confirmPassword?.[0]}
-              defaultPassword={state?.password}
-              defaultConfirm={state?.confirmPassword}
-            />
+            <PasswordGroup />
           </div>
 
           <div className="mbs-6 border-be border-[#e0e0e0] pbe-6">

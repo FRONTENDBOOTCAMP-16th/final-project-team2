@@ -19,10 +19,10 @@ export default function OrderItemCard({
   finalPrice,
   orderStatus,
 }: Props) {
-  const categoryName = order.products.product_categories[0].categories.name
+  const categoryName = order.products.product_categories.categories.name
 
   const categoryId = CATEGORY_GROUPS.find((group) =>
-    group.categories.includes(categoryName),
+    group.categories.includes(categoryName ?? ''),
   )?.id
 
   const productId = order.product_id

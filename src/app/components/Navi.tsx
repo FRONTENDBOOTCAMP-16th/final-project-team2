@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import Header from './Header'
 import SubHeader from './SubHeader'
+import DarkModeBtn from './darkModeBtn'
 
 export default function Navi() {
   return (
@@ -25,7 +26,6 @@ export default function Navi() {
               행쇼마켓
             </Link>
           </h1>
-
           {/* 스킵링크 */}
           <a
             href="#main-content"
@@ -33,12 +33,14 @@ export default function Navi() {
           >
             상품 리스트로 바로가기
           </a>
-
           {/* 메뉴 리스트 */}
           <SubHeader />
-
           {/* 헤더 */}
           <Header />
+        </div>
+        <div className="absolute">
+          {/* 다크모드 테스트 */}
+          <DarkModeBtn />
         </div>
       </header>
     </>

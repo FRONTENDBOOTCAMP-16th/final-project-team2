@@ -115,9 +115,7 @@ export default function ImageUploader({
           onClick={handleButtonClick}
           aria-disabled={!isEditing}
           className={`rounded-sm border border-gray-300 px-4 py-2 text-xs font-semibold transition ${
-            !isEditing
-              ? 'cursor-not-allowed bg-gray-50 text-gray-400 opacity-50'
-              : 'bg-white text-gray-600 hover:bg-gray-50'
+            !isEditing ? 'hidden' : 'bg-white text-gray-600 hover:bg-gray-50'
           }`}
         >
           이미지 변경

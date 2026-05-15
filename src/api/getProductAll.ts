@@ -1,7 +1,8 @@
 import { Products } from '@/app/lib/products.types'
-import { createClient } from '@/utils/supabase/server'
 import { categoriesList } from './categoriesList'
 import { Categories } from '@/app/lib/categories.types'
+import { cacheLife, cacheTag } from 'next/cache'
+import { createStaticClient } from '@/utils/supabase/static'
 
 export interface ProductWithCategory extends Products {
   category_path: string
@@ -27,7 +28,10 @@ export const getProductsAll = async ({
   page = 1,
   search = '',
 }: GetProductsAllProps) => {
-  const supabase = await createClient()
+  'use cache'
+  cacheLife('hours')
+  cacheTag('all-products')
+  const supabase = await createStaticClient()
 
   // 상품 조회 - 전체 삼품 조회, 각 상품마다 연결된 category_id 함께 조회
   let query = supabase
@@ -36,7 +40,7 @@ export const getProductsAll = async ({
 
   // ilike(대소문자 구분X)를 통해 검색어가 단어에 포함되어있으면 전부찾기(%)
   if (search) {
-    query = query.ilike('name', `%${search}%`) 
+    query = query.ilike('name', `%${search}%`)
   }
 
   // 상품 정렬 기준
@@ -119,7 +123,7 @@ export const getProductsAll = async ({
       categoryList.find((category) => category.id === categoryId) ?? null
 
     // 구조 분해 할당 시 product_categories는 화면에 불필요하므로 제외해도 됨
-    const { product_categories, ...restProduct } = product
+    const { ...restProduct } = product
 
     return {
       ...restProduct,

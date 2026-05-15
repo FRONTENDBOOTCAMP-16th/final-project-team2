@@ -13,7 +13,7 @@ const PROFILE_FIELDS = [
   { label: '이메일', name: 'email', type: 'email', isReadOnly: true },
   { label: '이름', name: 'name', type: 'text', isReadOnly: false },
   { label: '닉네임', name: 'nickname', type: 'text', isReadOnly: false },
-  { label: '휴대전화', name: 'phone', type: 'tel', isReadOnly: false },
+  { label: '휴대전화', name: 'phone', type: 'tel', isReadOnly: true },
   { label: '주소', name: 'address', type: 'text', isReadOnly: false },
   { label: '생일', name: 'birthday', type: 'date', isReadOnly: false },
 ] as const
