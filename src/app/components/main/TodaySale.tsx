@@ -8,7 +8,6 @@ interface TodaySaleProps {
 export default async function TodaySale({ maxProducts }: TodaySaleProps) {
   const { products } = await getProductsAll({
     sort: 'discount_rate',
-    page: 1,
     pageSize: maxProducts,
   })
 
