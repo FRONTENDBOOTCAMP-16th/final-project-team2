@@ -1,16 +1,20 @@
+import {
+  mainCategoryConvert,
+  MainCategoryType,
+} from '@/app/(shop)/products/[mainCategory]/lib/category'
 import { Products } from '@/app/lib/products.types'
 import { createStaticClient } from '@/utils/supabase/static'
 import { cacheLife, cacheTag } from 'next/cache'
 
 type GetRecommendedProductsParams = {
   productId: string
-  mainCategoryName: string
+  mainCategoryKey: MainCategoryType
   limit?: number
 }
 
 export async function getRecommendedProducts({
   productId,
-  mainCategoryName,
+  mainCategoryKey,
   limit = 4,
 }: GetRecommendedProductsParams): Promise<Products[]> {
   'use cache'
@@ -19,7 +23,9 @@ export async function getRecommendedProducts({
   cacheTag('products')
   cacheTag(`recommended-products-${productId}`)
 
-  const supabase = createStaticClient()
+  const supabase = await createStaticClient()
+
+  const mainCategoryName = mainCategoryConvert[mainCategoryKey]
 
   const { data: mainCategory, error: mainCategoryError } = await supabase
     .from('categories')
