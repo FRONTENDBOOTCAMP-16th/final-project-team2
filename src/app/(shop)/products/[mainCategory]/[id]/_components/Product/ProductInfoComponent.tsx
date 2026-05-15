@@ -40,7 +40,7 @@ const ProductInfoComponent = ({
             />
 
             <div className="mt-8">
-              <ProductOption productId={product_id} />
+              <ProductOption productId={product_id} mainCategory={category} />
             </div>
           </div>
         </section>
