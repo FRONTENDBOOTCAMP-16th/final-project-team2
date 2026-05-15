@@ -1,10 +1,6 @@
 type UUID = string
 
-export interface SelectedOption {
-  color?: string
-  size?: string
-}
-
+export type SelectedOption = Record<string, string[]>
 export interface CartItem {
   id: UUID
   user_id: UUID
