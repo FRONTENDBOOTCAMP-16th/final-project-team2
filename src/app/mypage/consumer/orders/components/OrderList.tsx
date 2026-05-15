@@ -33,11 +33,6 @@ export default function OrderList() {
 
   const safeItems = data?.items ?? []
 
-  const filteredOrders =
-    status === 'all'
-      ? safeItems
-      : safeItems.filter((order) => order.order_status === status)
-
   const onValueChange = (slug: string) => {
     params.set('sort', slug)
     params.set('page', '1')
@@ -63,13 +58,7 @@ export default function OrderList() {
     return <MyPageOrdersSkeleton count={5} />
   }
 
-  if (safeItems.length === 0)
-    return (
-      <div className="pt-3 text-center text-red-500">
-        <p>주문한 상품이 없습니다.</p>
-      </div>
-    )
-
+  const hasOrder = safeItems?.length > 0
   return (
     <>
       <div className="mb-12.5 flex h-9 justify-between pl-4">
@@ -81,14 +70,10 @@ export default function OrderList() {
         <OrderStatusFilter value={status} statusChange={handleStatusFilter} />
       </div>
       <OrderItemHeader />
-      {filteredOrders?.length === 0 ? (
-        <p className="mt-5 text-center text-xl text-red-500">
-          해당 주문 상태가 존재하지 않습니다.
-        </p>
-      ) : (
+      {hasOrder ? (
         <>
           <ul>
-            {filteredOrders?.map((orders) =>
+            {safeItems?.map((orders) =>
               orders.order_items.map((item) => (
                 <li key={item.id}>
                   <OrderItemCard
@@ -107,6 +92,10 @@ export default function OrderList() {
             onPageChange={onChangePage}
           />
         </>
+      ) : (
+        <p className="mt-5 text-center text-xl text-red-500">
+          해당 주문 상태가 존재하지 않습니다.
+        </p>
       )}
     </>
   )
