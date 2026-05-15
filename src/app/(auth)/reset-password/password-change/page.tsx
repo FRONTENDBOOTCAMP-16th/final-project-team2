@@ -16,12 +16,7 @@ export default function ChangePasswordPage() {
 
       <form action={formAction} className="mbs-10 flex flex-col gap-2 pb-4">
         <div className="mbe-4">
-          <PasswordGroup
-            passwordError={state?.errors?.password?.[0]}
-            confirmError={state?.errors?.confirmPassword?.[0]}
-            defaultPassword={state?.password}
-            defaultConfirm={state?.confirmPassword}
-          />
+          <PasswordGroup />
         </div>
         <p className="border-bs border-[#e0e0e0] pbs-4 text-center text-red-500">
           {state?.errors?.root?.[0]}

@@ -6,6 +6,7 @@ import { loginAction } from '@/actions/loginAction'
 import InputBox from '@/app/components/InputBox'
 import TypeRadioInput from '@/app/components/TypeRadioInput'
 import SimpleToast from '@/app/components/SimpleToast'
+import { emailSchema, passwordSchema } from '@/app/lib/auth'
 
 export default function LoginPage() {
   const [state, formAction] = useActionState(loginAction, null)
@@ -50,16 +51,14 @@ export default function LoginPage() {
             label="이메일"
             name="email"
             placeholder="이메일을 입력하세요"
-            error={state?.errors?.email?.[0]}
-            defaultValue={state?.email}
+            schema={emailSchema}
           />
           <InputBox
             type="password"
             label="패스워드"
             name="password"
             placeholder="비밀번호를 입력하세요"
-            error={state?.errors?.password?.[0]}
-            defaultValue={state?.password}
+            schema={passwordSchema}
           />
         </div>
 
