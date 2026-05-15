@@ -1,40 +1,47 @@
-import OrderStatusBadge from "@/app/mypage/consumer/orders/components/OrderStatusBadge";
-import { OrderItem } from "@/app/mypage/types/orderItem";
-import DeliverStatusButton from "./DeliveryStatusButton";
+import OrderStatusBadge from '@/app/mypage/consumer/orders/components/OrderStatusBadge'
+import { OrderItem } from '@/app/mypage/types/orderItem'
+import DeliverStatusButton from './DeliveryStatusButton'
+import { TotalPriceFormat } from '@/utils/intl'
 
 export default function DeliveryProductCard({ order }: { order: OrderItem }) {
+  const emailPrefix = order.email?.split('@')[0]
+
   return (
-    <div className="flex font-semibold p-4 mb-2 border-b border-gray-300 gap-8 ">
-      {/* 주문번호 */}
-      <div className="flex w-1/9 text-center">
-        <h2>{order.orderId}</h2>
+    <div className="mb-2 flex gap-5 border-b border-gray-300 p-4 font-semibold">
+      <div className="flex w-1/10 shrink-0">
+        <h2 className="w-32 leading-snug break-all">{order.invoice_number}</h2>
+      </div>
+      <div className="flex w-3/10 shrink-0 justify-center truncate">
+        <h2>{order.products.name}</h2>
       </div>
 
-      <div className="flex w-3/9">
-        <h2>{order.name}</h2>
-      </div>
-      {/* 주문자 */}
-      <div className="flex w-1/9 ">
-        <p>{order.userId}</p>
+      <div className="flex w-1/10 shrink-0">
+        <p>{emailPrefix}</p>
       </div>
 
-      {/* 가격 */}
-      <div className="flex w-1/9 text-center justify-center items-center">
+      <div className="flex w-1/10 shrink-0 text-center whitespace-nowrap">
         <p>
-          {(order.unitPrice * (1 - order.discountRate / 100)).toLocaleString()}
+          {TotalPriceFormat(
+            order.unit_price,
+            order.products.discount_rate,
+            order.quantity,
+          )}
           원
         </p>
       </div>
 
-      {/* 주문 수량 */}
-      <div className="flex text-center justify-center  w-1/9">
+      <div className="flex w-1/10 shrink-0 justify-center text-center">
         <p>{order.quantity}개</p>
       </div>
-      {/* 상태 */}
-      <div className="flex w-2/9 gap-3">
-        <OrderStatusBadge status={order.itemStatus} />
-        <DeliverStatusButton />
+
+      <div className="flex w-3/10 shrink-0 gap-3">
+        <OrderStatusBadge status={order.item_status} />
+        <DeliverStatusButton
+          orderItemId={order.id}
+          currentStatus={order.item_status}
+          orderId={order.orders.id}
+        />
       </div>
     </div>
-  );
+  )
 }

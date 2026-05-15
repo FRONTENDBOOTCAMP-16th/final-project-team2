@@ -1,18 +1,18 @@
-import { statusLabel } from "@/data/statusLabel";
-import { OrderItem } from "@/app/mypage/types/orderItem";
+import { statusLabel } from '@/data/statusLabel'
+import { OrderItemStatus } from '../lib/orderItemStatus'
 
 export default function OrderStatusBadge({
   status,
 }: {
-  status: OrderItem["itemStatus"];
+  status: OrderItemStatus
 }) {
-  const config = statusLabel[status];
+  const config = statusLabel[status]
 
   return (
     <span
-      className={`inline-flex items-center justify-center w-20 h-10 rounded text-sm  ${config.color}`}
+      className={`inline-flex h-10 w-20 items-center justify-center rounded text-sm ${config.color}`}
     >
       {config.label}
     </span>
-  );
+  )
 }

@@ -1,10 +1,21 @@
-const TotalPrice = () => {
-  return (
-    <div className="flex items-center justify-between p-4 bg-gray-100">
-      <p>총 상품 금액</p>
-      <p className="text-[#FF6B6B] text-2xl font-bold">32,000원</p>
-    </div>
-  );
-};
+import { TotalPriceFormat } from '@/utils/intl'
 
-export default TotalPrice;
+type TotalPriceProps = {
+  price: number
+  discount_rate: number
+  quantity: number
+}
+
+const TotalPrice = ({ price, discount_rate, quantity }: TotalPriceProps) => {
+  return (
+    <div className="flex items-center justify-between bg-gray-100 p-4">
+      <p>총 상품 금액</p>
+      <p className="text-2xl font-bold text-black">
+        {TotalPriceFormat(price, discount_rate, quantity)}
+        <span className="ml-2">원</span>
+      </p>
+    </div>
+  )
+}
+
+export default TotalPrice

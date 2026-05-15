@@ -1,73 +1,74 @@
-"use client";
+'use client'
 
-import DeliveryProductCard from "./DeliveryProductCard";
-import { usePagination } from "@/hooks/usePagination";
-import Pagination from "./Pagination";
-import TabFilter from "@/app/mypage/consumer/wishlist/components/tabFilter";
-import DeliveryProductHeader from "./DeliveryProductHeader";
-import useDeliveryOrders from "@/hooks/useDeliveryOrders";
-import { useEffect } from "react";
-
-const myProductIds = [
-  "prod-1",
-  "prod-2",
-  "prod-4",
-  "prod-5",
-  "prod-7",
-  "prod-12",
-  "prod-13",
-  "prod-18",
-  "prod-19",
-  "prod-25",
-  "prod-26",
-  "prod-30",
-  "prod-32",
-];
-
-const CATEGORIES = [
-  { id: "All", label: "전체", sort: "All" },
-  { id: "latest", label: "주문 날짜 순", sort: "latest" },
-  { id: "highPrice", label: "금액 높은 순", sort: "highPrice" },
-  { id: "lowPrice", label: "금액 낮은 순", sort: "lowPrice" },
-] as const;
+import DeliveryProductCard from './DeliveryProductCard'
+import Pagination from './Pagination'
+import DeliveryProductHeader from './DeliveryProductHeader'
+import { useState } from 'react'
+import MypageDeliverySkeleton from '@/app/mypage/components/MypageDeliverSkeleton'
+import { useDeliveryQuery } from '../hooks/useDeliveryQuery'
+import { useRouter, useSearchParams } from 'next/navigation'
+import OrderStatusFilter from '@/app/mypage/consumer/orders/components/OrderStatusFilter'
 
 export default function DeliveryProductList() {
-  // 1. 정렬 + 데이터는 hook에서 처리
-  const { sortType, handleTabChange, sortedOrders } =
-    useDeliveryOrders(myProductIds);
+  // 1. , 서치파람스, 페이지네이션, 데이터 페칭
+  const searchParams = useSearchParams()
+  const router = useRouter()
+  const status = searchParams.get('status') ?? 'all'
+  const params = new URLSearchParams(searchParams.toString())
+  const pageParam = Number(searchParams.get('page') ?? 1) // 현재 페이지 번호. URL 쿼리스트링 ?page=N 기반, 기본값: 1
+  const { data, isLoading } = useDeliveryQuery(pageParam, 5, status)
+  const items = data?.items ?? []
+  const count = data?.count ?? 0
+  const totalPages = Math.ceil(count / 5)
 
-  // 2. 페이지네이션
-  const { currentPage, setCurrentPage, totalPages, currentItems } =
-    usePagination(sortedOrders, 4);
+  const handleOptionChange = (value: string) => {
+    router.push(`?status=${value}&page=1`)
+  }
 
-  useEffect(() => {
-    setCurrentPage(1);
-  }, [sortType, setCurrentPage]);
+  const handlePageChange = (page: number) => {
+    router.push(`?status=${status}&page=${page}`)
+  }
+
+  if (isLoading || !items) {
+    return <MypageDeliverySkeleton count={5} />
+  }
+
+  const hasItems = items.length > 0
 
   return (
     <div className="flex flex-col">
-      <div className="flex  flex-col ">
-        <TabFilter
-          items={CATEGORIES}
-          selectedValue={sortType}
-          onValueChange={(id) => handleTabChange(id, CATEGORIES)}
-        />
+      {hasItems ? (
+        <>
+          <div className="flex flex-col px-5">
+            <OrderStatusFilter
+              value={status}
+              statusChange={handleOptionChange}
+            />
+            <div>
+              <DeliveryProductHeader />
+              <ul>
+                {items.map((item) => (
+                  <li key={item.id}>
+                    <DeliveryProductCard order={item} />
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+          <Pagination
+            currentPage={pageParam}
+            totalPages={totalPages}
+            onPageChange={handlePageChange}
+          />
+        </>
+      ) : (
         <div>
-          <DeliveryProductHeader />
-          <ul>
-            {currentItems.map((item) => (
-              <li key={item.id}>
-                <DeliveryProductCard order={item} />
-              </li>
-            ))}
-          </ul>
+          <OrderStatusFilter value={status} statusChange={handleOptionChange} />
+          <p className="pt-3 text-center text-red-500">
+            주문된 상품이 없습니다.
+          </p>{' '}
         </div>
-      </div>
-      <Pagination
-        currentPage={currentPage}
-        totalPages={totalPages}
-        onPageChange={setCurrentPage}
-      />
+      )}
     </div>
-  );
+  )
 }

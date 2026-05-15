@@ -1,59 +1,69 @@
-import LikeToggleButton from "@/app/mypage/consumer/wishlist/components/LikeToggleButton";
-import Link from "next/link";
-import Image from "next/image";
-import { OrderItem } from "@/app/mypage/types/orderItem";
-
-const CATEGORY_TO_KOREAN: { writing: string; paper: string } = {
-  writing: "필기구",
-  paper: "노트/메모",
-};
+import Link from 'next/link'
+import Image from 'next/image'
+import { ProductLikeWithProduct } from '@/app/lib/productLike.types'
+import { CATEGORY_GROUPS } from '../lib/categoryGroup'
+import { DiscountPriceFormat, DiscountRateFormat } from '@/utils/intl'
+import HeartButton from '@/app/(shop)/products/[mainCategory]/[id]/_components/Product/HeartButton'
 
 interface Props {
-  order: OrderItem;
-  onRemove: (id: string) => void;
+  order: ProductLikeWithProduct
 }
 
-export default function WishListItemCard({ order, onRemove }: Props) {
+export default function WishListItemCard({ order }: Props) {
+  const product = order.products
+  const categoryName = product.product_categories.categories.name
+
+  const categoryId = CATEGORY_GROUPS.find((group) =>
+    group.categories.includes(categoryName),
+  )?.id
+
+  const productId = product.id
+
   return (
     <div key={order.id} className="flex flex-col">
       <Link
-        href={`/products/pen/${order.id}`}
-        className="relative flex flex-col transition-transform duration-400 hover:scale-105"
+        href={{
+          pathname: `/products/${categoryId}/${productId}`,
+        }}
+        className="relative flex flex-col shadow-md transition-transform duration-400 hover:scale-105"
       >
-        {order.discountRate > 0 && (
-          <div className="absolute top-0 left-0  bg-[#DC2626] text-white px-2 py-1 text-sm font-bold">
-            {order.discountRate}%
+        {product.discount_rate > 0 && (
+          <div className="absolute top-0 left-0 bg-red-500 px-2 py-1 text-sm font-bold text-white">
+            {product.discount_rate}%
           </div>
         )}
 
         <Image
           width={282}
           height={282}
-          className="object-fill "
-          src={order.image}
+          className="h-70.5 w-full"
+          src={product.thumbnail_image}
           alt=""
+          onError={(e) => {
+            ;(e.currentTarget as HTMLImageElement).src = '/fallback.png'
+          }}
         />
       </Link>
-      <div className="flex flex-col pr-4 pt-4">
-        <p className="text-sm text-gray-400 ">
-          {CATEGORY_TO_KOREAN[order.category]}
+      <div className="flex flex-col pt-4">
+        <p className="text-sm text-gray-400">
+          {product.product_categories?.categories.name}
         </p>
         <div className="flex justify-between">
-          <p className="font-bold self-center">{order.name}</p>
-          <LikeToggleButton id={order.id} onRemove={onRemove} />
+          <p className="w-50 self-center truncate font-bold">{product.name}</p>
+          <HeartButton productId={order.product_id} initialLiked={true} />
         </div>
 
         <div className="flex gap-2">
-          {order.discountRate > 0 && (
-            <span className="text-red-500 font-bold text-sm">
-              {order.discountRate}%
+          {product.discount_rate > 0 && (
+            <span className="text-sm font-bold text-red-500">
+              {DiscountRateFormat(product.discount_rate)}%
             </span>
           )}
-          <span className="font-bold text-sm text-slate-800">
-            {order.unitPrice.toLocaleString()}원
+          <span className="text-sm font-bold text-slate-800">
+            {DiscountPriceFormat(product.price, product.discount_rate)}원
           </span>
         </div>
       </div>
     </div>
-  );
+  )
 }

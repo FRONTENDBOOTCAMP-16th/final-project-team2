@@ -1,0 +1,25 @@
+import { createServerClient } from '@supabase/ssr'
+import { cookies } from 'next/headers'
+import { supabaseConfig } from './config'
+
+export const createClient = async () => {
+  const cookieStore = await cookies()
+
+  return createServerClient(supabaseConfig.url, supabaseConfig.key, {
+    cookies: {
+      getAll() {
+        return cookieStore.getAll()
+      },
+      setAll(cookiesToSet) {
+        try {
+          cookiesToSet.forEach(({ name, value, options }) =>
+            cookieStore.set(name, value, options),
+          )
+        } catch {
+          // 서버 컴포넌트에서 호출될 경우 set이 실패할 수 있으나,
+          // 미들웨어에서 이를 대신 처리하므로 무시해도 안전합니다.
+        }
+      },
+    },
+  })
+}

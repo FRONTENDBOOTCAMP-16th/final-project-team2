@@ -1,10 +1,10 @@
 export default function OrderItemHeader() {
   return (
-    <div className="flex font-semibold border-b p-4 mb-2">
-      <div className="w-3/6">상품명</div>
-      <div className="w-1/6 ">주문일자</div>
-      <div className="w-1/6 ">결제 금액</div>
-      <div className="w-1/6 ">상태</div>
+    <div className="grid grid-cols-[2fr_1fr_1fr_1fr] border-b p-4 font-semibold">
+      <p>상품명</p>
+      <p className="text-left">주문일자</p>
+      <p className="text-center">결제 금액</p>
+      <p className="justify-self-center text-center">상태 </p>
     </div>
-  );
+  )
 }

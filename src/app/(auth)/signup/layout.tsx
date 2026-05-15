@@ -1,4 +1,4 @@
-import { ReactNode } from "react"
+import { ReactNode } from 'react'
 
 interface LayoutProps {
   children: ReactNode
@@ -6,7 +6,7 @@ interface LayoutProps {
 
 export default function SignupLayout({ children }: LayoutProps) {
   return (
-    <section className="h-full flex flex-col min-h-[calc(100vh-433px)] items-center justify-center p-14 bg-amber-100">
+    <section className="flex h-full min-h-[calc(100vh-433px)] flex-col items-center justify-center bg-[#f5f5f5] dark:bg-[#868686] p-14">
       {children}
     </section>
   )

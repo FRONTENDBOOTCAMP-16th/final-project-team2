@@ -1,17 +1,22 @@
-"use client";
+'use client'
 
-import { UserCouponCombined } from "@/app/mypage/types/coupon";
-import CouponItem from "./CouponItem";
-import Pagination from "@/app/mypage/seller/delivery/components/Pagination";
-import { usePagination } from "@/hooks/usePagination";
+import { UserCouponCombined } from '@/app/mypage/types/coupon'
+import CouponItem from './CouponItem'
+
+import { useProductFilter } from '@/hooks/useFiltering'
+import Pagination from '@/app/components/Pagination'
 
 interface Props {
-  initialCoupons: UserCouponCombined[];
+  initialCoupons: UserCouponCombined[]
 }
 
 export default function CouponList({ initialCoupons }: Props) {
-  const { currentPage, setCurrentPage, currentItems, totalPages } =
-    usePagination(initialCoupons, 5);
+  const { page } = useProductFilter()
+  const itemsPerPage = 5
+
+  const totalCount = initialCoupons.length
+  const start = (page - 1) * itemsPerPage
+  const currentItems = initialCoupons.slice(start, start + itemsPerPage)
 
   return (
     <div className="flex flex-col gap-4">
@@ -23,11 +28,7 @@ export default function CouponList({ initialCoupons }: Props) {
             ))}
           </div>
 
-          <Pagination
-            currentPage={currentPage}
-            totalPages={totalPages}
-            onPageChange={setCurrentPage}
-          />
+          <Pagination pageSize={itemsPerPage} totalCount={totalCount} />
         </>
       ) : (
         <div className="py-20 text-center text-gray-500">
@@ -35,5 +36,5 @@ export default function CouponList({ initialCoupons }: Props) {
         </div>
       )}
     </div>
-  );
+  )
 }

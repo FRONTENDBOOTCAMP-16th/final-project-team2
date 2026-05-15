@@ -1,14 +1,19 @@
+'use client'
+
+import { useUser } from '../context/UserContext'
+import NextImage from 'next/image'
+
 const GradeTooltip = () => (
   <div className="group relative flex items-center">
     <button
       type="button"
       aria-label="등급 산정 조건 보기"
-      className="w-4 h-4 rounded-full border border-gray-400 text-gray-400 text-[10px] flex items-center justify-center cursor-help focus:outline-none focus:ring-2 focus:ring-gray-300"
+      className="flex h-4 w-4 cursor-help items-center justify-center rounded-full border border-gray-400 text-[10px] text-gray-400 focus:ring-2 focus:ring-gray-300 focus:outline-none"
     >
       ?
     </button>
-    <div className="absolute left-7 w-64 p-3 bg-white border border-gray-200 shadow-md hidden group-hover:block group-focus-within:block z-10 text-xs text-gray-700">
-      <p className="font-bold mb-2 pb-1 border-b border-gray-100">
+    <div className="absolute left-7 z-10 hidden w-64 border border-gray-200 bg-white p-3 text-xs text-gray-700 shadow-md group-focus-within:block group-hover:block">
+      <p className="mb-2 border-b border-gray-100 pb-1 font-bold">
         등급 산정 조건
       </p>
       <ul className="space-y-1">
@@ -27,31 +32,68 @@ const GradeTooltip = () => (
       </ul>
     </div>
   </div>
-);
+)
 
 export default function UserProfile() {
-  // TODO: 실제 로그인 연동 시 서버에서 받은 유저 정보로 교체 예정
-  const role = "consumer" as "consumer" | "seller";
-  const userGrade = "BRONZE";
-  const userName = "사용자";
+  const { user, role, isLoading } = useUser()
+
+  // 스켈레톤 추가
+  if (isLoading) {
+    return (
+      <div className="mb-10 flex animate-pulse flex-col">
+        <div className="flex w-[204px] flex-col items-center bg-white pb-6">
+          <div className="aspect-square w-[204px] shrink-0 border bg-gray-200" />
+          <div className="flex items-center justify-center gap-2 pt-5 pb-2">
+            <div className="h-5 w-24 rounded bg-gray-200" />
+          </div>
+          <div className="mt-1 h-6 w-32 rounded bg-gray-200" />
+        </div>
+      </div>
+    )
+  }
+
+  const isBusiness = role === 'BUSINESS'
+
+  // 판매자일 때는 스토어 이미지, 소비자일 때는 프로필 이미지를 우선순위로 둡니다.
+  const displayImage = isBusiness
+    ? user?.store_image // 판매자 상점 썸네일
+    : user?.profile_image // 소비자 프로필 이미지
+
+  const userGrade = user?.grade || 'BRONZE'
+  const userName = user?.name || '사용자'
 
   return (
-    <div className="flex flex-col mb-10">
-      <div className="w-[204px] pb-6 flex flex-col items-center bg-white">
-        {/* 이미지 영역 임시로 border 처리 - 추후에 이미지로 변경 예정 */}
-        <div className="w-[204px] aspect-square bg-white shrink-0 border" />
-
-        <div className="flex items-center justify-center gap-2 pt-5 pb-2">
-          <div className="bg-black text-white inline-block px-2 py-0.5 text-xs font-bold">
-            {userGrade}
-          </div>
-          {role !== "seller" && <GradeTooltip />}
+    <div className="mb-10 flex flex-col">
+      <div className="flex w-[204px] flex-col items-center bg-white pb-6">
+        <div className="relative aspect-square w-[204px] shrink-0 overflow-hidden border border-gray-100 bg-white">
+          {displayImage ? (
+            <NextImage
+              src={displayImage}
+              alt={isBusiness ? '상점 썸네일' : '프로필 이미지'}
+              fill
+              sizes="204px"
+              priority
+              className="object-cover"
+            />
+          ) : (
+            <div className="h-full w-full bg-white" />
+          )}
         </div>
-        <p className="text-lg w-full text-center">
+
+        {/* 등급 표시 영역 (판매자는 STORE MANAGER 고정) */}
+        <div className="flex items-center justify-center gap-2 pt-5 pb-2">
+          <div className="inline-block bg-black px-2 py-0.5 text-xs font-bold tracking-tight text-white">
+            {isBusiness ? 'STORE MANAGER' : userGrade}
+          </div>
+          {/* 소비자인 경우에만 등급 툴팁을 보여줍니다. */}
+          {!isBusiness && <GradeTooltip />}
+        </div>
+
+        <p className="w-full text-center text-lg">
           <strong className="font-bold text-black">{userName}</strong>님
           반갑습니다.
         </p>
       </div>
     </div>
-  );
+  )
 }

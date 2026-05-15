@@ -1,48 +1,78 @@
-import Pagination from '@/app/components/Pagination';
-import Sort from './_component/Sort';
-import BreadCrumble from './_component/BreadCrumble';
-import FilterCategory from './_component/filterCategory';
-import { CATEGORY_MAP, CategoryType } from './lib/category';
-import { Suspense } from 'react';
-import ProductListSkeleton from './_component/ProductListSkeleton';
-import ProductListFetcher from './_component/ProductListFetcher';
+import { notFound } from 'next/navigation'
+import { isMainCategory, mainCategoryConvert } from './lib/category'
+import BreadCrumble from './_components/BreadCrumble'
+import Sort from './_components/Sort'
+import { Suspense } from 'react'
+import ProductListFetcher from './_components/ProductListFetcher'
+import Skeleton from './skeleton'
+import FilterCategory from './_components/filterCategory'
+
 type Product = {
   params: Promise<{
-    mainCategory: CategoryType;
-  }>;
+    mainCategory: string
+  }>
   searchParams: Promise<{
-    category?: string;
-    page?: string;
-    sort?: string;
-  }>;
-};
+    category?: string
+    page?: number
+    sort?: string
+  }>
+}
 
-const ProductListPage = async ({ params, searchParams }: Product) => {
-  const { mainCategory } = await params;
-  const { category: keyword, page = '1', sort = 'latest' } = await searchParams;
-  const PAGE_SIZE = 12;
+export default async function ProductListPage({
+  params,
+  searchParams,
+}: Product) {
+  const { mainCategory } = await params
+  const { category, page = 1, sort = 'latest' } = await searchParams
+  const MAX_PAGE_SIZE = 4
+  if (!isMainCategory(mainCategory)) {
+    notFound()
+  }
+
+  const categoryLabel = mainCategoryConvert[mainCategory]
 
   return (
-    <div className="mt-5 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <BreadCrumble categoryMap={CATEGORY_MAP[mainCategory].label} />
+    <div className="mx-auto mt-5 max-w-7xl px-4 sm:px-6 lg:px-8 dark:bg-[#25292D]">
+      <BreadCrumble category={categoryLabel} />
+
       <div className="text-center">
-        <h1 className="text-4xl font-bold mt-3">{keyword ? keyword : CATEGORY_MAP[mainCategory].label}</h1>
-        <p className="text-base mt-3 font-semibold text-gray-600">장인은 도구탓을 합니다</p>
+        <h1 className="mt-3 text-4xl font-bold dark:text-white">
+          {categoryLabel}
+        </h1>
+        <p className="mt-3 text-base font-semibold text-gray-600 dark:text-white">
+          나만의 개성있는 문구류를 찾아보세요
+        </p>
       </div>
-
-      <div className="flex justify-between mb-16 mt-18">
-        <FilterCategory mainCategory={mainCategory} sort={sort} category={keyword} />
-        <Sort mainCategory={mainCategory} />
+      <div className="mt-18 mb-16 flex justify-between">
+        <FilterCategory mainCategory={mainCategory} />
+        <Sort />
       </div>
-
-      <main>
-        <Suspense fallback={<ProductListSkeleton />}>
-          <ProductListFetcher page={page} pageSize={12} category={mainCategory} sort={sort} keyword={keyword} />
+      <main id="main-content">
+        <Suspense fallback={<Skeleton />}>
+          {/*
+           * page: 현재 페이지
+           * pageSize: 페이지에 들어갈 상품의 수
+           *
+           * 아래 3개는 searchParams로 가져오는 것이 좋습니다
+           * mainCategory: 메인 카테고리
+           * category: 서브 카테고리
+           * sort: 정렬
+           *
+           * pagination : boolean (켜고 끄기) 기본값 false
+           *
+           * pagination true 시에 백엔드에서 totalCount를 반드시 작성해주어야 합니다.
+           * 참고 파일은 api의 getProducts.ts를 참고해주세요
+           */}
+          <ProductListFetcher
+            page={page}
+            pageSize={MAX_PAGE_SIZE}
+            mainCategory={mainCategory}
+            category={category}
+            sort={sort}
+            pagination={true}
+          />
         </Suspense>
-        <Pagination baseUrl={'/products'} mainCategory={mainCategory} searchParams={searchParams} pagesize={PAGE_SIZE} />
       </main>
     </div>
-  );
-};
-
-export default ProductListPage;
+  )
+}

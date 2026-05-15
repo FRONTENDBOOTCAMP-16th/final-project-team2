@@ -1,9 +1,9 @@
-import DeliveryProductList from "./components/DeliveryProductList";
+import DeliveryProductList from './components/DeliveryProductList'
 
 export default function SellerDeliveryStatusPage() {
   return (
-    <section className="flex flex-col gap-4 px-6 pt-12.5 m-auto w-full lg:w-243 bg-white">
+    <section className="mb-11.25 flex w-full flex-col bg-white px-6 pt-6 pb-11.25">
       <DeliveryProductList />
     </section>
-  );
+  )
 }

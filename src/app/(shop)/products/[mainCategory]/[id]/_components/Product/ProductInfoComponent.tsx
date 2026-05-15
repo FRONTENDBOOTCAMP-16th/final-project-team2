@@ -1,23 +1,34 @@
-import Image from 'next/image';
-import ProductOption from './ProductOption';
-import Quantity from './Quantity';
-import TotalPrice from './TotalPrice';
-import { ShoppingCart } from 'lucide-react';
-import HeartButton from './HeartButton';
-import ProductSummary from './ProductSummary';
-import { Products } from '../../../lib/products';
-
+import ProductSummary from './ProductSummary'
+import { Products } from '@/app/lib/products.types'
+import { Reviews } from '@/app/lib/reviews.types'
+import ProductImage from '@/app/(shop)/products/[mainCategory]/_components/ProductImage'
+import ProductOption from './ProductOption'
 
 type Props = {
-  product: Products;
-};
+  product: Products
+  category: string
+  reviews: Reviews[]
+  average_grade: number | null
+}
 
-const ProductInfoComponent = ({ product }: Props) => {
+const ProductInfoComponent = ({
+  product,
+  reviews,
+  category,
+  average_grade,
+}: Props) => {
+  const product_id = product.id
+
   return (
     <article className="mx-auto max-w-7xl">
-      <div className="grid grid-cols-1 gap-10 lg:grid-cols-2 mt-6">
-        <div className="mt-10">
-          <Image src="/pen_dummy.jpg" alt={`${product.name} 제품 이미지`} width={585} height={585} className="w-full rounded-lg object-cover" />
+      <div className="mt-6 grid grid-cols-1 gap-10 lg:grid-cols-2">
+        <div className="relative mt-10 aspect-square w-148 overflow-hidden">
+          <ProductImage
+            loading={'eager'}
+            src={product.thumbnail_image}
+            priority={true}
+            alt=""
+          />
         </div>
 
         <section aria-labelledby="product-info-title">
@@ -26,32 +37,21 @@ const ProductInfoComponent = ({ product }: Props) => {
           </h2>
 
           <div>
-            <ProductSummary products={product} />
+            <ProductSummary
+              mainCategory={category}
+              reviews={reviews}
+              products={product}
+              average_grade={average_grade}
+            />
+
             <div className="mt-8">
-              <ProductOption />
-            </div>
-            <div className="mt-4">
-              <Quantity />
-            </div>
-            <div className="mt-4">
-              <TotalPrice />
-            </div>
-            <div className="mt-6">
-              <div className="mt-4 flex gap-3">
-                <button
-                  type="button"
-                  className="bg-[#FF6B6B] hover:bg-[#ee6767] w-full flex items-center justify-center gap-3 transition duration-300"
-                >
-                  <ShoppingCart className="text-white w-5 h-5" /> <span className="text-white">구매하기</span>
-                </button>
-                <HeartButton />
-              </div>
+              <ProductOption productId={product_id} mainCategory={category} />
             </div>
           </div>
         </section>
       </div>
     </article>
-  );
-};
+  )
+}
 
-export default ProductInfoComponent;
+export default ProductInfoComponent

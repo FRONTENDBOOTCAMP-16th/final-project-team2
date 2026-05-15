@@ -1,27 +1,35 @@
-import { useId } from "react"
+import { useId } from 'react'
 
 interface TypeRadioInput {
   label: string
   name: string
   value: string
   checked?: boolean
+  defaultChecked?: boolean
   onChange?: () => void
 }
 
-export default function TypeRadioInput({ label, name }: TypeRadioInput) {
+export default function TypeRadioInput({
+  label,
+  name,
+  value,
+  defaultChecked,
+}: TypeRadioInput) {
   const uniqueId = useId()
 
   return (
-    <div className="border flex-1 cursor-pointer">
+    <div className="flex flex-1 cursor-pointer rounded-2xl text-center font-bold text-black">
       <input
         type="radio"
-        className="sr-only peer"
+        className="peer sr-only"
         id={uniqueId}
         name={name}
+        value={value}
+        defaultChecked={defaultChecked}
       />
       <label
         htmlFor={uniqueId}
-        className="cursor-pointer block  text-center peer-checked:bg-amber-300 peer-checked:border-blue-600 peer-focus-visible:ring-2 peer-focus-visible:ring-black py-2"
+        className="flex-1 cursor-pointer rounded border-2 border-black px-6 py-2.5 peer-checked:border-black peer-checked:bg-black peer-checked:text-white peer-focus-visible:ring-2 peer-focus-visible:ring-black"
       >
         {label}
       </label>

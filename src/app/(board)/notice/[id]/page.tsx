@@ -1,42 +1,77 @@
-// 실제 Next.js 프로젝트에서는 아래 import 문들을 주석 해제해서 사용하세요!
-import { getNoticeDetail } from "@/api/noticeDetail";
-import { notFound } from "next/navigation";
-import DOMPurify from 'isomorphic-dompurify';
+import { getNoticeDetail } from '@/actions/noticeAction'
+import { notFound } from 'next/navigation'
+import sanitizeHtml from 'sanitize-html'
+import Link from 'next/link'
+import checkUserID from '@/actions/checkUserId'
+import NoticeDeleteAction from '@/app/components/board/NoticeDeleteAction'
 
-
-export default async function NoticeDetailPage({ 
-  params 
-}: { 
-  params: Promise<{ id: string }> 
+export default async function NoticeDetailPage({
+  params,
+}: {
+  params: Promise<{ id: string }>
 }) {
-  const { id } = await params;
-
-  let notice;
+  let notice
+  const { id } = await params
 
   try {
-    notice = await getNoticeDetail(id);
+    notice = await getNoticeDetail(id)
   } catch (err) {
-    console.error(err);
-    throw new Error("데이터를 불러오지 못했습니다."); 
+    console.error(err)
+    throw new Error('데이터를 불러오지 못했습니다.')
   }
 
   if (!notice) {
-    notFound(); 
+    notFound()
   }
 
-  const cleanHtml = DOMPurify.sanitize(notice.content);
+  const cleanHtml = sanitizeHtml(notice.content || '', {
+    allowedTags: sanitizeHtml.defaults.allowedTags.concat([
+      'img',
+      'span',
+      'u',
+      's',
+      'iframe',
+    ]),
+    allowedAttributes: {
+      ...sanitizeHtml.defaults.allowedAttributes,
+      '*': ['class', 'style'],
+      iframe: ['src', 'width', 'height', 'allowfullscreen', 'frameborder'],
+    },
+    allowedSchemes: ['http', 'https', 'ftp', 'mailto', 'data'],
+  })
+
+  let isWriter = false
+  const user = await checkUserID()
+  if (notice.writer_id === user?.id || user?.role === 'ADMIN') {
+    isWriter = true
+  }
 
   return (
-    <div className="p-8">
+    <div className="mx-auto w-full max-w-4xl p-8 dark:text-gray-200">
       <h1 className="text-2xl font-bold">{notice.title}</h1>
-      <p className="text-gray-500">
+      <p className="text-gray-500 dark:text-gray-400">
         작성일: {new Date(notice.created_at).toLocaleDateString()}
       </p>
       <hr className="my-4" />
-      <div 
-        className="prose"
-        dangerouslySetInnerHTML={{ __html: cleanHtml }}
-      />
+      <div className="prose dark:prose-invert" dangerouslySetInnerHTML={{ __html: cleanHtml }} />
+
+      <div className="my-6 flex w-full justify-end gap-2">
+        {isWriter && (
+          <Link
+            href={`/notice/${notice.id}/edit`}
+            className="flex items-center justify-center bg-gray-200 dark:bg-gray-800 px-8 py-2 text-black dark:text-white"
+          >
+            수정
+          </Link>
+        )}
+        {isWriter && <NoticeDeleteAction id={notice.id} />}
+        <Link
+          href="/notice"
+          className="flex items-center justify-center bg-slate-800 px-8 py-2 text-white hover:bg-slate-700"
+        >
+          목록
+        </Link>
+      </div>
     </div>
-  );
+  )
 }

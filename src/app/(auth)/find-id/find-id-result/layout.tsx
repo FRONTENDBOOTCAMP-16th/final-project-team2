@@ -1,13 +1,9 @@
-import { ReactNode } from "react"
+import { ReactNode, Suspense } from 'react'
 
 interface FrindIdResultProps {
   children: ReactNode
 }
 
 export default function FindIdResultLayout({ children }: FrindIdResultProps) {
-  return (
-    <>
-      {children}
-    </>
-  )
+  return <Suspense>{children}</Suspense>
 }

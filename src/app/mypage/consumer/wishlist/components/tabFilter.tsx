@@ -1,43 +1,45 @@
 interface TabItem {
-  id: string;
-  label: string;
+  id: string
+  label: string
 }
 
 interface TabFilterProps {
-  items: readonly TabItem[] | TabItem[]; // 수정 가능한 배열 또는 수정 불가능한 배열이 올 수 있음
-  selectedValue: string;
-  onValueChange: (id: string) => void;
-  separator?: string;
+  items: readonly TabItem[] | TabItem[]
+  selectedValue: string
+  onValueChange: (id: string) => void
+  separator?: string
 }
 
-// searchParams를 이용하여 탭 항목을 가져오는 형식으로 구현해야 되기때문에,
-// 추후 수정 필요
 export default function TabFilter({
   items,
   selectedValue,
   onValueChange,
-  separator = "|",
+  separator = '|',
 }: TabFilterProps) {
   return (
-    <div className="flex items-center  gap-3 text-md font-medium mb-12.5 h-9">
-      {items.map((item, index) => (
-        <div key={item.id} className="flex items-center gap-3">
-          <button
-            onClick={() => onValueChange(item.id)}
-            className={`transition-all whitespace-nowrap ${
-              selectedValue === item.id
-                ? "text-black font-bold underline underline-offset-8 decoration-2"
-                : "text-gray-400 hover:text-gray-600"
-            }`}
-          >
-            {item.label}
-          </button>
-
-          {index !== items.length - 1 && (
-            <span className=" font-light">{separator}</span>
-          )}
-        </div>
-      ))}
+    <div className="text-md mb-12.5 flex h-9 items-center gap-3 font-medium">
+      {items.map((item, index) => {
+        const isActive = selectedValue === item.id
+        return (
+          <div key={item.id} className="flex items-center gap-3">
+            <button
+              onClick={() => onValueChange(item.id)}
+              aria-selected={isActive}
+              role="tab"
+              className={`whitespace-nowrap transition-all ${
+                isActive
+                  ? 'font-bold text-black underline decoration-2 underline-offset-8'
+                  : 'text-gray-400 hover:text-gray-600'
+              }`}
+            >
+              {item.label}
+            </button>
+            {index !== items.length - 1 && (
+              <span className="font-light">{separator}</span>
+            )}
+          </div>
+        )
+      })}
     </div>
-  );
+  )
 }

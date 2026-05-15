@@ -1,3 +1,130 @@
-export default function info() {
-  return <div>판매자 상점 정보 페이지</div>;
+'use client'
+
+import { sellerInfoSchema, type SellerInfoData } from '../../types/infoSchema'
+import { Pen, Check } from 'lucide-react'
+import useFormManagement from '@/hooks/useFormManagement'
+import { useUser } from '@/app/mypage/context/UserContext'
+import { useSellerProfile } from './hooks/useSellerProfile'
+import ImageUploader from '../../consumer/profile/components/ImageUploader'
+import ProfileForm from '../../consumer/profile/components/ProfileForm'
+import ProfileAction from '../../consumer/profile/components/ProfileAction'
+
+const PROFILE_FIELDS = [
+  { label: '이메일', name: 'email', type: 'email', isReadOnly: true },
+  { label: '가게명', name: 'name', type: 'text', isReadOnly: false },
+  { label: '휴대전화', name: 'phone', type: 'tel', isReadOnly: true },
+  { label: '가게 주소', name: 'location', type: 'text', isReadOnly: false },
+  { label: '소개글', name: 'intro', type: 'text', isReadOnly: false },
+] as const
+
+export default function Info() {
+  const { user } = useUser()
+
+  const initialData: SellerInfoData = {
+    profileImage: '',
+    email: '',
+    name: '',
+    phone: '',
+    location: '',
+    intro: '',
+  }
+
+  const validate = (data: SellerInfoData) => {
+    const result = sellerInfoSchema.safeParse(data)
+    if (!result.success) {
+      const newErrors: Record<string, string> = {}
+      result.error.issues.forEach((issue) => {
+        newErrors[issue.path[0] as string] = issue.message
+      })
+      return newErrors
+    }
+    return {}
+  }
+
+  const {
+    formData,
+    isEditing,
+    errors,
+    handleChange,
+    handleEdit,
+    handleCancel,
+    handleSubmit,
+    setFormData,
+  } = useFormManagement(initialData, validate)
+
+  // 커스텀 훅에 user 정보와 setFormData를 넘겨 로직을 실행합니다.
+  const { saveProfile } = useSellerProfile({
+    user: user ? { id: user.id } : null,
+    setFormData,
+  })
+
+  const handleSaveSuccess = async (data: SellerInfoData) => {
+    try {
+      await saveProfile(data)
+      alert('상점 정보가 저장되었습니다.')
+    } catch (error) {
+      console.error('저장 에러:', error)
+      alert('저장 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.')
+    }
+  }
+
+  return (
+    <section className="mb-11.25 w-full max-w-4xl bg-white p-8">
+      <form onSubmit={(e) => handleSubmit(e, handleSaveSuccess)}>
+        <div className="mb-6 flex items-center justify-between">
+          <h1 className="text-xl font-bold">상점 정보 관리</h1>
+          <div className="flex gap-2">
+            {isEditing && (
+              <button
+                type="button"
+                onClick={handleCancel}
+                className="rounded bg-gray-200 px-4 py-2 text-gray-700 transition hover:bg-gray-300"
+              >
+                취소
+              </button>
+            )}
+            <button
+              type={isEditing ? 'submit' : 'button'}
+              onClick={!isEditing ? handleEdit : undefined}
+              className={`${
+                isEditing
+                  ? 'bg-green-500 hover:bg-green-600'
+                  : 'bg-black hover:bg-red-500'
+              } px-6 py-2 font-medium text-white transition`}
+            >
+              <div className="flex items-center gap-2">
+                {isEditing ? <Check size={16} /> : <Pen size={16} />}
+                {isEditing ? '저장하기' : '수정하기'}
+              </div>
+            </button>
+          </div>
+        </div>
+
+        <div className="flex flex-col gap-5">
+          <ImageUploader
+            label="상점 로고 이미지"
+            defaultImage={formData.profileImage}
+            onUploadSuccess={(url) => {
+              setFormData((prev) => ({ ...prev, profileImage: url }))
+            }}
+            isEditing={isEditing}
+          />
+          {PROFILE_FIELDS.map((field) => (
+            <ProfileForm
+              key={field.name}
+              label={field.label}
+              name={field.name}
+              type={field.type}
+              value={String(formData[field.name as keyof SellerInfoData] || '')}
+              onChange={handleChange}
+              disabled={!isEditing}
+              readOnly={field.isReadOnly}
+              error={errors[field.name]}
+            />
+          ))}
+          <ProfileAction />
+        </div>
+      </form>
+    </section>
+  )
 }

@@ -1,14 +1,31 @@
-/* 
 import { redirect } from 'next/navigation'
-import { getUserRole } from '@/lib/auth' // 인증된 사용자 역할 가져오기 함수 (예시)
+import { createClient } from '@/utils/supabase/server'
 
 export default async function MyPage() {
-	const role = await getUserRole() // 'consumer' | 'seller'
-	
-	if (role === 'seller') redirect('/mypage/seller')
-	else redirect('/mypage/consumer')
-}
-  야무쌤이 참고하라고 제공해주신 코드 - 추후에 반영할 예정 : 사용자에 따라 리다이렉션해주는 코드 */
-export default function MyPage() {
-  return <div>마이페이지 영역</div>;
+  const supabase = await createClient()
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser()
+
+  if (!user) {
+    redirect('/login')
+  }
+
+  const { data: profile } = await supabase
+    .from('users')
+    .select('role')
+    .eq('id', user.id)
+    .single()
+
+  const role = profile?.role
+
+  if (role === 'BUSINESS') {
+    redirect('/mypage/seller/products') // 판매자 첫 메뉴
+  } else {
+    redirect('/mypage/consumer/orders') // 소비자 첫 메뉴
+  }
+
+  // 리다이렉트 중에는 아무것도 보여주지 않도록 null 반환
+  return null
 }
