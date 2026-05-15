@@ -30,31 +30,24 @@ export default function RootLayout({
       className={`${suit.className} h-full antialiased`}
       suppressHydrationWarning
     >
-      <body className="flex min-h-full flex-col">    
-       <ThemeProvider
+      <body className="flex min-h-full flex-col">
+        <ThemeProvider
           attribute="class"
           defaultTheme="system"
           enableSystem
           disableTransitionOnChange
         >
-        <Suspense fallback={null}>
-          <Header />
-        </Suspense>
-        <QueryProviders>
-          <main id="main-content" className="h-full min-h-full w-full flex-1">
-            <Suspense fallback={null}>{children}</Suspense>
-          </main>
-        </QueryProviders>
+          <QueryProviders>
+            <Suspense fallback={null}>
+              <Header />
+            </Suspense>
 
-          <Suspense fallback={null}>
-            <Header />
-          </Suspense>
+            <main id="main-content" className="h-full min-h-full w-full flex-1">
+              <Suspense fallback={null}>{children}</Suspense>
+            </main>
 
-          <main id="main-content" className="h-full min-h-full w-full flex-1">
-            <Suspense fallback={null}>{children}</Suspense>
-          </main>
-
-          <Footer />
+            <Footer />
+          </QueryProviders>
         </ThemeProvider>
       </body>
     </html>
