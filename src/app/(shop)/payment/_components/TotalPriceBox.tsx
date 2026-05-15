@@ -32,12 +32,10 @@ export default function TotalPriceBox({ cart, totalOriginPrice, totalDiscountedP
           {cart.map((item) => {
             const product = item.product
             const productPrice = product?.price ?? 0
-            const discountRate = product?.discount_rate ?? 0 // 안전하게 기본값 0 처리
-
-            // 한 품목의 최종 가격 계산
+            const discountRate = product?.discount_rate ?? 0
             const itemFinalPrice = (productPrice * (1 - discountRate / 100)) * item.quantity
 
-            // 옵션 렌더링을 위한 준비
+            // 옵션이 {"option": "value"}이기에 준비
             const selectedOptionsEntries = item.selected_options ? Object.entries(item.selected_options) : []
 
             return (
@@ -51,7 +49,6 @@ export default function TotalPriceBox({ cart, totalOriginPrice, totalDiscountedP
                   </span>
                 </div>
 
-                {/* 선택 옵션 표시 */}
                 {selectedOptionsEntries.length > 0 && (
                   <div className="text-xs text-gray-400 mt-0.5">
                     {selectedOptionsEntries.map(([key, value], idx) => (
@@ -62,7 +59,6 @@ export default function TotalPriceBox({ cart, totalOriginPrice, totalDiscountedP
                   </div>
                 )}
 
-                {/* 상품별 가격 표시 */}
                 <div className="flex justify-end mt-1">
                   <span className="text-sm font-semibold text-gray-700 dark:text-gray-400">
                     {itemFinalPrice.toLocaleString()}원
