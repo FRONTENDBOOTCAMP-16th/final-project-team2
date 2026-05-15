@@ -8,8 +8,8 @@ import { redirect } from 'next/navigation'
  * 에러 발생 시 리다이렉트 하지 않고 null을 반환하여 안전함
  */
 export async function getAuthUserInfo() {
+  const supabase = await createClient()
   try {
-    const supabase = await createClient()
     const {
       data: { user },
     } = await supabase.auth.getUser()
