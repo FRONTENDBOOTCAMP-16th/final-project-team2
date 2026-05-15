@@ -8,7 +8,7 @@ import HeartButton from '@/app/(shop)/products/[mainCategory]/[id]/_components/P
 interface Props {
   order: ProductLikeWithProduct
 }
-//
+
 export default function WishListItemCard({ order }: Props) {
   const product = order.products
   const categoryName = product.product_categories.categories.name
@@ -50,11 +50,6 @@ export default function WishListItemCard({ order }: Props) {
         </p>
         <div className="flex justify-between">
           <p className="w-50 self-center truncate font-bold">{product.name}</p>
-          {/* <LikeToggleButton
-            id={order.product_id}
-            isLiked={true}
-            onToggleLike={onToggleLike}
-          /> */}
           <HeartButton productId={order.product_id} initialLiked={true} />
         </div>
 
