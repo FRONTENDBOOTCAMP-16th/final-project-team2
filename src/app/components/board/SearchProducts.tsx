@@ -2,7 +2,8 @@
 import { useActionState } from 'react'
 import { Search, Loader2 } from 'lucide-react'
 import SearchProductsAction, { SearchState } from '@/api/searchProducts'
-import { useInquireStore } from '@/store/useInquireStore'
+import { useInquireStore, Product } from '@/store/useInquireStore'
+import ProductImage from "@/app/(shop)/products/[mainCategory]/_components/ProductImage"
 
 const initialState: SearchState = { success: false, message: '', data: [] }
 
@@ -18,7 +19,7 @@ export default function SearchProducts({ onSelectClose }: SearchProductsProps) {
 
   const { selectedProduct, setSelectedProduct } = useInquireStore()
 
-  function handleAddProduct(item: string) {
+  function handleAddProduct(item: Product) {
     setSelectedProduct(item)
     if (onSelectClose) onSelectClose()
   }
@@ -33,7 +34,6 @@ export default function SearchProducts({ onSelectClose }: SearchProductsProps) {
           placeholder="제품명을 입력해주세요"
           disabled={isPending}
         />
-
         <button
           type="submit"
           disabled={isPending}
@@ -47,30 +47,34 @@ export default function SearchProducts({ onSelectClose }: SearchProductsProps) {
         <p className="mt-2 text-sm text-red-500">{state.message}</p>
       )}
 
-      <ul className="mt-4 flex flex-col gap-2">
+      <ul className="mt-4 flex flex-col gap-2 divide-y divide-gray-400">
         {state.data && state.data.length > 0
           ? state.data.map((item) => (
-              <li
-                key={item.id}
-                className="flex items-center justify-between rounded-lg border p-4 shadow-sm"
-              >
+            <li
+              key={item.id}
+              className="flex items-center justify-between p-4"
+            >
+              <div className="flex gap-4 items-center">
+                <div className="relative w-14 h-14">
+                  <ProductImage src={item.thumbnail_image} alt={item.name} />
+                </div>
                 <p className="font-bold">{item.name}</p>
-                <button
-                  type="button"
-                  onClick={() => handleAddProduct(item.id)}
-                  className={`rounded-lg px-4 py-2 text-sm ${
-                    selectedProduct === item.id
-                      ? 'bg-blue-500 text-white'
-                      : 'bg-gray-200 hover:bg-gray-300'
+              </div>
+              <button
+                type="button"
+                onClick={() => handleAddProduct(item)}
+                className={`rounded-lg px-4 py-2 text-sm ${selectedProduct?.id === item.id
+                  ? 'bg-blue-500 text-white'
+                  : 'bg-gray-200 hover:bg-gray-300'
                   }`}
-                >
-                  {selectedProduct === item.id ? '선택됨' : '선택하기'}
-                </button>
-              </li>
-            ))
+              >
+                {selectedProduct?.id === item.id ? '선택됨' : '선택하기'}
+              </button>
+            </li>
+          ))
           : state.success && (
-              <li className="p-4 text-gray-500">검색 결과가 없습니다.</li>
-            )}
+            <li className="p-4 text-gray-500">검색 결과가 없습니다.</li>
+          )}
       </ul>
     </div>
   )
