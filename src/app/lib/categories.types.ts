@@ -23,12 +23,19 @@ export interface ProductPreview {
   thumbnail_image: string
   price: number
   discount_rate: number
-  product_categories: ProductCategoriesWithCategory[]
+  product_categories: ProductCategoriesWithCategory
 }
 
 export interface OrderProducts {
   id: string
   name: string
   thumbnail_image: string
-  product_categories: ProductCategoriesWithCategory[]
+  product_categories: ProductCategoriesWithCategory
+}
+
+export interface OrderProductCategory {
+  categories: {
+    id: string
+    name: string
+  }
 }

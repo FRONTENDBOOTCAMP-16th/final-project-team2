@@ -3,7 +3,6 @@
 import SideMenu from './components/SideMenu'
 import SummaryMenu from './components/SummaryMenu'
 import UserProfile from './components/UserProfile'
-import MypageProviders from './providers/MypageProviders'
 import { UserProvider, useUser } from './context/UserContext'
 
 interface LayoutProps {
@@ -26,7 +25,7 @@ function LayoutContent({ children }: LayoutProps) {
           <div className="flex flex-col gap-6">
             {/* key를 제공함으로서 요약 메뉴가 변경되었음을 전달해 새로고침과 같이 새로 렌더링을 진행함  */}
             <SummaryMenu key={role} />
-            <MypageProviders>{children}</MypageProviders>
+          {children}
           </div>
         </main>
       </div>

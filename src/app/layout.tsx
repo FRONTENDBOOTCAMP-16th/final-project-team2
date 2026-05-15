@@ -4,6 +4,7 @@ import './globals.css'
 import Header from './components/Navi'
 import Footer from './components/FooterSection'
 import localFont from 'next/font/local'
+import QueryProviders from './mypage/providers/QueryProviders'
 import { ThemeProvider } from './components/provider/theme-provider'
 
 const suit = localFont({
@@ -29,13 +30,22 @@ export default function RootLayout({
       className={`${suit.className} h-full antialiased`}
       suppressHydrationWarning
     >
-      <body className="flex min-h-full flex-col">
-        <ThemeProvider
+      <body className="flex min-h-full flex-col">    
+       <ThemeProvider
           attribute="class"
           defaultTheme="system"
           enableSystem
           disableTransitionOnChange
         >
+        <Suspense fallback={null}>
+          <Header />
+        </Suspense>
+        <QueryProviders>
+          <main id="main-content" className="h-full min-h-full w-full flex-1">
+            <Suspense fallback={null}>{children}</Suspense>
+          </main>
+        </QueryProviders>
+
           <Suspense fallback={null}>
             <Header />
           </Suspense>
