@@ -35,7 +35,7 @@ export default function AddressSection({ userInfo }: { userInfo: UserInfo }) {
 
         <div className="flex gap-8">
           <div className="flex flex-col w-full max-w-[320px]">
-            <label htmlFor="userName" className="font-semibold text-sm">주문자 이름 *</label>
+            <label htmlFor="userName" className="font-semibold text-sm">주문자 이름 <span className='text-red-500'>*</span></label>
             <input
               type="text"
               id="userName"
@@ -48,7 +48,7 @@ export default function AddressSection({ userInfo }: { userInfo: UserInfo }) {
             />
           </div>
           <div className="flex flex-col w-full max-w-[320px]">
-            <label htmlFor="phone" className="font-semibold text-sm">연락처 *</label>
+            <label htmlFor="phone" className="font-semibold text-sm">연락처 <span className='text-red-500'>*</span></label>
             <input
               type="tel"
               id="phone"
@@ -64,7 +64,7 @@ export default function AddressSection({ userInfo }: { userInfo: UserInfo }) {
       </fieldset>
 
       <div className="mt-2">
-        <span className="font-semibold text-sm">배송지 *</span>
+        <p className="font-semibold text-sm">배송지 <span className='text-red-500'>*</span></p>
         {mode === 'saved' ? (
           <div className="">
             <input type='hidden' name='zipCode' />
