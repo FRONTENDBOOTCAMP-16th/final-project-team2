@@ -97,18 +97,17 @@ export default function LoginPage() {
       </form>
 
       {/* 간편로그인 */}
-      <div className="relative border-bs border-[#e0e0e0]">
+      {/* <div className="relative border-bs border-[#e0e0e0]">
         <span className="absolute left-1/2 -translate-1/2 bg-white px-6 text-[#575A68]">
           간편로그인
         </span>
-        {/* 카카오로그인 */}
         <button
           type="submit"
           className="mbs-7 w-full cursor-pointer rounded bg-[#FEE500] py-4 font-bold text-black"
         >
           카카오 로그인
         </button>
-      </div>
+      </div> */}
 
       {/* 토스트 메세지 */}
       <SimpleToast
