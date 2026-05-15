@@ -55,7 +55,7 @@ export default function WishListItemsList() {
   const safeItems = data?.items ?? []
 
   // 아이템의 찜하기 버튼 해체 시 해당 아이템 카드 사라지게 하기
-  const { mutate: onToggleLikeList } = useToggleWishList()
+  // const { mutate: onToggleLikeList } = useToggleWishList()
 
   // 데이터에서 카테고리 네임 탭 설정
   const categoryTabs = getWishListCategoryTabs()
@@ -102,7 +102,7 @@ export default function WishListItemsList() {
               <li key={item.id}>
                 <WishListItemCard
                   order={item}
-                  onToggleLike={onToggleLikeList}
+                  // onToggleLike={onToggleLikeList}
                 />
               </li>
             ))}
