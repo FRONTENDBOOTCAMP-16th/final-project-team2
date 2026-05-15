@@ -1,12 +1,11 @@
 'use server'
 
 import { redirect } from 'next/navigation'
-// import { revalidateTag, cacheTag } from 'next/cache'
+import { revalidateTag, cacheTag } from 'next/cache'
 import { createClient } from '@/utils/supabase/server'
 import { createStaticClient } from '@/utils/supabase/static'
 import {z} from 'zod'
 import type { BoardCard, FormState } from '@/types/boards'
-import checkAdmin from '@/actions/checkAdminAction'
 
 /**
  * Zod 스키마 정의
@@ -48,8 +47,8 @@ const InquireReplySchema = z.object({
  */
 export const getInquires = async (pages: number) => {
 
-  // 'use cache'
-  // cacheTag('inquire')
+  'use cache'
+  cacheTag('inquire')
 
   // 페이지 당 게시물은 env로 제어하므로 이렇게 합니다.
   const ITEMS_PER_PAGE = Number(process.env.NEXT_PUBLIC_ITEMS_PER_PAGE) || 10
@@ -118,10 +117,6 @@ export async function handleInquireAction(
 
   try {
     if (deleteId) {
-      // 삭제 권한 검증 및 실행
-      await checkAdmin('/inquire')
-
-      // 수정 포인트 1: 테이블명 오타 수정 (qna -> qnas)
       const { error } = await supabase
         .from('qnas')
         .delete()
@@ -164,7 +159,7 @@ export async function handleInquireAction(
     }
 
     // 추후 캐싱전략을 위해 주석처리
-    // revalidateTag('inquire', { expire: 3600 })
+    revalidateTag('inquire', { expire: 3600 })
 
 
   } catch (error: unknown) {
@@ -265,7 +260,7 @@ export async function handleInquireReplyAction(
 
     if (updateError) throw updateError
 
-    // revalidateTag('inquire', { expire: 3600 })
+    revalidateTag('inquire', { expire: 3600 })
 
   } catch (error: unknown) {
     const errorMessage = error instanceof Error ? error.message : '답변 등록 중 알 수 없는 오류가 발생했습니다.'

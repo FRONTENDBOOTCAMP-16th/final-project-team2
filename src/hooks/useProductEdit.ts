@@ -1,49 +1,72 @@
-import { useState } from "react";
-import { SellerProduct } from "@/app/mypage/types/sellerOrderItems";
-import { productUpdateSchema } from "@/app/mypage/types/productSchema";
-import useOptionForm from "./useOptionForm";
+import { useState, useEffect, useRef } from 'react'
+import { createClient } from '@/utils/supabase/client'
+import { SellerProduct } from '@/app/mypage/types/sellerOrderItems'
+import { productUpdateSchema } from '@/app/mypage/types/productSchema'
+import useOptionForm from './useOptionForm'
 
 export const useProductEdit = (product: SellerProduct, onClose: () => void) => {
+  const supabase = createClient()
+
   const [formData, setFormData] = useState({
-    state: product.state || "판매중",
+    status: product.status || '판매중',
     inventory: product.inventory || 0,
     price: product.price || 0,
     discount_rate: product.discount_rate || 0,
-    category: "",
-  });
+    category: '',
+  })
 
-  const optionForm = useOptionForm(product.options || []);
+  const optionForm = useOptionForm(product.options || [])
+  const { setOptions } = optionForm.actions
+  const [errors, setErrors] = useState<Record<string, string>>({})
 
-  const [errors, setErrors] = useState<Record<string, string>>({});
+  const isInitialized = useRef(false)
 
-  // 재고 입력 시 에러 지우는 것과 똑같은 로직의 함수
-  const clearOptionError = () => {
-    if (errors.options) {
-      setErrors((prev) => {
-        const next = { ...prev };
-        delete next.options;
-        return next;
-      });
+  useEffect(() => {
+    if (isInitialized.current) return
+
+    const initializeData = async () => {
+      if (product.id) {
+        const { data, error } = await supabase
+          .from('product_categories')
+          .select('category_id')
+          .eq('product_id', product.id)
+          .maybeSingle()
+
+        if (error) {
+          console.error('카테고리 로드 실패:', error)
+        } else if (data) {
+          setFormData((prev) => ({ ...prev, category: data.category_id }))
+        }
+      }
+
+      if (
+        product.options &&
+        Array.isArray(product.options) &&
+        product.options.length > 0
+      ) {
+        setOptions(product.options)
+      }
+
+      isInitialized.current = true
     }
-  };
 
-  // 입력값 변경 핸들러
+    initializeData()
+  }, [product.id, product.options, supabase, setOptions])
+
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => {
     const { name, value, type } = e.target
     let nextValue: string | number = value
 
-    if (type === "number") {
-      nextValue = value === "" ? 0 : Number(value);
-      if (nextValue < 0) nextValue = 0;
-      // 할인율 최대치 제한 로직
-      if (name === "discount_rate" && nextValue > 100) nextValue = 100;
+    if (type === 'number') {
+      nextValue = value === '' ? 0 : Number(value)
+      if (nextValue < 0) nextValue = 0
+      if (name === 'discount_rate' && nextValue > 100) nextValue = 100
     }
 
     setFormData((prev) => ({ ...prev, [name]: nextValue }))
 
-    // 사용자가 값을 입력하면 해당 필드의 에러 메시지 삭제
     if (errors[name]) {
       setErrors((prev) => {
         const next = { ...prev }
@@ -53,35 +76,60 @@ export const useProductEdit = (product: SellerProduct, onClose: () => void) => {
     }
   }
 
-  // 폼 제출 핸들러
-  const handleSubmit = () => {
-    // 검증을 위해 모든 데이터(기본정보 + 옵션)를 하나의 객체로 합침
+  const handleSubmit = async () => {
     const allData = {
       ...formData,
       options: optionForm.state.options,
-    };
-
-    const result = productUpdateSchema.safeParse(allData);
-
-    if (!result.success) {
-      const formattedErrors: Record<string, string> = {};
-
-      result.error.issues.forEach((issue) => {
-        const fieldName = issue.path[0] as string;
-        formattedErrors[fieldName] = issue.message;
-      });
-
-      setErrors(formattedErrors);
-      console.error("유효성 검사 실패 목록:", formattedErrors);
-      return;
     }
 
-    // TODO. 검증 통과 시 실행 (Supabase 연동 로직이 들어갈 자리)
-    console.log("서버로 전송할 최종 데이터:", result.data);
+    const result = productUpdateSchema.safeParse(allData)
 
-    alert("상품 정보가 성공적으로 수정되었습니다.");
-    onClose();
-  };
+    if (!result.success) {
+      const formattedErrors: Record<string, string> = {}
+      result.error.issues.forEach((issue) => {
+        const fieldName = issue.path[0] as string
+        formattedErrors[fieldName] = issue.message
+      })
+      setErrors(formattedErrors)
+      return
+    }
+
+    try {
+      // 상품 정보 업데이트
+      const { error: productUpdateError } = await supabase
+        .from('products')
+        .update({
+          status: result.data.status,
+          inventory: result.data.inventory,
+          price: result.data.price,
+          discount_rate: result.data.discount_rate,
+          options: result.data.options,
+        })
+        .eq('id', product.id)
+
+      if (productUpdateError) throw productUpdateError
+
+      //카테고리 정보 업데이트
+      const { error: categoryUpdateError } = await supabase
+        .from('product_categories')
+        .upsert(
+          {
+            product_id: product.id,
+            category_id: result.data.category,
+          },
+          { onConflict: 'product_id' },
+        )
+
+      if (categoryUpdateError) throw categoryUpdateError
+
+      alert('상품 정보가 성공적으로 수정되었습니다.')
+      onClose()
+      window.location.reload()
+    } catch (error) {
+      console.error('수정 실패:', error)
+      alert('저장 중 오류가 발생했습니다.')
+    }
+  }
 
   const finalPrice = Math.floor(
     formData.price * (1 - formData.discount_rate / 100),
@@ -94,6 +142,6 @@ export const useProductEdit = (product: SellerProduct, onClose: () => void) => {
     handleSubmit,
     finalPrice,
     optionForm,
-    clearOptionError,
-  };
-};
+    clearOptionError: () => setErrors((prev) => ({ ...prev, options: '' })),
+  }
+}

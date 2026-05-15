@@ -12,7 +12,7 @@ export interface SellerProduct {
   discount_rate: number
   options: ProductOptionType[]
   average_grade: number
-  state: '판매중' | '준비중' | '판매중지' | '품절'
+  status: 'ON_SALE' | 'PREPARING' | 'HIDDEN' | 'SOLD_OUT'
   created_at: string
   updated_at: string
 }

@@ -3,11 +3,14 @@
 import Image from 'next/image'
 import { useRef, useState } from 'react'
 
-type ProductImageProps = {
+type loadingType = 'lazy' | 'eager' | undefined
+
+interface ProductImageProps {
   src?: string
   alt: string
   sizes?: string
   priority?: boolean
+  loading?: loadingType
   onLoadComplete?: () => void
 }
 
@@ -15,6 +18,7 @@ export default function ProductImage({
   src,
   alt,
   sizes = '(max-width: 768px) 100vw, 25vw',
+  loading = 'lazy',
   priority = false,
   onLoadComplete,
 }: ProductImageProps) {
@@ -40,7 +44,7 @@ export default function ProductImage({
       priority={priority}
       className="object-cover"
       onLoad={reportLoaded}
-      loading="eager"
+      loading={loading}
       onError={() => {
         reportLoaded()
 

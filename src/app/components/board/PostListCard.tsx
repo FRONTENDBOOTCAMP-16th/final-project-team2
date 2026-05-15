@@ -1,11 +1,11 @@
 import type { BoardCard } from '@/types/boards'
-import Image from 'next/image'
 import Link from 'next/link'
+import ProductImage from '@/app/(shop)/products/[mainCategory]/_components/ProductImage'
 
 interface PostCardList {
   data: BoardCard
   isImportant?: boolean
-  isAnswered?: boolean // 💡 1. 타입 정의 추가 (선택적 프로퍼티)
+  isAnswered?: boolean
   link: string
 }
 
@@ -28,11 +28,9 @@ export default function PostListCard({
         {link === 'inquire' && (
           <div className="flex w-full items-center gap-2 xl:w-1/3">
             <div className="relative h-10 w-10 shrink-0 xl:h-16 xl:w-16">
-              <Image
+              <ProductImage
                 src={data.product?.thumbnail_image || ''}
                 alt={data.product?.name || ''}
-                fill
-                className="rounded object-cover"
               />
             </div>
             <p className="text-sm">{data.product?.name}</p>
@@ -41,7 +39,6 @@ export default function PostListCard({
 
         <div className="flex w-full">
           <div className="flex w-1/2 items-center justify-start gap-1">
-            {/* 공지사항 중요 배지 */}
             {important && (
               <strong
                 className="shrink-0 bg-orange-600 px-2 py-1 text-xs font-normal text-white"
@@ -51,7 +48,6 @@ export default function PostListCard({
               </strong>
             )}
 
-            {/* 💡 2. QnA 답변 상태 배지: isAnswered가 undefined가 아닐 때만 렌더링 */}
             {isAnswered !== undefined &&
               (isAnswered ? (
                 <strong

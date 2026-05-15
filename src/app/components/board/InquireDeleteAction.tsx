@@ -4,15 +4,15 @@ import { useFormStatus } from 'react-dom'
 import { Loader2 } from 'lucide-react'
 import { useState, useActionState } from 'react'
 import Modal from '@/app/components/Modal'
-import { handleNoticeAction } from '@/actions/noticeAction'
+import { handleInquireAction } from '@/actions/inquireAction'
 
-interface NoticeDeleteActionProps {
+interface InquireDeleteActionProps {
   id: string
 }
 
-export default function NoticeDeleteAction({ id }: NoticeDeleteActionProps) {
+export default function InquireDeleteAction({ id }: InquireDeleteActionProps) {
   const [isOpen, setIsOpen] = useState(false)
-  const [state, formAction] = useActionState(handleNoticeAction, {
+  const [state, formAction] = useActionState(handleInquireAction, {
     success: true,
     message: '',
   })
@@ -31,7 +31,7 @@ export default function NoticeDeleteAction({ id }: NoticeDeleteActionProps) {
       <Modal
         isOpen={isOpen}
         onClose={() => setIsOpen(false)}
-        title="공지사항 삭제"
+        title="1:1문의글 삭제"
         footer={
           <div className="flex gap-2">
             <button
@@ -42,6 +42,7 @@ export default function NoticeDeleteAction({ id }: NoticeDeleteActionProps) {
             </button>
 
             <form action={formAction}>
+              {/* 삭제할 ID를 hidden input으로 전달 */}
               <input type="hidden" name="deleteId" value={id} />
               <button
                 type="submit"
@@ -61,7 +62,7 @@ export default function NoticeDeleteAction({ id }: NoticeDeleteActionProps) {
         }
       >
         <p className="py-4 text-gray-600">
-          정말로 이 공지사항을 삭제하시겠습니까?
+          정말로 이 게시글을 삭제하시겠습니까?
           <br />
           삭제된 데이터는 복구할 수 없습니다.
         </p>

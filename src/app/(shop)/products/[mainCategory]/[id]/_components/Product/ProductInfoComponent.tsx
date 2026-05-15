@@ -23,7 +23,12 @@ const ProductInfoComponent = ({
     <article className="mx-auto max-w-7xl">
       <div className="mt-6 grid grid-cols-1 gap-10 lg:grid-cols-2">
         <div className="relative mt-10 aspect-square w-148 overflow-hidden">
-          <ProductImage src={product.thumbnail_image} priority={true} alt="" />
+          <ProductImage
+            loading={'eager'}
+            src={product.thumbnail_image}
+            priority={true}
+            alt=""
+          />
         </div>
 
         <section aria-labelledby="product-info-title">
@@ -40,7 +45,7 @@ const ProductInfoComponent = ({
             />
 
             <div className="mt-8">
-              <ProductOption productId={product_id} />
+              <ProductOption productId={product_id} mainCategory={category} />
             </div>
           </div>
         </section>
