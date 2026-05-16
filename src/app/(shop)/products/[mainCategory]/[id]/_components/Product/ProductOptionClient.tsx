@@ -8,6 +8,7 @@ import { Minus, Plus } from 'lucide-react'
 import { ProductOptionType } from '@/app/lib/products.types'
 import { SelectedOption } from '@/app/lib/cart.types'
 import HeartButton from './HeartButton'
+import { useIsLikedQuery } from '@/app/mypage/consumer/wishlist/hooks/useIsLikedQuery'
 
 interface Props {
   productId: string
@@ -24,6 +25,7 @@ export default function ProductOptionClient({
   maxCount,
   options,
 }: Props) {
+  const { data: isLiked } = useIsLikedQuery(productId)
   const [quantity, setQuantity] = useState(1)
   const [color, setColor] = useState('')
   const [size, setSize] = useState('')
@@ -210,7 +212,7 @@ export default function ProductOptionClient({
             <span className="text-white">구매하기</span>
           </button>
           <div className="mt-2 flex aspect-square w-15 items-center justify-center rounded-xl border border-gray-300 bg-white p-2 transition hover:bg-gray-100">
-            <HeartButton productId={productId} initialLiked={false} />
+            <HeartButton productId={productId} initialLiked={isLiked} />
           </div>
         </div>
       </div>
