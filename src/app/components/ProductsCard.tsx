@@ -10,6 +10,7 @@ import {
 import HeartButton from '../(shop)/products/[mainCategory]/[id]/_components/Product/HeartButton'
 import { useQuery } from '@tanstack/react-query'
 import { fetchLikes } from '../mypage/api/fetchLikes'
+import { getMainCategoryName } from '../(shop)/products/[mainCategory]/lib/category'
 
 interface ProductCardProps {
   product: Products
@@ -65,7 +66,9 @@ export default function ProductsCard({
         <div>
           <dl className="flex items-baseline gap-3">
             <dt className="sr-only">제품 타입</dt>
-            <dd className="mt-4 text-gray-700 dark:text-white">필기구</dd>
+            <dd className="mt-4 text-gray-700 dark:text-white">
+              {getMainCategoryName(category)}
+            </dd>
             <dt className="sr-only">평점</dt>
             <dd>{product.average_grade ? product.average_grade : 0}점</dd>
           </dl>

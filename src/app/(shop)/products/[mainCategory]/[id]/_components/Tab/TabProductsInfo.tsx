@@ -2,7 +2,7 @@
 
 import { ReactNode, useState } from 'react'
 import { Products } from '@/app/lib/products.types'
-import { Sanitize } from '@/utils/sanitize'
+import { sanitizeContent } from '@/utils/sanitize'
 
 type Props = {
   product: Products
@@ -81,7 +81,7 @@ export default function TabProductsInfo({
             <div
               className="mt-6 max-w-6xl text-justify text-lg leading-9 text-gray-700"
               dangerouslySetInnerHTML={{
-                __html: Sanitize(product.content),
+                __html: sanitizeContent(product.content),
               }}
             />
 

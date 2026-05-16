@@ -51,11 +51,18 @@ export default function ProductOptionClient({
     setQuantity((q) => q - 1)
   }
 
-  const optionData = useMemo<SelectedOption | null>(() => {
-    return {
-      color: color || undefined,
-      size: size || undefined,
+  const optionData = useMemo<SelectedOption>(() => {
+    const selectedOptions: SelectedOption = {}
+
+    if (color) {
+      selectedOptions.color = [color]
     }
+
+    if (size) {
+      selectedOptions.size = [size]
+    }
+
+    return selectedOptions
   }, [color, size])
 
   const hasColorOption =
