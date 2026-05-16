@@ -139,6 +139,7 @@ export async function addCartItem({
     .select('id, quantity')
     .eq('user_id', auth.id)
     .eq('product_id', productId)
+    .eq('selected_options', JSON.stringify(optionData))
     .maybeSingle()
 
   if (selectError) {
@@ -170,7 +171,6 @@ export async function addCartItem({
   if (error) {
     throw new Error(error.message)
   }
-
 }
 
 // 장바구니 아이템 삭제 Server Action 추가
