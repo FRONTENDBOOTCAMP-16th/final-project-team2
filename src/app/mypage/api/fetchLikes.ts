@@ -24,6 +24,7 @@ export type ProductLikeWithProduct = ProductLike & {
   products: ProductPreview
 }
 
+// 찜한 상품 페이지에 필요한 데이터 가져오기
 export const fetchLikes = async (
   page: number,
   limit: number,
@@ -111,4 +112,23 @@ export const fetchLikes = async (
     }),
     count: count ?? 0,
   }
+}
+
+// 찜 여부 확인용 (상품 상세, 메인용)
+export const fetchIsLiked = async (productId: string) => {
+  const supabase = createClient()
+  const {
+    data: { user },
+  } = await supabase.auth.getUser()
+
+  if (!user) return false
+
+  const { data } = await supabase
+    .from('product_likes')
+    .select('id')
+    .eq('user_id', user.id)
+    .eq('product_id', productId)
+    .maybeSingle()
+
+  return !!data
 }
