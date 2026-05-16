@@ -55,7 +55,7 @@ const CartButton = ({
       <button
         type="button"
         disabled={disabled || isPending}
-        className="flex w-full items-center justify-center gap-3 rounded-xl border border-gray-300 bg-white py-4 text-base font-semibold text-gray-900 transition duration-300 hover:border-gray-400 hover:bg-gray-100 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50"
+        className="flex w-full items-center justify-center gap-3 rounded-xl border-2 border-border bg-card py-4 text-base font-semibold text-foreground transition duration-300 hover:border-primary hover:bg-muted active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50"
         onClick={isLogin ? handleAddCart : () => setIsOpen(true)}
       >
         <ShoppingCart className="h-5 w-5" />
@@ -70,10 +70,10 @@ const CartButton = ({
         {isLogin ? (
           <div className="space-y-6">
             <div className="text-center">
-              <p className="text-base font-semibold text-gray-900">
+              <p className="text-base font-semibold text-foreground">
                 이 상품을 장바구니에 담았습니다
               </p>
-              <p className="mt-2 text-sm text-gray-500">
+              <p className="mt-2 text-sm text-muted-foreground">
                 장바구니로 이동하시겠습니까?
               </p>
             </div>
@@ -82,13 +82,13 @@ const CartButton = ({
               <button
                 type="button"
                 onClick={() => setIsOpen(false)}
-                className="rounded-xl border border-gray-300 bg-red-500 py-3 text-sm font-semibold text-white transition hover:bg-red-600"
+                className="rounded-xl border-2 border-border bg-card py-3 text-sm font-semibold text-foreground transition hover:bg-muted"
               >
                 아니요
               </button>
               <Link
                 href="/cart"
-                className="flex items-center justify-center rounded-xl bg-blue-700 py-3 text-sm font-semibold text-white transition hover:bg-blue-800"
+                className="flex items-center justify-center rounded-xl bg-primary py-3 text-sm font-semibold text-white transition hover:bg-primary-dark"
               >
                 예
               </Link>
@@ -97,10 +97,10 @@ const CartButton = ({
         ) : (
           <div className="space-y-6">
             <div className="text-center">
-              <p className="text-base font-semibold text-gray-900">
+              <p className="text-base font-semibold text-foreground">
                 장바구니에 상품을 담으려면 로그인이 필요합니다.
               </p>
-              <p className="mt-2 text-sm text-gray-500">
+              <p className="mt-2 text-sm text-muted-foreground">
                 로그인 페이지로 이동하시겠습니까?
               </p>
             </div>
@@ -109,14 +109,14 @@ const CartButton = ({
               <button
                 type="button"
                 onClick={() => setIsOpen(false)}
-                className="rounded-xl border border-gray-300 bg-white py-3 text-sm font-semibold text-gray-700 transition hover:bg-gray-100"
+                className="rounded-xl border-2 border-border bg-card py-3 text-sm font-semibold text-foreground transition hover:bg-muted"
               >
                 아니요
               </button>
 
               <Link
                 href="/login"
-                className="flex items-center justify-center rounded-xl bg-gray-900 py-3 text-sm font-semibold text-white transition hover:bg-gray-800"
+                className="flex items-center justify-center rounded-xl bg-primary py-3 text-sm font-semibold text-white transition hover:bg-primary-dark"
               >
                 예
               </Link>

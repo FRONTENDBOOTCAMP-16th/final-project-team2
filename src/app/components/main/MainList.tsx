@@ -20,18 +20,18 @@ const swiperList = [
     title: '새학기 준비,\n행쇼마켓에서!',
     subText: '필기구부터 노트까지, 특가로 만나보세요',
     tag: 'SPRING SALE',
-    image: '/Hero_banner.png',
+    image: '/hero-banner-1.jpg',
   },
   {
     title: '행쇼마켓\n특가 할인',
     subText: '12:00 ~ 18:00까지!',
     tag: 'TIME SALE',
-    image: '/Hero_banner.png',
+    image: '/hero-banner-2.jpg',
   },
   {
     title: '품절 임박 꿀템,\n놓치지 마세요',
     tag: '품절 임박',
-    image: '/Hero_banner.png',
+    image: '/hero-banner-3.jpg',
   },
 ]
 
@@ -69,11 +69,10 @@ export default function Main() {
       </section>
 
       {/* 오늘의 신상품 */}
-      <section className="min-h-250px sm:min-h-300px relative flex h-138 w-full flex-col justify-center overflow-hidden px-4">
+      <section className="min-h-250px sm:min-h-300px relative flex h-138 w-full flex-col justify-center overflow-hidden px-4 rounded-3xl mx-auto max-w-7xl my-10">
         <Suspense fallback={<FullSkeleton />}>
-          <ProductsNew image="/new_product_bg.png" />
+          <ProductsNew image="/new-product-bg.jpg" />
         </Suspense>
-        x{' '}
       </section>
 
       {/* 품절 임박 꿀템 */}

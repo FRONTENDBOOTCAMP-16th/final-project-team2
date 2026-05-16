@@ -37,7 +37,7 @@ export default function SimpleToast<T>({
   if (!showToast || !text) return null
 
   return (
-    <div className="fixed bottom-14 left-1/2 z-40 -translate-x-1/2 rounded-3xl bg-gray-800 px-4 py-3 text-sm whitespace-nowrap text-white">
+    <div className="fixed bottom-14 left-1/2 z-40 -translate-x-1/2 rounded-full bg-foreground px-6 py-3 text-sm whitespace-nowrap text-card shadow-lg">
       {text}
     </div>
   )

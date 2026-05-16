@@ -56,15 +56,15 @@ const HeartButton = ({ productId, initialLiked }: HeartButtonProps) => {
         className="disabled:cursor-not-allowed disabled:opacity-50"
       >
         <Heart
-          className={`h-10 w-10 p-2 text-gray-700 transition-transform duration-200 hover:scale-125 ${
-            liked ? 'fill-red-500 text-red-500' : 'hover:fill-pink-200'
+          className={`h-10 w-10 p-2 text-muted-foreground transition-transform duration-200 hover:scale-125 ${
+            liked ? 'fill-primary text-primary' : 'hover:fill-primary-light'
           } ${isPending ? 'scale-90 opacity-70' : ''}`}
         />
       </button>
 
       {showToast && (
         <div className="fixed bottom-10 left-1/2 z-20 -translate-x-1/2">
-          <div className="rounded-full bg-gray-800 px-6 py-3 text-sm text-white shadow-lg">
+          <div className="rounded-full bg-foreground px-6 py-3 text-sm text-card shadow-lg">
             {toastMessage}
           </div>
         </div>
@@ -77,10 +77,10 @@ const HeartButton = ({ productId, initialLiked }: HeartButtonProps) => {
       >
         <div className="space-y-6">
           <div className="text-center">
-            <p className="text-base font-semibold text-gray-900">
+            <p className="text-base font-semibold text-foreground">
               찜 기능을 사용하려면 로그인이 필요합니다.
             </p>
-            <p className="mt-2 text-sm text-gray-500">
+            <p className="mt-2 text-sm text-muted-foreground">
               로그인 페이지로 이동하시겠습니까?
             </p>
           </div>
@@ -88,13 +88,13 @@ const HeartButton = ({ productId, initialLiked }: HeartButtonProps) => {
             <button
               type="button"
               onClick={() => setIsOpen(false)}
-              className="rounded-xl border border-gray-300 bg-red-500 py-3 text-sm font-semibold text-white transition hover:bg-red-600"
+              className="rounded-xl border-2 border-border bg-card py-3 text-sm font-semibold text-foreground transition hover:bg-muted"
             >
               아니요
             </button>
             <Link
               href="/login"
-              className="flex items-center justify-center rounded-xl bg-blue-700 py-3 text-sm font-semibold text-white transition hover:bg-blue-800"
+              className="flex items-center justify-center rounded-xl bg-primary py-3 text-sm font-semibold text-white transition hover:bg-primary-dark"
             >
               예
             </Link>

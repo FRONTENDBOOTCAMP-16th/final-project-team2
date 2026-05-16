@@ -30,30 +30,30 @@ export default function NavList({
           <li key={index} className="group relative items-center flex">
             {item.href ? (
               <Link
-                className="cursor-pointer text-[#2D3142] opacity-80 transition-all hover:font-medium hover:opacity-100 dark:text-white"
+                className="cursor-pointer text-foreground transition-all hover:font-medium hover:text-primary"
                 href={item.href || ""}
               >
                 {item.icon ? (
-                  <p className="rounded-full bg-[#F5F5F5] p-1.5 dark:bg-black">
+                  <p className="rounded-full bg-muted p-2 hover:bg-primary-light transition-colors">
                     {item.icon}
                   </p>
                 ) : (
                   <>{item.name}</>
                 )}
                 {mainMenu ? (
-                  <span className="absolute -bottom-2 left-1/2 h-0.5 w-0 -translate-x-1/2 bg-black transition-all duration-300 group-hover:w-full"></span>
+                  <span className="absolute -bottom-2 left-1/2 h-0.5 w-0 -translate-x-1/2 bg-primary transition-all duration-300 group-hover:w-full rounded-full"></span>
                 ) : (
                   <></>
                 )}
               </Link>
             ) : (
               <button
-                className="cursor-pointer"
+                className="cursor-pointer text-foreground hover:text-primary transition-colors"
                 onClick={item.onClick}
                 type="button"
               >
                 {item.icon ? (
-                  <p className="rounded-full bg-[#F5F5F5] p-1.5 dark:bg-black">
+                  <p className="rounded-full bg-muted p-2 hover:bg-primary-light transition-colors">
                     {item.icon}
                   </p>
                 ) : (

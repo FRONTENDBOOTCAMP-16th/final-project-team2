@@ -18,7 +18,7 @@ export default function TypeRadioInput({
   const uniqueId = useId()
 
   return (
-    <div className="flex flex-1 cursor-pointer rounded-2xl text-center font-bold text-black">
+    <div className="flex flex-1 cursor-pointer rounded-2xl text-center font-bold text-foreground">
       <input
         type="radio"
         className="peer sr-only"
@@ -29,7 +29,7 @@ export default function TypeRadioInput({
       />
       <label
         htmlFor={uniqueId}
-        className="flex-1 cursor-pointer rounded border-2 border-black px-6 py-2.5 peer-checked:border-black peer-checked:bg-black peer-checked:text-white peer-focus-visible:ring-2 peer-focus-visible:ring-black"
+        className="flex-1 cursor-pointer rounded-xl border-2 border-border px-6 py-2.5 transition-all peer-checked:border-primary peer-checked:bg-primary peer-checked:text-white peer-focus-visible:ring-2 peer-focus-visible:ring-primary hover:border-primary-light"
       >
         {label}
       </label>

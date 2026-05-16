@@ -8,8 +8,8 @@ type Props = {
   mainCategory: MainCategoryType;
 };
 
-const ACTIVE_CLASS = 'border-b-4 border-[#FF6B6B] font-bold text-[#FF6B6B]'
-const DEFAULT_CLASS = 'text-gray-500'
+const ACTIVE_CLASS = 'border-b-4 border-primary font-bold text-primary'
+const DEFAULT_CLASS = 'text-muted-foreground hover:text-primary transition-colors'
 
 export default function FilterCategory({ mainCategory }: Props) {
   const currentCategories = subCategory[mainCategory];
@@ -30,7 +30,7 @@ export default function FilterCategory({ mainCategory }: Props) {
               {label}
             </Link>
 
-            {index !== currentCategories.length - 1 && <span className="h-3 border-r ml-4 border-gray-300 text-slate-300" aria-hidden />}
+            {index !== currentCategories.length - 1 && <span className="h-3 border-r ml-4 border-border" aria-hidden />}
           </li>
         )
       })}

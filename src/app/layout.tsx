@@ -27,7 +27,7 @@ export default function RootLayout({
   return (
     <html
       lang="ko"
-      className={`${suit.className} h-full antialiased`}
+      className={`${suit.className} h-full antialiased bg-background`}
       suppressHydrationWarning
     >
       <body className="flex min-h-full flex-col">

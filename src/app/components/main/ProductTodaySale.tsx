@@ -19,8 +19,8 @@ export default function ProductsTodaySale({
     )
 
     return (
-      <div key={item.id} className="flex flex-1 overflow-hidden">
-        <div className="relative h-90 flex-1 border-2 border-gray-200">
+      <div key={item.id} className="flex flex-1 overflow-hidden rounded-3xl shadow-lg">
+        <div className="relative h-90 flex-1 rounded-l-3xl overflow-hidden">
           <Image
             src={item.thumbnail_image}
             alt={`${item.name} 상품 이미지`}
@@ -29,35 +29,35 @@ export default function ProductsTodaySale({
             sizes="w-full h-full"
           />
         </div>
-        <div className="flex min-w-0 flex-1 flex-col border-2 border-gray-200 bg-gray-200 px-8.5 pbs-17 pbe-8.5 text-left dark:bg-[#1b1b1b]">
+        <div className="flex min-w-0 flex-1 flex-col rounded-r-3xl bg-muted px-8.5 pbs-17 pbe-8.5 text-left">
           <dl className="w-full min-w-0">
             <dt className="sr-only">상품 카테고리</dt>
             <dd
               aria-label={`${item.category_name_kr}`}
-              className="font-extrabold text-[#7B7979] dark:text-[#e2e2e2]"
+              className="font-extrabold text-muted-foreground"
             >
               {item.category_name_kr}
             </dd>
 
             <dt className="sr-only">상품명</dt>
-            <dd className="mbs-4.5 truncate text-3xl font-bold text-[#2D3142] dark:text-white">
+            <dd className="mbs-4.5 truncate text-3xl font-bold text-foreground">
               {item.name}
             </dd>
           </dl>
 
           <dl className="mbs-4.5 flex flex-1 flex-wrap items-center">
             <dt className="sr-only">기존 금액</dt>
-            <dd className="order-3 h-full w-full text-[#7B7979] line-through dark:text-[#e2e2e2]">
+            <dd className="order-3 h-full w-full text-muted-foreground line-through">
               {priceLocale}원
             </dd>
 
             <dt className="sr-only">할인율</dt>
-            <dd className="order-1 me-2 font-black text-red-500">
+            <dd className="order-1 me-2 font-black text-primary">
               {item.discount_rate}%
             </dd>
 
             <dt className="sr-only">최종금액</dt>
-            <dd className="order-2 text-2xl font-black text-[#2D3142] dark:text-white">
+            <dd className="order-2 text-2xl font-black text-foreground">
               {finalPrice}원
             </dd>
           </dl>

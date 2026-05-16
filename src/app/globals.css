@@ -41,21 +41,89 @@
 }
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Pastel Theme Colors */
+  --background: #FFF9F5;
+  --foreground: #4A4A4A;
+  
+  /* Primary - Soft Coral Pink */
+  --primary: #FF9A8B;
+  --primary-light: #FFBCB0;
+  --primary-dark: #E87A6B;
+  
+  /* Secondary - Soft Mint */
+  --secondary: #A8E6CF;
+  --secondary-light: #C8F7E4;
+  --secondary-dark: #7DCFB6;
+  
+  /* Accent - Soft Lavender */
+  --accent: #D4A5FF;
+  --accent-light: #E8CCFF;
+  --accent-dark: #B87FE8;
+  
+  /* Neutrals */
+  --muted: #F5F0EB;
+  --muted-foreground: #8B8B8B;
+  --border: #FFE4DC;
+  --card: #FFFFFF;
+  --card-foreground: #4A4A4A;
+  
+  /* Semantic */
+  --destructive: #FF6B6B;
+  --success: #7DCFB6;
+  --warning: #FFD97D;
+  
+  --radius: 1rem;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-primary-light: var(--primary-light);
+  --color-primary-dark: var(--primary-dark);
+  --color-secondary: var(--secondary);
+  --color-secondary-light: var(--secondary-light);
+  --color-secondary-dark: var(--secondary-dark);
+  --color-accent: var(--accent);
+  --color-accent-light: var(--accent-light);
+  --color-accent-dark: var(--accent-dark);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-destructive: var(--destructive);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
   --font-sans: var(--font-suit), ui-sans-serif, system-ui, sans-serif;
+  --radius-sm: 0.5rem;
+  --radius-md: 1rem;
+  --radius-lg: 1.5rem;
+  --radius-xl: 2rem;
+  --radius-full: 9999px;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+.dark {
+  --background: #2D2A3E;
+  --foreground: #F5F0EB;
+  
+  --primary: #FF9A8B;
+  --primary-light: #FFBCB0;
+  --primary-dark: #E87A6B;
+  
+  --secondary: #A8E6CF;
+  --secondary-light: #C8F7E4;
+  --secondary-dark: #7DCFB6;
+  
+  --accent: #D4A5FF;
+  --accent-light: #E8CCFF;
+  --accent-dark: #B87FE8;
+  
+  --muted: #3D3A4E;
+  --muted-foreground: #A8A8A8;
+  --border: #4D4A5E;
+  --card: #3D3A4E;
+  --card-foreground: #F5F0EB;
 }
 
 body {
@@ -65,5 +133,5 @@ body {
 }
 
 .dark body {
-  @apply bg-[#25292D] text-white;
+  @apply bg-background text-foreground;
 }

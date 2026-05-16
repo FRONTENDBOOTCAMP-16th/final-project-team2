@@ -12,10 +12,10 @@ export default function LoginPage() {
   const [state, formAction] = useActionState(loginAction, null)
 
   return (
-    <div className="w-full rounded-2xl bg-white p-10 shadow-md shadow-[#c7c7c7] transition-all sm:w-160">
-      <div className="border-be border-[#e0e0e0] pbe-9 text-center text-2xl">
-        <strong className="text-[#575A68]">환영합니다</strong>
-        <p className="mbs-1 text-sm text-[#575A68]">계정에 로그인하세요</p>
+    <div className="w-full rounded-3xl bg-card p-10 shadow-lg border border-border transition-all sm:w-160">
+      <div className="border-be-2 border-border pbe-9 text-center text-2xl">
+        <strong className="text-foreground">환영합니다</strong>
+        <p className="mbs-1 text-sm text-muted-foreground">계정에 로그인하세요</p>
       </div>
 
       <form action={formAction} className="mbs-10 flex flex-col gap-2 pb-7">
@@ -40,7 +40,7 @@ export default function LoginPage() {
             defaultChecked={state?.role === 'ADMIN'}
           />
         </div>
-        <p className="text-red-600" aria-live="polite" aria-hidden="true">
+        <p className="text-destructive font-medium" aria-live="polite" aria-hidden="true">
           {state?.errors?.role?.[0]}
         </p>
 
@@ -63,7 +63,7 @@ export default function LoginPage() {
         </div>
 
         <p
-          className="mbs-1 text-center text-red-600"
+          className="mbs-1 text-center text-destructive font-medium"
           aria-live="polite"
           aria-hidden="true"
         >
@@ -71,16 +71,16 @@ export default function LoginPage() {
         </p>
 
         {/* 로그인 서브 */}
-        <div className="grid grid-cols-1 border-be border-[#e0e0e0] pbe-9">
+        <div className="grid grid-cols-1 border-be-2 border-border pbe-9">
           <Link
             href="/signup"
-            className="col-start-2 row-start-1 text-right text-[#575A68]"
+            className="col-start-2 row-start-1 text-right text-muted-foreground hover:text-primary transition-colors font-medium"
           >
             회원가입
           </Link>
           <Link
             href="/reset-password"
-            className="col-start-2 row-start-3 text-right text-[#575A68]"
+            className="col-start-2 row-start-3 text-right text-muted-foreground hover:text-primary transition-colors font-medium"
           >
             비밀번호 재설정
           </Link>
@@ -89,7 +89,7 @@ export default function LoginPage() {
         {/* 로그인버튼 */}
         <button
           type="submit"
-          className="mbs-12 w-full cursor-pointer rounded bg-black py-4 font-bold text-white"
+          className="mbs-12 w-full cursor-pointer rounded-xl bg-primary py-4 font-bold text-white hover:bg-primary-dark transition-colors"
         >
           로그인 버튼
         </button>

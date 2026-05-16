@@ -43,9 +43,9 @@ export default function ProductsCard({
   const label = `제품명 ${product.name}, 원래 가격은 ${PriceFormat(price)}원이고 ${DiscountRateFormat(discount_rate)}퍼센트 할인 중이며 현재 가격은 ${DiscountPriceFormat(price, discount_rate)}원입니다.`
 
   return (
-    <li className="relative" aria-label={label}>
+    <li className="relative group" aria-label={label}>
       <Link href={`${baseUrl}/${category}/${product.id}`} className="block">
-        <div className="relative aspect-square w-70.5 overflow-hidden border-2 border-gray-200">
+        <div className="relative aspect-square w-70.5 overflow-hidden rounded-3xl border-2 border-border bg-card shadow-sm transition-all duration-300 group-hover:shadow-lg group-hover:scale-[1.02]">
           <ProductImage
             src={product.thumbnail_image}
             alt={product_name}
@@ -54,7 +54,7 @@ export default function ProductsCard({
 
           {(inventoryTag || product.discount_rate > 0) && (
             <div
-              className="absolute top-0 left-0 flex h-8 min-w-16 items-center justify-center bg-red-500 px-4 font-semibold text-white"
+              className="absolute top-3 left-3 flex h-8 min-w-16 items-center justify-center rounded-full bg-primary px-4 font-semibold text-white shadow-md"
               aria-hidden="true"
             >
               {inventoryTag ? inventoryLabel : `${product.discount_rate}%`}
@@ -62,25 +62,25 @@ export default function ProductsCard({
           )}
         </div>
 
-        <div>
+        <div className="mt-4">
           <dl className="flex items-baseline gap-3">
             <dt className="sr-only">제품 타입</dt>
-            <dd className="mt-4 text-gray-700 dark:text-white">필기구</dd>
+            <dd className="text-muted-foreground text-sm font-medium">필기구</dd>
             <dt className="sr-only">평점</dt>
-            <dd>{product.average_grade ? product.average_grade : 0}점</dd>
+            <dd className="text-primary-dark font-medium">{product.average_grade ? product.average_grade : 0}점</dd>
           </dl>
           <dl>
             <dt className="sr-only">제품 명</dt>
-            <dd className="mt-2 w-60 truncate text-2xl font-medium">
+            <dd className="mt-2 w-60 truncate text-xl font-semibold text-foreground">
               {product_name}
             </dd>
           </dl>
 
-          <dl className="flex gap-3">
+          <dl className="flex gap-3 items-center mt-2">
             {product.discount_rate > 0 && (
               <>
                 <dt className="sr-only">할인율</dt>
-                <dd className="mt-2 text-xl font-bold text-red-500">
+                <dd className="text-lg font-bold text-primary">
                   {DiscountRateFormat(discount_rate)}%
                 </dd>
               </>
@@ -89,7 +89,7 @@ export default function ProductsCard({
             <dt className="sr-only">
               {product.discount_rate === 0 ? '가격' : '할인된 가격'}
             </dt>
-            <dd className="mt-2 ml-2 text-xl font-medium">
+            <dd className="text-lg font-semibold text-foreground">
               {DiscountPriceFormat(price, discount_rate)}원
             </dd>
           </dl>
@@ -97,7 +97,7 @@ export default function ProductsCard({
       </Link>
 
       <div
-        className="absolute right-3 bottom-17 flex aspect-square"
+        className="absolute right-3 bottom-20 flex aspect-square"
         aria-label={`${product_name} 찜하기`}
       >
         <HeartButton productId={product.id} initialLiked={isLiked} />

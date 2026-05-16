@@ -23,14 +23,14 @@ export default async function ProductsNew({ image }: ProductsNewProps) {
       <Image
         src={image}
         alt=""
-        className="w-full object-cover"
+        className="w-full object-cover rounded-3xl"
         fill
         unoptimized={true}
       />
-      <div className="z-0 m-auto w-full max-w-7xl text-right break-keep">
-        <strong className="block font-bold text-white">오늘의 신상품</strong>
+      <div className="z-0 m-auto w-full max-w-7xl text-right break-keep px-8">
+        <span className="inline-block bg-secondary text-foreground px-4 py-2 rounded-full font-semibold text-sm mb-4">오늘의 신상품</span>
 
-        <p className="mt-9 text-4xl font-bold text-white">
+        <p className="mt-4 text-4xl font-bold text-white drop-shadow-lg">
           {firstProduct.name}
         </p>
 

@@ -13,7 +13,7 @@ export default function Sort() {
           sort: e.target.value,
         })
       }
-      className="border px-3 py-2"
+      className="border-2 border-border px-4 py-2.5 rounded-xl bg-card text-foreground focus:border-primary focus:outline-none transition-colors"
     >
       <option value="latest">최신순</option>
       {/* 평균 평점 높은 순 */}

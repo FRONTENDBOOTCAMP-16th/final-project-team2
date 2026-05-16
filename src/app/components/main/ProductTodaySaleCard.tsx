@@ -17,8 +17,8 @@ export default function ProductTodaySaleCard({
     <>
       <div className="m-auto max-w-7xl px-4 py-22.5 ">
         <div className="text-center">
-          <h2 className="font-4 text-5xl font-bold">{title}</h2>
-          <p className="mbs-5 mb-12.5 text-[#7B7979]">{subTitle}</p>
+          <h2 className="font-4 text-5xl font-bold text-foreground">{title}</h2>
+          <p className="mbs-5 mb-12.5 text-muted-foreground">{subTitle}</p>
         </div>
         {fullImage ? (
           <div className="[&_a>div]:w-full! [&_li>button]:right-0 ">

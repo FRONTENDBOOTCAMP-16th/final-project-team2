@@ -82,11 +82,11 @@ export default function InputBox({
 
   return (
     <div className="flex flex-col">
-      <label htmlFor={uniqueId} className="font-medium text-[#474953]">
+      <label htmlFor={uniqueId} className="font-medium text-foreground">
         {label}
       </label>
       <input
-        className="mbs-1 rounded bg-[#F0F1F1] px-3 py-2.5 dark:bg-[#b1b1b1] dark:placeholder:text-black"
+        className="mbs-1 rounded-xl bg-muted px-4 py-3 border-2 border-border focus:border-primary focus:outline-none transition-colors text-foreground placeholder:text-muted-foreground"
         id={uniqueId}
         type={type}
         placeholder={placeholder}
@@ -96,7 +96,7 @@ export default function InputBox({
         onFocus={handleFocus}
         onBlur={handleBlur}
       />
-      <p className="mbs-1 text-red-600" aria-live="polite" aria-hidden="true">
+      <p className="mbs-1 text-destructive font-medium text-sm" aria-live="polite" aria-hidden="true">
         {displayError}
       </p>
 
@@ -104,14 +104,14 @@ export default function InputBox({
         <ul className="mbs-1 flex flex-col gap-1 text-xs">
           <li
             className={
-              isValidLength ? 'font-bold text-green-600' : 'text-gray-500'
+              isValidLength ? 'font-bold text-success' : 'text-muted-foreground'
             }
           >
             {isValidLength ? '✓' : '•'} 8자 이상 입력해주세요
           </li>
           <li
             className={
-              validCheck ? 'font-bold text-green-600' : 'text-gray-500'
+              validCheck ? 'font-bold text-success' : 'text-muted-foreground'
             }
           >
             {validCheck ? '✓' : '•'} 영문자, 숫자, 특수기호(!,@,#,$,%,^,&,*,?,_)

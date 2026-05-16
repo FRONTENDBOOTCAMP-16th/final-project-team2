@@ -21,10 +21,10 @@ export default function Pagination({ pageSize, totalCount }: PaginationProps) {
   });
 
   const paginationButton = {
-    active: 'text-[#FF6B6B] font-semibold px-4 py-2',
-    default: 'text-black px-4 py-2 hover:text-[#FF6B6B]',
-    disabled: 'cursor-not-allowed text-gray-500 flex px-4 py-2 -space-x-3',
-    pageActive: 'px-4 py-2 hover:text-[#FF6B6B] flex -space-x-3',
+    active: 'text-primary font-semibold px-4 py-2',
+    default: 'text-foreground px-4 py-2 hover:text-primary transition-colors',
+    disabled: 'cursor-not-allowed text-muted-foreground flex px-4 py-2 -space-x-3',
+    pageActive: 'px-4 py-2 hover:text-primary flex -space-x-3 transition-colors',
   };
 
   if (totalCount === 0) return null;
