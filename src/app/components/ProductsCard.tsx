@@ -48,6 +48,7 @@ export default function ProductsCard({
       <Link href={`${baseUrl}/${category}/${product.id}`} className="block">
         <div className="relative aspect-square w-70.5 overflow-hidden border-2 border-gray-200">
           <ProductImage
+            priority
             src={product.thumbnail_image}
             alt={product_name}
             onLoadComplete={onImageLoad}
@@ -55,7 +56,7 @@ export default function ProductsCard({
 
           {(inventoryTag || product.discount_rate > 0) && (
             <div
-              className="absolute top-0 left-0 flex h-8 min-w-16 items-center justify-center bg-red-500 px-4 font-semibold text-white"
+              className="absolute top-0 left-0 flex h-8 min-w-16 items-center justify-center rounded-br-md bg-rose-700 px-4 text-sm font-semibold tracking-wide text-white"
               aria-hidden="true"
             >
               {inventoryTag ? inventoryLabel : `${product.discount_rate}%`}

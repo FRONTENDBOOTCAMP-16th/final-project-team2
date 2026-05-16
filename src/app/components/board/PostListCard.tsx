@@ -19,7 +19,7 @@ export default function PostListCard({
   const important = isImportant ?? data.important
 
   return (
-    <li className="w-full border-b border-gray-100 dark:border-gray-700 transition-colors hover:bg-gray-50 dark:hover:bg-gray-800">
+    <li className="w-full border-b border-gray-100 transition-colors hover:bg-gray-50 dark:border-gray-700 dark:hover:bg-gray-800">
       <Link
         href={`/${link}/${data.id}`}
         className="flex w-full items-center gap-4 py-4"
@@ -29,6 +29,7 @@ export default function PostListCard({
           <div className="flex w-full items-center gap-2 xl:w-1/3">
             <div className="relative h-10 w-10 shrink-0 xl:h-16 xl:w-16">
               <ProductImage
+                priority
                 src={data.product?.thumbnail_image || ''}
                 alt={data.product?.name || ''}
               />

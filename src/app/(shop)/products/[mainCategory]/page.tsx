@@ -24,7 +24,7 @@ export default async function ProductListPage({
 }: Product) {
   const { mainCategory } = await params
   const { category, page = 1, sort = 'latest' } = await searchParams
-  const MAX_PAGE_SIZE = 4
+  const MAX_PAGE_SIZE = 12
   if (!isMainCategory(mainCategory)) {
     notFound()
   }

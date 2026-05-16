@@ -24,10 +24,10 @@ const ProductInfoComponent = ({
       <div className="mt-6 grid grid-cols-1 gap-10 lg:grid-cols-2">
         <div className="relative mt-10 aspect-square w-148 overflow-hidden">
           <ProductImage
+            priority
             loading={'eager'}
             src={product.thumbnail_image}
-            priority={true}
-            alt=""
+            alt={product.name ?? '제품 상세 이미지를 불러올 수 없습니다'}
           />
         </div>
 

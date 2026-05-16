@@ -28,7 +28,7 @@ const RecommendProducts = async ({
       <h2 className="mb-6 text-2xl font-semibold">추천 상품</h2>
 
       <ProductsCardList>
-        {products.map((product) => (
+        {products.map((product, i) => (
           <ProductsCard
             key={product.id}
             category={mainCategoryKey}
