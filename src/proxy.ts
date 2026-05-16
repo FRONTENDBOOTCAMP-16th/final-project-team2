@@ -13,7 +13,7 @@ export async function proxy(request: NextRequest) {
         return request.cookies.getAll()
       },
       setAll(cookiesToSet) {
-        cookiesToSet.forEach(({ name, value, options }) =>
+        cookiesToSet.forEach(({ name, value }) =>
           request.cookies.set(name, value),
         )
         supabaseResponse = NextResponse.next({
@@ -46,7 +46,18 @@ export async function proxy(request: NextRequest) {
 
   // 회원일 경우 역할(소비자/판매자)에 따라서 서버가 사용자에게 맞는 마이페이지를 보여주도록 함
   if (user) {
-    const role = user.user_metadata?.role
+    const { data: userProfile } = await supabase
+      .from('users')
+      .select('role')
+      .eq('id', user.id)
+      .single()
+
+    const role = userProfile?.role
+    console.log(role)
+
+    if (path === '/products') {
+      return NextResponse.redirect(new URL('/products/write', request.url))
+    }
 
     if (path.startsWith('/mypage/consumer') && role === 'BUSINESS') {
       return NextResponse.redirect(new URL('/mypage/seller', request.url))
@@ -54,10 +65,6 @@ export async function proxy(request: NextRequest) {
 
     if (path.startsWith('/mypage/seller') && role === 'USER') {
       return NextResponse.redirect(new URL('/mypage/consumer', request.url))
-    }
-
-    if (path === '/products') {
-      return NextResponse.redirect(new URL('/products/write', request.url))
     }
   }
   return supabaseResponse
