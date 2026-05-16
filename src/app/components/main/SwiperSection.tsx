@@ -55,7 +55,9 @@ export default function SwiperList({ swiperList }: swiperProps) {
                 {item.title}
               </strong>
               {item.subText && (
-                <p className="mbs-3 text-[#7B7979] dark:text-white">{item.subText}</p>
+                <p className="mbs-3 text-[#7B7979] dark:text-white">
+                  {item.subText}
+                </p>
               )}
             </div>
           </div>

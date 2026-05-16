@@ -10,7 +10,7 @@ interface SearchCardWrapProps {
 export default async function SearchCardWrap({
   maxProducts,
   page,
-  keyword
+  keyword,
 }: SearchCardWrapProps) {
   // 검색한 키워드를 받아서 필터링
   const { products } = await getProductsAll({
@@ -20,13 +20,16 @@ export default async function SearchCardWrap({
   })
 
   if (!products || products.length === 0) {
-    return <p className='absolute left-1/2 -translate-x-1/2'>검색하신 상품이 없습니다.</p>
+    return (
+      <p className="absolute left-1/2 -translate-x-1/2">
+        검색하신 상품이 없습니다.
+      </p>
+    )
   }
-  
-  
+
   return (
     <>
-      {products.map((product) => (
+      {products.map((product, i) => (
         <ProductsCard
           key={product.id}
           product={product}

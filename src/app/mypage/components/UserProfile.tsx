@@ -72,7 +72,6 @@ export default function UserProfile() {
               alt={isBusiness ? '상점 썸네일' : '프로필 이미지'}
               fill
               sizes="204px"
-              priority
               className="object-cover"
             />
           ) : (
