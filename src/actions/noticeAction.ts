@@ -41,7 +41,7 @@ export const getNotices = async (pages: number): Promise<NoticeResponse> => {
 
 
   // env에 환경설정이랑, 캐시(정적)환경용 supabase 선언
-  const ITEMS_PER_PAGE = Number(process.env.NEXT_PUBLIC_ITEMS_PER_PAGE) || 10 
+  const ITEMS_PER_PAGE = Number(process.env.NEXT_PUBLIC_ITEMS_PER_PAGE) || 10
   const supabase = await createStaticClient()
 
   const { count: totalCount, error: countError } = await supabase
@@ -114,21 +114,18 @@ export async function handleNoticeAction(
 
   try {
     // 삭제 로직 (삭제는 ID만 있으면 되므로 우선 처리, 향후에 is_delete로 업데이트 해서 유지보수 기능 추가 예정)
-    // 삭제 로직 (삭제는 ID만 있으면 되므로 우선 처리, 향후에 is_delete로 업데이트 해서 유지보수 기능 추가 예정)
     if (deleteId) {
       // 공지 삭제 쿼리문
       const { error } = await supabase
         .from('notices')
         .delete()
         .eq('id', deleteId)
+        .eq('writer_id', user.id)
       if (error) throw error
     } else {
-      // 3. Zod를 활용한 폼 데이터 유효성 검사 (생성/수정의 경우)
       const validatedFields = NoticeFormSchema.safeParse(rawData)
 
-      // 유효성 검사 실패 시
       if (!validatedFields.success) {
-        // Zod 에러 배열에서 첫 번째 메시지를 뽑아서 클라이언트 반환
         return {
           success: false,
           message: validatedFields.error.issues[0].message
@@ -140,14 +137,13 @@ export async function handleNoticeAction(
 
       if (updateId) {
         // 공지사항 수정
-        // 공지사항 수정
         const { error } = await supabase
           .from('notices')
           .update({ title, content, important })
           .eq('id', updateId)
+          .eq('writer_id', user.id)
         if (error) throw error
       } else {
-        // 새 공지사항 작성
         // 새 공지사항 작성
         const { error } = await supabase
           .from('notices')
@@ -174,7 +170,7 @@ export async function handleNoticeAction(
  */
 export const getNoticeDetail = async (id: string): Promise<BoardCard> => {
   const supabase = await createClient()
-  
+
   const { data, error } = await supabase
     .from('notices')
     .select('*')

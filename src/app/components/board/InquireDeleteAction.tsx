@@ -42,15 +42,15 @@ export default function InquireDeleteAction({ id }: InquireDeleteActionProps) {
             </button>
 
             <form action={formAction}>
-              {/* 삭제할 ID를 hidden input으로 전달 */}
               <input type="hidden" name="deleteId" value={id} />
               <button
                 type="submit"
                 className="rounded-lg bg-red-500 px-6 py-2 font-medium text-white hover:bg-red-600"
+                disabled={pending}
               >
                 {pending ? (
                   <>
-                    <Loader2 className="animate-spin" size={20} />
+                    <Loader2 className="mr-2 animate-spin" size={20} />
                     삭제 처리 중
                   </>
                 ) : (
@@ -61,11 +61,19 @@ export default function InquireDeleteAction({ id }: InquireDeleteActionProps) {
           </div>
         }
       >
-        <p className="py-4 text-gray-600">
-          정말로 이 게시글을 삭제하시겠습니까?
-          <br />
-          삭제된 데이터는 복구할 수 없습니다.
-        </p>
+        <div className="flex flex-col gap-3 py-4">
+          <p className="text-gray-600">
+            정말로 이 게시글을 삭제하시겠습니까?
+            <br />
+            삭제된 데이터는 복구할 수 없습니다.
+          </p>
+
+          {!state.success && state.message && (
+            <div className="rounded-md border border-red-200 bg-red-50 p-3 text-sm font-medium text-red-600">
+              {state.message}
+            </div>
+          )}
+        </div>
       </Modal>
     </>
   )
