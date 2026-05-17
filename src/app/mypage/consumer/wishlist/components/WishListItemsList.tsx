@@ -70,12 +70,12 @@ export default function WishListItemsList() {
           />
         </div>
         <div className="flex items-center gap-2">
-          <label htmlFor="filter" className="sr-only">
+          <label htmlFor="wishlist-sort-filter" className="sr-only">
             필터
           </label>
           <select
-            name="filter"
-            id="filter"
+            name="wishlist-sort-filter"
+            id="wishlist-sort-filter"
             className="h-9 w-full border border-gray-400 px-2 sm:w-auto"
             value={sort}
             onChange={(e) => onChangeSort(e.target.value)}
