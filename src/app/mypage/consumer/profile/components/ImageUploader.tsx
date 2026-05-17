@@ -59,7 +59,6 @@ export default function ImageUploader({
 
       // 부모 컴포넌트(Info.tsx)의 setFormData를 실행하기 위해 콜백 함수를 호출합니다.
       if (onUploadSuccess) {
-        console.log('이미지 업로드 성공! URL:', publicUrl)
         onUploadSuccess(publicUrl)
       }
     } catch (error) {
