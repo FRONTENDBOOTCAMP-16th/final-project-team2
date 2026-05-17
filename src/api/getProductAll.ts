@@ -12,7 +12,7 @@ export interface ProductWithCategory extends Products {
 interface ProductRow extends Products {
   product_categories: {
     category_id: string
-  }[]
+  } | null
 }
 
 interface GetProductsAllProps {
@@ -31,6 +31,7 @@ export const getProductsAll = async ({
   'use cache'
   cacheLife('hours')
   cacheTag('all-products')
+ 
   const supabase = await createStaticClient()
 
   // 상품 조회 - 전체 삼품 조회, 각 상품마다 연결된 category_id 함께 조회
@@ -77,7 +78,7 @@ export const getProductsAll = async ({
 
   // category_id를 골라내어 배열로 담은 후, DB에서 효율적인 호출을 위해 중복 카테고리 걸러냄
   const allCategoryIds = productRows
-    .map((products) => products.product_categories?.[0]?.category_id)
+    .map((products) => products.product_categories?.category_id)
     .filter((id): id is string => id !== null && id !== undefined)
 
   const categoryIds = allCategoryIds.filter(
@@ -117,7 +118,7 @@ export const getProductsAll = async ({
 
   const products = productRows.map((product) => {
     // 소분류 카테고리 코드(c1000...) 뽑아오기
-    const categoryId = product.product_categories?.[0]?.category_id ?? null
+    const categoryId = product.product_categories?.category_id ?? null
     // 위에서 찾은 카테고리 코드로 소분류 카테고리와 매칭하여 해당되는 소분류 이름표 달아주기
     const category =
       categoryList.find((category) => category.id === categoryId) ?? null
