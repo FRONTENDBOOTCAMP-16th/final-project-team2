@@ -49,20 +49,6 @@ export default async function ProductListPage({
       </div>
       <main id="main-content">
         <Suspense fallback={<Skeleton />}>
-          {/*
-           * page: 현재 페이지
-           * pageSize: 페이지에 들어갈 상품의 수
-           *
-           * 아래 3개는 searchParams로 가져오는 것이 좋습니다
-           * mainCategory: 메인 카테고리
-           * category: 서브 카테고리
-           * sort: 정렬
-           *
-           * pagination : boolean (켜고 끄기) 기본값 false
-           *
-           * pagination true 시에 백엔드에서 totalCount를 반드시 작성해주어야 합니다.
-           * 참고 파일은 api의 getProducts.ts를 참고해주세요
-           */}
           <ProductListFetcher
             page={page}
             pageSize={MAX_PAGE_SIZE}
