@@ -37,6 +37,7 @@ export default function ProductListInner({ products, category, sort }: Props) {
             category={category}
             product={product}
             onImageLoad={handleImageLoad}
+            preload={i === 0}
           />
         ))}
       </ProductsCardList>

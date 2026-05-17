@@ -3,14 +3,11 @@
 import Image from 'next/image'
 import { useRef, useState } from 'react'
 
-type LoadingType = 'lazy' | 'eager'
-
 interface ProductImageProps {
   src?: string
   alt: string
   sizes?: string
-  priority?: boolean
-  loading?: LoadingType
+  preload?: boolean
   onLoadComplete?: () => void
 }
 
@@ -18,8 +15,7 @@ export default function ProductImage({
   src,
   alt,
   sizes = '(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw',
-  priority = false,
-  loading = 'lazy',
+  preload = false,
   onLoadComplete,
 }: ProductImageProps) {
   const fallback = '/fallback.png'
@@ -28,6 +24,7 @@ export default function ProductImage({
 
   const reportLoaded = () => {
     if (isReportedRef.current) return
+
     isReportedRef.current = true
     onLoadComplete?.()
   }
@@ -38,8 +35,9 @@ export default function ProductImage({
       alt={alt}
       fill
       sizes={sizes}
-      priority={priority}
-      loading={priority ? undefined : loading}
+      preload={preload}
+      fetchPriority={preload ? 'high' : 'auto'}
+      loading={preload ? 'eager' : 'lazy'}
       className="object-cover"
       onLoad={reportLoaded}
       onError={() => {
