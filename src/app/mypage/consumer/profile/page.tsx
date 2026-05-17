@@ -107,7 +107,6 @@ export default function Profile() {
             label="프로필 이미지"
             defaultImage={formData.profileImage}
             onUploadSuccess={(url) => {
-              console.log('업로드된 이미지 URL:', url)
               setFormData((prev) => ({ ...prev, profileImage: url }))
             }}
             isEditing={isEditing}
