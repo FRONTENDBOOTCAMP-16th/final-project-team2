@@ -131,7 +131,7 @@ async function processRegister(formData: FormData): Promise<FormState> {
     .from('public-assets')
     .getPublicUrl(`products/${fileName}`)
 
-  const finalDescription = `<img src="https://xgiayrmzgokjzwwzivzi.supabase.co/storage/v1/object/public/public-assets/products/product2.jpg" alt="상세이미지"/><br/>${description}`
+  const finalDescription = `<img src="${publicUrl}" alt="상세이미지"/><br/>${description}`
 
   const { data, error } = await supabase
     .from('products')
