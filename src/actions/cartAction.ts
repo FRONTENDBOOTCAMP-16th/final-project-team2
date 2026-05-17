@@ -134,17 +134,21 @@ export async function addCartItem({
 
   const supabase = await createClient()
 
-  const { data: existingItem, error: selectError } = await supabase
+  const { data: existingItems, error: selectError } = await supabase
     .from('cart_items')
-    .select('id, quantity')
+    .select('id, quantity, selected_options')
     .eq('user_id', auth.id)
     .eq('product_id', productId)
-    .eq('selected_options', JSON.stringify(optionData))
-    .maybeSingle()
 
   if (selectError) {
     throw new Error(selectError.message)
   }
+
+  // JS에서 옵션 검증 (객체 키 순서 등의 문제 방지를 위해 문자열 비교 혹은 깊은 비교)
+  const existingItem = existingItems?.find(
+    (item) => JSON.stringify(item.selected_options) === JSON.stringify(optionData)
+  )
+
   // 제품이 이미 있으면 갯수 추가
   if (existingItem) {
     const { error: updateError } = await supabase
