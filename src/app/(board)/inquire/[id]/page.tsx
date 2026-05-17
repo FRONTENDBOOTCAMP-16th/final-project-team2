@@ -5,6 +5,7 @@ import sanitizeHtml from 'sanitize-html'
 import Link from 'next/link'
 import Image from 'next/image'
 import InquireDeleteAction from '@/app/components/board/InquireDeleteAction'
+import UnauthorizedModal from '@/app/components/board/UnauthorizedModal'
 
 export default async function QnaDetailPage({
   params,
@@ -18,6 +19,9 @@ export default async function QnaDetailPage({
   try {
     qna = await getInquireDetail(id)
   } catch (err) {
+    if (err instanceof Error && err.message === '이 게시글을 열람할 권한이 없습니다.') {
+      return <UnauthorizedModal />
+    }
     console.error(err)
     throw new Error('데이터를 불러오지 못했습니다.')
   }
