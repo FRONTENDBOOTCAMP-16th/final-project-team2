@@ -24,7 +24,6 @@ export default function OrderItemCard({
   const categoryId = CATEGORY_GROUPS.find((group) =>
     group.categories.includes(categoryName ?? ''),
   )?.id
-  console.log(order.products)
   const productId = order.product_id
 
   return (
