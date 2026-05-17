@@ -9,7 +9,7 @@ type Props = {
 
 export default function TabStoreInfo({ store, seller }: Props) {
   return (
-    <section className="mt-8 rounded-2xl border border-gray-200 bg-white p-6">
+    <section className="mt-8 rounded-2xl border border-gray-200 bg-white p-6 dark:bg-[#25292D]">
       <h2 className="text-2xl font-semibold">가게 정보</h2>
 
       <div className="mt-6 flex flex-col gap-6 md:flex-row md:items-center">
@@ -29,7 +29,7 @@ export default function TabStoreInfo({ store, seller }: Props) {
         <div className="flex-1">
           <strong className="text-xl font-bold">{store.name}</strong>
 
-          <p className="mt-3 leading-7 text-gray-600">
+          <p className="mt-3 leading-7 text-gray-600 dark:text-white">
             {store.intro || '등록된 가게 소개가 없습니다.'}
           </p>
 
@@ -39,7 +39,9 @@ export default function TabStoreInfo({ store, seller }: Props) {
 
               <dt className="sr-only">판매자</dt>
 
-              <dd>{seller ?? '판매자 정보 없음'}</dd>
+              <dd className="dark:text-white">
+                {seller ?? '판매자 정보 없음'}
+              </dd>
             </div>
 
             <div className="flex items-center gap-2">
@@ -47,7 +49,9 @@ export default function TabStoreInfo({ store, seller }: Props) {
 
               <dt className="sr-only">위치</dt>
 
-              <dd>{store.location || '위치 정보 없음'}</dd>
+              <dd className="dark:text-white">
+                {store.location || '위치 정보 없음'}
+              </dd>
             </div>
           </dl>
         </div>

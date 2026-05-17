@@ -8,9 +8,8 @@ import {
   PriceFormat,
 } from '@/utils/intl'
 import HeartButton from '../(shop)/products/[mainCategory]/[id]/_components/Product/HeartButton'
-import { useQuery } from '@tanstack/react-query'
-import { fetchLikes } from '../mypage/api/fetchLikes'
 import { getMainCategoryName } from '../(shop)/products/[mainCategory]/lib/category'
+import { useIsLikedQuery } from '../mypage/consumer/wishlist/hooks/useIsLikedQuery'
 
 interface ProductCardProps {
   product: Products
@@ -26,13 +25,9 @@ export default function ProductsCard({
   onImageLoad,
   inventoryTag,
 }: ProductCardProps) {
-  const { data } = useQuery({
-    queryKey: ['likes'],
-    queryFn: () => fetchLikes(1, 1000, 'all'),
-    staleTime: 0,
-  })
+  const { data: isLiked } = useIsLikedQuery(product.id)
   if (!product) return null
-  const isLiked = data?.items.some((l) => l.product_id === product.id)
+
   const inventoryLabel =
     product.inventory <= 10 ? '곧 품절이에요!' : `${product.inventory}개`
 
@@ -46,8 +41,9 @@ export default function ProductsCard({
   return (
     <li className="relative" aria-label={label}>
       <Link href={`${baseUrl}/${category}/${product.id}`} className="block">
-        <div className="relative aspect-square w-70.5 overflow-hidden border-2 border-gray-200">
+        <div className="relative aspect-square w-70.5 overflow-hidden border-2 border-gray-200 transition-transform duration-400 hover:scale-103">
           <ProductImage
+            priority
             src={product.thumbnail_image}
             alt={product_name}
             onLoadComplete={onImageLoad}
@@ -55,7 +51,7 @@ export default function ProductsCard({
 
           {(inventoryTag || product.discount_rate > 0) && (
             <div
-              className="absolute top-0 left-0 flex h-8 min-w-16 items-center justify-center bg-red-500 px-4 font-semibold text-white"
+              className="absolute top-0 left-0 flex h-8 min-w-16 items-center justify-center rounded-br-md bg-rose-700 px-4 text-sm font-semibold tracking-wide text-white"
               aria-hidden="true"
             >
               {inventoryTag ? inventoryLabel : `${product.discount_rate}%`}

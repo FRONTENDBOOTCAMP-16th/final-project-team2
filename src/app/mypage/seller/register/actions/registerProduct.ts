@@ -36,20 +36,12 @@ export async function registerProductActionWithState(
 async function processRegister(formData: FormData): Promise<FormState> {
   const errors: NonNullable<FormState>['errors'] = {}
 
-  const image = formData.get('productImage')
   const name = formData.get('productName')?.toString().trim()
   const priceRaw = formData.get('productPrice')?.toString()
   const description = formData.get('productDescription')?.toString().trim()
   const inventory = formData.get('productInventory')?.toString()
   const discount = formData.get('productDiscount')?.toString()
   const optionsRaw = formData.get('productOptions')?.toString()
-
-  // 이미지
-  if (!(image instanceof File) || image.size === 0) {
-    errors.productImage = '이미지를 업로드해야 합니다.'
-  } else if (image.size > 5 * 1024 * 1024) {
-    errors.productImage = '5MB 이하 이미지만 업로드 가능합니다.'
-  }
 
   // 이름
   if (!name) {
@@ -109,29 +101,13 @@ async function processRegister(formData: FormData): Promise<FormState> {
     .eq('owner_id', user?.id)
     .single()
 
-  // 실제 Supabase Storage에 업로드
-  const imageFile = image as File
-  const ext = imageFile.name.split('.').pop()
-
-  // 고유한 영문 파일명 생성
-  const fileName = `${Date.now()}.${ext}`
-  const { error: uploadError } = await supabase.storage
-    .from('public-assets')
-    .upload(`products/${fileName}`, imageFile)
-
-  if (uploadError) {
-    errors.productImage = '이미지 업로드에 실패했습니다.'
+  const publicUrl = formData.get('thumbnailUrl')?.toString()
+  if (!publicUrl) {
+    errors.productImage = '이미지를 업로드해야 합니다.'
     return { errors }
   }
 
-  // 업로드된 이미지의 public URL 가져오기
-  const {
-    data: { publicUrl },
-  } = supabase.storage
-    .from('public-assets')
-    .getPublicUrl(`products/${fileName}`)
-
-  const finalDescription = `<img src="https://xgiayrmzgokjzwwzivzi.supabase.co/storage/v1/object/public/public-assets/products/product2.jpg" alt="상세이미지"/><br/>${description}`
+  const finalDescription = `<img src="${publicUrl}" alt="상세이미지"/><br/>${description}`
 
   const { data, error } = await supabase
     .from('products')
