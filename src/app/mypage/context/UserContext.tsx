@@ -38,11 +38,9 @@ export function UserProvider({
   children: ReactNode
   initialUser?: User | null
 }) {
-  const [authState, setAuthState] = useState<UserContextType>({
-    user: initialUser ?? null,
-    role: (initialUser?.role as Role) ?? null,
-    isLoading: initialUser ? false : true,
-  })
+  // initialUser가 없을 때만 클라이언트 fetch 결과를 담는 state
+  const [fetchedUser, setFetchedUser] = useState<User | null>(null)
+  const [isLoading, setIsLoading] = useState(!initialUser)
 
   useEffect(() => {
     if (initialUser) return // 서버에서 이미 받았으면 스킵
@@ -51,10 +49,12 @@ export function UserProvider({
 
     const fetchFullUserData = async () => {
       try {
-        const { data: { user: authUser } } = await supabase.auth.getUser()
+        const {
+          data: { user: authUser },
+        } = await supabase.auth.getUser()
 
         if (!authUser) {
-          setAuthState({ user: null, role: null, isLoading: false })
+          setIsLoading(false)
           return
         }
 
@@ -80,26 +80,28 @@ export function UserProvider({
             }
           }
 
-          setAuthState({
-            user: finalUserData,
-            role: profile.role as Role,
-            isLoading: false,
-          })
-        } else {
-          // 핵심 수정: profile이 null이어도 isLoading을 false로 변경
-          setAuthState({ user: null, role: null, isLoading: false })
+          setFetchedUser(finalUserData)
         }
       } catch (error) {
         console.error('User fetch error:', error)
-        // catch에서도 isLoading: false 보장 (기존 유지)
-        setAuthState((prev) => ({ ...prev, isLoading: false }))
+      } finally {
+        setIsLoading(false)
       }
     }
 
     fetchFullUserData()
-  }, [initialUser]) // 마운트 시 1회만 실행
+  }, [initialUser])
 
-  const value = useMemo(() => authState, [authState])
+  // initialUser(서버)가 있으면 그걸 우선 사용, 없으면 클라이언트 fetch 결과 사용
+  // initialUser?.id가 바뀌면 자동으로 새 값으로 파생됨 → useEffect 불필요
+  const value = useMemo<UserContextType>(() => {
+    const activeUser = initialUser ?? fetchedUser
+    return {
+      user: activeUser,
+      role: (activeUser?.role as Role) ?? null,
+      isLoading,
+    }
+  }, [initialUser, fetchedUser, isLoading])
 
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>
 }
