@@ -8,7 +8,7 @@ import {
   useEffect,
   useMemo,
 } from 'react'
-import { createClient } from '@/utils/supabase/client'
+import { getSupabaseClient } from '@/utils/supabase/client'
 
 interface User {
   id: string
@@ -31,21 +31,27 @@ interface UserContextType {
 
 const UserContext = createContext<UserContextType | undefined>(undefined)
 
-export function UserProvider({ children }: { children: ReactNode }) {
+export function UserProvider({
+  children,
+  initialUser,
+}: {
+  children: ReactNode
+  initialUser?: User | null
+}) {
   const [authState, setAuthState] = useState<UserContextType>({
-    user: null,
-    role: null,
-    isLoading: true,
+    user: initialUser ?? null,
+    role: (initialUser?.role as Role) ?? null,
+    isLoading: initialUser ? false : true,
   })
 
-  const supabase = createClient()
-
   useEffect(() => {
+    if (initialUser) return // 서버에서 이미 받았으면 스킵
+
+    const supabase = getSupabaseClient()
+
     const fetchFullUserData = async () => {
       try {
-        const {
-          data: { user: authUser },
-        } = await supabase.auth.getUser()
+        const { data: { user: authUser } } = await supabase.auth.getUser()
 
         if (!authUser) {
           setAuthState({ user: null, role: null, isLoading: false })
@@ -79,15 +85,19 @@ export function UserProvider({ children }: { children: ReactNode }) {
             role: profile.role as Role,
             isLoading: false,
           })
+        } else {
+          // 핵심 수정: profile이 null이어도 isLoading을 false로 변경
+          setAuthState({ user: null, role: null, isLoading: false })
         }
       } catch (error) {
         console.error('User fetch error:', error)
+        // catch에서도 isLoading: false 보장 (기존 유지)
         setAuthState((prev) => ({ ...prev, isLoading: false }))
       }
     }
 
     fetchFullUserData()
-  }, [supabase])
+  }, [initialUser]) // 마운트 시 1회만 실행
 
   const value = useMemo(() => authState, [authState])
 
