@@ -73,7 +73,6 @@ export default function Main() {
         <Suspense fallback={<FullSkeleton />}>
           <ProductsNew image="/new_product_bg.png" />
         </Suspense>
-        x{' '}
       </section>
 
       {/* 품절 임박 꿀템 */}

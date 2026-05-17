@@ -24,7 +24,6 @@ export default function OrderItemCard({
   const categoryId = CATEGORY_GROUPS.find((group) =>
     group.categories.includes(categoryName ?? ''),
   )?.id
-
   const productId = order.product_id
 
   return (
@@ -39,7 +38,7 @@ export default function OrderItemCard({
           <Image
             width={80}
             height={80}
-            className="shrink-0 object-cover"
+            className="h-20 w-20 shrink-0 object-cover"
             src={order.products.thumbnail_image}
             alt=""
             onError={(e) => {

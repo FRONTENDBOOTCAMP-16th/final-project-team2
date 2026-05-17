@@ -14,8 +14,8 @@ export const CATEGORY_GROUPS = [
   },
 
   {
-    id: 'accessory',
-    label: '소품/액세서리',
+    id: 'office',
+    label: '사무/데스크용품',
 
     categories: ['사무/데스크용품', '데스크 수납/정리', '파일/서류보관'],
   },

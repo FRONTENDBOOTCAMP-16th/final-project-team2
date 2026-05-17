@@ -19,7 +19,7 @@ const HeartButton = ({ productId, initialLiked }: HeartButtonProps) => {
   const [showToast, setShowToast] = useState(false)
   const [toastMessage, setToastMessage] = useState('')
 
-  const liked = initialLiked ?? false
+  const liked = initialLiked === true
 
   const handleClick = () => {
     if (isPending) return
@@ -85,19 +85,20 @@ const HeartButton = ({ productId, initialLiked }: HeartButtonProps) => {
             </p>
           </div>
           <div className="grid grid-cols-2 gap-3">
-            <button
-              type="button"
-              onClick={() => setIsOpen(false)}
-              className="rounded-xl border border-gray-300 bg-red-500 py-3 text-sm font-semibold text-white transition hover:bg-red-600"
-            >
-              아니요
-            </button>
             <Link
+              aria-label="로그인페이지로 이동하기"
               href="/login"
-              className="flex items-center justify-center rounded-xl bg-blue-700 py-3 text-sm font-semibold text-white transition hover:bg-blue-800"
+              className="flex items-center justify-center rounded-xl bg-gray-300 py-3 text-sm font-semibold text-white transition hover:bg-gray-400"
             >
               예
             </Link>
+            <button
+              type="button"
+              onClick={() => setIsOpen(false)}
+              className="rounded-xl border border-gray-300 bg-black py-3 text-sm font-semibold text-white transition hover:bg-gray-800"
+            >
+              아니요
+            </button>
           </div>
         </div>
       </Modal>

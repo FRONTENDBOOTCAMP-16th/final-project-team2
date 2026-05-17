@@ -4,7 +4,7 @@ import { redirect } from 'next/navigation'
 import { revalidateTag, cacheTag } from 'next/cache'
 import { createClient } from '@/utils/supabase/server'
 import { createStaticClient } from '@/utils/supabase/static'
-import {z} from 'zod'
+import { z } from 'zod'
 import type { BoardCard, FormState } from '@/types/boards'
 
 /**
@@ -105,82 +105,59 @@ export async function handleInquireAction(
   prevState: FormState,
   formData: FormData
 ): Promise<FormState> {
-
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
 
-  // 오류가 났을때 대응.
   if (!user) return { success: false, message: '세션이 만료되었습니다.' }
 
   const rawData = Object.fromEntries(formData.entries())
   const deleteId = rawData.deleteId as string | undefined
 
   try {
+    // 1. 삭제 모드
     if (deleteId) {
       const { error } = await supabase
         .from('qnas')
         .delete()
         .eq('id', deleteId)
+        .eq('writer_id', user.id)
       if (error) throw error
-
-    } else {
-      // zod로 데이터 검증
+    }
+    // 2. 작성/수정 모드
+    else {
       const validatedFields = InquireFormSchema.safeParse(rawData)
 
       if (!validatedFields.success) {
-        return { 
-          success: false, 
-          message: validatedFields.error.issues[0].message 
-        }
+        return { success: false, message: validatedFields.error.issues[0].message }
       }
 
-      // 조드로 검증된 데이터를 구조분해할당하기.
       const { title, content, product, updateId } = validatedFields.data
 
       if (updateId) {
-        // 업데이트
         const { error } = await supabase
           .from('qnas')
           .update({ title, question_content: content })
           .eq('id', updateId)
+          .eq('writer_id', user.id)
         if (error) throw error
       } else {
-        // 새 질문글 작성
         const { error } = await supabase
           .from('qnas')
-          .insert({ 
-            title, 
-            question_content: content, 
-            writer_id: user.id, 
-            product_id: product || null 
+          .insert({
+            title,
+            question_content: content,
+            writer_id: user.id,
+            product_id: product || null
           })
         if (error) throw error
       }
     }
 
-    // 추후 캐싱전략을 위해 주석처리
-    revalidateTag('inquire', { expire: 3600 })
-
+    revalidateTag('inquire', 'default')
 
   } catch (error: unknown) {
-    console.error('오류 코드:', error)
-    let errorMessage = '알 수 없는 에러가 발생했습니다.'
-
-    if (error instanceof Error) {
-      errorMessage = error.message
-    } else if (error && typeof error === 'object' && 'message' in error) {
-      const supaError = error as { code?: string; message: string; details?: string }
-      errorMessage = supaError.code 
-        ? `오류 코드: ${supaError.code}, ${supaError.message}` 
-        : supaError.message
-    } else {
-      errorMessage = String(error)
-    }
-
-    return {
-      success: false,
-      message: errorMessage
-    }
+    console.error('오류 발생:', error)
+    return { success: false, message: '알 수 없는 에러가 발생했습니다.' }
   }
 
   redirect('/inquire')
@@ -208,9 +185,9 @@ export async function handleInquireReplyAction(
 
   // 실패하면 출력
   if (!validatedFields.success) {
-    return { 
-      success: false, 
-      message: validatedFields.error.issues[0].message 
+    return {
+      success: false,
+      message: validatedFields.error.issues[0].message
     }
   }
 
@@ -279,28 +256,30 @@ export async function handleInquireReplyAction(
  */
 export const getInquireDetail = async (id: string): Promise<BoardCard> => {
   const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) throw new Error('로그인이 필요합니다.')
 
   const { data, error } = await supabase
     .from('qnas')
-    .select(`*,
-      writer:writer_id (
-        id,
-        nickname,
-        profile_image
-      ),
-      product:product_id (
-        id,
-        name,
-        thumbnail_image,
-        price,
-        store_id
-      )
-      `)
+    .select(`*, writer:writer_id(id, nickname, profile_image), product:product_id(id, name, thumbnail_image, price, store_id)`)
     .eq('id', id)
     .single()
 
-  if (error) {
-    throw new Error(error.message)
+  if (error) throw new Error(error.message)
+
+  // [보안 핵심] 본인 글이거나, 해당 상품 판매자이거나, 관리자인지 확인
+  const { data: userData } = await supabase
+    .from('users').select('role').eq('id', user.id).single()
+
+  const isAdmin = userData?.role === 'ADMIN'
+  const isWriter = data.writer_id === user.id
+
+  // product 정보가 배열로 올 경우 대비
+  const productInfo = Array.isArray(data.product) ? data.product[0] : data.product
+  const isSeller = productInfo?.store_id === user.id
+
+  if (!isWriter && !isSeller && !isAdmin) {
+    throw new Error('이 게시글을 열람할 권한이 없습니다.')
   }
 
   return data

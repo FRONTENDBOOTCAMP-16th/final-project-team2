@@ -5,7 +5,7 @@ import SearchCardWrap from "./_components/SearchCardWrap"
 type SearchPageProps = {
   searchParams: Promise<{
     q?: string
-    page?: number
+    page?: number | string
     sort?: string
   }>
 }
@@ -20,13 +20,12 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
 
   // 검색어와 함께 getProductsAll 호출
   const data = await getProductsAll({
-    search: q,
-    page: Number(page),
+    search: q.trim(),
+    page: currentPage,
     pageSize: MAX_PAGE_SIZE,
     sort,
   })
 
-  
   return (
     <div className="mx-auto mt-5 max-w-7xl px-4 sm:px-6 lg:px-8">
       {/* 검색 결과 헤더 */}
@@ -40,11 +39,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
       <main id="main-content" className="mt-44 flex flex-wrap gap-6 justify-start [&_li]:list-none">
         {/* 카드리스트 읽어옴 */}
         <div className="grid w-full grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 [&_a>div]:w-full!">
-          <SearchCardWrap
-            maxProducts={MAX_PAGE_SIZE}
-            page={currentPage}
-            keyword={q}
-          />
+          <SearchCardWrap products={data.products} />
         </div>
         
         {/* 상품이 하나라도 있을때 페이지네이션 */}

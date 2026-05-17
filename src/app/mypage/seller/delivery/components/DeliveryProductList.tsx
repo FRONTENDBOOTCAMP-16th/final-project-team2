@@ -3,7 +3,6 @@
 import DeliveryProductCard from './DeliveryProductCard'
 import Pagination from './Pagination'
 import DeliveryProductHeader from './DeliveryProductHeader'
-import { useState } from 'react'
 import MypageDeliverySkeleton from '@/app/mypage/components/MypageDeliverSkeleton'
 import { useDeliveryQuery } from '../hooks/useDeliveryQuery'
 import { useRouter, useSearchParams } from 'next/navigation'
@@ -14,7 +13,6 @@ export default function DeliveryProductList() {
   const searchParams = useSearchParams()
   const router = useRouter()
   const status = searchParams.get('status') ?? 'all'
-  const params = new URLSearchParams(searchParams.toString())
   const pageParam = Number(searchParams.get('page') ?? 1) // 현재 페이지 번호. URL 쿼리스트링 ?page=N 기반, 기본값: 1
   const { data, isLoading } = useDeliveryQuery(pageParam, 5, status)
   const items = data?.items ?? []

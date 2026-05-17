@@ -91,7 +91,7 @@ export default function Profile() {
               className={`${
                 isEditing
                   ? 'bg-green-500 hover:bg-green-600'
-                  : 'bg-red-400 hover:bg-red-500'
+                  : 'bg-black hover:bg-red-600'
               } px-6 py-2 font-medium text-white transition`}
             >
               <div className="flex items-center gap-2">
@@ -107,7 +107,6 @@ export default function Profile() {
             label="프로필 이미지"
             defaultImage={formData.profileImage}
             onUploadSuccess={(url) => {
-              console.log('업로드된 이미지 URL:', url)
               setFormData((prev) => ({ ...prev, profileImage: url }))
             }}
             isEditing={isEditing}
