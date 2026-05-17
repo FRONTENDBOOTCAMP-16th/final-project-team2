@@ -49,9 +49,9 @@ export default function WishListItemCard({ order }: Props) {
           {product.product_categories?.categories.name}
         </p>
         <div className="flex justify-between">
-          <p className="w-50 self-center truncate text-[18px] font-bold">
+          <h2 className="w-50 self-center truncate text-[18px] font-bold">
             {product.name}
-          </p>
+          </h2>
           <HeartButton productId={order.product_id} initialLiked={true} />
         </div>
 
