@@ -9,6 +9,10 @@ interface ProductProps {
   mainCategory: string
 }
 
+interface StoreProps {
+  id: string
+}
+
 export const getProductDetail = async ({
   id,
   mainCategory,
@@ -38,10 +42,6 @@ export const getProductDetail = async ({
   }
 
   return data as Products
-}
-
-interface StoreProps {
-  id: string
 }
 
 export const getStoreDetailInfo = async ({

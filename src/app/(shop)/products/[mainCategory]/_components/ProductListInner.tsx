@@ -30,7 +30,7 @@ export default function ProductListInner({ products, category, sort }: Props) {
       <ProductsCardList
         className={`transition-opacity duration-150 ${isAllLoaded ? 'opacity-100' : 'pointer-events-none absolute inset-0 opacity-0'}`}
       >
-        {products.map((product) => (
+        {products.map((product, i) => (
           <ProductsCard
             key={product.id}
             sort={sort}
