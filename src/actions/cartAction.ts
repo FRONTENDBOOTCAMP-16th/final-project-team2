@@ -50,7 +50,6 @@ export async function getCarts() {
   const auth = await getAuthUserInfo()
 
   if (!auth) {
-    console.log('로그인된 사용자가 없습니다.')
     return { success: false, message: '세션이 만료되었습니다.' }
   }
 
@@ -146,7 +145,8 @@ export async function addCartItem({
 
   // JS에서 옵션 검증 (객체 키 순서 등의 문제 방지를 위해 문자열 비교 혹은 깊은 비교)
   const existingItem = existingItems?.find(
-    (item) => JSON.stringify(item.selected_options) === JSON.stringify(optionData)
+    (item) =>
+      JSON.stringify(item.selected_options) === JSON.stringify(optionData),
   )
 
   // 제품이 이미 있으면 갯수 추가

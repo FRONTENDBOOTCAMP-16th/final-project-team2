@@ -130,7 +130,5 @@ async function processRegister(formData: FormData): Promise<FormState> {
     category_id: categoryId,
   })
 
-  console.log(data, error)
-
   return redirect('/mypage/seller/products')
 }
