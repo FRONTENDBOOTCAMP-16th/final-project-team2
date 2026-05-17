@@ -1,17 +1,29 @@
-import sanitizeHtml from 'sanitize-html';
+import sanitizeHtml from 'sanitize-html'
 
-export function Sanitize(html: string) {
-  return sanitizeHtml(html || '', {
-    allowedTags: sanitizeHtml.defaults.allowedTags.concat(['img', 'span', 'u', 's', 'iframe']),
+export function sanitizeContent(html: string) {
+  return sanitizeHtml(html, {
+    allowedTags: [
+      'p',
+      'b',
+      'i',
+      'strong',
+      'em',
+      'ul',
+      'ol',
+      'li',
+      'a',
+      'img',
+      'blockquote',
+      'code',
+      'pre',
+      'br',
+    ],
 
     allowedAttributes: {
-      ...sanitizeHtml.defaults.allowedAttributes,
-
-      '*': ['class', 'style'],
-
-      iframe: ['src', 'width', 'height', 'allowfullscreen', 'frameborder'],
+      a: ['href', 'target', 'rel'],
+      img: ['src', 'alt'],
     },
 
-    allowedSchemes: ['http', 'https', 'ftp', 'mailto', 'data'],
-  });
+    allowedSchemes: ['http', 'https', 'mailto'],
+  })
 }

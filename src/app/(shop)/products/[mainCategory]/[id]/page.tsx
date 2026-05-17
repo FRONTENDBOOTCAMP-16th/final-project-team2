@@ -61,7 +61,7 @@ export default async function ProductDetailPage({
           <h2 className="mt-4 mb-4 text-3xl font-bold">추천 상품</h2>
           <Suspense fallback={<Skeleton />}>
             <RecommendProducts
-              mainCategoryName={categoryLabel}
+              mainCategoryKey={mainCategory}
               productId={product.id}
             />
           </Suspense>
