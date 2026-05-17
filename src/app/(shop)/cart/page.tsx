@@ -35,12 +35,12 @@ export default async function CartList() {
   return (
     <div className="mx-auto flex max-w-7xl gap-6 py-6">
       <ul className="w-full">
-        {cart.map((item) => (
+        {cart.map((item, i) => (
           <li key={item.id} className="relative flex items-start gap-4 p-4">
             {/* 상품 이미지 */}
             <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-md bg-gray-100 sm:h-24 sm:w-24">
               <ProductImage
-                priority
+                preload={i === 0}
                 src={item.product?.thumbnail_image || ''}
                 alt={item.product?.name || ''}
               />

@@ -30,6 +30,7 @@ const RecommendProducts = async ({
       <ProductsCardList>
         {products.map((product, i) => (
           <ProductsCard
+            preload={i < 4}
             key={product.id}
             category={mainCategoryKey}
             product={product}

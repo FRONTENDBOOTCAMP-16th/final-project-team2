@@ -17,10 +17,12 @@ interface ProductCardProps {
   sort?: string
   onImageLoad?: () => void
   inventoryTag?: boolean
+  preload: boolean
 }
 
 export default function ProductsCard({
   product,
+  preload,
   category,
   onImageLoad,
   inventoryTag,
@@ -43,7 +45,7 @@ export default function ProductsCard({
       <Link href={`${baseUrl}/${category}/${product.id}`} className="block">
         <div className="relative aspect-square w-70.5 overflow-hidden border-2 border-gray-200 transition-transform duration-400 hover:scale-103">
           <ProductImage
-            priority
+            preload={preload}
             src={product.thumbnail_image}
             alt={product_name}
             onLoadComplete={onImageLoad}

@@ -33,6 +33,7 @@ export default function RecommendMDClient({
             key={product.id}
             product={product}
             category={mainCategories[i]}
+            preload={i === 0}
           />
         ))}
       </ul>
