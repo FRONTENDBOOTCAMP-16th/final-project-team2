@@ -1,24 +1,13 @@
-import { getProductsAll } from '@/api/getProductAll'
+import { ProductWithCategory } from '@/api/getProductAll'
 import ProductsCard from '@/app/components/ProductsCard'
 
 interface SearchCardWrapProps {
-  maxProducts: number
-  page: number
-  keyword?: string
+  products: ProductWithCategory[]
 }
 
-export default async function SearchCardWrap({
-  maxProducts,
-  page,
-  keyword,
+export default function SearchCardWrap({
+  products
 }: SearchCardWrapProps) {
-  // 검색한 키워드를 받아서 필터링
-  const { products } = await getProductsAll({
-    search: keyword,
-    page,
-    pageSize: maxProducts,
-  })
-
   if (!products || products.length === 0) {
     return (
       <p className="absolute left-1/2 -translate-x-1/2">
