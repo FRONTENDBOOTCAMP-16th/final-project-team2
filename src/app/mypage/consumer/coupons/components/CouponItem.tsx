@@ -25,7 +25,7 @@ export default function CouponItem({ userCoupon }: CouponItemProps) {
     >
       <div className="flex flex-col gap-1">
         <span className="text-lg font-medium">{coupon_details.name}</span>
-        <span className="text-2xl font-bold text-[#FF6B6B]">
+        <span className="text-2xl font-bold text-red-500">
           {discountDisplay} 할인
         </span>
 

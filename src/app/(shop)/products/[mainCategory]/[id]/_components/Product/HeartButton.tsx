@@ -19,7 +19,7 @@ const HeartButton = ({ productId, initialLiked }: HeartButtonProps) => {
   const [showToast, setShowToast] = useState(false)
   const [toastMessage, setToastMessage] = useState('')
 
-  const liked = initialLiked ?? false
+  const liked = initialLiked === true
 
   const handleClick = () => {
     if (isPending) return
