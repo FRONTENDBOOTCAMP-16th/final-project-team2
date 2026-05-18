@@ -10,6 +10,7 @@ export default function ChangePasswordPage() {
 
   return (
     <div className="w-full rounded-2xl bg-white p-10 shadow-md shadow-[#c7c7c7] transition-all sm:w-160">
+      <h2 className='sr-only'>비밀번호 변경</h2>
       <div className="border-be border-[#e0e0e0] pbe-9 text-center text-2xl">
         <strong className="text-[#575A68]">비밀번호 재설정</strong>
       </div>

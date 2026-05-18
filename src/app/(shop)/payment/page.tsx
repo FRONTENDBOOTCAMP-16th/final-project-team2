@@ -9,7 +9,11 @@ import PaymentSelector from "./_components/PaymentSeletor"
 
 export default async function Payment() {
   const cart = await getCarts()
-  const userInfo = await getLocationUserInfo() as UserInfo
+  const userInfo = await getLocationUserInfo() as UserInfo | null
+
+  if (!userInfo) {
+    redirect('/login')
+  }
 
   if (!Array.isArray(cart) || cart.length === 0) {
     redirect('/cart')
@@ -26,6 +30,7 @@ export default async function Payment() {
 
   return (
     <div className="max-w-7xl mx-auto py-6">
+      <h1 className="sr-only">결제</h1>
       <form id="payment-form" action={submitPayment} className="flex gap-6">
         <div className="w-full flex flex-col gap-6">
 

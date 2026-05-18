@@ -40,7 +40,7 @@ export default function Main() {
     <>
       {/* 스와이프 섹션 */}
       <Suspense fallback={<FullSkeleton />}>
-        <SwiperSection swiperList={swiperList} />
+        <SwiperSection srTitle='슬라이드 배너' srSubtitle='새로운 소식을 안내드립니다' swiperList={swiperList} />
       </Suspense>
 
       {/* 오늘의 특가 */}
@@ -71,7 +71,7 @@ export default function Main() {
       {/* 오늘의 신상품 */}
       <section className="min-h-250px sm:min-h-300px relative flex h-138 w-full flex-col justify-center overflow-hidden px-4">
         <Suspense fallback={<FullSkeleton />}>
-          <ProductsNew image="/new_product_bg.png" />
+          <ProductsNew title='오늘의 신상품' subtitle='오늘 올라온 신상품을 확인하세요' image="/new_product_bg.png" />
         </Suspense>
       </section>
 

@@ -30,11 +30,8 @@ export default function PriceBox({ totalOriginPrice, totalDiscountedPrice }: Pri
           </dd>
         </div>
 
-        {/* 구분선 */}
-        <div className="border-t my-4" role="presentation" />
-
         {/* 최종 결제 금액 */}
-        <div className="flex justify-between items-center text-xl font-bold">
+        <div className="mt-4 flex items-center justify-between border-t pt-4 text-xl font-bold">
           <dt>총 결제금액</dt>
           <dd className="text-black-600">
             <span className="sr-only">최종 결제 예정 금액은</span>

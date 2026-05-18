@@ -44,20 +44,21 @@ export default async function MyPageLayout({ children }: LayoutProps) {
 
   return (
     <UserProvider initialUser={initialUser}>
-      <section className="min-h-screen w-full bg-[#FFF8F3] dark:bg-[#25292D] dark:text-black">
+      <h1 className="sr-only">마이페이지</h1>
+      <div className="min-h-screen w-full bg-[#FFF8F3] dark:bg-[#25292D] dark:text-black">
         <div className="mx-auto flex max-w-6xl gap-6 px-4 pt-32">
           <aside className="shrink-0">
             <UserProfile />
             <SideMenu />
           </aside>
-          <main className="flex-1">
+          <div className="flex-1">
             <div className="flex flex-col gap-6">
               <SummaryMenu />
               {children}
             </div>
-          </main>
+          </div>
         </div>
-      </section>
+      </div>
     </UserProvider>
   )
 }
