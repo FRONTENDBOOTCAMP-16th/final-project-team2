@@ -142,8 +142,6 @@ export default function RegisterProductForm() {
     }))
   }
 
-  // 클라이언트 또는 서버측에 둘 중 하나 에러 발생할 수 있으니 체크
-  // -> {clientErrors.name || serverErrors?.name}
   return (
     <form
       action={formAction}
