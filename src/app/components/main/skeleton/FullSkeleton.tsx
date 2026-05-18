@@ -4,8 +4,8 @@ type FullSkeletonProps = {
 
 export default function FullSkeleton({ count = 1 }: FullSkeletonProps) {
   return (
-    <section aria-labelledby="productListLoading">
-      <h2 id="productListLoading" className="sr-only">
+    <section aria-labelledby="productListLoading-2">
+      <h2 id="productListLoading-2" className="sr-only">
         상품 이미지 불러오는 중
       </h2>
 
