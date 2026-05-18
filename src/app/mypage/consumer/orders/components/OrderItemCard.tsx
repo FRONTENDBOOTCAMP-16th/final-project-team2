@@ -45,9 +45,9 @@ export default function OrderItemCard({
               ;(e.currentTarget as HTMLImageElement).src = '/fallback.png'
             }}
           />
-          <h2 className="min-w-0 truncate hover:font-extrabold hover:text-red-500">
+          <span className="min-w-0 truncate hover:font-extrabold hover:text-red-500">
             {order.products.name}
-          </h2>
+          </span>
         </div>
         <p className="text-left whitespace-nowrap tabular-nums">
           {DateFormat(createdAt)}
