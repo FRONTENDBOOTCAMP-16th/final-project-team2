@@ -3,6 +3,14 @@
 import { redirect } from 'next/navigation'
 import { createClient } from '@/utils/supabase/server'
 import { getCarts } from './cartAction'
+import { z } from 'zod'
+
+const paymentFormDataSchema = z.object({
+  zipCode: z.string().min(1, "우편번호를 입력해주세요."),
+  streetAdr: z.string().min(1, "도로명 주소를 입력해주세요."),
+  detailAdr: z.string().optional(),
+  phone: z.string().regex(/^\d+$/, "전화번호는 숫자만 입력해주세요.").min(1, "전화번호를 입력해주세요."),
+})
 
 // 유저 정보 불러오기
 export async function getLocationUserInfo() {
@@ -40,7 +48,11 @@ async function processPayment(formData: FormData) {
     const streetAdr = formData.get('streetAdr') as string
     const detailAdr = formData.get('detailAdr') as string
     const phone = formData.get('phone') as string
-    const totalAdr = `[${zipCode}] ${streetAdr} || ${detailAdr}`
+
+    if (!zipCode || !streetAdr || !phone) {
+      throw new Error('필수 배송지 정보가 누락되었습니다.')
+    }
+    const totalAdr = `[${zipCode}] ${streetAdr} || ${detailAdr || ''}`
 
     const productList = await getCarts()
     if (!Array.isArray(productList) || productList.length === 0) {
@@ -57,7 +69,7 @@ async function processPayment(formData: FormData) {
       const itemDiscountRate = item.product?.discount_rate || 0
 
       const originalPrice = itemPrice * itemQuantity
-      const discountedPrice = Math.floor((itemPrice * (1 - itemDiscountRate / 100)) * itemQuantity)
+      const discountedPrice = Math.round((itemPrice * (100 - itemDiscountRate) / 100) * itemQuantity)
       const itemDiscountAmount = originalPrice - discountedPrice
 
       total_price += originalPrice
@@ -74,9 +86,9 @@ async function processPayment(formData: FormData) {
     const orderData = {
       user_id: user.id,
       order_status: 'PENDING',
-      total_price: Math.floor(total_price),
-      discount_amount: Math.floor(discount_amount),
-      final_price: Math.floor(total_price - discount_amount),
+      total_price: Math.round(total_price),
+      discount_amount: Math.round(discount_amount),
+      final_price: Math.round(total_price - discount_amount),
       shipping_address: totalAdr,
       shipping_phone: phone,
     }
@@ -88,11 +100,9 @@ async function processPayment(formData: FormData) {
       .select('id')
       .single()
 
-    if (orderError) {
-      throw new Error(`주문서 생성 에러: ${orderError.message}`)
-    }
-    if (!createdOrder) {
-      throw new Error('주문서 생성에 실패했습니다. (데이터 반환 없음)')
+    if (orderError || !createdOrder) {
+      console.error("Order Create Error:", orderError)
+      throw new Error('주문서 생성에 실패했습니다. 잠시 후 다시 시도해주세요.')
     }
 
     const finalOrderItemsArray = orderItemsArray.map(item => ({
@@ -105,11 +115,16 @@ async function processPayment(formData: FormData) {
       .insert(finalOrderItemsArray)
 
     if (itemsError) {
+      console.error("Order Items Create Error:", itemsError)
       await supabase.from('orders').delete().eq('id', createdOrder.id)
-      throw new Error(`주문 상세 정보 저장 에러: ${itemsError.message}`)
+      throw new Error('주문 상세 정보 저장에 실패했습니다.')
     }
 
-    await supabase.from('cart_items').delete().eq('user_id', user.id)
+    const { error: cartError } = await supabase.from('cart_items').delete().eq('user_id', user.id)
+    if (cartError) {
+      console.error("Cart Delete Error after Order:", cartError)
+    }
+
     return createdOrder.id // 성공 시 orderId 반환 (try 블록 밖에서 redirect 하기 위함)
 
   } catch (error) {
