@@ -26,8 +26,8 @@ export default function NavList({
   title,
 }: NaviListProps) {
   return (
-    <nav aria-label={label} className={className}>
-      <h2 className='sr-only'>{title}</h2>
+    <nav aria-label={label} aria-labelledby={label} className={className}>
+      <h2 className='sr-only' id={label}>{title}</h2>
       <ul className="flex gap-3">
         {items.map((item, index) => (
           <li key={index} className="group relative items-center flex">
@@ -58,9 +58,9 @@ export default function NavList({
                 type="button"
               >
                 {item.icon ? (
-                  <p className="rounded-full bg-[#F5F5F5] p-1.5 dark:bg-black">
+                  <span className="block rounded-full bg-[#F5F5F5] p-1.5 dark:bg-black">
                     {item.icon}
-                  </p>
+                  </span>
                 ) : (
                   <>{item.text}</>
                 )}

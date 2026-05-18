@@ -41,7 +41,7 @@ export default function Header() {
 
   return (
     <>
-      <NavList title='서브 메뉴바' label="convenience-menu" items={convenienceMenu} />
+      <NavList title='유저 서비스 메뉴' label="convenience-menu" items={convenienceMenu} />
 
       {/* 로그인 모달 */}
       {isLogoutModal && (
