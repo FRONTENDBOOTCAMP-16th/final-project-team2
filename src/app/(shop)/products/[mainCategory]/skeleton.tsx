@@ -6,11 +6,7 @@ type ProductListSkeletonProps = {
 
 export default function Skeleton({ count = 12 }: ProductListSkeletonProps) {
   return (
-    <section aria-labelledby="productListLoading">
-      <h2 id="productListLoading" className="sr-only">
-        상품 목록 불러오는 중
-      </h2>
-
+    <section aria-label="상품 목록 불러오는 중">
       <ProductsCardList>
         {Array.from({ length: count }).map((_, i) => (
           <li key={i} className="animate-pulse">

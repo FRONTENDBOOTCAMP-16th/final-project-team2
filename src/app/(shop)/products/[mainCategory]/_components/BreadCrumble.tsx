@@ -7,10 +7,7 @@ type categoryProps = {
 
 const BreadCrumble = ({ category }: categoryProps) => {
   return (
-    <nav aria-labelledby="breadcrumb">
-      <h1 id="breadcrumb" className="sr-only">
-        현재 메뉴 위치
-      </h1>
+    <>
       <ol className="flex items-center gap-2 text-sm text-gray-500">
         <li>
           <Link
@@ -28,7 +25,7 @@ const BreadCrumble = ({ category }: categoryProps) => {
           {category}
         </li>
       </ol>
-    </nav>
+    </>
   )
 }
 

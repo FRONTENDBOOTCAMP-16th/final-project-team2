@@ -47,13 +47,7 @@ export default function Pagination({ pageSize, totalCount }: PaginationProps) {
   }
 
   return (
-    <nav
-      aria-labelledby="pagination"
-      className="pagination mt-24 mb-20 flex items-center justify-center gap-3"
-    >
-      <h1 className="sr-only" id="pagination">
-        페이지 이동 버튼
-      </h1>
+    <div className="pagination mt-24 mb-20 flex items-center justify-center gap-3">
       {currentPage === 1 ? (
         <span className={paginationButton.disabled} aria-hidden>
           <ChevronLeft />
@@ -140,6 +134,6 @@ export default function Pagination({ pageSize, totalCount }: PaginationProps) {
           <ChevronRight />
         </Link>
       )}
-    </nav>
+    </div>
   )
 }
