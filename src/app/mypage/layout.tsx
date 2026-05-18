@@ -51,12 +51,12 @@ export default async function MyPageLayout({ children }: LayoutProps) {
             <UserProfile />
             <SideMenu />
           </aside>
-          <main className="flex-1">
+          <div className="flex-1">
             <div className="flex flex-col gap-6">
               <SummaryMenu />
               {children}
             </div>
-          </main>
+          </div>
         </div>
       </div>
     </UserProvider>
