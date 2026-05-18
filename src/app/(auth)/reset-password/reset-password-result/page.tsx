@@ -3,6 +3,7 @@ import Link from 'next/link'
 export default function ResetPasswordResultPage() {
   return (
     <div className="flex w-full flex-col rounded-2xl bg-white p-10 shadow-md shadow-[#c7c7c7] transition-all sm:w-160">
+      <h2 className='sr-only'>비밀번호 메일 전송</h2>
       <div className="border-be border-[#e0e0e0] pbe-9 text-center text-2xl">
         <strong className="text-[#575A68]">비밀번호 메일 전송</strong>
       </div>
