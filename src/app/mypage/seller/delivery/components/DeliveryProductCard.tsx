@@ -9,10 +9,10 @@ export default function DeliveryProductCard({ order }: { order: OrderItem }) {
   return (
     <div className="mb-2 flex gap-5 border-b border-gray-300 p-4 font-semibold">
       <div className="flex w-1/10 shrink-0">
-        <h2 className="w-32 leading-snug break-all">{order.invoice_number}</h2>
+        <p className="w-32 leading-snug break-all">{order.invoice_number}</p>
       </div>
       <div className="flex w-3/10 shrink-0 justify-center truncate">
-        <h2>{order.products.name}</h2>
+        <span>{order.products.name}</span>
       </div>
 
       <div className="flex w-1/10 shrink-0">
