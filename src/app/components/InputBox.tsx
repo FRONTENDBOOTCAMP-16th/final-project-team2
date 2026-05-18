@@ -96,7 +96,7 @@ export default function InputBox({
         onFocus={handleFocus}
         onBlur={handleBlur}
       />
-      <p className="mbs-1 text-red-600" aria-live="polite" aria-hidden="true">
+      <p className="mbs-1 text-red-600" aria-live="polite">
         {displayError}
       </p>
 
