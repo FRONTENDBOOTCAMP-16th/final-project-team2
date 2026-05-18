@@ -9,8 +9,13 @@ type Props = {
 
 export default function TabStoreInfo({ store, seller }: Props) {
   return (
-    <section className="mt-8 rounded-2xl border border-gray-200 bg-white p-6 dark:bg-[#25292D]">
-      <h2 className="text-2xl font-semibold">가게 정보</h2>
+    <section
+      aria-labelledby="storeTab"
+      className="mt-8 rounded-2xl border border-gray-200 bg-white p-6 dark:bg-[#25292D]"
+    >
+      <h2 id="storeTab" className="text-2xl font-semibold">
+        가게 정보
+      </h2>
 
       <div className="mt-6 flex flex-col gap-6 md:flex-row md:items-center">
         <div className="relative h-28 w-28 overflow-hidden rounded-full border border-gray-200 bg-gray-100">

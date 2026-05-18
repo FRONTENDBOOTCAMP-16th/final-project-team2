@@ -35,8 +35,13 @@ const ReviewChart = ({ reviews, average_grade }: ReviewProps) => {
   ]
 
   return (
-    <article className="mx-auto max-w-7xl px-4 py-12">
-      <h2 className="text-2xl font-semibold">고객 리뷰</h2>
+    <article
+      aria-labelledby="customerReviewChart"
+      className="mx-auto max-w-7xl px-4 py-12"
+    >
+      <h2 id="customerReviewChart" className="text-2xl font-semibold">
+        고객 리뷰 차트
+      </h2>
 
       <div className="mt-6 grid gap-6 rounded-2xl border border-gray-200 bg-white p-6 md:grid-cols-[260px_1fr]">
         <div className="flex flex-col items-center justify-center border-b border-gray-200 pb-6 md:border-r md:border-b-0 md:pr-6 md:pb-0">
