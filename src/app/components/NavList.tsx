@@ -26,8 +26,8 @@ export default function NavList({
   title,
 }: NaviListProps) {
   return (
-    <nav aria-label={label} className={className}>
-      <h2 className='sr-only'>{title}</h2>
+    <nav aria-label={label} aria-labelledby={label} className={className}>
+      <h2 className='sr-only' id={label}>{title}</h2>
       <ul className="flex gap-3">
         {items.map((item, index) => (
           <li key={index} className="group relative items-center flex">
