@@ -31,6 +31,7 @@ export default function RecommendMDClient({
             key={product.id}
             product={product}
             category={product.category_path}
+            preload={false}
           />
         ))}
       </ul>

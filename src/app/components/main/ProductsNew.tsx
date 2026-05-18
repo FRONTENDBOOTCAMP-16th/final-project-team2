@@ -17,7 +17,6 @@ export default async function ProductsNew({ image }: ProductsNewProps) {
   }
 
   const firstProduct = products[0]
-  console.log('??', firstProduct)
   
   return (
     <>
