@@ -98,11 +98,13 @@ function ProductsCard({
         </div>
       </Link>
 
-      <div
-        className="absolute right-3 bottom-17 flex aspect-square"
-        aria-label={`${product_name} 찜하기`}
-      >
-        <HeartButton productId={product.id} initialLiked={isLiked} />
+      <div className="absolute right-3 bottom-17 flex aspect-square">
+        <HeartButton
+          aria-hidden="true"
+          productId={product.id}
+          initialLiked={isLiked}
+          product_name={product_name}
+        />
       </div>
     </li>
   )

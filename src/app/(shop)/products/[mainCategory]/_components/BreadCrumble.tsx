@@ -21,7 +21,9 @@ const BreadCrumble = ({ category }: categoryProps) => {
             <HomeIcon className="h-5 w-5" />
           </Link>
         </li>
-        <ChevronRight className="h-4 w-4" />
+        <li aria-hidden>
+          <ChevronRight className="h-4 w-4" />
+        </li>
         <li className="text-lg font-medium text-black dark:text-white">
           {category}
         </li>

@@ -47,8 +47,10 @@ export default async function ProductListPage({
         <FilterCategory mainCategory={mainCategory} />
         <Sort />
       </div>
-      <main id="main-content">
-        <h2 className="sr-only">상품 목록</h2>
+      <section aria-labelledby="product_list">
+        <h2 id="product_list" className="sr-only">
+          상품 목록
+        </h2>
         <Suspense fallback={<Skeleton />}>
           <ProductListFetcher
             page={page}
@@ -59,7 +61,7 @@ export default async function ProductListPage({
             pagination={true}
           />
         </Suspense>
-      </main>
+      </section>
     </div>
   )
 }
