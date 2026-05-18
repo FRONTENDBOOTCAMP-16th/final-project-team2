@@ -31,7 +31,7 @@ export default function AuthGuardPage() {
           <div className="flex w-full justify-center gap-3">
             <button
               onClick={handleClose}
-              className="rounded-xl border border-gray-300 px-5 py-2.5 text-sm font-medium text-gray-500 transition-colors hover:bg-gray-100"
+              className="rounded-xl border border-white px-5 py-2.5 text-sm font-medium text-black transition-colors hover:bg-gray-100"
             >
               취소
             </button>

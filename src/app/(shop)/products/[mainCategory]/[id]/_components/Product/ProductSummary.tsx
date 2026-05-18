@@ -60,7 +60,7 @@ const ProductSummary = ({
             {DiscountPriceFormat(products.price, products.discount_rate)}
           </dd>
         </dl>
-        <div className="discountBadge mt-2 flex h-7 w-20.5 items-center justify-center bg-red-500 pt-1 pr-3 pb-1 pl-3">
+        <div className="discountBadge mt-2 flex h-7 w-20.5 items-center justify-center bg-red-600 pt-1 pr-3 pb-1 pl-3">
           <p className="text-white">{products.discount_rate}%</p>
         </div>
       </div>

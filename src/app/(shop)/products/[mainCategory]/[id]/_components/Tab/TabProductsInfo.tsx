@@ -28,9 +28,18 @@ export default function TabProductsInfo({
   const [activeTab, setActiveTab] = useState<TabType>('detail')
 
   return (
-    <article className="mx-auto mt-16 max-w-7xl px-4">
+    <article
+      aria-labelledby="product_tab"
+      className="mx-auto mt-16 max-w-7xl px-4"
+    >
+      <h2 id="product_tab" className="sr-only">
+        제품 상세 설명
+      </h2>
       <header className="sticky top-17 z-30 border-b border-gray-200 bg-white pl-4 dark:bg-black dark:text-white">
-        <nav aria-label="상품 상세 탭">
+        <nav aria-labelledby="product_detail_tab">
+          <h3 id="product_detail_tab" className="sr-only">
+            제품 상세 탭
+          </h3>
           <div
             role="tablist"
             className="flex items-center gap-8 overflow-x-auto"
