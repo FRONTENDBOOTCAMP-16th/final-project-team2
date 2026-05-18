@@ -9,7 +9,7 @@ import SimpleToast from '@/app/components/SimpleToast'
 import { emailSchema, passwordSchema } from '@/app/lib/auth'
 
 export default function LoginPage() {
-  const [state, formAction] = useActionState(loginAction, null)
+  const [state, formAction, isPending] = useActionState(loginAction, null)
 
   return (
     <div className="w-full rounded-2xl bg-white p-10 shadow-md shadow-[#c7c7c7] transition-all sm:w-160">
@@ -66,7 +66,6 @@ export default function LoginPage() {
         <p
           className="mbs-1 text-center text-red-600"
           aria-live="polite"
-          aria-hidden="true"
         >
           {state?.errors?.root?.[0]}
         </p>
