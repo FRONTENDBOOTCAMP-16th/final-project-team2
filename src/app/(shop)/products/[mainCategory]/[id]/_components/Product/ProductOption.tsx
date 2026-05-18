@@ -7,6 +7,7 @@ type ProductOptionProps = {
   discount_rate: number
   maxCount: number
   options: ProductOptionType[] | null
+  name: string
 }
 
 const ProductOption = ({
@@ -15,10 +16,12 @@ const ProductOption = ({
   discount_rate,
   maxCount,
   options,
+  name,
 }: ProductOptionProps) => {
   return (
     <ProductOptionClient
       productId={productId}
+      product_name={name}
       price={price}
       discount_rate={discount_rate}
       maxCount={maxCount}

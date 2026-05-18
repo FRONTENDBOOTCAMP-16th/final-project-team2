@@ -46,6 +46,7 @@ const ProductInfoComponent = ({
 
           <div className="mt-8 min-h-60">
             <ProductOption
+              name={product.name}
               productId={product.id}
               price={product.price}
               discount_rate={product.discount_rate}

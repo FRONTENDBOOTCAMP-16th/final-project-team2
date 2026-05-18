@@ -16,11 +16,13 @@ interface Props {
   discount_rate: number
   maxCount: number
   options: ProductOptionType[] | null
+  product_name: string
 }
 
 export default function ProductOptionClient({
   productId,
   price,
+  product_name,
   discount_rate,
   maxCount,
   options,
@@ -212,7 +214,11 @@ export default function ProductOptionClient({
             <span className="text-white">구매하기</span>
           </button>
           <div className="mt-2 flex aspect-square w-15 items-center justify-center rounded-xl border border-gray-300 bg-white p-2 transition hover:bg-gray-100">
-            <HeartButton productId={productId} initialLiked={isLiked} />
+            <HeartButton
+              product_name={product_name}
+              productId={productId}
+              initialLiked={isLiked}
+            />
           </div>
         </div>
       </div>
