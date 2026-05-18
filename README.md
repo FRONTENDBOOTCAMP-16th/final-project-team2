@@ -111,23 +111,28 @@ src/
 
 ```jsx
 # 🚀 사용 방법
+```
+```jsx
+# 1. 프로젝트 실행
+```
 
-# 1. env 설정
+```jsx
+# 2. 저장소 클론
+git clone https://github.com/your-repo/final-project-team2.git
+```
+
+```jsx
+# 3. 폴더 이동
+cd final-project-team2
+```
+
+```jsx 
+# 4. env 설정
 NEXT_PUBLIC_SUPABASE_URL="https://[여기는본인의고유알파벳].supabase.co"
 NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY="공개키"
 SUPABASE_SERVICE_ROLE_KEY="서버 전용 관리자 키"
 ```
-```jsx
-# 2. 프로젝트 실행
-```
-```jsx
-# 3. 저장소 클론
-git clone https://github.com/your-repo/final-project-team2.git
-```
-```jsx 
-# 4. 폴더 이동
-cd final-project-team2
-```
+
 ```jsx 
 # 5. 패키지 설치
 bun install
