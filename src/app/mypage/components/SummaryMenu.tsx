@@ -112,7 +112,6 @@ export default function SummaryMenu() {
   // 데이터가 이미 존재한다면 스켈레톤을 보여주지 않도록 순서 제어
   const hasData = data.count1 !== 0 || data.count2 !== 0 || data.text3 !== ''
 
-
   if ((isUserLoading || isDataLoading) && !hasData) {
     return (
       <div className="mx-auto flex w-full max-w-4xl animate-pulse gap-6">
@@ -150,16 +149,21 @@ export default function SummaryMenu() {
   const currentStats = STATS_CONFIG[role]
 
   return (
-    <div className="mx-auto flex w-full max-w-4xl gap-6">
-      {currentStats.map((stat) => (
-        <StatCard
-          key={stat.label}
-          label={stat.label}
-          value={getMappedValue(stat.key)}
-          href={stat.href}
-          icon={stat.icon}
-        />
-      ))}
-    </div>
+    <section aria-labelledby="summary-title">
+      <h2 id="summary-title" className="sr-only">
+        요약 정보
+      </h2>
+      <div className="mx-auto flex w-full max-w-4xl gap-6">
+        {currentStats.map((stat) => (
+          <StatCard
+            key={stat.label}
+            label={stat.label}
+            value={getMappedValue(stat.key)}
+            href={stat.href}
+            icon={stat.icon}
+          />
+        ))}
+      </div>
+    </section>
   )
 }
