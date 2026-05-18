@@ -51,7 +51,10 @@ export default function SideMenu() {
 
   return (
     <aside className="w-full max-w-[204px] bg-white">
-      <nav aria-label="마이페이지 메뉴">
+      <nav aria-labelledby="sidemenu-title">
+        <h2 id="sidemenu-title" className="sr-only">
+          마이페이지 메뉴
+        </h2>
         <ul className="flex flex-col">
           {currentMenu.map((menu) => {
             const isActive = pathname.startsWith(menu.href)

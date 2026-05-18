@@ -10,8 +10,8 @@ export default function CouponPage() {
   const { coupons, isLoading } = useUserCoupons(user?.id)
 
   return (
-    <div className="mb-20 flex w-full flex-col bg-white px-18 py-12">
-      <h1 className="mb-8 text-2xl font-bold">내 쿠폰함</h1>
+    <section className="mb-20 flex w-full flex-col bg-white px-18 py-12">
+      <h2 className="mb-8 text-2xl font-bold">내 쿠폰함</h2>
 
       {isLoading ? (
         <div className="flex flex-col gap-4">
@@ -23,6 +23,6 @@ export default function CouponPage() {
       ) : (
         <CouponList initialCoupons={coupons} />
       )}
-    </div>
+    </section>
   )
 }

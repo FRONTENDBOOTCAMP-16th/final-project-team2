@@ -28,6 +28,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
 
   return (
     <div className="mx-auto mt-5 max-w-7xl px-4 sm:px-6 lg:px-8">
+      <h2 className='sr-only'>검색 완료</h2>
       {/* 검색 결과 헤더 */}
       <div className="text-center mt-15">
         <h1 className="mt-3 text-4xl font-bold">{keyword ? keyword : '전체 상품'}</h1>
@@ -36,7 +37,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
         </p>
       </div>
 
-      <main id="main-content" className="mt-44 flex flex-wrap gap-6 justify-start [&_li]:list-none">
+      <section id="main-content-search" className="mt-44 flex flex-wrap gap-6 justify-start [&_li]:list-none">
         {/* 카드리스트 읽어옴 */}
         <div className="grid w-full grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 [&_a>div]:w-full!">
           <SearchCardWrap products={data.products} />
@@ -48,7 +49,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
             <Pagination pageSize={MAX_PAGE_SIZE} totalCount={data.totalCount} />
           </div>
         )}
-      </main>
+      </section>
     </div>
   );
 }
