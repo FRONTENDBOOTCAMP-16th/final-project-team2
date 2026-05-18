@@ -18,7 +18,13 @@ export default function Review({ reviews }: ReviewListProps) {
   }
 
   return (
-    <section className="mx-auto max-w-7xl px-4 py-12">
+    <section
+      aria-labelledby="reviewTab"
+      className="mx-auto max-w-7xl px-4 py-12"
+    >
+      <h2 id="reviewTab" className="sr-only">
+        리뷰 탭
+      </h2>
       <ul>
         {reviews.map((review) => (
           <li

@@ -48,6 +48,7 @@ export default async function ProductListPage({
         <Sort />
       </div>
       <main id="main-content">
+        <h2 className="sr-only">상품 목록</h2>
         <Suspense fallback={<Skeleton />}>
           <ProductListFetcher
             page={page}

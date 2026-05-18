@@ -24,8 +24,10 @@ const RecommendProducts = async ({
   }
 
   return (
-    <section className="mt-20">
-      <h2 className="mb-6 text-2xl font-semibold">추천 상품</h2>
+    <section aria-labelledby="RecommendProducts" className="mt-20">
+      <h3 id="RecommendProducts" className="mb-6 text-2xl font-semibold">
+        추천 상품
+      </h3>
 
       <ProductsCardList>
         {products.map((product) => (
