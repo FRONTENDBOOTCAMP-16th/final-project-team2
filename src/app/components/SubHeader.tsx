@@ -14,6 +14,7 @@ export default function SubHeader() {
       items={mainMenu}
       className="md:absolute md:left-1/2 md:-translate-x-1/2"
       mainMenu
+      title='메인 메뉴바'
     />
   )
 }

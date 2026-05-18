@@ -4,9 +4,11 @@ import MainMoreDetail from './MainMoreDetail'
 
 interface ProductsNewProps {
   image: string
+  title: string
+  subtitle: string
 }
 
-export default async function ProductsNew({ image }: ProductsNewProps) {
+export default async function ProductsNew({ image, title, subtitle }: ProductsNewProps) {
   const { products } = await getProductsAll({
     page: 1,
     pageSize: 1,
@@ -20,6 +22,8 @@ export default async function ProductsNew({ image }: ProductsNewProps) {
   
   return (
     <>
+      <h2 className='sr-only'>{title}</h2>
+      <p className='sr-only'>{subtitle}</p>
       <Image
         src={image}
         alt=""
