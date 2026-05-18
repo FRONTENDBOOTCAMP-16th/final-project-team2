@@ -26,7 +26,7 @@ export default function RecommendMDClient({
   return (
     <>
       <ul className="grid w-full grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-        {visibleProducts.map((product, i) => (
+        {visibleProducts.map((product) => (
           <ProductsCard
             key={product.id}
             product={product}
