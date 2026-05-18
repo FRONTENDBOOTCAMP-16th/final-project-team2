@@ -39,7 +39,7 @@ export default function TotalPriceBox({ cart, totalOriginPrice, totalDiscountedP
             const selectedOptionsEntries = item.selected_options ? Object.entries(item.selected_options) : []
 
             return (
-              <li key={item.id} className="flex flex-col border-b border-gray-50 pb-2 last:border-0">
+              <li key={item.id} className="flex flex-col border-b border-gray-400 pb-2 last:border-0 dark:border-gray-600 last:pb-0">
                 <div className="flex justify-between text-sm font-medium">
                   <span className="text-gray-800 truncate w-2/3 dark:text-gray-200">
                     {product?.name ?? '상품 정보 없음'}
@@ -81,8 +81,7 @@ export default function TotalPriceBox({ cart, totalOriginPrice, totalDiscountedP
           <dt>할인금액</dt>
           <dd>-{totalDiscountAmount.toLocaleString()}원</dd>
         </div>
-        <div className="border-t my-4" />
-        <div className="flex justify-between items-center text-xl font-bold">
+        <div className="mt-4 flex items-center justify-between border-t pt-4 text-xl font-bold">
           <dt>총 결제금액</dt>
           <dd className="text-blue-600">{totalDiscountedPrice.toLocaleString()}원</dd>
         </div>

@@ -41,29 +41,23 @@ export default function PostListCard({
         <div className="flex w-full">
           <div className="flex w-1/2 items-center justify-start gap-1">
             {important && (
-              <strong
-                className="shrink-0 bg-orange-600 px-2 py-1 text-xs font-normal text-white"
-                aria-label="중요 공지"
-              >
+              <span className="shrink-0 bg-orange-600 px-2 py-1 text-xs text-white">
+                <span className="sr-only">중요 공지: </span>
                 필독
-              </strong>
+              </span>
             )}
 
             {isAnswered !== undefined &&
               (isAnswered ? (
-                <strong
-                  className="shrink-0 bg-green-600 px-2 py-1 text-xs font-normal text-white"
-                  aria-label="답변 완료"
-                >
+                <span className="shrink-0 bg-green-600 px-2 py-1 text-xs text-white">
+                  <span className="sr-only">상태: </span>
                   답변완료
-                </strong>
+                </span>
               ) : (
-                <strong
-                  className="shrink-0 bg-gray-400 px-2 py-1 text-xs font-normal text-white"
-                  aria-label="답변 대기"
-                >
+                <span className="shrink-0 bg-gray-400 px-2 py-1 text-xs text-white">
+                  <span className="sr-only">상태: </span>
                   답변대기
-                </strong>
+                </span>
               ))}
 
             <p className="ml-1 truncate">{data.title}</p>

@@ -45,6 +45,7 @@ export default async function qnaList({
           <Link
             href={'/inquire/write'}
             className="bg-gray-100 dark:bg-gray-800 px-4 py-2 text-black dark:text-white"
+            aria-label="새 1:1 문의 글쓰기"
           >
             글쓰기
           </Link>

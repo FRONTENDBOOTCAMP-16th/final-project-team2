@@ -6,14 +6,20 @@ import Link from 'next/link'
 import { ShoppingBag } from 'lucide-react'
 
 import ProductImage from '../products/[mainCategory]/_components/ProductImage'
+import LoginRequiredModal from '@/app/components/board/LoginRequiredModal'
 
 export default async function CartList() {
   const cart = await getCarts()
 
-  if (!Array.isArray(cart) || cart.length === 0) {
+  if (!Array.isArray(cart)) {
+    return <LoginRequiredModal />
+  }
+
+  if (cart.length === 0) {
     return (
       <div className="flex h-full min-h-180 w-full flex-col items-center justify-center gap-4">
-        <p className="text-8xl">
+        <h1 className="sr-only">장바구니</h1>
+        <p className="text-8xl" aria-hidden="true">
           <ShoppingBag size={96} />
         </p>
         <p className="text-2xl font-bold">장바구니가 비었어요!</p>
@@ -33,7 +39,8 @@ export default async function CartList() {
   }, 0)
 
   return (
-    <div className="mx-auto flex max-w-7xl gap-6 py-6">
+    <div className="mx-auto flex max-w-7xl gap-6 py-6 relative">
+      <h1 className="sr-only">장바구니</h1>
       <ul className="w-full">
         {cart.map((item, i) => (
           <li key={item.id} className="relative flex items-start gap-4 p-4">
