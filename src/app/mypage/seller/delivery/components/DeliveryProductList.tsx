@@ -35,13 +35,12 @@ export default function DeliveryProductList() {
 
   return (
     <div className="flex flex-col">
+      <div className="self-end">
+        <OrderStatusFilter value={status} statusChange={handleOptionChange} />
+      </div>
       {hasItems ? (
         <>
           <div className="flex flex-col px-5">
-            <OrderStatusFilter
-              value={status}
-              statusChange={handleOptionChange}
-            />
             <div>
               <DeliveryProductHeader />
               <ul>
