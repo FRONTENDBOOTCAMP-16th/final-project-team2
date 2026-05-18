@@ -11,11 +11,8 @@ export default function ProductDescription({
   onChange,
   onBlur,
 }: Props) {
-  //  작성할 때마다 밑에 오류 메시지가 깜빡 깜빡 되는 부분을 리펙토링 과정 필요
-
   return (
     <div className="flex flex-col gap-2">
-      {/* 상품 정보 */}
       <label htmlFor="productDescription" className="text-sm">
         상품 정보
       </label>
