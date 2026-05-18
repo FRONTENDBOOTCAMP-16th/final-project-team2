@@ -1,17 +1,18 @@
 'use client'
 
 import { useProductFilter } from '@/hooks/useFiltering'
+import { useId } from 'react'
 
 export default function Sort() {
   const { sort, changeFilter } = useProductFilter()
-
+  const sortId = useId()
   return (
     <>
-      <label htmlFor="sort" className="sr-only">
+      <label htmlFor={sortId} className="sr-only">
         정렬
       </label>
       <select
-        id="sort"
+        id={sortId}
         value={sort}
         onChange={(e) =>
           changeFilter({
