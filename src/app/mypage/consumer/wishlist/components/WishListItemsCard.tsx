@@ -38,7 +38,7 @@ export default function WishListItemCard({ order }: Props) {
           height={282}
           className="h-70.5 w-full"
           src={product.thumbnail_image}
-          alt=""
+          alt={`${product.name} 상품 이미지`}
           onError={(e) => {
             ;(e.currentTarget as HTMLImageElement).src = '/fallback.png'
           }}
@@ -49,9 +49,9 @@ export default function WishListItemCard({ order }: Props) {
           {product.product_categories?.categories.name}
         </p>
         <div className="flex justify-between">
-          <h2 className="w-50 self-center truncate text-[18px] font-bold">
+          <span className="w-50 self-center truncate text-[18px] font-bold">
             {product.name}
-          </h2>
+          </span>
           <HeartButton
             product_name={order.products.name}
             productId={order.product_id}
