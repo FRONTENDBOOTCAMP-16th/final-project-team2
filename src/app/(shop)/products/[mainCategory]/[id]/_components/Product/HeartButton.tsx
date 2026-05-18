@@ -10,9 +10,14 @@ import { Fragment, useState } from 'react'
 type HeartButtonProps = {
   productId: string
   initialLiked?: boolean
+  product_name: string
 }
 
-const HeartButton = ({ productId, initialLiked }: HeartButtonProps) => {
+const HeartButton = ({
+  productId,
+  initialLiked,
+  product_name,
+}: HeartButtonProps) => {
   const { isLogin } = useAuth()
   const [isOpen, setIsOpen] = useState(false)
   const { mutate, isPending } = useToggleWishList()
@@ -52,7 +57,9 @@ const HeartButton = ({ productId, initialLiked }: HeartButtonProps) => {
         type="button"
         onClick={handleClick}
         disabled={isPending}
-        aria-label={liked ? '찜 취소' : '찜 추가'}
+        aria-label={
+          liked ? `${product_name} 찜 취소` : `${product_name} 찜 추가`
+        }
         className="disabled:cursor-not-allowed disabled:opacity-50"
       >
         <Heart
