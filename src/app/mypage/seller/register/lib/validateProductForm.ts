@@ -33,8 +33,8 @@ const validators: Partial<
   productDescription: (value) => {
     const text = value.trim()
     if (!text) return '상품 정보를 입력하세요.'
-    if (!/^[가-힣0-9\s\n.,!?~"'""''%]+$/.test(text))
-      return '한글만 입력 가능합니다.'
+    if (!/^[가-힣a-zA-Z0-9\s\n.,!?~"'""''%]+$/.test(text))
+      return '한글 및 영문만 입력 가능합니다.'
     if (text.length < 10) return '최소 10자 이상 입력해야 합니다.'
     if (text.length > 500) return '최대 500자까지 입력 가능합니다.'
     return ''
