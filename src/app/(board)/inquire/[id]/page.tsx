@@ -1,7 +1,7 @@
 import { getInquireDetail } from '@/actions/inquireAction'
 import { notFound } from 'next/navigation'
 import { getAuthUserInfo } from '@/actions/getUser'
-import sanitizeHtml from 'sanitize-html'
+import { sanitizeContent } from '@/utils/sanitize'
 import Link from 'next/link'
 import Image from 'next/image'
 import InquireDeleteAction from '@/app/components/board/InquireDeleteAction'
@@ -35,37 +35,8 @@ export default async function QnaDetailPage({
     notFound()
   }
 
-  const cleanQuestion = sanitizeHtml(qna.question_content || '', {
-    allowedTags: sanitizeHtml.defaults.allowedTags.concat([
-      'img',
-      'span',
-      'u',
-      's',
-      'iframe',
-    ]),
-    allowedAttributes: {
-      ...sanitizeHtml.defaults.allowedAttributes,
-      '*': ['class', 'style'],
-      iframe: ['src', 'width', 'height', 'allowfullscreen', 'frameborder'],
-    },
-    allowedSchemes: ['http', 'https', 'ftp', 'mailto', 'data'],
-  })
-
-  const cleanAnswer = sanitizeHtml(qna.answer_content || '', {
-    allowedTags: sanitizeHtml.defaults.allowedTags.concat([
-      'img',
-      'span',
-      'u',
-      's',
-      'iframe',
-    ]),
-    allowedAttributes: {
-      ...sanitizeHtml.defaults.allowedAttributes,
-      '*': ['class', 'style'],
-      iframe: ['src', 'width', 'height', 'allowfullscreen', 'frameborder'],
-    },
-    allowedSchemes: ['http', 'https', 'ftp', 'mailto', 'data'],
-  })
+  const cleanQuestion = sanitizeContent(qna.question_content || '')
+  const cleanAnswer = sanitizeContent(qna.answer_content || '')
 
   const user = await getAuthUserInfo()
 
