@@ -41,7 +41,7 @@ export default function LoginPage() {
             defaultChecked={state?.role === 'ADMIN'}
           />
         </div>
-        <p className="text-red-600" aria-live="polite" aria-hidden="true">
+        <p className="text-red-600" aria-live="polite">
           {state?.errors?.role?.[0]}
         </p>
 
