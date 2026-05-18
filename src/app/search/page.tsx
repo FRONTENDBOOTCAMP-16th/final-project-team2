@@ -28,6 +28,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
 
   return (
     <div className="mx-auto mt-5 max-w-7xl px-4 sm:px-6 lg:px-8">
+      <h2 className='sr-only'>검색 완료</h2>
       {/* 검색 결과 헤더 */}
       <div className="text-center mt-15">
         <h1 className="mt-3 text-4xl font-bold">{keyword ? keyword : '전체 상품'}</h1>
