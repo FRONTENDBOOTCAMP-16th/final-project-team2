@@ -35,15 +35,12 @@ export default async function ProductDetailPage({
   const options = product.options
 
   return (
-    <div
-      aria-labelledby="product-detail-title"
-      className="mx-auto mt-5 mb-38 max-w-7xl px-4 sm:px-6 lg:px-8"
-    >
-      <h2 id="product-detail-title" className="sr-only">
-        제품 상세 페이지
-      </h2>
+    <div className="mx-auto mt-5 mb-38 max-w-7xl px-4 sm:px-6 lg:px-8">
       <BreadCrumble category={categoryLabel} />
-      <main>
+      <section aria-labelledby="product-detail-title">
+        <h2 id="product-detail-title" className="sr-only">
+          제품 상세 페이지
+        </h2>
         <ProductInfoComponent
           reviews={reviews}
           product={product}
@@ -59,7 +56,7 @@ export default async function ProductDetailPage({
           average_grade={average_grade}
         />
 
-        <div aria-labelledby="recommendProductsArea" className="mt-15">
+        <article aria-labelledby="recommendProductsArea" className="mt-15">
           <h2 id="recommendProductsArea" className="sr-only">
             추천 상품 영역
           </h2>
@@ -69,8 +66,8 @@ export default async function ProductDetailPage({
               productId={product.id}
             />
           </Suspense>
-        </div>
-      </main>
+        </article>
+      </section>
     </div>
   )
 }
