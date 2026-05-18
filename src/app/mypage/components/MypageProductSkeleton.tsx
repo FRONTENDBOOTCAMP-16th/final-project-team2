@@ -6,8 +6,8 @@ export default function MyPageProductSkeleton({
   count = 9,
 }: ProductListSkeletonProps) {
   return (
-    <section aria-labelledby="productListLoading" className="mt-15">
-      <h2 id="productListLoading" className="sr-only">
+    <section aria-labelledby="productListLoading5" className="mt-15">
+      <h2 id="productListLoading5" className="sr-only">
         찜한 상품 목록 불러오는 중
       </h2>
 
