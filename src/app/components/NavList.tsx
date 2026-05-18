@@ -58,9 +58,9 @@ export default function NavList({
                 type="button"
               >
                 {item.icon ? (
-                  <p className="rounded-full bg-[#F5F5F5] p-1.5 dark:bg-black">
+                  <span className="block rounded-full bg-[#F5F5F5] p-1.5 dark:bg-black">
                     {item.icon}
-                  </p>
+                  </span>
                 ) : (
                   <>{item.text}</>
                 )}
