@@ -4,7 +4,7 @@ import {
   handleInquireReplyAction,
 } from '@/actions/inquireAction'
 import { notFound } from 'next/navigation'
-import sanitizeHtml from 'sanitize-html'
+import { sanitizeContent } from '@/utils/sanitize'
 import Image from 'next/image'
 
 export default async function ReplyInquirePage({
@@ -19,21 +19,7 @@ export default async function ReplyInquirePage({
 
   // 문의 내용을 알기 위해서 불러오고
   // sanitize로 처리하기
-  const cleanQuestion = sanitizeHtml(qna.question_content || '', {
-    allowedTags: sanitizeHtml.defaults.allowedTags.concat([
-      'img',
-      'span',
-      'u',
-      's',
-      'iframe',
-    ]),
-    allowedAttributes: {
-      ...sanitizeHtml.defaults.allowedAttributes,
-      '*': ['class', 'style'],
-      iframe: ['src', 'width', 'height', 'allowfullscreen', 'frameborder'],
-    },
-    allowedSchemes: ['http', 'https', 'ftp', 'mailto', 'data'],
-  })
+  const cleanQuestion = sanitizeContent(qna.question_content || '')
 
   if (!qna) {
     notFound()
