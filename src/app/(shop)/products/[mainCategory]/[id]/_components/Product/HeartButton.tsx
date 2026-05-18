@@ -95,7 +95,7 @@ const HeartButton = ({
             <Link
               aria-label="로그인페이지로 이동하기"
               href="/login"
-              className="flex items-center justify-center rounded-xl bg-white py-3 text-sm font-semibold text-black transition hover:bg-gray-400"
+              className="flex items-center justify-center rounded-xl border-2 bg-white py-3 text-sm font-semibold text-black transition hover:bg-gray-300"
             >
               예
             </Link>
