@@ -52,7 +52,11 @@ export default function WishListItemCard({ order }: Props) {
           <h2 className="w-50 self-center truncate text-[18px] font-bold">
             {product.name}
           </h2>
-          <HeartButton productId={order.product_id} initialLiked={true} />
+          <HeartButton
+            product_name={order.products.name}
+            productId={order.product_id}
+            initialLiked={true}
+          />
         </div>
 
         <div className="flex gap-2">
