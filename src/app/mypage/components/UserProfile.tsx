@@ -87,7 +87,7 @@ export default function UserProfile() {
           {/* 소비자인 경우에만 등급 툴팁을 보여줍니다. */}
           {!isBusiness && <GradeTooltip />}
         </div>
-
+        <h2 className="sr-only">프로필 정보</h2>
         <p className="w-full text-center text-lg">
           <strong className="font-bold text-black">{userName}</strong>님
           반갑습니다.
