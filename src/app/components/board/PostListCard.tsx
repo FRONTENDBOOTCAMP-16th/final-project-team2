@@ -29,7 +29,7 @@ export default function PostListCard({
           <div className="flex w-full items-center gap-2 xl:w-1/3">
             <div className="relative h-10 w-10 shrink-0 xl:h-16 xl:w-16">
               <ProductImage
-                priority
+                preload={true}
                 src={data.product?.thumbnail_image || ''}
                 alt={data.product?.name || ''}
               />

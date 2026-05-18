@@ -4,8 +4,6 @@ import { useState } from 'react'
 import { LucideThumbsUp } from 'lucide-react'
 import { ProductWithCategory } from '@/api/getProductAll'
 import ProductsCard from '../ProductsCard'
-import { mainCategories } from '@/app/(shop)/products/[mainCategory]/lib/category'
-
 export interface RecommendMDClientProps {
   products: ProductWithCategory[]
   maxProducts: number
@@ -33,6 +31,7 @@ export default function RecommendMDClient({
             key={product.id}
             product={product}
             category={mainCategories[i]}
+            preload={i === 0}
           />
         ))}
       </ul>

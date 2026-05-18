@@ -32,6 +32,7 @@ export default async function ProductDetailPage({
   const store = await getStoreDetailInfo({ id: product.store_id })
   const seller = await getSellerUser(store.owner_id)
   const average_grade = await getAverageGrade(product.id)
+  const options = product.options
 
   return (
     <div
@@ -48,6 +49,7 @@ export default async function ProductDetailPage({
           product={product}
           category={categoryLabel}
           average_grade={average_grade}
+          options={options}
         />
         <TabInfoComponent
           product={product}
