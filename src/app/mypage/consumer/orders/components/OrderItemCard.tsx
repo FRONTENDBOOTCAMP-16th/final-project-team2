@@ -40,7 +40,7 @@ export default function OrderItemCard({
             height={80}
             className="h-20 w-20 shrink-0 object-cover"
             src={order.products.thumbnail_image}
-            alt=""
+            alt={`${order.products.name} 상품 이미지`}
             onError={(e) => {
               ;(e.currentTarget as HTMLImageElement).src = '/fallback.png'
             }}
