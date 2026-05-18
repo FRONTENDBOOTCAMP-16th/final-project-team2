@@ -88,7 +88,7 @@ const HeartButton = ({ productId, initialLiked }: HeartButtonProps) => {
             <Link
               aria-label="로그인페이지로 이동하기"
               href="/login"
-              className="flex items-center justify-center rounded-xl bg-gray-300 py-3 text-sm font-semibold text-white transition hover:bg-gray-400"
+              className="flex items-center justify-center rounded-xl bg-white py-3 text-sm font-semibold text-black transition hover:bg-gray-400"
             >
               예
             </Link>
