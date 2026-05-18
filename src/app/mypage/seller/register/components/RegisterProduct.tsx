@@ -11,7 +11,7 @@ import {
   FormState,
   registerProductActionWithState,
 } from '../actions/registerProduct'
-import { useActionState, useState } from 'react'
+import { useActionState, useState, startTransition } from 'react' // 👈 startTransition 추가
 import validateProductForm, { ProductForm } from '../lib/validateProductForm'
 import useOptionForm from '@/hooks/useOptionForm'
 import CategorySelector from './CategorySelector'
@@ -116,7 +116,10 @@ export default function RegisterProductForm() {
       formData.delete('productImage')
       formData.set('thumbnailUrl', publicUrl)
     }
-    formAction(formData)
+
+    startTransition(() => {
+      formAction(formData)
+    })
   }
 
   const handleInputChange = <T extends keyof ProductForm>(
