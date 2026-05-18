@@ -44,6 +44,10 @@ export async function proxy(request: NextRequest) {
     return NextResponse.redirect(url)
   }
 
+  if (path === '/products') {
+    return NextResponse.redirect(new URL('/products/writing', request.url))
+  }
+
   // 회원일 경우 역할(소비자/판매자)에 따라서 서버가 사용자에게 맞는 마이페이지를 보여주도록 함
   if (user) {
     const { data: userProfile } = await supabase
@@ -53,11 +57,6 @@ export async function proxy(request: NextRequest) {
       .single()
 
     const role = userProfile?.role
-    console.log(role)
-
-    if (path === '/products') {
-      return NextResponse.redirect(new URL('/products/write', request.url))
-    }
 
     if (path.startsWith('/mypage/consumer') && role === 'BUSINESS') {
       return NextResponse.redirect(new URL('/mypage/seller', request.url))

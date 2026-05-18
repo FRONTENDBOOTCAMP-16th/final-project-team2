@@ -49,7 +49,7 @@ export default function SearchProducts({ onSelectClose }: SearchProductsProps) {
 
       <ul className="mt-4 flex flex-col gap-2 divide-y divide-gray-400">
         {state.data && state.data.length > 0
-          ? state.data.map((item) => (
+          ? state.data.map((item, i) => (
               <li
                 key={item.id}
                 className="flex items-center justify-between p-4"
@@ -57,7 +57,7 @@ export default function SearchProducts({ onSelectClose }: SearchProductsProps) {
                 <div className="flex items-center gap-4">
                   <div className="relative h-14 w-14">
                     <ProductImage
-                      priority
+                      preload={i === 0}
                       src={item.thumbnail_image}
                       alt={item.name}
                     />

@@ -25,7 +25,7 @@ export default function ProductInfo() {
         <div className="flex items-center gap-3">
           <div className="relative h-16 w-16">
             <ProductImage
-              priority
+              preload={true}
               src={selectedProduct.thumbnail_image}
               alt={selectedProduct.name}
               sizes="(max-width: 768px) 50vw, 600px"

@@ -30,7 +30,8 @@ export default function RecommendMDClient({
           <ProductsCard
             key={product.id}
             product={product}
-            category={product.category_path}
+            category={mainCategories[i]}
+            preload={i === 0}
           />
         ))}
       </ul>

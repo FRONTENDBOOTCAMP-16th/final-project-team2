@@ -5,9 +5,7 @@ interface SearchCardWrapProps {
   products: ProductWithCategory[]
 }
 
-export default function SearchCardWrap({
-  products
-}: SearchCardWrapProps) {
+export default function SearchCardWrap({ products }: SearchCardWrapProps) {
   if (!products || products.length === 0) {
     return (
       <p className="absolute left-1/2 -translate-x-1/2">
@@ -15,7 +13,7 @@ export default function SearchCardWrap({
       </p>
     )
   }
-  
+
   return (
     <>
       {products.map((product, i) => (
@@ -23,6 +21,7 @@ export default function SearchCardWrap({
           key={product.id}
           product={product}
           category={product.category_path}
+          preload={i === 0}
         />
       ))}
     </>
