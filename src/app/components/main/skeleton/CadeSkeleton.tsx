@@ -6,8 +6,8 @@ export default function CardSkeleton({ count = 1 }: CardSkeletonProps) {
   return (
     <>
       <h2
-        id="productListLoading"
-        aria-labelledby="productListLoading"
+        id="productListLoading-1"
+        aria-labelledby="productListLoading-1"
         className="sr-only"
       >
         상품 이미지 불러오는 중
