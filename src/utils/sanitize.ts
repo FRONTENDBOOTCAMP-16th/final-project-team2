@@ -5,9 +5,31 @@ export function sanitizeContent(html: string) {
     // 1. 허용할 태그 목록 (스크립트, 폼, 아이프레임 등 위험 태그 원천 차단)
     // 에디터에서 자주 쓰이는 제목(h1~h6), 구분선(hr) 등 안전한 태그 추가
     allowedTags: [
-      'p', 'b', 'i', 'strong', 'em', 'ul', 'ol', 'li', 'a', 'img',
-      'blockquote', 'code', 'pre', 'br', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'hr',
-      'span', 'u', 's', 'iframe' // 기존 에디터 호환성을 위해 추가
+      'p',
+      'b',
+      'i',
+      'strong',
+      'em',
+      'ul',
+      'ol',
+      'li',
+      'a',
+      'img',
+      'blockquote',
+      'code',
+      'pre',
+      'br',
+      'h1',
+      'h2',
+      'h3',
+      'h4',
+      'h5',
+      'h6',
+      'hr',
+      'span',
+      'u',
+      's',
+      'iframe', // 기존 에디터 호환성을 위해 추가
     ],
 
     allowedAttributes: {
@@ -44,7 +66,10 @@ export function sanitizeContent(html: string) {
     transformTags: {
       a: (tagName, attribs) => {
         // 6. 2차 방어: href가 없거나 교묘하게 javascript: 가 포함된 경우 링크 기능 무효화
-        if (!attribs.href || attribs.href.toLowerCase().trim().startsWith('javascript:')) {
+        if (
+          !attribs.href ||
+          attribs.href.toLowerCase().trim().startsWith('javascript:')
+        ) {
           return { tagName: 'span', attribs: {} } // 단순 텍스트 감싸개로 강제 변환
         }
 
@@ -74,8 +99,8 @@ export function sanitizeContent(html: string) {
             decoding: 'async',
             width: attribs.width || '800',
             height: attribs.height || '600',
-            sizes: attribs.sizes || '(max-width: 768px) 100vw, 800px',
-            // 인라인 스타일은 allowedAttributes에서 전역 차단되었지만, 
+            // sizes: attribs.sizes || '(max-width: 768px) 100vw, 800px',
+            // 인라인 스타일은 allowedAttributes에서 전역 차단되었지만,
             // 여기서 강제 주입하는 스타일은 안전하게 적용됨
             style: 'max-width:100%;height:auto;',
           },
@@ -84,4 +109,3 @@ export function sanitizeContent(html: string) {
     },
   })
 }
-
