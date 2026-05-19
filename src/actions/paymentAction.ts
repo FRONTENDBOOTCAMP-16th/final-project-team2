@@ -44,15 +44,17 @@ async function processPayment(formData: FormData) {
 
     if (!user) throw new Error('로그인이 필요합니다.')
 
-    const zipCode = formData.get('zipCode') as string
-    const streetAdr = formData.get('streetAdr') as string
-    const detailAdr = formData.get('detailAdr') as string
-    const phone = formData.get('phone') as string
+    const zipCode = formData.get('zipCode') as string || ''
+    const streetAdr = formData.get('streetAdr') as string || ''
+    const detailAdr = formData.get('detailAdr') as string || ''
+    const phone = formData.get('phone') as string || ''
 
-    if (!zipCode || !streetAdr || !phone) {
+    if (!streetAdr || !phone) {
       throw new Error('필수 배송지 정보가 누락되었습니다.')
     }
-    const totalAdr = `[${zipCode}] ${streetAdr} || ${detailAdr || ''}`
+
+    // 배송지 주소 없을 시 : 기존에 저장된 배송지 정보를 가져와 사용
+    const totalAdr = zipCode ? `[${zipCode}] ${streetAdr} || ${detailAdr}` : streetAdr
 
     const productList = await getCarts()
     if (!Array.isArray(productList) || productList.length === 0) {
