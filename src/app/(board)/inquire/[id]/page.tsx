@@ -154,6 +154,7 @@ export default async function QnaDetailPage({
 
         <Link
           href="/inquire"
+          prefetch={true}
           className="inline-block bg-slate-800 px-4 py-2 text-white hover:bg-slate-700"
         >
           목록
