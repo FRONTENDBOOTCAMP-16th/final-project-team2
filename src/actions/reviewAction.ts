@@ -11,6 +11,10 @@ type AddReviewParams = {
   grade: number
 }
 
+type ReviewGrade = {
+  grade: number
+}
+
 export async function addReview({
   productId,
   title,
@@ -37,7 +41,7 @@ export async function addReview({
 
   const supabase = await createClient()
 
-  const { error } = await supabase.from('reviews').insert({
+  const { error: insertError } = await supabase.from('reviews').insert({
     user_id: auth.id,
     product_id: productId,
     title,
@@ -45,14 +49,47 @@ export async function addReview({
     grade,
   })
 
-  if (error) {
-    throw new Error(error.message)
+  if (insertError) {
+    throw new Error(insertError.message)
+  }
+
+  const { data: reviews, error: reviewError } = await supabase
+    .from('reviews')
+    .select('grade')
+    .eq('product_id', productId)
+    .returns<ReviewGrade[]>()
+
+  if (reviewError) {
+    throw new Error(reviewError.message)
+  }
+
+  const reviewCount = reviews.length
+
+  const averageGrade =
+    reviewCount > 0
+      ? Number(
+          (
+            reviews.reduce((acc, review) => acc + review.grade, 0) / reviewCount
+          ).toFixed(1),
+        )
+      : 0
+
+  const { error: updateError } = await supabase
+    .from('products')
+    .update({
+      average_grade: averageGrade,
+    })
+    .eq('id', productId)
+
+  if (updateError) {
+    throw new Error(updateError.message)
   }
 
   revalidateTag('reviews', 'max')
   revalidateTag(`reviews-${productId}`, 'max')
   revalidateTag(`product-${productId}`, 'max')
   revalidateTag(`average-grade-${productId}`, 'max')
+  revalidateTag('products', 'max')
 
   return {
     success: true,
