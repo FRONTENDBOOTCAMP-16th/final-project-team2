@@ -11,7 +11,7 @@ import {
   FormState,
   registerProductActionWithState,
 } from '../actions/registerProduct'
-import { useActionState, useState } from 'react'
+import { useActionState, useState, useTransition } from 'react'
 import validateProductForm, { ProductForm } from '../lib/validateProductForm'
 import useOptionForm from '@/hooks/useOptionForm'
 import CategorySelector from './CategorySelector'
@@ -35,6 +35,7 @@ export default function RegisterProductForm() {
     registerProductActionWithState,
     null,
   )
+  const [isPending, startTransition] = useTransition()
 
   const [form, setForm] = useState<Partial<ProductForm>>({
     productName: '',
@@ -116,7 +117,10 @@ export default function RegisterProductForm() {
       formData.delete('productImage')
       formData.set('thumbnailUrl', publicUrl)
     }
-    formAction(formData)
+
+    startTransition(() => {
+      formAction(formData)
+    })
   }
 
   const handleInputChange = <T extends keyof ProductForm>(
@@ -150,7 +154,7 @@ export default function RegisterProductForm() {
     >
       <div className="flex justify-between">
         <h2 className="text-2xl font-bold">상품 등록 페이지</h2>
-        <SubmitButton />
+        <SubmitButton isPending={isPending} />
       </div>
 
       <div className="flex flex-col gap-y-6">

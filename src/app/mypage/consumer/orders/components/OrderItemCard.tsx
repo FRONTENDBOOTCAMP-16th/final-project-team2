@@ -40,14 +40,14 @@ export default function OrderItemCard({
             height={80}
             className="h-20 w-20 shrink-0 object-cover"
             src={order.products.thumbnail_image}
-            alt=""
+            alt={`${order.products.name} 상품 이미지`}
             onError={(e) => {
               ;(e.currentTarget as HTMLImageElement).src = '/fallback.png'
             }}
           />
-          <h2 className="min-w-0 truncate hover:font-extrabold hover:text-red-500">
+          <span className="min-w-0 truncate hover:font-extrabold hover:text-red-500">
             {order.products.name}
-          </h2>
+          </span>
         </div>
         <p className="text-left whitespace-nowrap tabular-nums">
           {DateFormat(createdAt)}

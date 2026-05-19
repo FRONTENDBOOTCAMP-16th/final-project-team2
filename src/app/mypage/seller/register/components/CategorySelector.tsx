@@ -52,7 +52,7 @@ export default function CategorySelector({ value, error, onChange }: Props) {
 
   return (
     <div className="flex gap-2">
-      <div className="relative flex gap-2">
+      <div className="relative flex gap-4">
         <label htmlFor="categoryGroup" className="self-center text-sm">
           카테고리
         </label>
@@ -61,7 +61,7 @@ export default function CategorySelector({ value, error, onChange }: Props) {
           id="categoryGroup"
           value={selectedGroup}
           onChange={handleGroupChange}
-          className="cursor-pointer appearance-none rounded-md border border-gray-300 px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
+          className="cursor-pointer appearance-none rounded-md border border-gray-300 px-3 py-3 pr-10 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
         >
           <option value="">대분류 선택</option>
           {CATEGORY_GROUPS.map((g) => (
@@ -78,7 +78,7 @@ export default function CategorySelector({ value, error, onChange }: Props) {
           name="productCategoryId"
           value={selectedCategory}
           onChange={handleCategoryChange}
-          className="cursor-pointer rounded-md border border-gray-300 px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
+          className="cursor-pointer rounded-md border border-gray-300 px-3 py-3 pr-10 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
         >
           <option value="">소분류 선택</option>
           {currentGroup.categories
