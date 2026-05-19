@@ -3,6 +3,7 @@ import Link from 'next/link'
 export default function SignupIdResultPage() {
   return (
     <div className="flex w-full flex-col rounded-2xl bg-white p-10 shadow-md shadow-[#c7c7c7] transition-all sm:w-160">
+      <h2 className='sr-only'>회원가입 결과</h2>
       <div className="border-be border-[#e0e0e0] pbe-9 text-center text-2xl">
         <strong className="text-[#575A68]">회원가입 완료</strong>
       </div>

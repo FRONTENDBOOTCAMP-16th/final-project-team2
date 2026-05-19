@@ -9,10 +9,11 @@ import SimpleToast from '@/app/components/SimpleToast'
 import { emailSchema, passwordSchema } from '@/app/lib/auth'
 
 export default function LoginPage() {
-  const [state, formAction] = useActionState(loginAction, null)
+  const [state, formAction, isPending] = useActionState(loginAction, null)
 
   return (
     <div className="w-full rounded-2xl bg-white p-10 shadow-md shadow-[#c7c7c7] transition-all sm:w-160">
+      <h2 className='sr-only'>로그인</h2>
       <div className="border-be border-[#e0e0e0] pbe-9 text-center text-2xl">
         <strong className="text-[#575A68]">환영합니다</strong>
         <p className="mbs-1 text-sm text-[#575A68]">계정에 로그인하세요</p>
@@ -40,7 +41,7 @@ export default function LoginPage() {
             defaultChecked={state?.role === 'ADMIN'}
           />
         </div>
-        <p className="text-red-600" aria-live="polite" aria-hidden="true">
+        <p className="text-red-600" aria-live="polite">
           {state?.errors?.role?.[0]}
         </p>
 
@@ -65,7 +66,6 @@ export default function LoginPage() {
         <p
           className="mbs-1 text-center text-red-600"
           aria-live="polite"
-          aria-hidden="true"
         >
           {state?.errors?.root?.[0]}
         </p>

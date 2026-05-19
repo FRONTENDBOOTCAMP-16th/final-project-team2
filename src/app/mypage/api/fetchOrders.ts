@@ -67,8 +67,14 @@ export const fetchOrders = async (
 
   if (error) throw error
 
+  const filteredData =
+    data?.map((order) => ({
+      ...order,
+      order_items: order.order_items.filter((item) => item.products !== null),
+    })) ?? []
+
   return {
-    items: data ?? [],
+    items: filteredData,
     count: count ?? 0,
   }
 }

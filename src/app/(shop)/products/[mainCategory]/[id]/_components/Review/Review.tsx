@@ -18,61 +18,69 @@ export default function Review({ reviews }: ReviewListProps) {
   }
 
   return (
-    <section className="mx-auto max-w-7xl px-4 py-12">
+    <section
+      aria-labelledby="reviewTab"
+      className="mx-auto max-w-7xl px-4 py-12"
+    >
+      <h2 id="reviewTab" className="sr-only">
+        리뷰 탭
+      </h2>
       <ul>
-        {reviews.map((review) => (
-          <li
-            key={review.id}
-            className="rounded-2xl border border-gray-200 p-6"
-          >
-            <div className="flex items-start justify-between gap-4">
-              <div>
-                <div className="flex items-center gap-2">
-                  <strong className="font-semibold">
-                    {review.users.nickname}
-                  </strong>
+        {reviews
+          .map((review) => (
+            <li
+              key={review.id}
+              className="mb-5 rounded-2xl border border-gray-200 p-6"
+            >
+              <div className="flex items-start justify-between gap-4">
+                <div>
+                  <div className="flex items-center gap-2">
+                    <strong className="font-semibold">
+                      {review.users.name}
+                    </strong>
 
-                  <time className="text-sm text-gray-400">
-                    {DateFormat(review.created_at)}
-                  </time>
+                    <time className="text-sm text-gray-400">
+                      {DateFormat(review.created_at)}
+                    </time>
 
-                  <div className="flex items-center gap-1">
-                    {Array.from({ length: 5 }).map((_, index) => {
-                      const isFilled = index < review.grade
+                    <div className="flex items-center gap-1">
+                      {Array.from({ length: 5 }).map((_, index) => {
+                        const isFilled = index < review.grade
 
-                      return (
-                        <Star
-                          key={index}
-                          className={`h-4 w-4 ${isFilled ? 'text-yellow-400' : 'text-gray-300'}`}
-                          fill={isFilled ? 'currentColor' : 'none'}
-                        />
-                      )
-                    })}
+                        return (
+                          <Star
+                            key={index}
+                            className={`h-4 w-4 ${isFilled ? 'text-yellow-400' : 'text-gray-300'}`}
+                            fill={isFilled ? 'currentColor' : 'none'}
+                          />
+                        )
+                      })}
 
-                    <span className="sr-only">평점 {review.grade}점</span>
+                      <span className="sr-only">평점 {review.grade}점</span>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
 
-            <p className="mt-4 text-gray-700">{review.content}</p>
+              <p className="mt-4 text-gray-700">{review.content}</p>
 
-            {review.images?.length > 0 && (
-              <div className="mt-5 flex gap-2 overflow-x-auto">
-                {review.images.map((image, index) => (
-                  <Image
-                    key={index}
-                    src={image.src}
-                    alt={`리뷰 이미지 ${index + 1}`}
-                    width={120}
-                    height={120}
-                    className="aspect-square rounded-lg object-cover"
-                  />
-                ))}
-              </div>
-            )}
-          </li>
-        ))}
+              {review.images?.length > 0 && (
+                <div className="mt-5 flex gap-2 overflow-x-auto">
+                  {review.images.map((image, index) => (
+                    <Image
+                      key={index}
+                      src={image.src}
+                      alt={`리뷰 이미지 ${index + 1}`}
+                      width={120}
+                      height={120}
+                      className="aspect-square rounded-lg object-cover"
+                    />
+                  ))}
+                </div>
+              )}
+            </li>
+          ))
+          .slice(0, 4)}
       </ul>
     </section>
   )

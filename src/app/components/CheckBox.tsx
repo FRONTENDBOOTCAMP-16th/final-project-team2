@@ -41,7 +41,7 @@ export default function CheckBox({
           {label}
         </label>
       </div>
-      <p className="mbs-1 text-red-600" aria-live="polite" aria-hidden="true">
+      <p className="mbs-1 text-red-600" aria-live="polite">
         {error}
       </p>
     </>

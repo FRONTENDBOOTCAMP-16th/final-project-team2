@@ -1,6 +1,6 @@
 import { getNoticeDetail } from '@/actions/noticeAction'
 import { notFound } from 'next/navigation'
-import sanitizeHtml from 'sanitize-html'
+import { sanitizeContent } from '@/utils/sanitize'
 import Link from 'next/link'
 import checkUserID from '@/actions/checkUserId'
 import NoticeDeleteAction from '@/app/components/board/NoticeDeleteAction'
@@ -24,21 +24,7 @@ export default async function NoticeDetailPage({
     notFound()
   }
 
-  const cleanHtml = sanitizeHtml(notice.content || '', {
-    allowedTags: sanitizeHtml.defaults.allowedTags.concat([
-      'img',
-      'span',
-      'u',
-      's',
-      'iframe',
-    ]),
-    allowedAttributes: {
-      ...sanitizeHtml.defaults.allowedAttributes,
-      '*': ['class', 'style'],
-      iframe: ['src', 'width', 'height', 'allowfullscreen', 'frameborder'],
-    },
-    allowedSchemes: ['http', 'https', 'ftp', 'mailto', 'data'],
-  })
+  const cleanHtml = sanitizeContent(notice.content || '')
 
   let isWriter = false
   const user = await checkUserID()
@@ -67,6 +53,7 @@ export default async function NoticeDetailPage({
         {isWriter && <NoticeDeleteAction id={notice.id} />}
         <Link
           href="/notice"
+          prefetch={true}
           className="flex items-center justify-center bg-slate-800 px-8 py-2 text-white hover:bg-slate-700"
         >
           목록

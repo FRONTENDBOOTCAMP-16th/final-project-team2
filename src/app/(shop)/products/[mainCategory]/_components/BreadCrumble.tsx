@@ -7,17 +7,25 @@ type categoryProps = {
 
 const BreadCrumble = ({ category }: categoryProps) => {
   return (
-    <nav aria-label="breadcrumb">
+    <>
       <ol className="flex items-center gap-2 text-sm text-gray-500">
         <li>
-          <Link aria-label="홈으로 이동하기" href="/" className="hover:text-black">
-            <HomeIcon className="w-5 h-5" />
+          <Link
+            aria-label="홈으로 이동하기"
+            href="/"
+            className="p-2 hover:text-black dark:text-white dark:hover:text-red-500"
+          >
+            <HomeIcon className="h-5 w-5" />
           </Link>
         </li>
-        <ChevronRight className="h-4 w-4" />
-        <li className="text-lg font-medium text-black">{category}</li>
+        <li aria-hidden>
+          <ChevronRight className="h-4 w-4" />
+        </li>
+        <li className="text-lg font-medium text-black dark:text-white">
+          {category}
+        </li>
       </ol>
-    </nav>
+    </>
   )
 }
 

@@ -155,17 +155,18 @@ export default function WriteForm({
       )}
 
       <div className="flex flex-col gap-2">
-        <label
-          htmlFor="content-editor"
+        <p
+          id="content-editor"
           className="text-sm font-bold text-gray-800 dark:text-gray-200"
         >
           본문{' '}
           <span className="text-red-500" aria-hidden="true">
             *
           </span>
-        </label>
+        </p>
 
         <ReactQuill
+          aria-labelledby="content-editor"
           value={content}
           onChange={setContent}
           theme="snow"

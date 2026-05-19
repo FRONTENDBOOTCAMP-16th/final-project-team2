@@ -1,29 +1,31 @@
-import { getProductDetail } from '@/api/productDetailApi'
 import ProductOptionClient from './ProductOptionClient'
+import { ProductOptionType } from '@/app/lib/products.types'
 
 type ProductOptionProps = {
   productId: string
-  mainCategory: string
+  price: number
+  discount_rate: number
+  maxCount: number
+  options: ProductOptionType[] | null
+  name: string
 }
 
-const ProductOption = async ({
+const ProductOption = ({
   productId,
-  mainCategory,
+  price,
+  discount_rate,
+  maxCount,
+  options,
+  name,
 }: ProductOptionProps) => {
-  const product = await getProductDetail({
-    id: productId,
-    mainCategory,
-  })
-
-  if (!product) return null
-
   return (
     <ProductOptionClient
-      productId={product.id}
-      price={product.price}
-      discount_rate={product.discount_rate}
-      maxCount={product.inventory}
-      options={product.options}
+      productId={productId}
+      product_name={name}
+      price={price}
+      discount_rate={discount_rate}
+      maxCount={maxCount}
+      options={options}
     />
   )
 }

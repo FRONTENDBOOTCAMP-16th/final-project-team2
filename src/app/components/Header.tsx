@@ -18,10 +18,18 @@ export default function Header() {
     {
       name: '검색',
       onClick: () => setSearchModal(true),
-      icon: <LucideSearch />,
+      icon: <LucideSearch aria-label="검색" />,
     },
-    isLogin && { name: '마이페이지', href: '/mypage', icon: <LucideUser /> },
-    { name: '장바구니', href: '/cart', icon: <LucideShoppingCart /> },
+    isLogin && {
+      name: '마이페이지',
+      href: '/mypage',
+      icon: <LucideUser aria-label="마이페이지" />,
+    },
+    {
+      name: '장바구니',
+      href: '/cart',
+      icon: <LucideShoppingCart aria-label="장바구니" />,
+    },
     isLogin
       ? {
           name: '로그아웃',
@@ -33,7 +41,7 @@ export default function Header() {
 
   return (
     <>
-      <NavList label="convenience-menu" items={convenienceMenu} />
+      <NavList title='유저 서비스 메뉴' label="convenience-menu" items={convenienceMenu} />
 
       {/* 로그인 모달 */}
       {isLogoutModal && (

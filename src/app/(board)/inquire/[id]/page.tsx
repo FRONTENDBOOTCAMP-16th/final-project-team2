@@ -1,10 +1,12 @@
 import { getInquireDetail } from '@/actions/inquireAction'
 import { notFound } from 'next/navigation'
 import { getAuthUserInfo } from '@/actions/getUser'
-import sanitizeHtml from 'sanitize-html'
+import { sanitizeContent } from '@/utils/sanitize'
 import Link from 'next/link'
 import Image from 'next/image'
 import InquireDeleteAction from '@/app/components/board/InquireDeleteAction'
+import UnauthorizedModal from '@/app/components/board/UnauthorizedModal'
+import LoginRequiredModal from '@/app/components/board/LoginRequiredModal'
 
 export default async function QnaDetailPage({
   params,
@@ -18,6 +20,14 @@ export default async function QnaDetailPage({
   try {
     qna = await getInquireDetail(id)
   } catch (err) {
+    if (err instanceof Error) {
+      if (err.message === '이 게시글을 열람할 권한이 없습니다.') {
+        return <UnauthorizedModal />
+      }
+      if (err.message === '로그인이 필요합니다.') {
+        return <LoginRequiredModal />
+      }
+    }
     console.error(err)
     throw new Error('데이터를 불러오지 못했습니다.')
   }
@@ -25,37 +35,8 @@ export default async function QnaDetailPage({
     notFound()
   }
 
-  const cleanQuestion = sanitizeHtml(qna.question_content || '', {
-    allowedTags: sanitizeHtml.defaults.allowedTags.concat([
-      'img',
-      'span',
-      'u',
-      's',
-      'iframe',
-    ]),
-    allowedAttributes: {
-      ...sanitizeHtml.defaults.allowedAttributes,
-      '*': ['class', 'style'],
-      iframe: ['src', 'width', 'height', 'allowfullscreen', 'frameborder'],
-    },
-    allowedSchemes: ['http', 'https', 'ftp', 'mailto', 'data'],
-  })
-
-  const cleanAnswer = sanitizeHtml(qna.answer_content || '', {
-    allowedTags: sanitizeHtml.defaults.allowedTags.concat([
-      'img',
-      'span',
-      'u',
-      's',
-      'iframe',
-    ]),
-    allowedAttributes: {
-      ...sanitizeHtml.defaults.allowedAttributes,
-      '*': ['class', 'style'],
-      iframe: ['src', 'width', 'height', 'allowfullscreen', 'frameborder'],
-    },
-    allowedSchemes: ['http', 'https', 'ftp', 'mailto', 'data'],
-  })
+  const cleanQuestion = sanitizeContent(qna.question_content || '')
+  const cleanAnswer = sanitizeContent(qna.answer_content || '')
 
   const user = await getAuthUserInfo()
 
@@ -103,7 +84,7 @@ export default async function QnaDetailPage({
           )}
           <Link
             href={`/inquire/${id}/reply`}
-            className="mb-4 inline-block bg-slate-800 px-4 py-2 text-white hover:bg-slate-700"
+            className="inline-block bg-slate-800 px-4 py-2 text-white hover:bg-slate-700"
           >
             답변하기
           </Link>
@@ -173,6 +154,7 @@ export default async function QnaDetailPage({
 
         <Link
           href="/inquire"
+          prefetch={true}
           className="inline-block bg-slate-800 px-4 py-2 text-white hover:bg-slate-700"
         >
           목록

@@ -16,12 +16,15 @@ export default function OrderStatusFilter({ value, statusChange }: Props) {
   return (
     <div className="flex flex-col justify-center gap-4 px-2 py-5">
       <div className="flex items-center gap-2">
-        <label htmlFor="filter" className="text-sm font-medium text-gray-500">
+        <label
+          htmlFor="order-status-filter"
+          className="text-sm font-medium text-gray-500"
+        >
           배송 상태:
         </label>
         <select
-          name="filter"
-          id="filter"
+          name="order-status-filter"
+          id="order-status-filter"
           onChange={handleStatusChange}
           value={value}
           className="cursor-pointer border-none bg-transparent text-sm font-medium focus:ring-0"

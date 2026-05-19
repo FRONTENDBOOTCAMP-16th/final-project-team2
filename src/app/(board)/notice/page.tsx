@@ -19,9 +19,10 @@ export default async function NoticeList({
   if (importantData.length === 0 && normalData.length === 0) {
     return (
       <div className="mx-auto w-full max-w-4xl p-4 dark:text-gray-200">
+        <h1 className="sr-only">공지사항</h1>
         {isAdmin && (
           <div className="mb-4 text-right">
-            <button className="rounded bg-blue-500 px-4 py-2 text-white">
+            <button className="rounded bg-blue-500 px-4 py-2 text-white" aria-label="공지사항 작성 (관리자용)">
               공지사항 작성 (관리자)
             </button>
           </div>
@@ -64,6 +65,7 @@ export default async function NoticeList({
           <Link
             href={'/notice/write'}
             className="bg-gray-100 dark:bg-gray-800 px-4 py-2 text-black dark:text-white"
+            aria-label="새 공지사항 글쓰기"
           >
             글쓰기
           </Link>

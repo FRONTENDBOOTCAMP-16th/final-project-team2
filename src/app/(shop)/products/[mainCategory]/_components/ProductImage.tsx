@@ -3,29 +3,23 @@
 import Image from 'next/image'
 import { useRef, useState } from 'react'
 
-type loadingType = 'lazy' | 'eager' | undefined
-
 interface ProductImageProps {
   src?: string
   alt: string
   sizes?: string
-  priority?: boolean
-  loading?: loadingType
+  preload?: boolean
   onLoadComplete?: () => void
 }
 
 export default function ProductImage({
   src,
   alt,
-  sizes = '(max-width: 768px) 100vw, 25vw',
-  loading = 'lazy',
-  priority = false,
+  sizes = '(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw',
+  preload = false,
   onLoadComplete,
 }: ProductImageProps) {
   const fallback = '/fallback.png'
-
   const [imgSrc, setImgSrc] = useState(src || fallback)
-
   const isReportedRef = useRef(false)
 
   const reportLoaded = () => {
@@ -41,10 +35,11 @@ export default function ProductImage({
       alt={alt}
       fill
       sizes={sizes}
-      priority={priority}
+      preload={preload}
+      fetchPriority={preload ? 'high' : 'auto'}
+      loading={preload ? 'eager' : 'lazy'}
       className="object-cover"
       onLoad={reportLoaded}
-      loading={loading}
       onError={() => {
         reportLoaded()
 

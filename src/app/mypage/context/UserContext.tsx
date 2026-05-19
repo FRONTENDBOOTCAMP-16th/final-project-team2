@@ -8,7 +8,7 @@ import {
   useEffect,
   useMemo,
 } from 'react'
-import { createClient } from '@/utils/supabase/client'
+import { getSupabaseClient } from '@/utils/supabase/client'
 
 interface User {
   id: string
@@ -31,16 +31,22 @@ interface UserContextType {
 
 const UserContext = createContext<UserContextType | undefined>(undefined)
 
-export function UserProvider({ children }: { children: ReactNode }) {
-  const [authState, setAuthState] = useState<UserContextType>({
-    user: null,
-    role: null,
-    isLoading: true,
-  })
-
-  const supabase = createClient()
+export function UserProvider({
+  children,
+  initialUser,
+}: {
+  children: ReactNode
+  initialUser?: User | null
+}) {
+  // initialUser가 없을 때만 클라이언트 fetch 결과를 담는 state
+  const [fetchedUser, setFetchedUser] = useState<User | null>(null)
+  const [isLoading, setIsLoading] = useState(!initialUser)
 
   useEffect(() => {
+    if (initialUser) return // 서버에서 이미 받았으면 스킵
+
+    const supabase = getSupabaseClient()
+
     const fetchFullUserData = async () => {
       try {
         const {
@@ -48,7 +54,7 @@ export function UserProvider({ children }: { children: ReactNode }) {
         } = await supabase.auth.getUser()
 
         if (!authUser) {
-          setAuthState({ user: null, role: null, isLoading: false })
+          setIsLoading(false)
           return
         }
 
@@ -74,22 +80,28 @@ export function UserProvider({ children }: { children: ReactNode }) {
             }
           }
 
-          setAuthState({
-            user: finalUserData,
-            role: profile.role as Role,
-            isLoading: false,
-          })
+          setFetchedUser(finalUserData)
         }
       } catch (error) {
         console.error('User fetch error:', error)
-        setAuthState((prev) => ({ ...prev, isLoading: false }))
+      } finally {
+        setIsLoading(false)
       }
     }
 
     fetchFullUserData()
-  }, [supabase])
+  }, [initialUser])
 
-  const value = useMemo(() => authState, [authState])
+  // initialUser(서버)가 있으면 그걸 우선 사용, 없으면 클라이언트 fetch 결과 사용
+  // initialUser?.id가 바뀌면 자동으로 새 값으로 파생됨 → useEffect 불필요
+  const value = useMemo<UserContextType>(() => {
+    const activeUser = initialUser ?? fetchedUser
+    return {
+      user: activeUser,
+      role: (activeUser?.role as Role) ?? null,
+      isLoading,
+    }
+  }, [initialUser, fetchedUser, isLoading])
 
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>
 }

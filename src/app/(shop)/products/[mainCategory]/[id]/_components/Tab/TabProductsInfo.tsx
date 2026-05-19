@@ -2,7 +2,7 @@
 
 import { ReactNode, useState } from 'react'
 import { Products } from '@/app/lib/products.types'
-import { Sanitize } from '@/utils/sanitize'
+import { sanitizeContent } from '@/utils/sanitize'
 
 type Props = {
   product: Products
@@ -28,9 +28,18 @@ export default function TabProductsInfo({
   const [activeTab, setActiveTab] = useState<TabType>('detail')
 
   return (
-    <article className="mx-auto mt-16 max-w-7xl px-4">
-      <header className="sticky top-17 z-30 border-b border-gray-200 bg-white">
-        <nav aria-label="상품 상세 탭">
+    <article
+      aria-labelledby="product_tab"
+      className="mx-auto mt-16 max-w-7xl px-4"
+    >
+      <h2 id="product_tab" className="sr-only">
+        제품 상세 설명
+      </h2>
+      <header className="sticky top-17 z-30 border-b border-gray-200 bg-white pl-4 dark:bg-black dark:text-white">
+        <nav aria-labelledby="product_detail_tab">
+          <h3 id="product_detail_tab" className="sr-only">
+            제품 상세 탭
+          </h3>
           <div
             role="tablist"
             className="flex items-center gap-8 overflow-x-auto"
@@ -49,8 +58,8 @@ export default function TabProductsInfo({
                   onClick={() => setActiveTab(tab.id)}
                   className={`relative py-5 text-lg font-medium whitespace-nowrap transition-all duration-200 ${
                     isActive
-                      ? 'text-[#FF6B6B]'
-                      : 'text-gray-500 hover:text-black'
+                      ? 'text-red-600 dark:text-red-500'
+                      : 'text-gray-500 hover:text-black dark:hover:text-white'
                   }`}
                 >
                   {tab.label}
@@ -79,9 +88,9 @@ export default function TabProductsInfo({
             <h2 className="text-3xl font-bold">제품 상세</h2>
 
             <div
-              className="mt-6 max-w-6xl text-justify text-lg leading-9 text-gray-700"
+              className="mt-6 max-w-6xl text-justify text-lg leading-9 text-gray-700 dark:text-white"
               dangerouslySetInnerHTML={{
-                __html: Sanitize(product.content),
+                __html: sanitizeContent(product.content),
               }}
             />
 

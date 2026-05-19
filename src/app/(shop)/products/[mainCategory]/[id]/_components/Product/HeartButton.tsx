@@ -10,16 +10,21 @@ import { Fragment, useState } from 'react'
 type HeartButtonProps = {
   productId: string
   initialLiked?: boolean
+  product_name: string
 }
 
-const HeartButton = ({ productId, initialLiked }: HeartButtonProps) => {
+const HeartButton = ({
+  productId,
+  initialLiked,
+  product_name,
+}: HeartButtonProps) => {
   const { isLogin } = useAuth()
   const [isOpen, setIsOpen] = useState(false)
   const { mutate, isPending } = useToggleWishList()
   const [showToast, setShowToast] = useState(false)
   const [toastMessage, setToastMessage] = useState('')
 
-  const liked = initialLiked ?? false
+  const liked = initialLiked === true
 
   const handleClick = () => {
     if (isPending) return
@@ -52,7 +57,9 @@ const HeartButton = ({ productId, initialLiked }: HeartButtonProps) => {
         type="button"
         onClick={handleClick}
         disabled={isPending}
-        aria-label={liked ? '찜 취소' : '찜 추가'}
+        aria-label={
+          liked ? `${product_name} 찜 취소` : `${product_name} 찜 추가`
+        }
         className="disabled:cursor-not-allowed disabled:opacity-50"
       >
         <Heart
@@ -85,19 +92,20 @@ const HeartButton = ({ productId, initialLiked }: HeartButtonProps) => {
             </p>
           </div>
           <div className="grid grid-cols-2 gap-3">
-            <button
-              type="button"
-              onClick={() => setIsOpen(false)}
-              className="rounded-xl border border-gray-300 bg-red-500 py-3 text-sm font-semibold text-white transition hover:bg-red-600"
-            >
-              아니요
-            </button>
             <Link
+              aria-label="로그인페이지로 이동하기"
               href="/login"
-              className="flex items-center justify-center rounded-xl bg-blue-700 py-3 text-sm font-semibold text-white transition hover:bg-blue-800"
+              className="flex items-center justify-center rounded-xl border-2 bg-white py-3 text-sm font-semibold text-black transition hover:bg-gray-300"
             >
               예
             </Link>
+            <button
+              type="button"
+              onClick={() => setIsOpen(false)}
+              className="rounded-xl border border-gray-300 bg-black py-3 text-sm font-semibold text-white transition hover:bg-gray-800"
+            >
+              아니요
+            </button>
           </div>
         </div>
       </Modal>

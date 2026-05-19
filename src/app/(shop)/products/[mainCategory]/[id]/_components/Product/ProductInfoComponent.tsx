@@ -1,5 +1,5 @@
 import ProductSummary from './ProductSummary'
-import { Products } from '@/app/lib/products.types'
+import { ProductOptionType, Products } from '@/app/lib/products.types'
 import { Reviews } from '@/app/lib/reviews.types'
 import ProductImage from '@/app/(shop)/products/[mainCategory]/_components/ProductImage'
 import ProductOption from './ProductOption'
@@ -9,6 +9,7 @@ type Props = {
   category: string
   reviews: Reviews[]
   average_grade: number | null
+  options: ProductOptionType[] | null
 }
 
 const ProductInfoComponent = ({
@@ -17,36 +18,41 @@ const ProductInfoComponent = ({
   category,
   average_grade,
 }: Props) => {
-  const product_id = product.id
-
   return (
-    <article className="mx-auto max-w-7xl">
+    <article aria-labelledby="product-info-title" className="mx-auto max-w-7xl">
+      <h2 id="product-info-title" className="sr-only">
+        상품 영역
+      </h2>
       <div className="mt-6 grid grid-cols-1 gap-10 lg:grid-cols-2">
-        <div className="relative mt-10 aspect-square w-148 overflow-hidden">
+        <div className="relative mt-10 aspect-square w-full max-w-148 overflow-hidden bg-gray-100">
           <ProductImage
-            loading={'eager'}
+            preload
             src={product.thumbnail_image}
-            priority={true}
-            alt=""
+            alt={product.name ?? '제품 상세 이미지를 불러올 수 없습니다'}
+            sizes="(max-width: 1024px) 100vw, 592px"
           />
         </div>
 
-        <section aria-labelledby="product-info-title">
-          <h2 id="product-info-title" className="sr-only">
-            제품 소개
+        <section aria-labelledby="product_intro">
+          <h2 id="product_intro" className="sr-only">
+            상품 소개
           </h2>
+          <ProductSummary
+            mainCategory={category}
+            reviews={reviews}
+            products={product}
+            average_grade={average_grade}
+          />
 
-          <div>
-            <ProductSummary
-              mainCategory={category}
-              reviews={reviews}
-              products={product}
-              average_grade={average_grade}
+          <div className="mt-8 min-h-60">
+            <ProductOption
+              name={product.name}
+              productId={product.id}
+              price={product.price}
+              discount_rate={product.discount_rate}
+              maxCount={product.inventory}
+              options={product.options}
             />
-
-            <div className="mt-8">
-              <ProductOption productId={product_id} mainCategory={category} />
-            </div>
           </div>
         </section>
       </div>

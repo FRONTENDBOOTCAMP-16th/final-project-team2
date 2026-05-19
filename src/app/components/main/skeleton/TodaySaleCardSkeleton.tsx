@@ -8,8 +8,8 @@ export default function TodaySaleCardSkeleton({
   return (
     <>
       <h2
-        id="productListLoading"
-        aria-labelledby="productListLoading"
+        id="productListLoading-3"
+        aria-labelledby="productListLoading-3"
         className="sr-only"
       >
         상품 이미지 불러오는 중

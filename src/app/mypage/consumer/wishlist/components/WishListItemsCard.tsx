@@ -28,7 +28,7 @@ export default function WishListItemCard({ order }: Props) {
         className="relative flex flex-col shadow-md transition-transform duration-400 hover:scale-105"
       >
         {product.discount_rate > 0 && (
-          <div className="absolute top-0 left-0 bg-red-500 px-2 py-1 text-sm font-bold text-white">
+          <div className="absolute top-0 left-0 bg-red-600 px-2 py-1 text-sm font-bold text-white">
             {product.discount_rate}%
           </div>
         )}
@@ -38,28 +38,34 @@ export default function WishListItemCard({ order }: Props) {
           height={282}
           className="h-70.5 w-full"
           src={product.thumbnail_image}
-          alt=""
+          alt={`${product.name} 상품 이미지`}
           onError={(e) => {
             ;(e.currentTarget as HTMLImageElement).src = '/fallback.png'
           }}
         />
       </Link>
       <div className="flex flex-col pt-4">
-        <p className="text-sm text-gray-400">
+        <p className="text-md text-gray-500">
           {product.product_categories?.categories.name}
         </p>
         <div className="flex justify-between">
-          <p className="w-50 self-center truncate font-bold">{product.name}</p>
-          <HeartButton productId={order.product_id} initialLiked={true} />
+          <span className="w-50 self-center truncate text-[18px] font-bold">
+            {product.name}
+          </span>
+          <HeartButton
+            product_name={order.products.name}
+            productId={order.product_id}
+            initialLiked={true}
+          />
         </div>
 
         <div className="flex gap-2">
           {product.discount_rate > 0 && (
-            <span className="text-sm font-bold text-red-500">
+            <span className="text-md font-bold text-red-600">
               {DiscountRateFormat(product.discount_rate)}%
             </span>
           )}
-          <span className="text-sm font-bold text-slate-800">
+          <span className="text-md font-bold text-slate-800">
             {DiscountPriceFormat(product.price, product.discount_rate)}원
           </span>
         </div>

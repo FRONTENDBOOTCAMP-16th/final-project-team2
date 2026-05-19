@@ -1,21 +1,22 @@
 import { getRecommendedProducts } from '@/api/recommandProducts'
 import ProductsCard from '@/app/components/ProductsCard'
 import ProductsCardList from '@/app/components/ProductsCardList'
+import { MainCategoryType } from '../../../lib/category'
 
 type Props = {
   productId: string
-  mainCategoryName: string
+  mainCategoryKey: MainCategoryType
   onImageLoad?: () => void
 }
 
 const RecommendProducts = async ({
   productId,
-  mainCategoryName,
+  mainCategoryKey,
   onImageLoad,
 }: Props) => {
   const products = await getRecommendedProducts({
     productId,
-    mainCategoryName,
+    mainCategoryKey,
   })
 
   if (products.length === 0) {
@@ -23,14 +24,17 @@ const RecommendProducts = async ({
   }
 
   return (
-    <section className="mt-20">
-      <h2 className="mb-6 text-2xl font-semibold">추천 상품</h2>
+    <section aria-labelledby="RecommendProducts" className="mt-20">
+      <h3 id="RecommendProducts" className="mb-6 text-2xl font-semibold">
+        추천 상품
+      </h3>
 
       <ProductsCardList>
         {products.map((product) => (
           <ProductsCard
+            preload={false}
             key={product.id}
-            category={mainCategoryName}
+            category={mainCategoryKey}
             product={product}
             onImageLoad={onImageLoad}
           />

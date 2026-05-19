@@ -11,11 +11,12 @@ import {
   FormState,
   registerProductActionWithState,
 } from '../actions/registerProduct'
-import { useActionState, useState } from 'react'
+import { useActionState, useState, useTransition } from 'react'
 import validateProductForm, { ProductForm } from '../lib/validateProductForm'
 import useOptionForm from '@/hooks/useOptionForm'
 import CategorySelector from './CategorySelector'
 import useRegisterImg from '../hooks/useRegisterImg'
+import { createClient } from '@/utils/supabase/client'
 
 type ProductErrors = {
   productImage?: string
@@ -34,6 +35,7 @@ export default function RegisterProductForm() {
     registerProductActionWithState,
     null,
   )
+  const [isPending, startTransition] = useTransition()
 
   const [form, setForm] = useState<Partial<ProductForm>>({
     productName: '',
@@ -66,7 +68,8 @@ export default function RegisterProductForm() {
     return newErrors
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
     const newErrors = validateAll()
 
     if (!imgForm.preview) {
@@ -83,9 +86,41 @@ export default function RegisterProductForm() {
     }
 
     // 하나라도 폼 양식이 작성되어있지 않은 경우에, 제출을 할 수 없음
-    if (Object.keys(newErrors).length > 0) {
-      e.preventDefault()
+    if (Object.keys(newErrors).length > 0) return
+
+    const formData = new FormData(e.currentTarget as HTMLFormElement)
+
+    // 클라이언트에서 이미지 업로드
+    if (imgForm.imgFile) {
+      const supabase = createClient()
+      const ext = imgForm.imgFile.name.split('.').pop()
+      const fileName = `${Date.now()}.${ext}`
+
+      const { error } = await supabase.storage
+        .from('public-assets')
+        .upload(`products/${fileName}`, imgForm.imgFile)
+
+      if (error) {
+        setClientErrors((prev) => ({
+          ...prev,
+          productImage: '이미지 업로드에 실패했습니다.',
+        }))
+        return
+      }
+
+      const {
+        data: { publicUrl },
+      } = supabase.storage
+        .from('public-assets')
+        .getPublicUrl(`products/${fileName}`)
+
+      formData.delete('productImage')
+      formData.set('thumbnailUrl', publicUrl)
     }
+
+    startTransition(() => {
+      formAction(formData)
+    })
   }
 
   const handleInputChange = <T extends keyof ProductForm>(
@@ -111,8 +146,6 @@ export default function RegisterProductForm() {
     }))
   }
 
-  // 클라이언트 또는 서버측에 둘 중 하나 에러 발생할 수 있으니 체크
-  // -> {clientErrors.name || serverErrors?.name}
   return (
     <form
       action={formAction}
@@ -121,7 +154,7 @@ export default function RegisterProductForm() {
     >
       <div className="flex justify-between">
         <h2 className="text-2xl font-bold">상품 등록 페이지</h2>
-        <SubmitButton />
+        <SubmitButton isPending={isPending} />
       </div>
 
       <div className="flex flex-col gap-y-6">

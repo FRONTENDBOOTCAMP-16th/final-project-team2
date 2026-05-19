@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { startTransition, useEffect, useState } from 'react'
 import { useUser } from '../context/UserContext'
 import { getSummaryData } from '../actions/summaryAction'
 import StatCard from './StatCard'
@@ -12,6 +12,7 @@ import {
   ClipboardList,
 } from 'lucide-react'
 import { StatData } from '../types/user'
+import { usePathname } from 'next/navigation'
 
 const CONSUMER_PATH = '/mypage/consumer'
 const SELLER_PATH = '/mypage/seller'
@@ -60,6 +61,8 @@ const STATS_CONFIG: Record<'USER' | 'BUSINESS', StatData[]> = {
 }
 
 export default function SummaryMenu() {
+  const pathname = usePathname()
+
   const { role, user, isLoading: isUserLoading } = useUser()
   const [data, setData] = useState({ count1: 0, count2: 0, text3: '' })
   const [isDataLoading, setIsDataLoading] = useState(true)
@@ -67,6 +70,11 @@ export default function SummaryMenu() {
   const userId = user?.id
 
   useEffect(() => {
+    if (!isUserLoading && !userId) {
+      startTransition(() => setIsDataLoading(false))
+      return
+    }
+
     // 초기 로딩 중이거나 필수 정보가 없으면 실행 중단
     if (isUserLoading || !userId || !role) return
 
@@ -74,6 +82,7 @@ export default function SummaryMenu() {
 
     async function loadData() {
       setIsDataLoading(true)
+
       try {
         // 여기서 userId가 string임을 한 번 더 확실히 체크합니다.
         // 이렇게 하면 getSummaryData에 들어가는 인자가 절대 undefined일 수 없음을 TS가 인지합니다.
@@ -90,9 +99,7 @@ export default function SummaryMenu() {
       } catch (error) {
         console.error('데이터 연동 실패:', error)
       } finally {
-        if (isMounted) {
-          setIsDataLoading(false)
-        }
+        setIsDataLoading(false)
       }
     }
 
@@ -100,7 +107,7 @@ export default function SummaryMenu() {
     return () => {
       isMounted = false
     }
-  }, [userId, role, isUserLoading])
+  }, [userId, role, isUserLoading, pathname])
 
   // 데이터가 이미 존재한다면 스켈레톤을 보여주지 않도록 순서 제어
   const hasData = data.count1 !== 0 || data.count2 !== 0 || data.text3 !== ''
@@ -142,16 +149,21 @@ export default function SummaryMenu() {
   const currentStats = STATS_CONFIG[role]
 
   return (
-    <div className="mx-auto flex w-full max-w-4xl gap-6">
-      {currentStats.map((stat) => (
-        <StatCard
-          key={stat.label}
-          label={stat.label}
-          value={getMappedValue(stat.key)}
-          href={stat.href}
-          icon={stat.icon}
-        />
-      ))}
-    </div>
+    <section aria-labelledby="summary-title">
+      <h2 id="summary-title" className="sr-only">
+        요약 정보
+      </h2>
+      <div className="mx-auto flex w-full max-w-4xl gap-6">
+        {currentStats.map((stat) => (
+          <StatCard
+            key={stat.label}
+            label={stat.label}
+            value={getMappedValue(stat.key)}
+            href={stat.href}
+            icon={stat.icon}
+          />
+        ))}
+      </div>
+    </section>
   )
 }

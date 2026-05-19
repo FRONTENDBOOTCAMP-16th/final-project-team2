@@ -20,10 +20,12 @@ next.js 기반으로 구현한 오픈마켓 서비스
 
 | 구분                         | 도입 기술                      | 도입 목적 및 기대효과                                  |
 | ---------------------------- | ------------------------------ | ------------------------------------------------------ |
-| **Frontend**                 | Next.js 16, TypeScript         | 빠른 렌더링, SEO 최적화 및 안정적인 타입 관리          |
-| **Styling & Interactive UI** | Tailwind CSS, Swiper, Three.js | 감각적인 UI 구현 및 부드러운 인터랙션, 3D 상품 뷰 제공 |
-| **State & Validation**       | Zustand, TanStack Query, Zod   | 전역 상태 관리, 서버 상태 캐싱, 폼 및 데이터 검증      |
-| **Backend & Infra**          | Supabase, Vercel               | 안정적인 DB(BaaS) 및 간편한 배포 환경 구축             |
+| **코어기술**                 | Next.js 16, TypeScript, tailwind css  | 빠른 렌더링, SEO 최적화 및 안정적인 타입 관리, 네이밍컨벤션 적용 및 다크모드 대응         |
+| **상태관리** | zustand, tanstack query, Next-themes  | 전역 상태 관리를 위한 라이브러리, 마이페이지 데이터 상태 관리, Next-themes를 통한 Hydration 문제 해결 |
+| **UI & 라이브러리**       | swiper, react-quill, react-daum-postcode, lucide-react   | swiper로 개발 효율 및 유지보수성, WYSIWYG에디터/XSS보안, API키 발급 및 서버구축 불필요, 유연한 커스터마이징  |
+| **유효성 검사 & 보안**          | zod, sanitize    |  유효성 검사를 스키마 하나로 통합, XSS 보안방어 및 데이터 소독         |
+| **백엔드 & 배포**          | supabase, vercel    |  서버 구축 최소화 및 개발 효율 증대, 무설정 배포 및 next.js 완벽 호환         |
+| **개발 환경**          |  bun, eslint&prettier    |  자체 런타임 환경을 통해 더 빠른 패키지 설치와 실행, 코드 품질 및 컨벤션 통일         |
 
 ---
 
@@ -42,51 +44,109 @@ next.js 기반으로 구현한 오픈마켓 서비스
 # 🗂️ 폴더 구조
 
 ```jsx
-📦 src
- ┣ 📂 actions           # Supabase Server Actions (데이터 통신 및 비즈니스 로직)
- ┃ ┣ 📜 auth.actions.ts # 로그인, 회원가입 등 인증 관련 액션
- ┃ ┗ 📜 shop.actions.ts # 상품, 장바구니, 결제 관련 액션
- ┣ 📂 app               # Next.js App Router (페이지 및 라우팅)
- ┃ ┣ 📂 (auth)          # 인증 도메인 (URL에 /auth가 노출되지 않는 라우트 그룹)
- ┃ ┃ ┣ 📂 login               # 로그인 페이지
- ┃ ┃ ┣ 📂 signup              # 회원가입 페이지
- ┃ ┃ ┣ 📂 find-account        # 계정 찾기 페이지
- ┃ ┃ ┗ 📂 reset-password      # 비밀번호 초기화 페이지
- ┃ ┣ 📂 (shop)          # 상거래 도메인
- ┃ ┃ ┣ 📂 products            # 상품 페이지 (목록 및 상세)
- ┃ ┃ ┣ 📂 cart                # 장바구니 페이지
- ┃ ┃ ┗ 📂 checkout            # 결제하기 페이지
- ┃ ┣ 📂 mypage          # 마이페이지
- ┃ ┣ 📜 layout.tsx      # 최상위 공통 레이아웃
- ┃ ┗ 📜 page.tsx        # 메인 페이지 (Home)
- ┣ 📂 components        # 재사용 가능한 UI 컴포넌트
- ┃ ┣ 📂 common          # 버튼, 인풋 등 공통 컴포넌트
- ┃ ┗ 📂 layout          # 헤더, 푸터, 네비게이션 등
- ┣ 📂 lib               # Supabase 클라이언트 설정 및 유틸리티 함수
- ┃ ┗ 📜 supabase.ts     # Supabase 인스턴스 초기화
- ┗ 📂 types             # 전역 TypeScript 타입 정의
-   ┣ 📜 database.types.ts # Supabase DB 자동 생성 타입
-   ┗ 📜 index.ts          # 공통 사용 타입 (User, Product 등)
+src/
+├── actions/                # 서버 액션 (인증, 장바구니, 결제 등)
+│   ├── auth.actions.ts
+│   ├── cartAction.ts
+│   ├── loginAction.ts
+│   ├── signupAction.ts
+│   └── ...
+├── api/                    # API 페칭 함수 (카테고리, 상품 리스트 등)
+│   ├── categoriesList.ts
+│   ├── getProductAll.ts
+│   └── products.ts
+├── app/                    # Next.js App Router (페이지 및 레이아웃)
+│   ├── (auth)/             # 인증 관련 그룹 (로그인, 회원가입, 아이디 찾기 등)
+│   │   ├── find-id/
+│   │   ├── login/
+│   │   ├── reset-password/
+│   │   └── signup/
+│   ├── (board)/            # 게시판 관련 그룹 (공지사항, QnA)
+│   │   ├── inquire/        # 문의하기
+│   │   └── notice/         # 공지사항
+│   ├── (shop)/             # 쇼핑 관련 그룹
+│   │   ├── cart/           # 장바구니
+│   │   ├── checkout/       # 
+│   │   └── payment/        # 결제
+│   ├── auth-guard/         # 로그인 가드 (접근 권한이 필요할 시 작동)
+│   ├── components/         # 재사용 가능한 코드 모음
+│   │   ├── board/          # 게시판 컴포넌트
+│   │   ├── main/           # 메인 화면 컴포넌트
+│   │   └── provider/       # 다크모드/라이트모드 컴포넌트
+│   ├── lib/                # Type 모음
+│   ├── mypage/             # 마이페이지 (사용자/판매자)
+│   │   ├── actions/        # 마이페이지 전용 서버 액션
+│   │   ├── api/            # 데이터 패칭
+│   │   ├── components/     # 마이페이지 공용 UI 컴포넌트
+│   │   ├── consumer/       # 마이페이지 고객용 UI (쿠폰, 주문내역조회, 프로필, 찜하기)
+│   │   ├── context/        # 마이페이지 컨텍스트 (사용자 타입에 따른 분기)
+│   │   ├── providers/      # 마이페이지 프로바이더
+│   │   ├── seller/         # 마이페이지 셀러용 UI (상점 관리, 배송)
+│   │   └── types/          # 마이페이지 타입 (zod, type)
+│   ├── search/             # 상품 검색 페이
+│   ├── favicon.ico         # 파비콘
+│   ├── globals.css         # 글로벌 스타일
+│   ├── layout.tsx          # 루트 레이아웃
+│   ├── not-found.tsx       # not-found 페이지
+│   └── page.tsx            # 메인 페이지
+├── components/             # 공용 및 도메인별 UI 컴포넌트
+│   ├── board/              # 게시판 전용 컴포넌트 (페이지네이션, 카드 등)
+│   ├── main/               # 메인 페이지 전용 컴포넌트 및 스켈레톤
+│   ├── provider/           # ThemeProvider 등 설정
+│   └── (Shared UI)/        # 공용 컴포넌트 (Button, Input, Modal, Toast 등)
+├── data/                   # 더미 데이터 (JSON 파일)
+├── fonts/                  # 폰트
+├── hooks/                  # 훅
+├── store/                  # 상태 저장소 (상품 정보를 전체 공유)
+├── types/                  # Type 모음
+├── utils/                  # 유틸리티 함수
+│   └── supabase/           # supabase
+├── utils/                  # 유틸리티 함수
+├── global.d.ts/            # swiper.css
+├── proxy.ts/               # 프록시
+└── types/                  # 전역 타입 정의 파일
 ```
 
-# 사용 방법 ( 추후 추가 작성 예정 )
+# 사용 방법
 
 ```jsx
-## 🚀 사용 방법
+# 🚀 사용 방법
+```
+```jsx
+# 1. 프로젝트 실행
+```
 
-## 1. 프로젝트 실행
-
-# 저장소 클론
+```jsx
+# 2. 저장소 클론
 git clone https://github.com/your-repo/final-project-team2.git
+```
 
-# 폴더 이동
+```jsx
+# 3. 폴더 이동
 cd final-project-team2
+```
 
-# 패키지 설치
+```jsx 
+# 4. env 설정
+NEXT_PUBLIC_SUPABASE_URL="https://[여기는본인의고유알파벳].supabase.co"
+NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY="공개키"
+SUPABASE_SERVICE_ROLE_KEY="서버 전용 관리자 키"
+```
+
+```jsx 
+# 5. 패키지 설치
 bun install
+```
 
-# 개발 서버 실행
+```jsx
+# 6. 개발 서버 실행
 bun dev
 ```
 
 👉 실행 후 브라우저에서 [http://localhost:3000](http://localhost:3000/) 접속
+
+---
+
+# 배포 링크
+🎈 https://final-project-team2.vercel.app/
+
