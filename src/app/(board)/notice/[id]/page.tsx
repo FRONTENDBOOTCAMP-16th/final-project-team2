@@ -53,6 +53,7 @@ export default async function NoticeDetailPage({
         {isWriter && <NoticeDeleteAction id={notice.id} />}
         <Link
           href="/notice"
+          prefetch={true}
           className="flex items-center justify-center bg-slate-800 px-8 py-2 text-white hover:bg-slate-700"
         >
           목록
