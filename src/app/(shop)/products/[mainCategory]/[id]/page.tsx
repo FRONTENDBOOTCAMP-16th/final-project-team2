@@ -9,6 +9,7 @@ import { getSellerUser } from '@/actions/getUser'
 import { Suspense } from 'react'
 import Skeleton from '../skeleton'
 import RecommendProducts from './_components/Product/RecommendProduct'
+import ReviewBtnWrap from './_components/Review/ReviewBtnWrap'
 
 type ProductDetailPageProps = {
   params: Promise<{
@@ -48,6 +49,9 @@ export default async function ProductDetailPage({
           average_grade={average_grade}
           options={options}
         />
+        <div className="mt-20 flex justify-end">
+          <ReviewBtnWrap productId={product.id} />
+        </div>
         <TabInfoComponent
           product={product}
           store={store}
@@ -55,7 +59,6 @@ export default async function ProductDetailPage({
           seller={seller}
           average_grade={average_grade}
         />
-
         <article aria-labelledby="recommendProductsArea" className="mt-15">
           <h2 id="recommendProductsArea" className="sr-only">
             추천 상품 영역
