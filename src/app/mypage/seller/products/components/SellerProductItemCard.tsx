@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import { SellerProduct } from '@/app/mypage/types/sellerOrderItems'
+import { DiscountPriceFormat } from '@/utils/intl'
 
 interface CardProps {
   product: SellerProduct
@@ -7,8 +8,6 @@ interface CardProps {
 }
 
 export default function SellerProductItemCard({ product, onEdit }: CardProps) {
-  const totalPrice = product.price * (1 - product.discount_rate / 100)
-
   const statusConfig = {
     ON_SALE: { label: '판매중', stateStyles: 'bg-[#00C37E] text-white' },
     SOLD_OUT: { label: '품절', stateStyles: 'bg-gray-400 text-white' },
@@ -46,7 +45,7 @@ export default function SellerProductItemCard({ product, onEdit }: CardProps) {
         {product.price.toLocaleString()}원
       </p>
       <p className="w-[12%] text-center font-bold text-gray-900">
-        {totalPrice.toLocaleString()}원
+        {DiscountPriceFormat(product.price, product.discount_rate)}원
       </p>
       <p className="w-[12%] text-center text-gray-600">
         {product.discount_rate}%
