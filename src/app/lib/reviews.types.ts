@@ -1,6 +1,6 @@
 export interface ReviewUser {
   id: string
-  nickname: string
+  name: string
 }
 
 export interface Imageinterface {

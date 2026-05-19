@@ -7,32 +7,32 @@ type ReviewProps = {
 }
 
 const ReviewChart = ({ reviews, average_grade }: ReviewProps) => {
-  // const review_avg =
-  //   reviews.length > 0
-  //     ? (
-  //         reviews.reduce((acc, review) => acc + review.grade, 0) /
-  //         reviews.length
-  //       ).toFixed(1)
-  //     : '0.0'
-  const reviewStats = {
-    5: reviews.filter((r) => r.grade === 5).length,
-    4: reviews.filter((r) => r.grade === 4).length,
-    3: reviews.filter((r) => r.grade === 3).length,
-    2: reviews.filter((r) => r.grade === 2).length,
-    1: reviews.filter((r) => r.grade === 1).length,
+  const averageGrade = average_grade ?? 0
+  const totalReviews = reviews.length
+
+  const reviewStats = reviews.reduce<Record<number, number>>(
+    (acc, review) => {
+      acc[review.grade] = (acc[review.grade] ?? 0) + 1
+      return acc
+    },
+    {
+      1: 0,
+      2: 0,
+      3: 0,
+      4: 0,
+      5: 0,
+    },
+  )
+
+  const reviewPercent = (count: number) => {
+    if (totalReviews === 0) return 0
+    return Number(((count / totalReviews) * 100).toFixed(0))
   }
 
-  function reviewPercent(count: number, length: number) {
-    if (length === 0) return 0
-    return (count / length) * 100
-  }
-  const ratingRows = [
-    { label: '5점', percent: reviewPercent(reviewStats['5'], reviews.length) },
-    { label: '4점', percent: reviewPercent(reviewStats['4'], reviews.length) },
-    { label: '3점', percent: reviewPercent(reviewStats['3'], reviews.length) },
-    { label: '2점', percent: reviewPercent(reviewStats['2'], reviews.length) },
-    { label: '1점', percent: reviewPercent(reviewStats['1'], reviews.length) },
-  ]
+  const ratingRows = [5, 4, 3, 2, 1].map((grade) => ({
+    label: `${grade}점`,
+    percent: reviewPercent(reviewStats[grade]),
+  }))
 
   return (
     <article
@@ -45,23 +45,29 @@ const ReviewChart = ({ reviews, average_grade }: ReviewProps) => {
 
       <div className="mt-6 grid gap-6 rounded-2xl border border-gray-200 bg-white p-6 md:grid-cols-[260px_1fr]">
         <div className="flex flex-col items-center justify-center border-b border-gray-200 pb-6 md:border-r md:border-b-0 md:pr-6 md:pb-0">
-          <p className="text-5xl font-bold">
-            {average_grade ? average_grade : '0.0'}
-          </p>
+          <p className="text-5xl font-bold">{averageGrade.toFixed(1)}</p>
 
-          <div className="mt-3 flex">
-            {Array.from({ length: 5 }).map((_, index) => (
-              <Star
-                key={index}
-                className={`h-5 w-5 ${index < Math.floor(Number(average_grade)) ? 'text-yellow-400' : 'text-gray-200'}`}
-                fill={index < 5 ? 'currentColor' : 'none'}
-              />
-            ))}
+          <div
+            className="mt-3 flex"
+            aria-label={`평균 평점 ${averageGrade.toFixed(1)}점`}
+          >
+            {Array.from({ length: 5 }).map((_, index) => {
+              const isFilled = index < Math.floor(averageGrade)
+
+              return (
+                <Star
+                  key={index}
+                  className={`h-5 w-5 ${
+                    isFilled ? 'text-yellow-400' : 'text-gray-200'
+                  }`}
+                  fill={isFilled ? 'currentColor' : 'none'}
+                  aria-hidden="true"
+                />
+              )
+            })}
           </div>
 
-          <p className="mt-2 text-sm text-gray-500">
-            {reviews.length}개의 리뷰
-          </p>
+          <p className="mt-2 text-sm text-gray-500">{totalReviews}개의 리뷰</p>
         </div>
 
         <div className="space-y-3">
