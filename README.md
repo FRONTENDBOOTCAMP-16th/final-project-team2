@@ -145,3 +145,8 @@ bun dev
 
 👉 실행 후 브라우저에서 [http://localhost:3000](http://localhost:3000/) 접속
 
+---
+
+# 배포 링크
+🎈 https://final-project-team2.vercel.app/
+
