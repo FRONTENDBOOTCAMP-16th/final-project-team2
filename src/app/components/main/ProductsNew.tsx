@@ -35,9 +35,9 @@ export default async function ProductsNew({ image, title, subtitle }: ProductsNe
       <div className="z-0 m-auto w-full max-w-7xl text-right break-keep">
         <strong className="block font-bold text-white">오늘의 신상품</strong>
 
-        <p className="mt-9 text-4xl font-bold text-white">
+        <h3 className="mt-9 text-4xl font-bold text-white">
           {firstProduct.name}
-        </p>
+        </h3>
 
         <MainMoreDetail
           id={firstProduct.id}
