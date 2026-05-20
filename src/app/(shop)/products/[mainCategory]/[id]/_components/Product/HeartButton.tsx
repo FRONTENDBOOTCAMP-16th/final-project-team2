@@ -56,10 +56,11 @@ const HeartButton = ({
       <button
         type="button"
         onClick={handleClick}
-        disabled={isPending}
+        aria-disabled={isPending}
         aria-label={
           liked ? `${product_name} 찜 취소` : `${product_name} 찜 추가`
         }
+        aria-pressed={liked ? 'true' : 'false'}
         className="disabled:cursor-not-allowed disabled:opacity-50"
       >
         <Heart
