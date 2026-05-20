@@ -15,7 +15,10 @@ export default function SellerProductItemCard({ product, onEdit }: CardProps) {
     HIDDEN: { label: '판매중단', stateStyles: 'bg-red-500 text-white' },
   }
 
-  const current = statusConfig[product.status as keyof typeof statusConfig]
+  const current = statusConfig[product.status as keyof typeof statusConfig] ?? {
+    label: '상태 미지정',
+    stateStyles: 'bg-gray-300 text-white',
+  }
 
   return (
     <div className="flex flex-row items-center gap-x-4 border-b border-gray-100 px-6 py-8 text-sm font-medium transition-colors hover:bg-gray-50">
