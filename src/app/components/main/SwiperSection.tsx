@@ -1,14 +1,15 @@
 'use client'
 
 import { Swiper, SwiperSlide } from 'swiper/react'
-import { Navigation, Pagination, Autoplay } from 'swiper/modules'
+import type { Swiper as SwiperType } from "swiper"
+import { Navigation, Pagination, Autoplay, A11y } from 'swiper/modules'
 import Image from 'next/image'
-
 import 'swiper/css'
 import 'swiper/css/navigation'
 import 'swiper/css/scrollbar'
 import 'swiper/css/pagination'
-import { LucideBadgePercent } from 'lucide-react'
+import { LucideBadgePercent, Pause, Play } from 'lucide-react'
+import { useRef, useState } from 'react'
 
 interface swiperProps {
   swiperList: {
@@ -22,20 +23,46 @@ interface swiperProps {
 }
 
 export default function SwiperList({ swiperList, srTitle, srSubtitle }: swiperProps) {
+  const swiperRef = useRef<SwiperType | null>(null)
+  const [isPlay, setIsPlay] = useState(true)
+
+  const togglePlay = () => {
+    if (!swiperRef.current) return
+
+    if (isPlay) {
+      swiperRef.current.autoplay.stop()
+    } else {
+      swiperRef.current.autoplay.start()
+    }
+
+    setIsPlay(!isPlay)
+  }
+
   return (
-    <section>
+    <section className='relative'>
       <h2 className='sr-only'>{srTitle}</h2>
       <p className='sr-only'>{srSubtitle}</p>
       <Swiper
-        modules={[Navigation, Autoplay, Pagination]}
+        onSwiper={(swiper) => {
+          swiperRef.current = swiper
+        }}
+        modules={[Navigation, Autoplay, Pagination, A11y]}
         loop={true}
         spaceBetween={0}
         slidesPerView={1}
         navigation={true}
-        pagination={{ clickable: true }}
+        pagination={{
+          el: ".custom-pagination",
+          clickable: true,
+        }}
         autoplay={{
           delay: 3000,
           disableOnInteraction: false,
+        }}
+        a11y={{
+          prevSlideMessage: "이전 슬라이드",
+          nextSlideMessage: "다음 슬라이드",
+          paginationBulletMessage: `{{index}}번째 슬라이드로 이동`
         }}
         className="[&_.swiper-button-next]:right-5! [&_.swiper-button-next]:rounded-full [&_.swiper-button-next]:bg-white [&_.swiper-button-next]:p-3.5 [&_.swiper-button-next]:ps-4.5 [&_.swiper-button-next]:shadow-lg [&_.swiper-button-prev]:left-5! [&_.swiper-button-prev]:rounded-full [&_.swiper-button-prev]:bg-white [&_.swiper-button-prev]:p-3.5 [&_.swiper-button-prev]:pe-4.5 [&_.swiper-button-prev]:shadow-lg [&_.swiper-navigation-icon]:text-black [&_.swiper-pagination-bullet]:bg-white! [&_.swiper-pagination-bullet]:opacity-100! [&_.swiper-pagination-bullet]:transition-all [&_.swiper-pagination-bullet]:duration-400 [&_.swiper-pagination-bullet-active]:w-16! [&_.swiper-pagination-bullet-active]:rounded-full! [&_.swiper-pagination-bullet-active]:bg-black! [&_.swiper-pagination-bullets]:bottom-10!"
       >
@@ -44,7 +71,7 @@ export default function SwiperList({ swiperList, srTitle, srSubtitle }: swiperPr
             <div className="relative aspect-video h-163 w-full">
               <Image
                 src={item.image}
-                alt={item.title}
+                alt={''}
                 fill
                 className="object-cover"
                 loading="eager"
@@ -68,6 +95,20 @@ export default function SwiperList({ swiperList, srTitle, srSubtitle }: swiperPr
             </div>
           </SwiperSlide>
         ))}
+        <div className="absolute bottom-10 left-1/2 -translate-1/2 z-4 flex items-center justify-center">
+          <button className="custom-pagination flex items-center gap-1.2"></button>
+          <button
+            onClick={togglePlay}
+            className="flex p-1 ms-4 items-center justify-center rounded-full bg-black text-white backdrop-blur-sm transition-hover hover:bg-black/60"
+            aria-label={isPlay ? "슬라이드 정지" : "슬라이드 재생"}
+          >
+            {isPlay ? (
+              <Pause className='w-4 h-4' />
+            ) : (
+              <Play className='w-4 h-4'/> 
+            )}
+          </button>
+        </div>
       </Swiper>
     </section>
   )
