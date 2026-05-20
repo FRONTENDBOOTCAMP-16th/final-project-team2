@@ -34,7 +34,7 @@ export default function OrderItemCard({
         }}
         className="grid h-24 grid-cols-[2fr_1fr_1fr_1fr] items-center gap-6 pb-5"
       >
-        <div className="flex items-center gap-4">
+        <div className="flex w-full min-w-0 items-center gap-4">
           <Image
             width={80}
             height={80}
@@ -45,7 +45,7 @@ export default function OrderItemCard({
               ;(e.currentTarget as HTMLImageElement).src = '/fallback.png'
             }}
           />
-          <span className="min-w-0 truncate hover:font-extrabold hover:text-red-500">
+          <span className="truncate hover:font-extrabold hover:text-red-500">
             {order.products.name}
           </span>
         </div>
