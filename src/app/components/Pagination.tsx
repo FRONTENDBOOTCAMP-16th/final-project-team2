@@ -64,7 +64,7 @@ export default function Pagination({ pageSize, totalCount }: PaginationProps) {
         </Link>
       )}
 
-      {!isPrev ? (
+      {currentPage === 1 ? (
         <span className={paginationButton.disabled} aria-hidden>
           <ChevronLeft />
         </span>
@@ -105,7 +105,7 @@ export default function Pagination({ pageSize, totalCount }: PaginationProps) {
         })}
       </ul>
 
-      {!isNext ? (
+      {currentPage === endPage ? (
         <span className={paginationButton.disabled} aria-hidden>
           <ChevronRight />
         </span>
