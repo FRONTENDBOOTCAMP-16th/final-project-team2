@@ -51,7 +51,7 @@ export const fetchOrders = async (
     )
     .eq('user_id', user.id)
 
-  if (sort === 'latest') {
+  if (sort === 'latest' || sort === 'all') {
     query = query.order('created_at', { ascending: false })
   } else if (sort === 'high-price') {
     query = query.order('final_price', { ascending: false })

@@ -20,7 +20,7 @@ export default function TabFilter({
     <ul
       role="tablist"
       aria-label="카테고리 필터"
-      className="text-md mb-12.5 flex h-9 items-center gap-3 font-medium"
+      className="text-md flex h-9 items-center gap-3 font-medium"
     >
       {items.map((item, index) => {
         const isActive = selectedValue === item.id
