@@ -1,6 +1,5 @@
 'use client'
 
-import Link from 'next/link'
 import { MainCategoryType, subCategory } from '../lib/category'
 import { useProductFilter } from '@/hooks/useFiltering'
 
@@ -10,11 +9,12 @@ type Props = {
 
 const ACTIVE_CLASS =
   'border-b-4 border-black font-bold text-black dark:border-white dark:text-white'
-const DEFAULT_CLASS = 'text-gray-500 dark:text-gray-300'
+const DEFAULT_CLASS =
+  'text-gray-500 hover:text-black dark:text-gray-300 dark:hover:text-white'
 
 export default function FilterCategory({ mainCategory }: Props) {
   const currentCategories = subCategory[mainCategory]
-  const { category, createFilterHref } = useProductFilter()
+  const { category, changeFilter, isPending } = useProductFilter()
 
   return (
     <ul className="flex gap-4">
@@ -23,13 +23,17 @@ export default function FilterCategory({ mainCategory }: Props) {
 
         return (
           <li key={value || 'all'} className="flex items-center">
-            <Link
-              href={createFilterHref({ category: value })}
+            <button
+              type="button"
+              disabled={isActive || isPending}
+              onClick={() => changeFilter({ category: value })}
               aria-current={isActive ? 'page' : undefined}
-              className={isActive ? ACTIVE_CLASS : DEFAULT_CLASS}
+              className={`${isActive ? ACTIVE_CLASS : DEFAULT_CLASS} ${
+                isPending ? 'cursor-wait opacity-70' : ''
+              }`}
             >
               {label}
-            </Link>
+            </button>
 
             {index !== currentCategories.length - 1 && (
               <span
