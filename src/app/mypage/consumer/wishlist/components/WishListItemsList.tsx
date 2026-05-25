@@ -61,7 +61,7 @@ export default function WishListItemsList() {
 
   return (
     <>
-      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+      <div className="mb-12.5 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div className="overflow-x-auto">
           <TabFilter
             items={categoryTabs}
@@ -69,7 +69,7 @@ export default function WishListItemsList() {
             onValueChange={onChangeCategory}
           />
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex justify-start gap-2">
           <label htmlFor="wishlist-sort-filter" className="sr-only">
             필터
           </label>
