@@ -7,19 +7,19 @@ export default function DeliveryProductCard({ order }: { order: OrderItem }) {
   const emailPrefix = order.email?.split('@')[0]
 
   return (
-    <div className="mb-2 flex gap-5 border-b border-gray-300 p-4 font-semibold">
-      <div className="flex w-1/10 shrink-0">
+    <div className="mb-2 grid grid-cols-[2fr_2fr_1fr_1fr_1fr_2fr] gap-5 border-b border-gray-300 p-4 font-semibold">
+      <div>
         <p className="w-32 leading-snug break-all">{order.invoice_number}</p>
       </div>
-      <div className="flex w-3/10 shrink-0 justify-center truncate">
-        <span>{order.products.name}</span>
+      <div className="min-w-0 justify-center">
+        <span className="block truncate">{order.products.name}</span>
       </div>
 
-      <div className="flex w-1/10 shrink-0">
+      <div>
         <p>{emailPrefix}</p>
       </div>
 
-      <div className="flex w-1/10 shrink-0 text-center whitespace-nowrap">
+      <div className="text-center whitespace-nowrap">
         <p>
           {TotalPriceFormat(
             order.unit_price,
@@ -30,11 +30,11 @@ export default function DeliveryProductCard({ order }: { order: OrderItem }) {
         </p>
       </div>
 
-      <div className="flex w-1/10 shrink-0 justify-center text-center">
+      <div className="justify-center text-center">
         <p>{order.quantity}개</p>
       </div>
 
-      <div className="flex w-3/10 shrink-0 gap-3">
+      <div className="flex gap-3 whitespace-nowrap">
         <OrderStatusBadge status={order.item_status} />
         <DeliverStatusButton
           orderItemId={order.id}
