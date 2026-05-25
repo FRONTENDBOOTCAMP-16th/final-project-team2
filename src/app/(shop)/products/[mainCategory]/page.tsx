@@ -2,9 +2,7 @@ import { notFound } from 'next/navigation'
 import { isMainCategory, mainCategoryConvert } from './lib/category'
 import BreadCrumble from './_components/BreadCrumble'
 import Sort from './_components/Sort'
-import { Suspense } from 'react'
 import ProductListFetcher from './_components/ProductListFetcher'
-import Skeleton from './skeleton'
 import FilterCategory from './_components/filterCategory'
 
 type Product = {
@@ -51,16 +49,14 @@ export default async function ProductListPage({
         <h2 id="product_list" className="sr-only">
           상품 목록
         </h2>
-        <Suspense fallback={<Skeleton />}>
-          <ProductListFetcher
-            page={page}
-            pageSize={MAX_PAGE_SIZE}
-            mainCategory={mainCategory}
-            category={category}
-            sort={sort}
-            pagination={true}
-          />
-        </Suspense>
+        <ProductListFetcher
+          page={page}
+          pageSize={MAX_PAGE_SIZE}
+          mainCategory={mainCategory}
+          category={category}
+          sort={sort}
+          pagination={true}
+        />
       </section>
     </div>
   )
