@@ -1,8 +1,8 @@
 import { createClient } from '@/utils/supabase/server'
-import { UserProvider } from './context/UserContext'
+import SideMenu from './components/SideMenu'
 import SummaryMenu from './components/SummaryMenu'
 import UserProfile from './components/UserProfile'
-import SideMenu from './components/SideMenu'
+import { UserProvider } from './context/UserContext'
 
 interface LayoutProps {
   children: React.ReactNode

@@ -11,14 +11,40 @@ import EmptyWishlist from './EmptyWishlist'
 import MyPageProductSkeleton from '@/app/mypage/components/MypageProductSkeleton'
 import { SORTTYPE, sortWishListItems } from '../utils/sortWishListItems'
 import { getWishListCategoryTabs } from '../utils/getWishListCategoryTabs'
+import { useState } from 'react'
+import { useCheckedItemDelete } from '../hooks/useCheckedItemDelete'
+import { toast } from 'sonner'
 
 export default function WishListItemsList() {
+  const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set())
+  const { mutate } = useCheckedItemDelete()
   const router = useRouter()
   const searchParams = useSearchParams()
   const page = Number(searchParams.get('page') ?? 1)
   const limit = 9
   const category = searchParams.get('category') ?? 'all'
   const sort = (searchParams.get('sort') as SORTTYPE) ?? 'latest'
+
+  const handleCheckBoxDelete = () => {
+    mutate(Array.from(selectedIds), {
+      onSuccess: () => {
+        setSelectedIds(new Set())
+        toast('찜 해제되었습니다.')
+      },
+    })
+  }
+
+  const toggleOne = (id: string) => {
+    setSelectedIds((prev) => {
+      const next = new Set(prev)
+      if (next.has(id)) {
+        next.delete(id)
+      } else {
+        next.add(id)
+      }
+      return next
+    })
+  }
 
   const onChangeCategory = (slug: string) => {
     const params = new URLSearchParams(searchParams.toString())
@@ -91,11 +117,28 @@ export default function WishListItemsList() {
         <>
           <ul className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 md:grid-cols-3">
             {sortedItems.map((item) => (
-              <li key={item.id}>
+              <li key={item.id} className="relative">
+                <input
+                  type="checkbox"
+                  checked={selectedIds.has(item.product_id)}
+                  onChange={() => toggleOne(item.product_id)}
+                  aria-label={`${item.products.name} 선택`}
+                  className="absolute top-2 right-2 z-10 h-5 w-5"
+                />
                 <WishListItemCard order={item} />
               </li>
             ))}
           </ul>
+          {selectedIds.size > 0 && (
+            <div className="fixed bottom-10 left-1/2 z-50 -translate-x-1/2">
+              <button
+                onClick={handleCheckBoxDelete}
+                className="rounded-full bg-red-600 px-6 py-3 text-lg font-semibold text-white shadow-lg hover:bg-gray-400"
+              >
+                찜 해제 ({selectedIds.size}개)
+              </button>
+            </div>
+          )}
           <Pagination
             currentPage={page}
             totalPages={totalPages}
