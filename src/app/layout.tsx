@@ -6,10 +6,11 @@ import Footer from './components/FooterSection'
 import localFont from 'next/font/local'
 import QueryProviders from './mypage/providers/QueryProviders'
 import { ThemeProvider } from './components/provider/theme-provider'
-import { Inter } from "next/font/google";
-import { cn } from "@/lib/utils";
+import { Inter } from 'next/font/google'
+import { cn } from '@/lib/utils'
+import { Toaster } from 'sonner'
 
-const inter = Inter({subsets:['latin'],variable:'--font-sans'});
+const inter = Inter({ subsets: ['latin'], variable: '--font-sans' })
 
 const suit = localFont({
   src: '../fonts/suit/SUIT-Variable.woff2',
@@ -31,7 +32,13 @@ export default function RootLayout({
   return (
     <html
       lang="ko"
-      className={cn("h-full", "antialiased", suit.className, "font-sans", inter.variable)}
+      className={cn(
+        'h-full',
+        'antialiased',
+        suit.className,
+        'font-sans',
+        inter.variable,
+      )}
       suppressHydrationWarning
     >
       <body className="flex min-h-full flex-col">
@@ -41,6 +48,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
+          <Toaster position="bottom-center" />
           <QueryProviders>
             <Suspense fallback={null}>
               <Header />

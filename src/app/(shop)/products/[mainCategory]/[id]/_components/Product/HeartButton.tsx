@@ -6,6 +6,7 @@ import { useAuth } from '@/hooks/useAuth'
 import { Heart } from 'lucide-react'
 import Link from 'next/link'
 import { Fragment, useState } from 'react'
+import { toast } from 'sonner'
 
 type HeartButtonProps = {
   productId: string
@@ -21,8 +22,6 @@ const HeartButton = ({
   const { isLogin } = useAuth()
   const [isOpen, setIsOpen] = useState(false)
   const { mutate, isPending } = useToggleWishList()
-  const [showToast, setShowToast] = useState(false)
-  const [toastMessage, setToastMessage] = useState('')
 
   const liked = initialLiked === true
 
@@ -37,15 +36,11 @@ const HeartButton = ({
       { productId, isLiked: liked },
       {
         onSuccess: () => {
-          setToastMessage(
+          toast(
             liked
               ? '찜한 상품을 해제하였습니다.'
               : '찜한 상품을 추가하였습니다.',
           )
-          setShowToast(true)
-          setTimeout(() => {
-            setShowToast(false)
-          }, 2500)
         },
       },
     )
@@ -69,14 +64,6 @@ const HeartButton = ({
           } ${isPending ? 'scale-90 opacity-70' : ''}`}
         />
       </button>
-
-      {showToast && (
-        <div className="fixed bottom-10 left-1/2 z-20 -translate-x-1/2">
-          <div className="rounded-full bg-gray-800 px-6 py-3 text-sm text-white shadow-lg">
-            {toastMessage}
-          </div>
-        </div>
-      )}
 
       <Modal
         isOpen={isOpen}

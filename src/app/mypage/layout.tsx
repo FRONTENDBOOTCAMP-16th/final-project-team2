@@ -1,9 +1,8 @@
 import { createClient } from '@/utils/supabase/server'
-import { UserProvider } from './context/UserContext'
+import SideMenu from './components/SideMenu'
 import SummaryMenu from './components/SummaryMenu'
 import UserProfile from './components/UserProfile'
-import SideMenu from './components/SideMenu'
-import { Toaster } from 'sonner'
+import { UserProvider } from './context/UserContext'
 
 interface LayoutProps {
   children: React.ReactNode
@@ -52,7 +51,6 @@ export default async function MyPageLayout({ children }: LayoutProps) {
             <UserProfile />
             <SideMenu />
           </aside>
-          <Toaster />
           <div className="flex-1">
             <div className="flex flex-col gap-6">
               <SummaryMenu />
