@@ -55,7 +55,7 @@ export default function Modal({
       if (!isOpen || e.key !== 'Tab' || !dialogRef.current) return
 
       const focusableElements = dialogRef.current.querySelectorAll<HTMLElement>(
-        'a[href], button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])'
+        'a[href], button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])',
       )
 
       if (focusableElements.length === 0) return
@@ -64,14 +64,18 @@ export default function Modal({
       const lastElement = focusableElements[focusableElements.length - 1]
 
       if (e.shiftKey) {
-        if (document.activeElement === firstElement || document.activeElement === titleRef.current || document.activeElement === dialogRef.current) {
-          lastElement.focus()
+        if (
+          document.activeElement === firstElement ||
+          document.activeElement === titleRef.current ||
+          document.activeElement === dialogRef.current
+        ) {
           e.preventDefault()
+          lastElement.focus()
         }
       } else {
         if (document.activeElement === lastElement) {
-          firstElement.focus()
           e.preventDefault()
+          dialogRef.current.focus()
         }
       }
     }
@@ -89,6 +93,7 @@ export default function Modal({
         onClick={onClose}
       />
       <section
+        tabIndex={0}
         ref={dialogRef}
         className="animate-in zoom-in-95 relative flex w-full max-w-200 flex-col overflow-hidden rounded-3xl bg-white shadow-[0_20px_50px_rgba(0,0,0,0.1)] duration-200"
         role="dialog"
@@ -115,7 +120,7 @@ export default function Modal({
         )}
         <button
           onClick={onClose}
-          className="absolute right-2 top-2 flex h-12 w-12 items-center justify-center rounded-full transition-all hover:bg-gray-50 active:scale-90 sm:right-4 sm:top-2 lg:right-8"
+          className="absolute top-2 right-2 flex h-12 w-12 items-center justify-center rounded-full transition-all hover:bg-gray-50 active:scale-90 sm:top-2 sm:right-4 lg:right-8"
           aria-label="닫기"
         >
           <X size={24} strokeWidth={2} className="text-[#333]" />
