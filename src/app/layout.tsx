@@ -50,7 +50,11 @@ export default function RootLayout({
         >
           <Toaster position="bottom-center" />
           <QueryProviders>
-            <Suspense fallback={null}>
+            <Suspense
+              fallback={
+                <div className="h-26.25 w-full bg-white dark:bg-[#1b1b1b]" />
+              }
+            >
               <Header />
             </Suspense>
 
