@@ -14,6 +14,7 @@ const nextConfig: NextConfig = {
         hostname: 'xgiayrmzgokjzwwzivzi.supabase.co',
       },
     ],
+    formats: ['image/avif', 'image/webp'],
   },
 }
 
