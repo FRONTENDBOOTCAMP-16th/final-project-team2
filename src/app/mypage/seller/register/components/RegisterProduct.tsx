@@ -134,16 +134,6 @@ export default function RegisterProductForm() {
     })
   }
 
-  const handleInputChange = <T extends keyof ProductForm>(
-    name: T,
-    value: ProductForm[T],
-  ) => {
-    setForm((prev) => ({
-      ...prev,
-      [name]: value,
-    }))
-  }
-
   const getInputProps = (name: keyof ProductForm) => ({
     value: form[name] ?? '',
     onChange: (value: string) => {
@@ -209,7 +199,7 @@ export default function RegisterProductForm() {
             clientErrors.productCategoryId || serverErrors?.productCategoryId
           }
           onChange={(value) => {
-            handleInputChange('productCategoryId', value)
+            setForm((prev) => ({ ...prev, productCategoryId: value }))
             setClientErrors((prev) => ({ ...prev, productCategoryId: '' }))
           }}
         />
