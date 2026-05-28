@@ -38,6 +38,8 @@ export default function OrderItemCard({
           <Image
             width={80}
             height={80}
+            sizes="80px"
+            quality={60}
             className="h-20 w-20 shrink-0 object-cover"
             src={order.products.thumbnail_image}
             alt={`${order.products.name} 상품 이미지`}
