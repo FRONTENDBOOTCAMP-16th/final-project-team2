@@ -17,6 +17,7 @@ import useOptionForm from '@/hooks/useOptionForm'
 import CategorySelector from './CategorySelector'
 import useRegisterImg from '../hooks/useRegisterImg'
 import { createClient } from '@/utils/supabase/client'
+import CancelButton from './CancelButton'
 
 type ProductErrors = {
   productImage?: string
@@ -28,6 +29,14 @@ type ProductErrors = {
   productOptions?: string
   productCategoryId?: string
 }
+const INITIAL_FORM = {
+  productName: '',
+  productPrice: '',
+  productDescription: '',
+  productInventory: '',
+  productDiscount: '',
+  productCategoryId: '',
+}
 
 export default function RegisterProductForm() {
   // 서버 액션
@@ -37,14 +46,7 @@ export default function RegisterProductForm() {
   )
   const [isPending, startTransition] = useTransition()
 
-  const [form, setForm] = useState<Partial<ProductForm>>({
-    productName: '',
-    productPrice: '',
-    productDescription: '',
-    productInventory: '',
-    productDiscount: '',
-    productCategoryId: '',
-  })
+  const [form, setForm] = useState<Partial<ProductForm>>(INITIAL_FORM)
   const serverErrors = formState?.errors
   const [clientErrors, setClientErrors] = useState<ProductErrors>({})
 
@@ -67,6 +69,15 @@ export default function RegisterProductForm() {
 
     return newErrors
   }
+
+  // 입력 폼 안에 작성한 부분이 있는지 검사
+  const isInputted =
+    Object.values(form).some((value) => value !== '') ||
+    imgForm.preview !== null ||
+    optionForm.state.options.length > 0
+
+  // 카테고리 리셋 상태 관리
+  const [categoryKey, setCategoryKey] = useState('')
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -123,28 +134,24 @@ export default function RegisterProductForm() {
     })
   }
 
-  const handleInputChange = <T extends keyof ProductForm>(
-    name: T,
-    value: ProductForm[T],
-  ) => {
-    setForm((prev) => ({
-      ...prev,
-      [name]: value,
-    }))
-  }
-
-  const handleBlur = <T extends keyof ProductForm>(name: T) => {
-    // form에서 해당 input의 현재 값을 가져오기
-    const value = form[name]
-    if (typeof value !== 'string') return
-    const error = validateProductForm(name, value)
-
-    // 해당 인푹의 에러만 업데이트 해서 보여줌
-    setClientErrors((prev) => ({
-      ...prev,
-      [name]: error,
-    }))
-  }
+  const getInputProps = (name: keyof ProductForm) => ({
+    value: form[name] ?? '',
+    onChange: (value: string) => {
+      setForm((prev) => ({ ...prev, [name]: value }))
+    },
+    onBlur: () => {
+      const value = form[name]
+      if (typeof value !== 'string') return
+      const error = validateProductForm(name, value)
+      setClientErrors((prev) => ({
+        ...prev,
+        [name]: error,
+      }))
+    },
+    error:
+      clientErrors[name as keyof ProductErrors] ||
+      serverErrors?.[name as keyof ProductErrors],
+  })
 
   return (
     <form
@@ -154,7 +161,19 @@ export default function RegisterProductForm() {
     >
       <div className="flex justify-between">
         <h2 className="text-2xl font-bold">상품 등록 페이지</h2>
-        <SubmitButton isPending={isPending} />
+        <div className="flex flex-row gap-3">
+          <CancelButton
+            isInputted={isInputted}
+            onConfirm={() => {
+              setForm(INITIAL_FORM)
+              imgForm.resetImg()
+              optionForm.actions.resetOptions()
+              setClientErrors({})
+              setCategoryKey((prev) => prev + 1)
+            }}
+          />
+          <SubmitButton isPending={isPending} />
+        </div>
       </div>
 
       <div className="flex flex-col gap-y-6">
@@ -168,46 +187,19 @@ export default function RegisterProductForm() {
           }}
           error={clientErrors.productImage || serverErrors?.productImage}
         />
-        <ProductName
-          value={form.productName ?? ''}
-          error={clientErrors.productName || serverErrors?.productName}
-          onChange={(value) => handleInputChange('productName', value)}
-          onBlur={() => handleBlur('productName')}
-        />
-        <ProductPrice
-          value={form.productPrice ?? ''}
-          error={clientErrors.productPrice || serverErrors?.productPrice}
-          onChange={(value) => handleInputChange('productPrice', value)}
-          onBlur={() => handleBlur('productPrice')}
-        />
-        <ProductDescription
-          value={form.productDescription ?? ''}
-          error={
-            clientErrors.productDescription || serverErrors?.productDescription
-          }
-          onChange={(value) => handleInputChange('productDescription', value)}
-          onBlur={() => handleBlur('productDescription')}
-        />
-        <ProductInventory
-          value={form.productInventory ?? ''}
-          error={
-            clientErrors.productInventory || serverErrors?.productInventory
-          }
-          onChange={(value) => handleInputChange('productInventory', value)}
-          onBlur={() => handleBlur('productInventory')}
-        />
-        <ProductDiscount
-          value={form.productDiscount ?? ''}
-          error={clientErrors.productDiscount || serverErrors?.productDiscount}
-          onChange={(value) => handleInputChange('productDiscount', value)}
-          onBlur={() => handleBlur('productDiscount')}
-        />
+        <ProductName {...getInputProps('productName')} />
+        <ProductPrice {...getInputProps('productPrice')} />
+        <ProductDescription {...getInputProps('productDescription')} />
+        <ProductInventory {...getInputProps('productInventory')} />
+        <ProductDiscount {...getInputProps('productDiscount')} />
         <CategorySelector
+          key={`category-${categoryKey}`}
+          value={form.productCategoryId}
           error={
             clientErrors.productCategoryId || serverErrors?.productCategoryId
           }
           onChange={(value) => {
-            handleInputChange('productCategoryId', value)
+            setForm((prev) => ({ ...prev, productCategoryId: value }))
             setClientErrors((prev) => ({ ...prev, productCategoryId: '' }))
           }}
         />

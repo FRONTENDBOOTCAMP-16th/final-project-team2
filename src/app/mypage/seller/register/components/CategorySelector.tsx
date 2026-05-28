@@ -13,26 +13,7 @@ type Props = {
 
 export default function CategorySelector({ value, error, onChange }: Props) {
   const [selectedGroup, setSelectedGroup] = useState('')
-  const [selectedCategory, setSelectedCategory] = useState('')
-  const [prevValue, setPrevValue] = useState<string | undefined>(undefined)
-
-  if (value !== prevValue) {
-    setPrevValue(value)
-    if (value) {
-      const categoryName = Object.keys(CATEGORY_NAME_TO_ID).find(
-        (key) => CATEGORY_NAME_TO_ID[key] === value,
-      )
-      if (categoryName) {
-        const group = CATEGORY_GROUPS.find((g) =>
-          g.categories.includes(categoryName),
-        )
-        if (group) {
-          setSelectedGroup(group.label)
-          setSelectedCategory(value)
-        }
-      }
-    }
-  }
+  const selectedCategory = value ?? ''
 
   const currentGroup = CATEGORY_GROUPS.find(
     (group) => group.label === selectedGroup,
@@ -40,14 +21,11 @@ export default function CategorySelector({ value, error, onChange }: Props) {
 
   const handleGroupChange = (e: ChangeEvent<HTMLSelectElement>) => {
     setSelectedGroup(e.target.value)
-    setSelectedCategory('')
     onChange('')
   }
 
   const handleCategoryChange = (e: ChangeEvent<HTMLSelectElement>) => {
-    const categoryId = e.target.value
-    setSelectedCategory(categoryId)
-    onChange(categoryId)
+    onChange(e.target.value)
   }
 
   return (
@@ -65,7 +43,7 @@ export default function CategorySelector({ value, error, onChange }: Props) {
         >
           <option value="">대분류 선택</option>
           {CATEGORY_GROUPS.map((g) => (
-            <option key={g.id} value={g.label}>
+            <option key={g.label} value={g.label}>
               {g.label}
             </option>
           ))}
