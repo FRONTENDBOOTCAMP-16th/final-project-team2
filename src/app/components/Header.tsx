@@ -1,3 +1,5 @@
+'use client'
+
 import { useAuth } from '@/hooks/useAuth'
 import NavList, { NaviProps } from './NavList'
 import { LucideSearch, LucideShoppingCart, LucideUser } from 'lucide-react'
@@ -41,7 +43,11 @@ export default function Header() {
 
   return (
     <>
-      <NavList title='유저 서비스 메뉴' label="convenience-menu" items={convenienceMenu} />
+      <NavList
+        title="유저 서비스 메뉴"
+        label="convenience-menu"
+        items={convenienceMenu}
+      />
 
       {/* 로그인 모달 */}
       {isLogoutModal && (

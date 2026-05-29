@@ -1,16 +1,10 @@
-'use client'
-
 import Link from 'next/link'
 import Header from './Header'
 import SubHeader from './SubHeader'
 import DarkModeBtn from './darkModeBtn'
-import { usePathname } from 'next/navigation'
+import LogoSection from './LogoSection'
 
 export default function Navi() {
-  const pathname = usePathname()
-  const isHome = pathname === '/'
-  const LogoTag = isHome ? 'h1' : 'div'
-
   return (
     <>
       {/* 쿠폰 */}
@@ -26,11 +20,7 @@ export default function Navi() {
         {/* 편의 메뉴 */}
         <div className="relative mx-auto flex max-w-7xl items-center justify-between px-4 py-4 md:px-4 dark:bg-[#1b1b1b]">
           {/* 타이틀 */}
-          <LogoTag>
-            <Link href="/" className="text-2xl font-bold">
-              행쇼마켓
-            </Link>
-          </LogoTag>
+          <LogoSection />
           {/* 스킵링크 */}
           <a
             href="#main-content"

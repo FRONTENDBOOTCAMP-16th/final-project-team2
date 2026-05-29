@@ -41,8 +41,8 @@ export default function UserProfile() {
   if (isLoading) {
     return (
       <div className="mb-10 flex animate-pulse flex-col">
-        <div className="flex w-[204px] flex-col items-center bg-white pb-6">
-          <div className="aspect-square w-[204px] shrink-0 border bg-gray-200" />
+        <div className="flex w-51 flex-col items-center bg-white pb-6">
+          <div className="aspect-square w-51 shrink-0 border bg-gray-200" />
           <div className="flex items-center justify-center gap-2 pt-5 pb-2">
             <div className="h-5 w-24 rounded bg-gray-200" />
           </div>
@@ -64,8 +64,8 @@ export default function UserProfile() {
 
   return (
     <div className="mb-10 flex flex-col">
-      <div className="flex w-[204px] flex-col items-center bg-white pb-6">
-        <div className="relative aspect-square w-[204px] shrink-0 overflow-hidden border border-gray-100 bg-white">
+      <div className="flex w-51 flex-col items-center bg-white pb-6">
+        <div className="relative aspect-square w-51 shrink-0 overflow-hidden border border-gray-100 bg-white">
           {displayImage ? (
             <NextImage
               src={displayImage}
@@ -73,6 +73,8 @@ export default function UserProfile() {
               fill
               sizes="204px"
               className="object-cover"
+              priority
+              fetchPriority="high"
             />
           ) : (
             <div className="h-full w-full bg-white" />

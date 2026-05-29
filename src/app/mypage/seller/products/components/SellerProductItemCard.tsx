@@ -29,6 +29,7 @@ export default function SellerProductItemCard({ product, onEdit }: CardProps) {
             className="object-cover"
             src={product.thumbnail_image}
             alt={product.name}
+            sizes="80px"
             onError={(e) => {
               ;(e.currentTarget as HTMLImageElement).src = '/fallback.png'
             }}
