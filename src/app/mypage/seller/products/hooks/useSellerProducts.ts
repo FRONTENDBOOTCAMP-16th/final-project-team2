@@ -30,6 +30,30 @@ export const useSellerProducts = (storeId: string | undefined) => {
     }
   }, [])
 
+  const deleteProduct = useCallback(async (productId: string) => {
+    try {
+      const supabase = createClient()
+
+      // product_categories 먼저 삭제 (FK 제약 때문에 순서 중요!)
+      await supabase
+        .from('product_categories')
+        .delete()
+        .eq('product_id', productId)
+
+      const { error } = await supabase
+        .from('products')
+        .delete()
+        .eq('id', productId)
+
+      if (error) throw error
+
+      // 삭제 후 목록에서 바로 제거 (refetch 없이 즉시 반영)
+      setProducts((prev) => prev.filter((p) => p.id !== productId))
+    } catch (err) {
+      console.error('Error deleting product:', err)
+    }
+  }, [])
+
   useEffect(() => {
     if (!storeId) {
       const timer = setTimeout(() => setIsLoading(false), 0)
@@ -47,5 +71,6 @@ export const useSellerProducts = (storeId: string | undefined) => {
     products,
     isLoading,
     refetch: () => storeId && fetchProducts(storeId),
+    deleteProduct,
   }
 }

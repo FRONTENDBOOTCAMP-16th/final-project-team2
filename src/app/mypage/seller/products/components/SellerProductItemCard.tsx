@@ -5,9 +5,14 @@ import { DiscountPriceFormat } from '@/utils/intl'
 interface CardProps {
   product: SellerProduct
   onEdit: () => void
+  onDelete: () => void
 }
 
-export default function SellerProductItemCard({ product, onEdit }: CardProps) {
+export default function SellerProductItemCard({
+  product,
+  onEdit,
+  onDelete,
+}: CardProps) {
   const statusConfig = {
     ON_SALE: { label: '판매중', stateStyles: 'bg-[#00C37E] text-white' },
     SOLD_OUT: { label: '품절', stateStyles: 'bg-gray-400 text-white' },
@@ -58,12 +63,20 @@ export default function SellerProductItemCard({ product, onEdit }: CardProps) {
         {product.inventory.toLocaleString()}
       </p>
 
-      <button
-        onClick={onEdit}
-        className="h-9 w-16 shrink-0 rounded-md border border-gray-300 text-xs font-semibold text-gray-600 transition-colors hover:bg-gray-100"
-      >
-        관리
-      </button>
+      <div className="flex shrink-0 gap-2">
+        <button
+          onClick={onEdit}
+          className="h-9 w-16 rounded-md border border-gray-300 text-xs font-semibold text-gray-600 transition-colors hover:bg-gray-100"
+        >
+          관리
+        </button>
+        <button
+          onClick={onDelete}
+          className="h-9 w-16 rounded-md border border-red-300 text-xs font-semibold text-red-500 transition-colors hover:bg-red-50"
+        >
+          삭제
+        </button>
+      </div>
     </div>
   )
 }
