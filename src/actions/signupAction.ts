@@ -72,6 +72,12 @@ export const signupAction = async (
       confirmPassword: confirmPassword,
       role: role,
     }
+  if (role === 'BUSINESS') {
+    await supabase.from('stores').insert({
+      owner_id: data.user?.id,
+      name: `${name}님의 가게`, // 기본 가게명
+    })
+  }
 
   redirect('/signup/signup-result')
 }
