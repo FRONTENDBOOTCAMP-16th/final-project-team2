@@ -31,7 +31,7 @@ export default function StatCard({
       >
         {value}
       </span>
-      <span className="flex items-center gap-1 text-base font-black text-gray-700">
+      <span className="flex items-center gap-1 text-base font-black whitespace-nowrap text-gray-700">
         {Icon && <Icon size={18} strokeWidth={2.5} />}
         {label}
       </span>

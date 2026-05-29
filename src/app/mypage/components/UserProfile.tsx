@@ -75,6 +75,38 @@ export default function UserProfile() {
 
   return (
     <>
+      {/* 모바일 전용 */}
+      <div className="flex w-full flex-col items-center gap-10 border-b border-gray-100 bg-white px-4 py-4 md:hidden">
+        <div className="relative h-50 w-50 overflow-hidden border border-gray-100 bg-white">
+          {displayImage ? (
+            <NextImage
+              src={displayImage}
+              alt={isBusiness ? '상점 썸네일' : '프로필 이미지'}
+              fill
+              sizes="56px"
+              className="object-cover"
+              priority
+            />
+          ) : (
+            <div className="h-full w-full bg-gray-100" />
+          )}
+        </div>
+        <div className="flex flex-col gap-3">
+          <div className="flex items-center justify-center gap-2">
+            <div className="inline-block bg-black px-2 py-0.5 text-[15px] font-bold tracking-tight text-white">
+              {isBusiness ? 'STORE MANAGER' : userGrade}
+            </div>
+            {!isBusiness && <GradeTooltip />}
+          </div>
+          <h2 className="sr-only">프로필 정보</h2>
+
+          <p className="text-base text-gray-800">
+            <strong className="font-bold text-black">{userName}</strong>님
+            반갑습니다.
+          </p>
+        </div>
+      </div>
+
       {/* 데스크탑 전용 */}
       <div className="mb-10 hidden flex-col md:flex">
         <div className="flex w-51 flex-col items-center bg-white pb-6">
@@ -104,40 +136,6 @@ export default function UserProfile() {
           </div>
           <h2 className="sr-only">프로필 정보</h2>
           <p className="w-full text-center text-lg">
-            <strong className="font-bold text-black">{userName}</strong>님
-            반갑습니다.
-          </p>
-        </div>
-      </div>
-      {/* 모바일 전용 */}
-      <div className="flex items-center gap-4 border-b border-gray-100 bg-white px-4 py-4 md:hidden">
-        {/* ✅ [추가] 이미지 크기 h-14 w-14로 축소 */}
-        <div className="relative h-14 w-14 shrink-0 overflow-hidden border border-gray-100 bg-white">
-          {displayImage ? (
-            <NextImage
-              src={displayImage}
-              alt={isBusiness ? '상점 썸네일' : '프로필 이미지'}
-              fill
-              sizes="56px"
-              className="object-cover"
-              priority
-            />
-          ) : (
-            <div className="h-full w-full bg-gray-100" />
-          )}
-        </div>
-        {/* ✅ [추가] 뱃지 + 이름을 이미지 오른쪽에 세로 배치 */}
-        <div className="flex flex-col gap-1">
-          <div className="flex items-center gap-2">
-            {/* ✅ [변경] 뱃지 폰트 text-xs → text-[10px]으로 축소 */}
-            <div className="inline-block bg-black px-2 py-0.5 text-[10px] font-bold tracking-tight text-white">
-              {isBusiness ? 'STORE MANAGER' : userGrade}
-            </div>
-            {!isBusiness && <GradeTooltip />}
-          </div>
-          <h2 className="sr-only">프로필 정보</h2>
-          {/* ✅ [변경] 텍스트 크기 text-lg → text-sm */}
-          <p className="text-sm">
             <strong className="font-bold text-black">{userName}</strong>님
             반갑습니다.
           </p>

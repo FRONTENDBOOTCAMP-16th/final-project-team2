@@ -31,7 +31,7 @@ export default function SideMenu() {
     return (
       <>
         {/* 모바일 전용 */}
-        <nav className="fixed bottom-0 left-0 z-50 flex w-full animate-pulse border-t border-gray-200 bg-white md:hidden">
+        <nav className="flex w-full border-gray-200 bg-white md:hidden">
           {[1, 2, 3, 4].map((i) => (
             <div
               key={i}
@@ -69,7 +69,7 @@ export default function SideMenu() {
       {/* 모바일 전용 */}
       <nav
         aria-label="마이페이지 메뉴"
-        className="fixed bottom-0 left-0 z-50 flex w-full border-t border-gray-200 bg-white md:hidden"
+        className="flex h-15 w-full border-t border-gray-200 bg-white md:hidden"
       >
         {currentMenu.map((menu) => {
           const isActive = pathname.startsWith(menu.href)
@@ -78,11 +78,10 @@ export default function SideMenu() {
               key={menu.name}
               href={menu.href}
               aria-current={isActive ? 'page' : undefined}
-              className={`flex flex-1 flex-col items-center justify-center py-3 text-[11px] transition-colors ${
+              className={`flex flex-1 flex-col items-center justify-center py-3 text-[15px] transition-colors ${
                 isActive ? 'font-bold text-red-400' : 'text-gray-400'
               }`}
             >
-              {/* ✅ [추가] 활성 탭 상단 인디케이터 */}
               {isActive && (
                 <div className="absolute top-0 h-0.5 w-full bg-red-400" />
               )}
