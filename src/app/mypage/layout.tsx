@@ -46,13 +46,13 @@ export default async function MyPageLayout({ children }: LayoutProps) {
     <UserProvider initialUser={initialUser}>
       <h1 className="sr-only">마이페이지</h1>
       <div className="min-h-screen w-full bg-[#FFF8F3] dark:bg-[#25292D] dark:text-black">
-        <div className="mx-auto flex max-w-6xl gap-6 px-4 pt-32">
-          <aside className="shrink-0">
+        <div className="mx-auto flex max-w-6xl flex-col gap-6 px-4 pt-20 md:flex-row md:pt-32">
+          <aside className="hidden shrink-0 md:block">
             <UserProfile />
             <SideMenu />
           </aside>
           <div className="flex-1">
-            <div className="flex flex-col gap-6">
+            <div className="flex flex-col gap-6 pb-16 md:pb-0">
               <SummaryMenu />
               {children}
             </div>
