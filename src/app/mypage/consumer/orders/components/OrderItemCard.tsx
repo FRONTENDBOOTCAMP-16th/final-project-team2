@@ -41,7 +41,7 @@ export default function OrderItemCard({
               height={80}
               sizes="80px"
               quality={60}
-              className="w-ful h-full object-cover"
+              className="w-ful h-full rounded-sm object-cover"
               src={order.products.thumbnail_image}
               alt={`${order.products.name} 상품 이미지`}
               onError={(e) => {
