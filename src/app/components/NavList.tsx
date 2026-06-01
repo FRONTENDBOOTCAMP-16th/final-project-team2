@@ -29,7 +29,7 @@ export default function NavList({
 }: NaviListProps) {
   const headingId = useId()
   return (
-    <nav aria-label={label} aria-labelledby={label} className={className}>
+    <nav aria-label={label} aria-labelledby={headingId} className={className}>
       <h2 className="sr-only" id={headingId}>
         {title}
       </h2>
