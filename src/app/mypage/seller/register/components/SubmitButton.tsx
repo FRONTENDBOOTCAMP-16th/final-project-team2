@@ -13,7 +13,7 @@ export default function SubmitButton({ isPending }: Props) {
       aria-disabled={isPending}
       className={`flex flex-row self-end p-3 hover:bg-red-500 ${isPending ? 'cursor-not-allowed border border-gray-200 opacity-50' : 'bg-black font-semibold text-white'} cursor-pointer`}
     >
-      <Pen className="mr-2" />
+      <Pen className="mr-2 hidden md:block" />
       {isPending ? '등록 중...' : '상품 등록'}
     </button>
   )

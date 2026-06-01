@@ -24,7 +24,7 @@ export default function SellerProductItemCard({ product, onEdit }: CardProps) {
 
   return (
     <div className="flex flex-col items-center border-b border-gray-100 text-sm font-medium transition-colors hover:bg-gray-50 md:grid md:grid-cols-[4fr_1fr_1fr_1fr_1fr_72px] md:gap-x-4 md:px-6 md:py-8">
-      <div className="flex h-full w-full flex-col items-center gap-4 md:flex-row">
+      <div className="flex h-full w-full min-w-0 flex-col items-center gap-4 md:flex-row">
         <div className="relative h-50 w-50 shrink-0 overflow-hidden rounded-sm bg-gray-100 md:h-20 md:w-20">
           <Image
             fill
@@ -43,7 +43,12 @@ export default function SellerProductItemCard({ product, onEdit }: CardProps) {
           >
             {current.label}
           </span>
-          <p className="min-w-0 truncate text-gray-900">{displayName}</p>
+          <p
+            className="min-w-0 cursor-pointer truncate text-gray-900"
+            title={product.name}
+          >
+            {displayName}
+          </p>
           <button
             onClick={onEdit}
             className="ml-auto h-8 w-14 shrink-0 rounded-md border border-gray-300 text-xs font-semibold text-gray-600 md:hidden"
