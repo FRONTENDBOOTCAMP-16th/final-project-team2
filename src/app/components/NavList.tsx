@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import { useId } from 'react'
 
 export interface NaviProps {
   name: string
@@ -26,9 +27,10 @@ export default function NavList({
   mainMenu,
   title,
 }: NaviListProps) {
+  const headingId = useId()
   return (
     <nav aria-label={label} aria-labelledby={label} className={className}>
-      <h2 className="sr-only" id={label}>
+      <h2 className="sr-only" id={headingId}>
         {title}
       </h2>
       <ul className="flex gap-3">

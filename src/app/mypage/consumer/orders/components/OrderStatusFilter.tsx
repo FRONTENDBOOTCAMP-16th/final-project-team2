@@ -14,7 +14,7 @@ export default function OrderStatusFilter({ value, statusChange }: Props) {
   }
 
   return (
-    <div className="flex flex-col justify-center gap-4 px-2 py-5">
+    <div className="mb-3 flex flex-row justify-end gap-2 md:justify-center md:px-2 md:py-5">
       <div className="flex items-center gap-2">
         <label
           htmlFor="order-status-filter"
