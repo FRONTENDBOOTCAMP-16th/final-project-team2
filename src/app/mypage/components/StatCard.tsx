@@ -22,16 +22,16 @@ export default function StatCard({
   return (
     <Link
       href={href}
-      className="flex h-47.5 flex-1 cursor-pointer flex-col items-center justify-center gap-6 border-4 border-gray-300 bg-white transition-colors hover:bg-[#FF6B6B]/5 dark:hover:bg-lime-50"
+      className="flex h-32 flex-1 cursor-pointer flex-col items-center justify-center gap-3 border-4 border-gray-300 bg-white transition-colors hover:bg-[#FF6B6B]/5 md:h-47.5 md:gap-6 dark:hover:bg-lime-50"
     >
       <span
-        className={`px-2 text-center leading-tight font-black ${
-          isLongText ? 'text-2xl' : 'text-5xl'
+        className={`shrink-0 px-2 text-center leading-tight font-black ${
+          isLongText ? 'text-2xl' : 'text-4xl'
         }`}
       >
         {value}
       </span>
-      <span className="flex items-center gap-1 text-base font-black whitespace-nowrap text-gray-700">
+      <span className="flex items-center gap-1 text-xs font-black whitespace-nowrap text-gray-700 md:text-base">
         {Icon && <Icon size={18} strokeWidth={2.5} />}
         {label}
       </span>

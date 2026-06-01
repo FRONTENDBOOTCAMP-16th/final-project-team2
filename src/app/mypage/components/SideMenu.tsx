@@ -78,7 +78,7 @@ export default function SideMenu() {
               key={menu.name}
               href={menu.href}
               aria-current={isActive ? 'page' : undefined}
-              className={`flex flex-1 flex-col items-center justify-center py-3 text-[15px] transition-colors ${
+              className={`flex flex-1 flex-col items-center justify-center py-3 text-[15px] whitespace-nowrap transition-colors ${
                 isActive ? 'font-bold text-red-400' : 'text-gray-400'
               }`}
             >
