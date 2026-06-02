@@ -8,17 +8,17 @@ interface Props {
 export default function OptionList({ options, onRemove }: Props) {
   const safeOptions = Array.isArray(options) ? options : []
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-1 flex-col">
       <ul>
         {safeOptions.map((option) => (
           <li key={option.name} className="mb-3 flex flex-row gap-4">
-            <span className="w-80 self-center border-2 border-gray-400 p-2">
+            <span className="w-full border-2 border-gray-400 p-2">
               {option.name}: {option.values.join(', ')}
             </span>
             <button
               type="button"
               onClick={() => onRemove(option.name as OptionType)}
-              className="bg-red-500 px-4 py-2 text-sm whitespace-nowrap text-white hover:scale-110 hover:text-base"
+              className="shrink-0 bg-red-500 px-9 py-3 text-sm whitespace-nowrap text-white hover:bg-gray-300"
             >
               삭제
             </button>

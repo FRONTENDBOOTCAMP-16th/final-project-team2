@@ -29,7 +29,7 @@ export default function CategorySelector({ value, error, onChange }: Props) {
   }
 
   return (
-    <div className="flex w-full flex-col gap-2 md:flex-row">
+    <div className="flex w-full flex-col gap-3 md:flex-row">
       <label
         htmlFor="categoryGroup"
         className="text-sm whitespace-nowrap md:self-center"
@@ -37,7 +37,7 @@ export default function CategorySelector({ value, error, onChange }: Props) {
         카테고리
       </label>
       <div className="flex w-full gap-2">
-        <div className="relative flex-1">
+        <div className="relative min-w-0 flex-[0.5]">
           {/* 대분류 */}
           <select
             id="categoryGroup"
@@ -55,14 +55,13 @@ export default function CategorySelector({ value, error, onChange }: Props) {
           <ChevronDown className="pointer-events-none absolute top-1/2 right-2 h-4 w-4 -translate-y-1/2 text-gray-500" />
         </div>
         {/* 소분류 */}
-
         {currentGroup && (
-          <div className="relative flex-1">
+          <div className="relative flex-[0.5]">
             <select
               name="productCategoryId"
               value={selectedCategory}
               onChange={handleCategoryChange}
-              className="w-full cursor-pointer rounded-md border border-gray-300 px-3 py-3 pr-10 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
+              className="w-full cursor-pointer appearance-none rounded-md border border-gray-300 px-3 py-3 pr-10 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
             >
               <option value="">소분류 선택</option>
               {currentGroup.categories
@@ -73,6 +72,7 @@ export default function CategorySelector({ value, error, onChange }: Props) {
                   </option>
                 ))}
             </select>
+            <ChevronDown className="pointer-events-none absolute top-1/2 right-2 h-4 w-4 -translate-y-1/2 text-gray-500" />
           </div>
         )}
       </div>
