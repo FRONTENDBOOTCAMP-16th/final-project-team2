@@ -9,6 +9,7 @@ import ProductEditModal from './ProductEditModal'
 import { useSellerProducts } from '../hooks/useSellerProducts'
 import Pagination from '@/app/components/Pagination'
 import { useProductFilter } from '@/hooks/useFiltering'
+import Modal from '@/app/components/Modal'
 
 interface CustomUser {
   id: string
@@ -83,30 +84,32 @@ export default function SellerProductItemList() {
         />
       )}
 
-      {deleteTargetId && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
-          <div className="rounded-lg bg-white p-6 shadow-lg">
-            <p className="mb-4 text-sm font-medium">정말 삭제하시겠습니까?</p>
-            <div className="flex justify-end gap-2">
-              <button
-                onClick={() => setDeleteTargetId(null)}
-                className="rounded-md border px-4 py-2 text-sm"
-              >
-                취소
-              </button>
-              <button
-                onClick={async () => {
-                  await deleteProduct(deleteTargetId)
-                  setDeleteTargetId(null)
-                }}
-                className="rounded-md bg-red-500 px-4 py-2 text-sm text-white"
-              >
-                삭제
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+      <Modal
+        isOpen={!!deleteTargetId}
+        onClose={() => setDeleteTargetId(null)}
+        title="상품 삭제"
+        footer={
+          <>
+            <button
+              onClick={() => setDeleteTargetId(null)}
+              className="rounded-md border px-4 py-2 text-sm"
+            >
+              취소
+            </button>
+            <button
+              onClick={async () => {
+                await deleteProduct(deleteTargetId!)
+                setDeleteTargetId(null)
+              }}
+              className="rounded-md bg-red-500 px-4 py-2 text-sm text-white"
+            >
+              삭제
+            </button>
+          </>
+        }
+      >
+        <p className="text-sm text-gray-600">정말 삭제하시겠습니까?</p>
+      </Modal>
     </div>
   )
 }
