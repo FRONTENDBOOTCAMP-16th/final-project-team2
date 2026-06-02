@@ -11,8 +11,22 @@ type Props = {
   onChange: (value: string) => void
 }
 
+const findInitialGroup = (categoryId: string) => {
+  if (!categoryId) return ''
+  for (const group of CATEGORY_GROUPS) {
+    for (const categoryName of group.categories) {
+      if (CATEGORY_NAME_TO_ID[categoryName] === categoryId) {
+        return group.label
+      }
+    }
+  }
+  return ''
+}
+
 export default function CategorySelector({ value, error, onChange }: Props) {
-  const [selectedGroup, setSelectedGroup] = useState('')
+  const [selectedGroup, setSelectedGroup] = useState(() =>
+    findInitialGroup(value ?? ''),
+  )
   const selectedCategory = value ?? ''
 
   const currentGroup = CATEGORY_GROUPS.find(
