@@ -9,7 +9,10 @@ export default function LogoSection() {
 
   return (
     <LogoTag>
-      <Link href="/" className="text-2xl font-bold">
+      <Link
+        href="/"
+        className="text-lg font-bold whitespace-nowrap md:text-2xl"
+      >
         행쇼마켓
       </Link>
     </LogoTag>
