@@ -21,6 +21,7 @@ export default function SellerProductItemList() {
   const [selectedProduct, setSelectedProduct] = useState<SellerProduct | null>(
     null,
   )
+  const [deleteTargetId, setDeleteTargetId] = useState<string | null>(null)
 
   const { user, isLoading: isUserLoading } = useUser()
   const storeId = (user as unknown as CustomUser)?.store_id
@@ -29,6 +30,7 @@ export default function SellerProductItemList() {
     products,
     isLoading: isDataLoading,
     refetch,
+    deleteProduct,
   } = useSellerProducts(storeId)
 
   const itemsPerPage = 5
@@ -57,6 +59,7 @@ export default function SellerProductItemList() {
                 <SellerProductItemCard
                   product={product}
                   onEdit={() => setSelectedProduct(product)}
+                  onDelete={() => setDeleteTargetId(product.id)}
                 />
               </li>
             ))}
@@ -78,6 +81,31 @@ export default function SellerProductItemList() {
             refetch()
           }}
         />
+      )}
+
+      {deleteTargetId && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
+          <div className="rounded-lg bg-white p-6 shadow-lg">
+            <p className="mb-4 text-sm font-medium">정말 삭제하시겠습니까?</p>
+            <div className="flex justify-end gap-2">
+              <button
+                onClick={() => setDeleteTargetId(null)}
+                className="rounded-md border px-4 py-2 text-sm"
+              >
+                취소
+              </button>
+              <button
+                onClick={async () => {
+                  await deleteProduct(deleteTargetId)
+                  setDeleteTargetId(null)
+                }}
+                className="rounded-md bg-red-500 px-4 py-2 text-sm text-white"
+              >
+                삭제
+              </button>
+            </div>
+          </div>
+        </div>
       )}
     </div>
   )

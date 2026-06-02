@@ -1,8 +1,8 @@
 import { ProductOptionType } from '@/app/lib/products.types'
 
 export interface SellerProduct {
-  id: number
-  store_id: number
+  id: string
+  store_id: string
   name: string
   thumbnail_image: string
   content?: string

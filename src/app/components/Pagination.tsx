@@ -30,12 +30,14 @@ export default function Pagination({ pageSize, totalCount }: PaginationProps) {
   })
 
   const paginationButton = {
-    active: 'text-red-600 font-semibold px-4 py-2 dark:text-red-500',
+    active:
+      'text-red-600 font-semibold px-2 py-2 md:px-4 py-2 dark:text-red-500',
     default:
-      'text-black px-4 py-2 hover:text-[#FF6B6B] dark:text-white disabled:cursor-not-allowed disabled:text-gray-400',
-    disabled: 'cursor-not-allowed text-gray-500 flex px-4 py-2 -space-x-3',
+      'text-black px-2 py-2 md:px-4 hover:text-[#FF6B6B] dark:text-white disabled:cursor-not-allowed disabled:text-gray-400',
+    disabled:
+      'cursor-not-allowed text-gray-500 flex px-1 py-2 md:px-4 -space-x-2',
     pageActive:
-      'px-4 py-2 hover:text-[#FF6B6B] flex -space-x-3 disabled:cursor-not-allowed disabled:text-gray-400',
+      'flex px-1 py-1 md:px-4 -space-x-2 hover:text-[#FF6B6B] disabled:cursor-not-allowed disabled:text-gray-400',
   }
 
   if (totalCount === 0) return null
