@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react'
 import { createClient } from '@/utils/supabase/client'
 import { SellerProduct } from '@/app/mypage/types/sellerOrderItems'
 import { productUpdateSchema } from '@/app/mypage/types/productSchema'
-import useOptionForm from './useOptionForm'
+import useOptionForm from '@/hooks/useOptionForm'
 
 export const useProductEdit = (product: SellerProduct, onClose: () => void) => {
   const supabase = createClient()
@@ -15,10 +15,10 @@ export const useProductEdit = (product: SellerProduct, onClose: () => void) => {
     category: '',
   })
 
+  const [isCategoryLoaded, setIsCategoryLoaded] = useState(false)
   const optionForm = useOptionForm(product.options || [])
   const { setOptions } = optionForm.actions
   const [errors, setErrors] = useState<Record<string, string>>({})
-
   const isInitialized = useRef(false)
 
   useEffect(() => {
@@ -48,6 +48,7 @@ export const useProductEdit = (product: SellerProduct, onClose: () => void) => {
       }
 
       isInitialized.current = true
+      setIsCategoryLoaded(true)
     }
 
     initializeData()
@@ -95,7 +96,6 @@ export const useProductEdit = (product: SellerProduct, onClose: () => void) => {
     }
 
     try {
-      // 상품 정보 업데이트
       const { error: productUpdateError } = await supabase
         .from('products')
         .update({
@@ -109,7 +109,6 @@ export const useProductEdit = (product: SellerProduct, onClose: () => void) => {
 
       if (productUpdateError) throw productUpdateError
 
-      //카테고리 정보 업데이트
       const { error: categoryUpdateError } = await supabase
         .from('product_categories')
         .upsert(
@@ -137,6 +136,7 @@ export const useProductEdit = (product: SellerProduct, onClose: () => void) => {
 
   return {
     formData,
+    isCategoryLoaded,
     errors,
     handleChange,
     handleSubmit,
