@@ -25,9 +25,9 @@ export default function CancelButton({ isInputted, onConfirm }: Props) {
       <button
         type="button"
         onClick={handleCancel}
-        className="flex items-center gap-3 bg-gray-400 p-3 font-semibold text-white hover:bg-red-500"
+        className="flex items-center gap-3 bg-gray-400 p-3 font-semibold whitespace-nowrap text-white hover:bg-red-500"
       >
-        <ArrowLeft size={16} />
+        <ArrowLeft size={16} className="hidden md:block" />
         취소
       </button>
 

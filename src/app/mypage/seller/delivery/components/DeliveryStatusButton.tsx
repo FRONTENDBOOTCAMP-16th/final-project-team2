@@ -45,7 +45,7 @@ export default function DeliverStatusButton({
         관리
       </button>
       {currentStatus !== 'DELIVERED' && isOpen && (
-        <ul className="absolute top-1/2 -left-5 z-10 w-25 rounded-2xl bg-white/70 p-2 shadow-xl backdrop-blur-md">
+        <ul className="absolute top-full -left-5 z-10 w-25 rounded-2xl bg-white/70 p-2 shadow-xl backdrop-blur-md">
           {filteredStatus.map((status) => {
             const config = statusLabel[status]
             return (

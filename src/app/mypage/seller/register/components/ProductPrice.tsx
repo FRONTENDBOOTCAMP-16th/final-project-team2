@@ -22,7 +22,7 @@ export default function ProductPrice({
         type="number"
         aria-describedby="productPriceHelp"
         value={value}
-        className="h-12.5 w-2xl appearance-none border border-[#D1D5DC] bg-[#F9FAFB] px-4 py-3 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+        className="h-12.5 w-full appearance-none border border-[#D1D5DC] bg-[#F9FAFB] px-4 py-3 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
         style={{
           MozAppearance: 'textfield',
         }}

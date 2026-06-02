@@ -9,6 +9,7 @@ export function useAuth() {
   const [isLogin, setIsLogin] = useState(false)
   const pathname = usePathname()
   const router = useRouter()
+  const [role, setRole] = useState<string | null>(null)
 
   // 경로가 변경되면 로그인/로그아웃 확인하여 값 전달
   // getSession으로 현재 유저로그인데이터가 있는지(값이 있으면 로그인상태)확인
@@ -18,6 +19,19 @@ export function useAuth() {
         data: { session },
       } = await supabase.auth.getSession()
       setIsLogin(!!session)
+
+      if (!session?.user) {
+        setRole(null)
+        return
+      }
+
+      const { data } = await supabase
+        .from('users')
+        .select('role')
+        .eq('id', session.user.id)
+        .single()
+
+      setRole(data?.role ?? null)
     }
 
     checkSession()
@@ -43,5 +57,5 @@ export function useAuth() {
     router.refresh()
   }
 
-  return { isLogin, handleLogout }
+  return { isLogin, handleLogout, role }
 }

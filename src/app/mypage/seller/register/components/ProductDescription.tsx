@@ -16,7 +16,7 @@ export default function ProductDescription({
       <label htmlFor="productDescription" className="text-sm">
         상품 정보
       </label>
-      <div className="relative w-2xl">
+      <div className="relative w-full">
         <textarea
           name="productDescription"
           value={value}

@@ -28,7 +28,7 @@ export default function ProductInventory({
         value={value}
         onChange={(e) => onChange(e.target.value)}
         onBlur={onBlur}
-        className="h-12.5 w-2xl border border-[#D1D5DC] bg-[#F9FAFB] px-4 py-3"
+        className="h-12.5 w-full border border-[#D1D5DC] bg-[#F9FAFB] px-4 py-3"
       />
       <p id="productInventoryHelp" className="sr-only">
         최소 10개부터 최대 100개까지 설정 가능합니다.

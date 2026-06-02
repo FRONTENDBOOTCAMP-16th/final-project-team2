@@ -157,7 +157,7 @@ export default function RegisterProductForm() {
     <form
       action={formAction}
       onSubmit={handleSubmit}
-      className="flex flex-col gap-6 px-6"
+      className="mx-auto flex w-full max-w-3xl flex-col gap-6 px-6"
     >
       <div className="flex justify-between">
         <h2 className="text-2xl font-bold">상품 등록 페이지</h2>
@@ -176,7 +176,7 @@ export default function RegisterProductForm() {
         </div>
       </div>
 
-      <div className="flex flex-col gap-y-6">
+      <div className="flex w-full flex-col gap-y-6">
         <ProductImg
           key={imgForm.imgKey}
           fileName={imgForm.fileName}

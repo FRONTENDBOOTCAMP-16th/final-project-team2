@@ -37,18 +37,29 @@ const GradeTooltip = () => (
 export default function UserProfile() {
   const { user, role, isLoading } = useUser()
 
-  // 스켈레톤 추가
   if (isLoading) {
     return (
-      <div className="mb-10 flex animate-pulse flex-col">
-        <div className="flex w-51 flex-col items-center bg-white pb-6">
-          <div className="aspect-square w-51 shrink-0 border bg-gray-200" />
-          <div className="flex items-center justify-center gap-2 pt-5 pb-2">
-            <div className="h-5 w-24 rounded bg-gray-200" />
+      <>
+        {/* 데스크탑용 스켈레톤 */}
+        <div className="mb-10 hidden animate-pulse flex-col md:flex">
+          <div className="flex w-51 flex-col items-center bg-white pb-6">
+            <div className="aspect-square w-51 shrink-0 border bg-gray-200" />
+            <div className="flex items-center justify-center gap-2 pt-5 pb-2">
+              <div className="h-5 w-24 rounded bg-gray-200" />
+            </div>
+            <div className="mt-1 h-6 w-32 rounded bg-gray-200" />
           </div>
-          <div className="mt-1 h-6 w-32 rounded bg-gray-200" />
         </div>
-      </div>
+
+        {/* 모바일 전용 스켈레톤 */}
+        <div className="flex animate-pulse items-center gap-4 border-b border-gray-100 bg-white px-4 py-4 md:hidden">
+          <div className="h-14 w-14 shrink-0 rounded-full bg-gray-200" />
+          <div className="flex flex-col gap-2">
+            <div className="h-4 w-20 rounded bg-gray-200" />
+            <div className="h-5 w-32 rounded bg-gray-200" />
+          </div>
+        </div>
+      </>
     )
   }
 
@@ -63,38 +74,73 @@ export default function UserProfile() {
   const userName = user?.name || '사용자'
 
   return (
-    <div className="mb-10 flex flex-col">
-      <div className="flex w-51 flex-col items-center bg-white pb-6">
-        <div className="relative aspect-square w-51 shrink-0 overflow-hidden border border-gray-100 bg-white">
+    <>
+      {/* 모바일 전용 */}
+      <div className="flex w-full flex-col items-center gap-10 border-b border-gray-100 bg-white px-4 py-4 md:hidden">
+        <div className="relative h-50 w-50 overflow-hidden border border-gray-100 bg-white">
           {displayImage ? (
             <NextImage
               src={displayImage}
               alt={isBusiness ? '상점 썸네일' : '프로필 이미지'}
               fill
-              sizes="204px"
+              sizes="56px"
               className="object-cover"
               priority
-              fetchPriority="high"
             />
           ) : (
-            <div className="h-full w-full bg-white" />
+            <div className="h-full w-full bg-gray-100" />
           )}
         </div>
-
-        {/* 등급 표시 영역 (판매자는 STORE MANAGER 고정) */}
-        <div className="flex items-center justify-center gap-2 pt-5 pb-2">
-          <div className="inline-block bg-black px-2 py-0.5 text-xs font-bold tracking-tight text-white">
-            {isBusiness ? 'STORE MANAGER' : userGrade}
+        <div className="flex flex-col gap-3">
+          <div className="flex items-center justify-center gap-2">
+            <div className="inline-block bg-black px-2 py-0.5 text-[15px] font-bold tracking-tight text-white">
+              {isBusiness ? 'STORE MANAGER' : userGrade}
+            </div>
+            {!isBusiness && <GradeTooltip />}
           </div>
-          {/* 소비자인 경우에만 등급 툴팁을 보여줍니다. */}
-          {!isBusiness && <GradeTooltip />}
+          <h2 className="sr-only">프로필 정보</h2>
+
+          <p className="text-base text-gray-800">
+            <strong className="font-bold text-black">{userName}</strong>님
+            반갑습니다.
+          </p>
         </div>
-        <h2 className="sr-only">프로필 정보</h2>
-        <p className="w-full text-center text-lg">
-          <strong className="font-bold text-black">{userName}</strong>님
-          반갑습니다.
-        </p>
       </div>
-    </div>
+
+      {/* 데스크탑 전용 */}
+      <div className="mb-10 hidden flex-col md:flex">
+        <div className="flex w-51 flex-col items-center bg-white pb-6">
+          <div className="relative aspect-square w-51 shrink-0 overflow-hidden border border-gray-100 bg-white">
+            {displayImage ? (
+              <NextImage
+                src={displayImage}
+                alt={isBusiness ? '상점 썸네일' : '프로필 이미지'}
+                fill
+                sizes="204px"
+                className="object-cover"
+                priority
+                fetchPriority="high"
+              />
+            ) : (
+              <div className="h-full w-full bg-white" />
+            )}
+          </div>
+
+          {/* 등급 표시 영역 (판매자는 STORE MANAGER 고정) */}
+          <div className="flex items-center justify-center gap-2 pt-5 pb-2">
+            <div className="inline-block bg-black px-2 py-0.5 text-xs font-bold tracking-tight text-white">
+              {isBusiness ? 'STORE MANAGER' : userGrade}
+            </div>
+            {/* 소비자인 경우에만 등급 툴팁을 보여줍니다. */}
+            {!isBusiness && <GradeTooltip />}
+          </div>
+          <h2 className="sr-only">프로필 정보</h2>
+          <p className="w-full text-center text-lg">
+            <strong className="font-bold text-black">{userName}</strong>님
+            반갑습니다.
+          </p>
+        </div>
+      </div>
+    </>
   )
 }

@@ -66,18 +66,22 @@ export default function OrderList() {
   const hasOrder = safeItems?.length > 0
   return (
     <>
-      <div className="mb-12.5 flex h-9 justify-between pl-4">
-        <TabFilter
-          items={CATEGORIES}
-          selectedValue={sort}
-          onValueChange={onValueChange}
-        />
-        <OrderStatusFilter value={status} statusChange={handleStatusFilter} />
+      <div className="flex min-w-0 flex-col gap-3 border-b border-b-gray-300 md:mb-12.5 md:h-9 md:flex-row md:items-center md:justify-between md:border-b-0">
+        <div>
+          <TabFilter
+            items={CATEGORIES}
+            selectedValue={sort}
+            onValueChange={onValueChange}
+          />
+        </div>
+        <div className="shrink-0">
+          <OrderStatusFilter value={status} statusChange={handleStatusFilter} />
+        </div>
       </div>
       <OrderItemHeader />
       {hasOrder ? (
         <>
-          <ul>
+          <ul className="space-y-3 md:space-y-0">
             {filteredOrders?.map((orders) =>
               orders.order_items.map((item) => (
                 <li key={item.id}>

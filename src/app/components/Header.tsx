@@ -21,6 +21,7 @@ export default function Header() {
       name: '검색',
       onClick: () => setSearchModal(true),
       icon: <LucideSearch aria-label="검색" />,
+      className: 'hidden md:flex',
     },
     isLogin && {
       name: '마이페이지',
@@ -31,6 +32,7 @@ export default function Header() {
       name: '장바구니',
       href: '/cart',
       icon: <LucideShoppingCart aria-label="장바구니" />,
+      className: 'hidden md:flex',
     },
     isLogin
       ? {
