@@ -1,3 +1,5 @@
+'use client'
+
 import { useAuth } from '@/hooks/useAuth'
 import NavList, { NaviProps } from './NavList'
 import { LucideSearch, LucideShoppingCart, LucideUser } from 'lucide-react'
@@ -19,6 +21,7 @@ export default function Header() {
       name: '검색',
       onClick: () => setSearchModal(true),
       icon: <LucideSearch aria-label="검색" />,
+      className: 'hidden md:flex',
     },
     isLogin && {
       name: '마이페이지',
@@ -29,6 +32,7 @@ export default function Header() {
       name: '장바구니',
       href: '/cart',
       icon: <LucideShoppingCart aria-label="장바구니" />,
+      className: 'hidden md:flex',
     },
     isLogin
       ? {
@@ -41,7 +45,11 @@ export default function Header() {
 
   return (
     <>
-      <NavList title='유저 서비스 메뉴' label="convenience-menu" items={convenienceMenu} />
+      <NavList
+        title="유저 서비스 메뉴"
+        label="convenience-menu"
+        items={convenienceMenu}
+      />
 
       {/* 로그인 모달 */}
       {isLogoutModal && (

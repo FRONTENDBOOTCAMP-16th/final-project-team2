@@ -13,7 +13,7 @@ export default function LoginPage() {
 
   return (
     <div className="w-full rounded-2xl bg-white p-10 shadow-md shadow-[#c7c7c7] transition-all sm:w-160">
-      <h2 className='sr-only'>로그인</h2>
+      <h2 className="sr-only">로그인</h2>
       <div className="border-be border-[#e0e0e0] pbe-9 text-center text-2xl">
         <strong className="text-[#575A68]">환영합니다</strong>
         <p className="mbs-1 text-sm text-[#575A68]">계정에 로그인하세요</p>
@@ -63,10 +63,7 @@ export default function LoginPage() {
           />
         </div>
 
-        <p
-          className="mbs-1 text-center text-red-600"
-          aria-live="polite"
-        >
+        <p className="mbs-1 text-center text-red-600" aria-live="polite">
           {state?.errors?.root?.[0]}
         </p>
 
@@ -91,7 +88,7 @@ export default function LoginPage() {
           type="submit"
           className="mbs-12 w-full cursor-pointer rounded bg-black py-4 font-bold text-white"
         >
-          로그인 버튼
+          {isPending ? '로그인 중...' : '로그인'}
         </button>
       </form>
 

@@ -40,18 +40,17 @@ export default function DeliveryProductList() {
       </div>
       {hasItems ? (
         <>
-          <div className="flex flex-col px-5">
-            <div>
-              <DeliveryProductHeader />
-              <ul>
-                {items.map((item) => (
-                  <li key={item.id}>
-                    <DeliveryProductCard order={item} />
-                  </li>
-                ))}
-              </ul>
-            </div>
+          <div className="flex flex-col md:px-5">
+            <DeliveryProductHeader />
+            <ul>
+              {items.map((item) => (
+                <li key={item.id}>
+                  <DeliveryProductCard order={item} />
+                </li>
+              ))}
+            </ul>
           </div>
+
           <Pagination
             currentPage={pageParam}
             totalPages={totalPages}
@@ -60,7 +59,6 @@ export default function DeliveryProductList() {
         </>
       ) : (
         <div>
-          <OrderStatusFilter value={status} statusChange={handleOptionChange} />
           <p className="pt-3 text-center text-red-500">
             주문된 상품이 없습니다.
           </p>{' '}

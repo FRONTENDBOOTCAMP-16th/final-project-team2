@@ -1,15 +1,15 @@
 'use client'
 
-import { Swiper, SwiperSlide } from 'swiper/react'
-import type { Swiper as SwiperType } from "swiper"
-import { Navigation, Pagination, Autoplay, A11y } from 'swiper/modules'
+import { LucideBadgePercent, Pause, Play } from 'lucide-react'
 import Image from 'next/image'
+import { useRef, useState } from 'react'
+import type { Swiper as SwiperType } from 'swiper'
 import 'swiper/css'
 import 'swiper/css/navigation'
-import 'swiper/css/scrollbar'
 import 'swiper/css/pagination'
-import { LucideBadgePercent, Pause, Play } from 'lucide-react'
-import { useRef, useState } from 'react'
+import 'swiper/css/scrollbar'
+import { A11y, Autoplay, Navigation, Pagination } from 'swiper/modules'
+import { Swiper, SwiperSlide } from 'swiper/react'
 
 interface swiperProps {
   swiperList: {
@@ -22,7 +22,11 @@ interface swiperProps {
   srSubtitle: string
 }
 
-export default function SwiperList({ swiperList, srTitle, srSubtitle }: swiperProps) {
+export default function SwiperList({
+  swiperList,
+  srTitle,
+  srSubtitle,
+}: swiperProps) {
   const swiperRef = useRef<SwiperType | null>(null)
   const [isPlay, setIsPlay] = useState(true)
 
@@ -39,9 +43,9 @@ export default function SwiperList({ swiperList, srTitle, srSubtitle }: swiperPr
   }
 
   return (
-    <section className='relative'>
-      <h2 className='sr-only'>{srTitle}</h2>
-      <p className='sr-only'>{srSubtitle}</p>
+    <section className="relative">
+      <h2 className="sr-only">{srTitle}</h2>
+      <p className="sr-only">{srSubtitle}</p>
       <Swiper
         onSwiper={(swiper) => {
           swiperRef.current = swiper
@@ -52,7 +56,7 @@ export default function SwiperList({ swiperList, srTitle, srSubtitle }: swiperPr
         slidesPerView={1}
         navigation={true}
         pagination={{
-          el: ".custom-pagination",
+          el: '.custom-pagination',
           clickable: true,
         }}
         autoplay={{
@@ -60,9 +64,9 @@ export default function SwiperList({ swiperList, srTitle, srSubtitle }: swiperPr
           disableOnInteraction: false,
         }}
         a11y={{
-          prevSlideMessage: "이전 슬라이드",
-          nextSlideMessage: "다음 슬라이드",
-          paginationBulletMessage: `{{index}}번째 슬라이드로 이동`
+          prevSlideMessage: '이전 슬라이드',
+          nextSlideMessage: '다음 슬라이드',
+          paginationBulletMessage: `{{index}}번째 슬라이드로 이동`,
         }}
         className="[&_.swiper-button-next]:right-5! [&_.swiper-button-next]:rounded-full [&_.swiper-button-next]:bg-white [&_.swiper-button-next]:p-3.5 [&_.swiper-button-next]:ps-4.5 [&_.swiper-button-next]:shadow-lg [&_.swiper-button-prev]:left-5! [&_.swiper-button-prev]:rounded-full [&_.swiper-button-prev]:bg-white [&_.swiper-button-prev]:p-3.5 [&_.swiper-button-prev]:pe-4.5 [&_.swiper-button-prev]:shadow-lg [&_.swiper-navigation-icon]:text-black [&_.swiper-pagination-bullet]:bg-white! [&_.swiper-pagination-bullet]:opacity-100! [&_.swiper-pagination-bullet]:transition-all [&_.swiper-pagination-bullet]:duration-400 [&_.swiper-pagination-bullet-active]:w-16! [&_.swiper-pagination-bullet-active]:rounded-full! [&_.swiper-pagination-bullet-active]:bg-black! [&_.swiper-pagination-bullets]:bottom-10!"
       >
@@ -95,17 +99,17 @@ export default function SwiperList({ swiperList, srTitle, srSubtitle }: swiperPr
             </div>
           </SwiperSlide>
         ))}
-        <div className="absolute bottom-10 left-1/2 -translate-1/2 z-4 flex items-center justify-center">
-          <button className="custom-pagination flex items-center gap-1.2"></button>
+        <div className="absolute bottom-10 left-1/2 z-4 flex -translate-1/2 items-center justify-center">
+          <button className="custom-pagination gap-1.2 flex items-center"></button>
           <button
             onClick={togglePlay}
-            className="flex p-1 ms-4 items-center justify-center rounded-full bg-black text-white backdrop-blur-sm transition-hover hover:bg-black/60"
-            aria-label={isPlay ? "슬라이드 정지" : "슬라이드 재생"}
+            className="transition-hover ms-4 flex items-center justify-center rounded-full bg-black p-1 text-white backdrop-blur-sm hover:bg-black/60"
+            aria-label={isPlay ? '슬라이드 정지' : '슬라이드 재생'}
           >
             {isPlay ? (
-              <Pause className='w-4 h-4' />
+              <Pause className="h-4 w-4" />
             ) : (
-              <Play className='w-4 h-4'/> 
+              <Play className="h-4 w-4" />
             )}
           </button>
         </div>

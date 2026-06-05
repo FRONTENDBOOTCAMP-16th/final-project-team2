@@ -12,9 +12,9 @@ export default function SubHeader() {
     <NavList
       label="main-menu"
       items={mainMenu}
-      className="md:absolute md:left-1/2 md:-translate-x-1/2"
+      className="text-sm whitespace-nowrap md:absolute md:left-1/2 md:-translate-x-1/2 md:text-xl"
       mainMenu
-      title='행쇼마켓 상품 메뉴바'
+      title="행쇼마켓 상품 메뉴바"
     />
   )
 }

@@ -27,7 +27,7 @@ export default async function ProductInventory({
           product={product}
           category={mainCategories[i]}
           inventoryTag
-          preload={i === 0}
+          isPriority={i === 0}
         />
       ))}
     </>

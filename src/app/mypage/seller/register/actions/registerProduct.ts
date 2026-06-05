@@ -101,6 +101,15 @@ async function processRegister(formData: FormData): Promise<FormState> {
     .eq('owner_id', user?.id)
     .single()
 
+  if (!store) {
+    return {
+      errors: {
+        productName:
+          '상점 정보가 저장되지 않았습니다. 상점 정보 관리를 통해 정보를 등록해주세요.',
+      },
+    }
+  }
+
   const publicUrl = formData.get('thumbnailUrl')?.toString()
   if (!publicUrl) {
     errors.productImage = '이미지를 업로드해야 합니다.'

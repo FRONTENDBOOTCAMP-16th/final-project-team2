@@ -6,14 +6,9 @@ import { MainCategoryType } from '../../../lib/category'
 type Props = {
   productId: string
   mainCategoryKey: MainCategoryType
-  onImageLoad?: () => void
 }
 
-const RecommendProducts = async ({
-  productId,
-  mainCategoryKey,
-  onImageLoad,
-}: Props) => {
+const RecommendProducts = async ({ productId, mainCategoryKey }: Props) => {
   const products = await getRecommendedProducts({
     productId,
     mainCategoryKey,
@@ -32,11 +27,10 @@ const RecommendProducts = async ({
       <ProductsCardList>
         {products.map((product) => (
           <ProductsCard
-            preload={false}
+            isPriority={false}
             key={product.id}
             category={mainCategoryKey}
             product={product}
-            onImageLoad={onImageLoad}
           />
         ))}
       </ProductsCardList>

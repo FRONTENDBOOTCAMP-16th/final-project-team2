@@ -21,13 +21,13 @@ export default function OptionInput({ optionForm }: Props) {
   }
 
   return (
-    <fieldset className="flex flex-col gap-3">
+    <fieldset className="flex w-full flex-col gap-3">
       <legend className="mb-3 text-sm">상품 옵션</legend>
-      <div className="flex flex-row items-baseline gap-3">
+      <div className="flex flex-col gap-3 md:flex-row md:items-center">
         <label htmlFor="productType" className="sr-only">
           옵션 타입
         </label>
-        <div className="relative">
+        <div className="relative flex w-40 md:shrink-0">
           <select
             name="productType"
             id="productType"
@@ -37,7 +37,7 @@ export default function OptionInput({ optionForm }: Props) {
                 e.target.value as OptionType | '',
               )
             }
-            className="cursor-pointer appearance-none rounded-md border border-gray-300 px-4 py-3 pr-8 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
+            className="w-full cursor-pointer appearance-none rounded-md border border-gray-300 px-4 py-3 pr-8 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
             aria-describedby="optionTypeHelp"
           >
             <option value="">선택</option>
@@ -47,7 +47,7 @@ export default function OptionInput({ optionForm }: Props) {
           <ChevronDown className="pointer-events-none absolute top-1/2 right-2 h-4 w-4 -translate-y-1/2 text-gray-500" />
         </div>
 
-        <div className="flex flex-row gap-4">
+        <div className="flex flex-1 flex-row gap-4">
           <label htmlFor="productOptions" className="sr-only">
             옵션 값
           </label>
@@ -56,7 +56,7 @@ export default function OptionInput({ optionForm }: Props) {
             id="productOptions"
             value={optionForm.state.optionValue}
             onChange={(e) => optionForm.actions.handleInput(e.target.value)}
-            className="w-120 border border-[#D1D5DC] bg-[#F9FAFB] px-4 py-3"
+            className="w-full min-w-0 border border-[#D1D5DC] bg-[#F9FAFB] px-4 py-3"
             placeholder={
               optionForm.state.optionType
                 ? placeholderOptions[optionForm.state.optionType]
@@ -68,11 +68,12 @@ export default function OptionInput({ optionForm }: Props) {
             type="hidden"
             name="productOptions"
             value={JSON.stringify(optionForm.state.options)}
+            className="w-full min-w-0"
           />
           <button
             type="button"
             onClick={optionForm.actions.handleAddOptions}
-            className="border px-4"
+            className="border px-4 whitespace-nowrap hover:bg-gray-300 md:shrink-0"
           >
             옵션 추가
           </button>

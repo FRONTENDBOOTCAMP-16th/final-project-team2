@@ -62,10 +62,11 @@ export const fetchDelivery = async (
       discount_rate
     )
   `,
-      { count: 'exact' }, // 나눠서 가져오는 데이터의 총 개수 (표시용)
+      { count: 'exact' },
     )
     .in('product_id', productIds)
-    .range(from, to) // 몇 개의 데이터를 나눠서 보여줄지
+    .order('invoice_number', { ascending: false })
+    .range(from, to)
 
   if (status !== 'all') {
     query = query.eq('item_status', status)

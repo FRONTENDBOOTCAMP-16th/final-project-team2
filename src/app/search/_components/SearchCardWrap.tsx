@@ -21,7 +21,7 @@ export default function SearchCardWrap({ products }: SearchCardWrapProps) {
           key={product.id}
           product={product}
           category={product.category_path}
-          preload={i === 0}
+          isPriority={i === 0}
         />
       ))}
     </>

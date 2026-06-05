@@ -15,7 +15,7 @@ export default function ProductName({ value, error, onChange, onBlur }: Props) {
         id="productName"
         name="productName"
         type="text"
-        className="h-12.5 w-2xl border border-[#D1D5DC] bg-[#F9FAFB] px-4 py-3"
+        className="h-12.5 w-full border border-[#D1D5DC] bg-[#F9FAFB] px-4 py-3"
         placeholder="예) 빈티지 라벨 스티커"
         aria-describedby="productNameHelp"
         value={value}

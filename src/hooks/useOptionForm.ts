@@ -70,6 +70,13 @@ export default function useOptionForm(
     setOptionValue(value)
   }
 
+  const resetOptions = () => {
+    setOptionType('')
+    setOptionValue('')
+    setOptions([])
+    setError('')
+  }
+
   return {
     state: {
       optionType,
@@ -84,6 +91,7 @@ export default function useOptionForm(
       handleInput,
       setOptions,
       setError,
+      resetOptions,
     },
   }
 }

@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import { useId } from 'react'
 
 export interface NaviProps {
   name: string
@@ -8,6 +9,7 @@ export interface NaviProps {
   icon?: React.ReactNode
   text?: string
   onClick?: () => void
+  className?: string
 }
 
 interface NaviListProps {
@@ -25,17 +27,23 @@ export default function NavList({
   mainMenu,
   title,
 }: NaviListProps) {
+  const headingId = useId()
   return (
-    <nav aria-label={label} aria-labelledby={label} className={className}>
-      <h2 className='sr-only' id={label}>{title}</h2>
+    <nav aria-label={label} aria-labelledby={headingId} className={className}>
+      <h2 className="sr-only" id={headingId}>
+        {title}
+      </h2>
       <ul className="flex gap-3">
         {items.map((item, index) => (
-          <li key={index} className="group relative items-center flex">
+          <li
+            key={index}
+            className={`group relative flex items-center ${item.className || ''}`}
+          >
             {item.href ? (
               <>
                 <Link
                   className="cursor-pointer text-[#2D3142] opacity-80 transition-all hover:font-medium hover:opacity-100 dark:text-white"
-                  href={item.href || ""}
+                  href={item.href || ''}
                 >
                   {item.icon ? (
                     <p className="rounded-full bg-[#F5F5F5] p-1.5 dark:bg-black">
@@ -62,7 +70,7 @@ export default function NavList({
                     {item.icon}
                   </span>
                 ) : (
-                  <>{item.text}</>
+                  <span className="whitespace-nowrap">{item.text}</span>
                 )}
               </button>
             )}

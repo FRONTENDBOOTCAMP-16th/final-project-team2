@@ -1,12 +1,12 @@
 export default function DeliveryProductHeader() {
   return (
-    <div className="flex font-semibold border-b border-gray-300 gap-5 p-4 mb-2">
-      <div className="w-1/10 shrink-0">주문번호</div>
-      <div className="w-3/10 shrink-0 text-center">상품명</div>
-      <div className="w-1/10 shrink-0 ">주문자</div>
-      <div className="w-1/10 shrink-0 ">총 가격</div>
-      <div className="w-1/10 shrink-0 text-center">주문 수량</div>
-      <div className="w-2/10 shrink-0 ">주문 상태</div>
+    <div className="mb-2 hidden grid-cols-[2fr_2fr_1fr_1fr_1fr_2fr] gap-5 border-b border-gray-300 p-4 font-semibold lg:grid">
+      <p className="min-w-0">주문번호</p>
+      <p className="min-w-0">상품명</p>
+      <p className="min-w-0">주문자</p>
+      <p className="min-w-0">총 가격</p>
+      <p className="min-w-0">주문 수량</p>
+      <p className="min-w-0">주문 상태</p>
     </div>
   )
 }
