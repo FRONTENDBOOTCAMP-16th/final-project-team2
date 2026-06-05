@@ -28,7 +28,16 @@ export default function SellerProductItemCard({
     product.name.length > 18 ? `${product.name.slice(0, 18)}...` : product.name
 
   return (
-    <div className="flex flex-col items-center border-b border-gray-100 text-sm font-medium transition-colors hover:bg-gray-50 md:gap-x-4 md:px-6 md:py-8 lg:grid lg:grid-cols-[4fr_1fr_1fr_1fr_1fr_72px]">
+    <div className="flex flex-col items-center border-b border-gray-100 text-sm font-medium transition-colors hover:bg-gray-50 md:gap-x-4 md:px-6 md:py-8 lg:grid lg:grid-cols-[80px_2fr_1fr_1fr_1fr_1fr_120px]">
+      {/* 상태 뱃지 - lg에서만 별도 컬럼으로 표시 */}
+      <div className="hidden lg:flex lg:justify-center">
+        <span
+          className={`shrink-0 rounded-sm px-2 py-0.5 text-[10px] ${current.stateStyles}`}
+        >
+          {current.label}
+        </span>
+      </div>
+
       <div className="flex h-full w-full min-w-0 flex-col items-center gap-4">
         <div className="relative h-50 w-50 shrink-0 overflow-hidden rounded-sm bg-gray-100 md:h-20 md:w-20">
           <Image
@@ -44,7 +53,7 @@ export default function SellerProductItemCard({
         </div>
         <div className="flex min-w-0 flex-1 items-center gap-2 md:overflow-hidden">
           <span
-            className={`shrink-0 rounded-sm px-2 py-0.5 text-[10px] ${current.stateStyles}`}
+            className={`shrink-0 rounded-sm px-2 py-0.5 text-[10px] lg:hidden ${current.stateStyles}`}
           >
             {current.label}
           </span>
@@ -68,6 +77,7 @@ export default function SellerProductItemCard({
           </button>
         </div>
       </div>
+
       <div className="flex flex-row justify-between gap-3 lg:contents">
         <span className="w-16 text-left text-gray-500 lg:hidden">판매가</span>
         <p className="text-gray-500 md:text-center">
