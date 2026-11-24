@@ -12,6 +12,7 @@ import { OrdersType } from '@/app/lib/orders.types'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { CATEGORIES } from '../lib/orderTabGroups'
 import { SORTTYPE } from '../../wishlist/utils/sortWishListItems'
+import OrderListError from './OrderListError'
 
 export default function OrderList() {
   const router = useRouter()
@@ -22,7 +23,7 @@ export default function OrderList() {
   const sort = (searchParams.get('sort') as SORTTYPE) ?? 'all'
   const status = searchParams.get('status') ?? 'all'
 
-  const { data, isLoading } = useQuery<{
+  const { data, isLoading, isError, refetch } = useQuery<{
     items: OrdersType[]
     count: number
   }>({
@@ -59,10 +60,13 @@ export default function OrderList() {
     router.push(`?${params.toString()}`)
   }
 
-  if (isLoading || !data) {
+  if (isLoading) {
     return <MyPageOrdersSkeleton count={5} />
   }
 
+  if (isError) {
+    return <OrderListError onRetry={() => refetch()} />
+  }
   const hasOrder = safeItems?.length > 0
   return (
     <>
