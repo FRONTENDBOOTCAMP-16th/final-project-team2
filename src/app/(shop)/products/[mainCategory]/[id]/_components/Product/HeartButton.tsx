@@ -6,7 +6,6 @@ import { useAuth } from '@/hooks/useAuth'
 import { Heart } from 'lucide-react'
 import Link from 'next/link'
 import { Fragment, useState } from 'react'
-import { toast } from 'sonner'
 
 type HeartButtonProps = {
   productId: string
@@ -32,18 +31,7 @@ const HeartButton = ({
       return
     }
 
-    mutate(
-      { productId, isLiked: liked },
-      {
-        onSuccess: () => {
-          toast(
-            liked
-              ? '찜한 상품을 해제하였습니다.'
-              : '찜한 상품을 추가하였습니다.',
-          )
-        },
-      },
-    )
+    mutate({ productId, isLiked: liked })
   }
 
   return (
